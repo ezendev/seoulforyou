@@ -5,8 +5,8 @@
 
 <mapper namespace="com.ezdev.sfy.tourApiMapper">
 	<insert id="insertDb" parameterType="java.util.List">
-		insert into tour_test(tour_no, tour_type, tour_name, tour_postal, tour_addr, tour_hp, tour_open_time, tour_open_day, tour_close_day, tour_traffic)
-		select tour_test_seq.nextval, A.* from(
+		insert into tour(tour_no, tour_type, tour_name, tour_postal, tour_addr, tour_hp, tour_open_time, tour_open_day, tour_close_day, tour_traffic)
+		select tour_seq.nextval, A.* from(
 			<foreach collection="list" item="item" separator="UNION ALL ">
 				select #{item.tour_type, jdbcType=NUMERIC} as tour_type,
 						#{item.tour_name, jdbcType=VARCHAR} as tour_name,
@@ -22,7 +22,7 @@
 	</insert>
 	
 	<delete id="deleteDb" parameterType="int">
-		delete from tour_test where tour_type = #{type}
+		delete from tour where tour_type = #{type}
 	</delete>
 
 </mapper> 	
