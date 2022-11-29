@@ -6,7 +6,7 @@
 	<!-- 여행지 분류 -->
 	<div class="row mt-2">
 		<div align="right">
-		<div class="col-12 mb-2 col-md-2" style="float:right" >
+		<div class="col-12 mb-3 col-md-2" style="float:right" >
           <select class="form-select" id="filterByRoote" onchange="searchFilter()">
              <option value="" selected >여행지목록</option>      
              <option value="숙소">숙소</option>
@@ -20,10 +20,9 @@
                    onkeyup="searchFilter()">
            </div>
            </a>
-	</div>
-	
+	</div>	
 	<!-- row -->
-	<div class="row row-cols-1 row-cols-lg-4 row-cols-md-2 row-cols-sm-2 g-4 mx-5">
+	<div class="row row-cols-1 row-cols-lg-4 row-cols-md-2 row-cols-sm-2 g-4 mx-0">
 	  <div class="col 숙소">
 		  <a data-bs-toggle="modal" data-bs-target="#tourView">
 		    <div class="card h-100">
@@ -67,7 +66,6 @@
 	    </div>
 	  </div>
 	</div>
-	
 	<!-- 상세페이지 모달 -->
 	<div class="modal fade" id="tourView">
 	 	<div class="modal-dialog">
@@ -78,7 +76,6 @@
 	      	<!-- 즐겨찾기 이미지 -->
  	 		<a href="#" id="favorite" title="즐겨찾기 등록"><img src="resources/icon/star-fill.svg"></a>
 	      </div>
-	
 	      <!-- Modal body -->
 	      <div class="modal-body">
 	     	 <div class="container-fluid">
@@ -95,11 +92,9 @@
 	     			 <p><img src="resources/icon/file-earmark-text.svg"> 내용</p>
 	    		</div>
 	 		 </div>
-		</div>
-	        
+		</div>	        
 	        &nbsp;&nbsp;
-	      </div>
-	
+	      </div>	
 	      <!-- Modal footer -->
 	      <div class="modal-footer">
 			<div class="container text-center">
@@ -196,10 +191,7 @@ $(document).ready(function() {
             }
         }
     </script>
-    <script>
-    var cardTitle =()=>{
-    	const cards = document.getElementsByClassName("card-title강서구");
-    }
+    <script>    
     </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <%@ include file="../bottom.jsp"%>

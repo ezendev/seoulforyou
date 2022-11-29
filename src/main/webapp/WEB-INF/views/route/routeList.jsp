@@ -21,9 +21,8 @@
            </div>
            </a>
 	</div>
-	
 	<!-- row -->
-	<div class="row row-cols-1 row-cols-lg-4 row-cols-md-2 row-cols-sm-2 g-4 mx-5">
+	<div class="row row-cols-1 row-cols-lg-4 row-cols-md-2 row-cols-sm-2 g-4 mx-0">
 	  <div class="col 숙소">
 	  	<a data-bs-toggle="modal" data-bs-target="#tourView">
 		    <div class="card h-100">
@@ -118,8 +117,7 @@
 								</div>
 							</div>
 					</div>	
-			</div>
-			
+			</div>			
 			<!-- 우측페이지 -->
     		<div class="col">
     			<h2 align="left">리뷰</h2>
@@ -205,7 +203,6 @@
   	        return triggerDefault;
   	    });
   	});
-  	
 </script>
 <script>
         var searchFilter =()=> {
@@ -226,10 +223,6 @@
         }
     </script>
     <script>
-    var cardTitle =()=>{
-    	const cards = document.getElementsByClassName("card-title강서구");
-    }
     </script>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <%@ include file="../bottom.jsp"%>
