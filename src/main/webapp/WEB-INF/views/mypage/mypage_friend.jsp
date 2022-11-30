@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!-- test4.jsp -->
+<!-- mypage_friend.jsp -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../top.jsp"%>
 
@@ -41,7 +41,7 @@ myModal.addEventListener('shown.bs.modal', () => {
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
-        <a class="nav-link js-scroll-trigger" aria-current="page" href="#profile">
+        <a class="nav-link js-scroll-trigger" aria-current="page" href="mypage.do">
           <svg class="bi pe-none me-2" width="16" height="16"></svg>
           내정보
         </a>
@@ -66,7 +66,7 @@ myModal.addEventListener('shown.bs.modal', () => {
         </a>
       </li>
       <li>
-        <a class="nav-link js-scroll-trigger" href="mypage_friend.do">
+        <a class="nav-link js-scroll-trigger" href="#mypage_friend">
           <svg class="bi pe-none me-2" width="16" height="16"></svg>
           친구 목록
         </a>
@@ -92,60 +92,62 @@ myModal.addEventListener('shown.bs.modal', () => {
     </ul>
     <hr>
   </aside>
-		<div class="col-md-9">
-        <h3>프로필</h3>
-        <table class="table table-sm">
-        <tr>
-        <th>아이디</th>
-        <td>member_id</td>
-        </tr>
-        <tr>
-        <th>이름</th>
-        <td>member_name</td>
-        </tr>
-        <tr>
-        <th>이메일</th>
-        <td>member_email</td>
-        </tr>
-        <tr>
-        <th>전화번호</th>
-        <td>member_hp</td>
-        </tr>
-        </table>
-       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#profile_update">
-                 수정
-       </button>
-
-<!-- Modal -->
-<div class="modal fade" id="profile_update" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="col-md-9">
+  <h3 id="mypage_friend">
+				친구 목록
+			</h3>
+			<!-- 친구 테이블 추가 -->
+			<table class="table table-sm table-hover">
+				<thead>
+					<tr>
+						<th width="30">
+							아이디
+						</th>
+						<th width="30">
+							이름
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+			<c:if test="${empty listFriend}">
+		<tr>
+			<td colspan="2">등록된 친구가 없습니다.</td>
+		</tr>
+	</c:if>
+	<c:forEach var="dto" items="${listFriend}">
+		<tr>
+			<td width="30">${dto.friend_id}</td>
+			<td width="30">${dto.friend_name}</td>
+	</c:forEach>
+				</tbody>
+			</table>
+			<!-- 등록 팝업창 추가 -->
+						<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#friend_insert">
+ 친구 추가
+</button>
+			<!-- Modal -->
+<div class="modal fade" id="friend_insert" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">정보 수정</h1>
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">친구 추가</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-         <form role="form">
-         <!-- 후에 value값,수정버튼에 자바스크립트값 추가 update.do 추가 name추가 -->
-         <%-- <input type="text" name="email" class="box" value="${getMember.email}">--%>
+         <form role="form" action="mypage_friend_insert.do" method="post">
+         <!-- 후에 value값,수정버튼에 자바스크립트값 추가 -->
 				<div class="form-group">
-					<label for="member_passwd">
-						비밀번호
+					<label for="friend_id">
+						아이디
 					</label>
-					<input type="password" class="form-control" id="member_passwd" />
+					<input type="text" class="form-control" id="friend_id" name="friend_id" />
 				</div>
 				<div class="form-group">
-					 
-					<label for="member_email">
-						이메일
+					<label for="friend_name">
+						이름
 					</label>
-					<input type="text" class="form-control" id="member_email" />
-				</div>
-				<div class="form-group">
-					<label for="member_hp">
-						전화번호
-					</label>
-					<input type="text" class="form-control" id="member_hp" />
+					<input type="text" class="form-control" id="friend_name" name="friend_name" />
 				</div>
 			
       </div>
@@ -160,29 +162,12 @@ myModal.addEventListener('shown.bs.modal', () => {
 </div>
 </div>
 </div>
-			<%-- <%-- <div class="box-footer">
-    <div class="form-group col-sm-1">
-        <select class="form-control" name="fasearch" id="fasearch">
-            <option value="fn" <c:out value="${searchCriteria.searchType == null ? 'selected' : ''}"/>>::: 선택 :::<</option>
-            <option value="ftitle" <c:out value="${searchCriteria.searchType eq 'ftitle' ? 'selected' : ''}"/>>제목<</option>
-            <option value="fcate" <c:out value="${searchCriteria.searchType eq 'fcate' ? 'selected' : ''}"/>>구분<</option>
-            <option value="ftcon" <c:out value="${searchCriteria.searchType eq 'ftcon' ? 'selected' : ''}"/>>제목+내용<</option>
-        </select>
-    </div>
-    <div class="form-group col-sm-4">
-        <div class="input-group">
-            <input type="text" class="form-control" name="keyword" id="keywordInput" value="${searchCriteria.keyword}" placeholder="검색어">
-            <span class="input-group-btn">
-                <button type="button" class="btn btn-primary btn-flat" id="searchBtn">
-                    <i class="fa fa-search"></i> 검색
-                </button>
-            </span>
-        </div>
-    </div> --%>
-
 
 <script src="resources/js/jquery-3.6.1.min.js"></script>
    <script src="resources/js/bootstrap.bundle.js"></script>
 </body>
 </html>
 <%@ include file="../bottom.jsp"%>
+
+</body>
+</html>
