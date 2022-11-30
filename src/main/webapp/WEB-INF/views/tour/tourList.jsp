@@ -35,7 +35,7 @@
 			      <img src="resources/img/111.jpeg" class="card-img-top" alt="..."
 			      style="width:100%   ; height:20vw ; object-fit:cover;">
 			      <div class="card-body">
-			        <h5 class="card-title">${dto.tour_name}</h5>
+			        <h5 class="card-title">${tdto.tour_name}</h5>
 			        <p class="card-text">This is a short card.</p>
 			      </div>
 			    </div>
