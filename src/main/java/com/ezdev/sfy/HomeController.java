@@ -28,11 +28,6 @@ public class HomeController {
 		return "login";
 	}
 	
-	//qna 임시매핑:: bottom.jsp -> 트위터 아이콘
-	@RequestMapping("/qnalist.do")
-	public String qnaList() {
-		return "pages/qnalist";
-	}
 	
 	//채팅 페이지
 	@RequestMapping("/chat.do")
