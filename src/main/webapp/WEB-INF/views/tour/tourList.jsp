@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!-- tour.jsp -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@ include file="../top.jsp"%>
+
 
 <div class="container-md">
 	<!-- 여행지 분류 -->
@@ -9,9 +11,11 @@
 		<div class="col-12 mb-3 col-md-2" style="float:right" >
           <select class="form-select" id="filterByRoote" onchange="searchFilter()">
              <option value="" selected >여행지목록</option>      
-             <option value="숙소">숙소</option>
-             <option value="맛집">맛집</option>
-             <option value="관광">관광</option>
+             <option value="1">문화</option>
+             <option value="2">명소</option>
+             <option value="3">자연</option>
+             <option value="4">음식</option>
+             <option value="5">숙소</option>
           </select>
 		</div>
 		</div>
@@ -20,22 +24,26 @@
                    onkeyup="searchFilter()">
            </div>
            </a>
-	</div>	
+	</div>
+	
 	<!-- row -->
 	<div class="row row-cols-1 row-cols-lg-4 row-cols-md-2 row-cols-sm-2 g-4 mx-0">
-	  <div class="col 숙소">
-		  <a data-bs-toggle="modal" data-bs-target="#tourView">
-		    <div class="card h-100">
-		      <img src="resources/img/111.jpeg" class="card-img-top" alt="..."
-		      style="width:100%   ; height:20vw ; object-fit:cover;">
-		      <div class="card-body">
-		        <h5 class="card-title">Card title</h5>
-		        <p class="card-text">This is a short card.</p>
-		      </div>
-		    </div>
-		  </a>
-	  </div>
-	  <div class="col 맛집">
+		<c:forEach var="dto" items="${listTour}">
+		  <div class="col ${dto.tour_type}">
+			  <a data-bs-toggle="modal" data-bs-target="#tourView">
+			    <div class="card h-100">
+			      <img src="resources/img/111.jpeg" class="card-img-top" alt="..."
+			      style="width:100%   ; height:20vw ; object-fit:cover;">
+			      <div class="card-body">
+			        <h5 class="card-title">${dto.tour_name}</h5>
+			        <p class="card-text">This is a short card.</p>
+			      </div>
+			    </div>
+			  </a>
+		  </div>
+	  	</c:forEach>
+
+	  <!-- <div class="col 맛집">
 		    <div class="card h-100">
 		      <img src="resources/img/222.jpeg" class="card-img-top" alt="..."
 		      style="width:100%   ; height:20vw ; object-fit:cover;">
@@ -65,6 +73,7 @@
 	      </div>
 	    </div>
 	  </div>
+	   -->
 	</div>
 	<!-- 상세페이지 모달 -->
 	<div class="modal fade" id="tourView">
