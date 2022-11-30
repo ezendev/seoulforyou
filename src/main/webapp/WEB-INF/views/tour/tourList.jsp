@@ -28,8 +28,8 @@
 	
 	<!-- row -->
 	<div class="row row-cols-1 row-cols-lg-4 row-cols-md-2 row-cols-sm-2 g-4 mx-0">
-		<c:forEach var="dto" items="${listTour}">
-		  <div class="col ${dto.tour_type}">
+		<c:forEach var="tdto" items="${tourList}">
+		  <div class="col ${tdto.tour_type}">
 			  <a data-bs-toggle="modal" data-bs-target="#tourView">
 			    <div class="card h-100">
 			      <img src="resources/img/111.jpeg" class="card-img-top" alt="..."
@@ -43,37 +43,6 @@
 		  </div>
 	  	</c:forEach>
 
-	  <!-- <div class="col 맛집">
-		    <div class="card h-100">
-		      <img src="resources/img/222.jpeg" class="card-img-top" alt="..."
-		      style="width:100%   ; height:20vw ; object-fit:cover;">
-		      <div class="card-body">
-		        <h5 class="card-title">Card title</h5>
-		        <p class="card-text">This is a short card.</p>
-		      </div>
-		    </div>
-		  </div>
-	  <div class="col 관광">
-		    <div class="card h-100">
-		      <img src="resources/img/333.jpeg" class="card-img-top" alt="..."
-		      style="width:100%   ; height:20vw ; object-fit:cover;">
-		      <div class="card-body">
-		        <h5 class="card-title">Card title</h5>
-		        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-		      </div>
-		    </div>
-	  </div>
-	  <div class="col 숙소">
-	    <div class="card h-100">
-	      <img src="resources/img/444.jpeg" class="card-img-top" alt="..."
-	      	style="width:100%   ; height:20vw ; object-fit:cover;"														>
-	      <div class="card-body">
-	        <h5 class="card-title">Card title</h5>
-	        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-	      </div>
-	    </div>
-	  </div>
-	   -->
 	</div>
 	<!-- 상세페이지 모달 -->
 	<div class="modal fade" id="tourView">
