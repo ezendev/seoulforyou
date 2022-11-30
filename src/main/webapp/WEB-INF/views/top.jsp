@@ -37,6 +37,9 @@
 		function chat(){
 			location.href="chat.do";
 		}
+		function qnaWrite(){
+			location.href="qnaWrite.do";
+		}
 	</script>
 	
 	<title>Seoul For You</title>
