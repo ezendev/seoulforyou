@@ -9,7 +9,7 @@
 	<div class="row mt-2">
 		<div align="right">
 			<div class="col-12 mb-3 col-md-2" style="float:right" >
-	          <select class="form-select" id="filterByRoote" onchange="searchFilter()">
+	          <select class="form-select" id="filterByType" onchange="searchFilter()">
 	             <option value="" selected >여행지목록</option>      
 	             <option value="1">문화</option>
 	             <option value="2">명소</option>
@@ -19,18 +19,17 @@
 	          </select>
 			</div>
 		</div>
-		<a class="visually-hidden-focusable" href="#content">
-	       	<div class="col-12 col-md-1 mb-1" disabled>
-	       		<input type="text" class="form-control" placeholder="Search cards" aria-label="Search cards" onkeyup="searchFilter()">
-	        </div>
-        </a>
 	</div>
 	
+	<form name="f" method="post" action="tourList.do">
+		<input type="hidden" name="tourType">
+	</form>
+	
 	<!-- 여행지 리스트 -->
-	<div class="row row-cols-1 row-cols-lg-4 row-cols-md-2 row-cols-sm-2 g-4 mx-0">
+	<div class="tourrow row row-cols-1 row-cols-lg-4 row-cols-md-2 row-cols-sm-2 g-4 mx-0">
 		<c:forEach var="tdto" items="${tourList}">
 			<!-- 여행지 -->
-			<div class="col ${tdto.tour_type}">
+			<div class="tourcol col ${tdto.tour_type}">
 				<a onclick="valueSetting('${tdto.tour_name}','${tdto.tour_postal}','${tdto.tour_addr}','${tdto.tour_hp}'
 											,'${tdto.tour_open_time}','${tdto.tour_open_day}','${tdto.tour_close_day}','${tdto.tour_traffic}')"
 					data-bs-toggle="modal" data-bs-target="#tourView">
@@ -39,7 +38,7 @@
 				    	<img src="resources/img/111.jpeg" class="card-img-top" alt="..."
 				    		style="width:100%; height:20vw; object-fit:cover;">
 						<!-- 여행지 -->
-			    		<div class="card-body">
+			    		<div class="tour-card-body card-body">
 					      	<!-- 이름 -->
 					        <h5 class="card-title">${tdto.tour_name}</h5>
 					        
@@ -143,6 +142,17 @@
 			</div>
 		</div>
 	</div>
+	<c:if test="${not empty tourList}">	
+		<c:if test="${startPage > pageBlock}">
+			[<a href="tourList.do?pageNum=${startPage-1}">이전</a>]
+		</c:if>
+		<c:forEach var="i" begin="${startPage}" end="${endPage}">
+			[<a href="tourList.do?pageNum=${i}">${i}</a>]
+		</c:forEach>	
+		<c:if test="${pageCount > endPage}">
+			[<a href="tourList.do?pageNum=${endPage+1}">다음</a>]
+		</c:if>
+	</c:if>
 
 </div>
 
@@ -193,22 +203,13 @@ $(document).ready(function() {
 });
 </script>
 <script>
-        var searchFilter =()=> {
-            let selectedColor = document.getElementById("filterByRoote").value;
-            console.log(selectedColor);
-            const input = document.querySelector(".form-control");
-            const cards = document.getElementsByClassName("col");
-            console.log(cards[1])
-            let textBox = input.value;
-            for (let i = 0; i < cards.length; i++) {
-                let title = cards[i].querySelector(".card-body");
-                if ((cards[i].classList.contains(selectedColor) || selectedColor=="") && title.innerText.toLowerCase().indexOf(textBox.toLowerCase()) > -1) {
-                    cards[i].classList.remove("d-none");
-                } else {
-                    cards[i].classList.add("d-none");
-                }
-            }
-        }
-    </script>
+	function searchFilter(event){
+	    console.log("야호");
+	    const tourType = $("#filterByType option:selected").val();
+	    console.log(tourType);
+	    document.f.tourType.value = tourType;
+	    f.submit();
+	}
+</script>
     
 <%@ include file="../bottom.jsp"%>

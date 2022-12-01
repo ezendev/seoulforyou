@@ -1,5 +1,6 @@
 package com.ezdev.sfy.service;
 
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -14,9 +15,23 @@ import com.ezdev.sfy.dto.TourDTO;
 public class TourMapper {
    @Autowired
    private SqlSession sqlSession;
+   
+	public int getTourCount() {
+		return sqlSession.selectOne("getTourCount");
+	}
+	
+	public List<TourDTO> listTour() {
+		Map<String, Integer> map = new HashMap<>();
+		
+	      return sqlSession.selectList("listTour", map);
+	   }
 
-   public List<TourDTO> listTour() {
-      return sqlSession.selectList("listTour");
+   public List<TourDTO> listTour(int startRow, int endRow) {
+	   Map<String, Integer> map = new HashMap<>();
+	   map.put("start", startRow);
+	   map.put("end", endRow);
+	   
+      return sqlSession.selectList("listTour", map);
    }
 
    public List<TourDTO> listTourByRegion(String region) {
@@ -30,6 +45,15 @@ public class TourMapper {
 			}		 
 	      return sqlSession.selectList("listTourByRegion", map);
    }
+   
+   public List<TourDTO> listTourByType(String tourType, int startRow, int endRow) {
+		Map<String, Integer> map = new HashMap<>();
+			map.put("type", Integer.parseInt(tourType));
+			map.put("start", startRow);
+			map.put("end", endRow);
+		
+		return sqlSession.selectList("listTourByType", map);
+	}
    
    public List<TourDTO> findTour(String keyword){
 		Map<String, String> map = new Hashtable<>();
