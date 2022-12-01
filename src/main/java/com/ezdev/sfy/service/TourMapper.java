@@ -30,6 +30,13 @@ public class TourMapper {
 			}		 
 	      return sqlSession.selectList("listTourByRegion", map);
    }
+   
+   public List<TourDTO> findTour(String keyword){
+		Map<String, String> map = new Hashtable<>();
+		map.put("keyword", keyword);
+		return sqlSession.selectList("findTour", map);
+	}
+   
 }
 	   
 
