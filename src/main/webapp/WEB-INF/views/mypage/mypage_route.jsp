@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!-- mypage_route.jsp -->
 <%@ include file="../top.jsp"%>
 <html>
@@ -43,7 +43,7 @@
         </a>
       </li>
       <li>
-        <a class="nav-link js-scroll-trigger" href="mypage.do">
+        <a class="nav-link js-scroll-trigger" href="mypage_friend.do">
           <svg class="bi pe-none me-2" width="16" height="16"></svg>
           친구 목록
         </a>

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!-- mypage_qna.jsp -->
 <%@ include file="../top.jsp"%>
 <html>
@@ -14,7 +14,7 @@
 	<div class="row">
 		<aside class="bd-aside sticky-xl-top text-muted align-self-start d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
     <a href="index.do" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-      <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+      <svg class="bi pe-none me-2" width="40" height="32"></svg>
       <span class="fs-4">Seoul for you</span>
     </a>
     <hr>
@@ -44,7 +44,7 @@
         </a>
       </li>
       <li>
-        <a class="nav-link js-scroll-trigger" href="mypage.do">
+        <a class="nav-link js-scroll-trigger" href="mypage_friend.do">
           <svg class="bi pe-none me-2" width="16" height="16"></svg>
           친구 목록
         </a>
