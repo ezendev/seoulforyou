@@ -7,7 +7,7 @@
 
 	
 	<insert id="insertMember" parameterType="memberDTO">
-		insert into member values(dev_member_seq.nextval, #{member_name}, #{member_id}, #{member_passwd}, 
+		insert into member values(member_seq.nextval, #{member_name}, #{member_id}, #{member_passwd}, 
 					#{member_email}, #{member_hp})
 	</insert>
 	
