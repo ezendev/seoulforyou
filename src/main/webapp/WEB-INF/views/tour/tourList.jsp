@@ -3,26 +3,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <%@ include file="../top.jsp"%>
-<!-- 임시 스타일 -->
-<head>
-	<style>
-		input{
-			border: none;
-		}
-	</style>
-</head>
-
-<!-- 모달에 각 tour dto값을 전달하기 위한 폼 -->
-<form id="f" name="f" action="tour.php" method="post">
-	<input type="hidden" name="name" value=""/>
-	<input type="hidden" name="postal" value=""/>
-	<input type="hidden" name="addr" value=""/>
-	<input type="hidden" name="hp" value=""/>
-	<input type="hidden" name="open_time" value=""/>
-	<input type="hidden" name="open_day" value=""/>
-	<input type="hidden" name="close_day" value=""/>
-	<input type="hidden" name="traffic" value=""/>
-</form>
 
 <div class="container-md">
 	<!-- 여행지 분류 -->
@@ -98,14 +78,14 @@
 		     				 <p><img src="resources/img/k1.jpg" class="rounded float-start" alt="" width="100%" height="260"></p>
 		    			</div>
 		   			 	<div class="col-sm-12 col-md-12 col-lg-6">
-			     			 <p><img src="resources/icon/geo-alt.svg">이름: <input id="name" style="display:none"></p>
-			     			 <p><img src="resources/icon/clock.svg">우편번호: <input id="postal" style="display:none"></p>
-			     			 <p><img src="resources/icon/clock.svg"> 주소: <input id="addr" style="display:none"></p>
-			     			 <p><img src="resources/icon/telephone.svg"> 전화번호: <input id="hp" style="display:none"></p>
-			     			 <p><img src="resources/icon/house-door.svg"> 운영시간: <input id="open_time" style="display:none"></p>
-			     			 <p><img src="resources/icon/house-door.svg"> 운영요일: <input id="open_day" style="display:none"></p>
-			     			 <p><img src="resources/icon/house-door.svg"> 휴무일: <input id="close_day" style="display:none"></p>
-			     			 <p><img src="resources/icon/shop-window.svg"> 교통정보: <input id="traffic" style="display:none"></p>
+			     			 <p><img src="resources/icon/geo-alt.svg">이름: <input id="name" style="display:none" /></p>
+			     			 <p><img src="resources/icon/clock.svg">우편번호: <input id="postal" style="display:none" /></p>
+			     			 <p><img src="resources/icon/clock.svg"> 주소: <input id="addr" style="display:none" /></p>
+			     			 <p><img src="resources/icon/telephone.svg"> 전화번호: <input id="hp" style="display:none" /></p>
+			     			 <p><img src="resources/icon/house-door.svg"> 운영시간: <textarea id="open_time" style="display:none"></textarea></p>
+			     			 <p><img src="resources/icon/house-door.svg"> 운영요일: <textarea id="open_day" style="display:none"></textarea></p>
+			     			 <p><img src="resources/icon/house-door.svg"> 휴무일: <textarea id="close_day" style="display:none"></textarea></p>
+			     			 <p><img src="resources/icon/shop-window.svg"> 교통정보: <textarea id="traffic" style="display:none"></textarea></p>
 		    			</div>
 		 		 	</div>
 				</div>
@@ -169,19 +149,9 @@
 
 <script>
 
-// 각 여행지 눌렀을 때 해당 dto값을 히든 폼에 넣고 모달영역에 띄워주는 함수
+// 각 여행지 눌렀을 때 해당 dto값을 모달영역에 띄워주는 함수
 function valueSetting(name, postal, addr, hp, open_time, open_day, close_day, traffic){
-	//폼에 dto값 업데이트
-	document.f.name.value = name;
-	document.f.postal.value = postal;
-	document.f.addr.value = addr;
-	document.f.hp.value = hp;
-	document.f.open_time.value = open_time;
-	document.f.open_day.value = open_day;
-	document.f.close_day.value = close_day;
-	document.f.traffic.value = traffic;
-	
-	//모달영역에 폼 안의 값 설정
+	//모달input에 dto값 설정 후 보이기
 	$('#name').val(name);	$('#name').show();
 	$('#postal').val(postal);	$('#postal').show();	
 	$('#addr').val(addr);	$('#addr').show();	
