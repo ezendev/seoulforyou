@@ -1,11 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!-- mypage_route.jsp -->
 <%@ include file="../top.jsp"%>
 <html>
 <head>
 <title>나의 여행루트</title>
+<style type="text/css">
+const myModal = document.getElementById('myModal')
+const myInput = document.getElementById('myInput')
+
+myModal.addEventListener('shown.bs.modal', () => {
+  myInput.focus()
+})
+</style>
  <link rel="stylesheet" href="resources/css/bootstrap.min.css">
 </head>
 <body>
