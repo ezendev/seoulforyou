@@ -10,24 +10,26 @@
 <title>마이페이지</title>
 <script>
 function getselect() {
-    const value = e.value;
+	<%-- 검색 관련 기능 --%>
+	const value = e.value;
 
     document.getElementById('result').innerText = value;
    
 }
-$('.modal').on('hidden.bs.modal', function (e) {
+<%-- 모달창 끄면 내용 초기화 시켜줌 --%>
+$('.modal').on('hidden.bs.modal', function (e) { 
     console.log('modal close');
   $(this).find('form')[0].reset()
 });
 </script>
-<style type="text/css">
+<!-- <style type="text/css">
 const myModal = document.getElementById('myModal')
 const myInput = document.getElementById('myInput')
 
 myModal.addEventListener('shown.bs.modal', () => {
   myInput.focus()
 })
-</style>
+</style> -->
  <link rel="stylesheet" href="resources/css/bootstrap.min.css">
 </head>
 <body>
@@ -47,7 +49,6 @@ myModal.addEventListener('shown.bs.modal', () => {
         </a>
       </li>
       <li>
-        <%-- 클릭시 mypage_route 페이지로 넘어가게 수정 <a href="mypage_route.do"> --%>
         <a class="nav-link js-scroll-trigger" href="mypage_route.do">
           <svg class="bi pe-none me-2" width="16" height="16"></svg>
           나의 여행 루트
@@ -106,6 +107,8 @@ myModal.addEventListener('shown.bs.modal', () => {
 						<th width="30">
 							이름
 						</th>
+						<th width="30">
+						</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -118,6 +121,7 @@ myModal.addEventListener('shown.bs.modal', () => {
 		<tr>
 			<td width="30">${dto.friend_id}</td>
 			<td width="30">${dto.friend_name}</td>
+			<td width="30"><a href="mypage_friend_delete.do?friend_num=${dto.friend_num}">[삭제]</a></td>
 	</c:forEach>
 				</tbody>
 			</table>
