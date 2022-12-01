@@ -20,9 +20,13 @@ public class TourController {
 	//여행지
 	@RequestMapping("/tourList.do")
 	public String tourList(HttpServletRequest req) {
-		List<TourDTO> list = tourMapper.listTour();
+		HttpSession session = req.getSession();
 		
-		req.setAttribute("listTour", list);
+		//세션에 "tourList" 키의 여행지 목록이 없다면 새로 만들어 저장한다
+		if(session.getAttribute("tourList") == null) {
+			List<TourDTO> list = tourMapper.listTour();
+			session.setAttribute("tourList", list);
+		}
 		
 		return "tour/tourList";
 	}
