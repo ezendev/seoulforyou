@@ -57,7 +57,7 @@
 			    	<div class="card h-100">
 			    		<!-- 여행지 이미지 -->
 				    	<img src="resources/img/111.jpeg" class="card-img-top" alt="..."
-				    		style="width:100%   ; height:20vw ; object-fit:cover;">
+				    		style="width:100%; height:20vw; object-fit:cover;">
 						<!-- 여행지 -->
 			    		<div class="card-body">
 					      	<!-- 이름 -->
@@ -98,14 +98,14 @@
 		     				 <p><img src="resources/img/k1.jpg" class="rounded float-start" alt="" width="100%" height="260"></p>
 		    			</div>
 		   			 	<div class="col-sm-12 col-md-12 col-lg-6">
-			     			 <p><img src="resources/icon/geo-alt.svg">이름: <input id="name" display:none></p>
-			     			 <p><img src="resources/icon/clock.svg">우편번호: <input id="postal" display:none></p>
-			     			 <p><img src="resources/icon/clock.svg"> 주소: <input id="addr" display:none></p>
-			     			 <p><img src="resources/icon/telephone.svg"> 전화번호: <input id="hp" display:none></p>
-			     			 <p><img src="resources/icon/house-door.svg"> 운영시간: <input id="open_time" display:none></p>
-			     			 <p><img src="resources/icon/house-door.svg"> 운영요일: <input id="open_day" display:none></p>
-			     			 <p><img src="resources/icon/house-door.svg"> 휴무일: <input id="close_day" display:none></p>
-			     			 <p><img src="resources/icon/shop-window.svg"> 교통정보: <input id="traffic" display:none></p>
+			     			 <p><img src="resources/icon/geo-alt.svg">이름: <input id="name" style="display:none"></p>
+			     			 <p><img src="resources/icon/clock.svg">우편번호: <input id="postal" style="display:none"></p>
+			     			 <p><img src="resources/icon/clock.svg"> 주소: <input id="addr" style="display:none"></p>
+			     			 <p><img src="resources/icon/telephone.svg"> 전화번호: <input id="hp" style="display:none"></p>
+			     			 <p><img src="resources/icon/house-door.svg"> 운영시간: <input id="open_time" style="display:none"></p>
+			     			 <p><img src="resources/icon/house-door.svg"> 운영요일: <input id="open_day" style="display:none"></p>
+			     			 <p><img src="resources/icon/house-door.svg"> 휴무일: <input id="close_day" style="display:none"></p>
+			     			 <p><img src="resources/icon/shop-window.svg"> 교통정보: <input id="traffic" style="display:none"></p>
 		    			</div>
 		 		 	</div>
 				</div>
@@ -240,7 +240,5 @@ $(document).ready(function() {
             }
         }
     </script>
-    <script>    
-    </script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    
 <%@ include file="../bottom.jsp"%>
