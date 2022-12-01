@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="com.ezdev.sfy.dto.mypageMapper">
+<select id="listFriend" resultType="mypageDTO">
+ select * from friend
+</select>
+<insert id="insertFriend" parameterType="mypageDTO">
+insert into friend values(#{friend_id}, #{friend_name})
+</insert>
+
+</mapper>
