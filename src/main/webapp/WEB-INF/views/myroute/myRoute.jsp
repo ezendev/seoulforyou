@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!-- my_route_1.jsp -->
 <%@ include file="../top.jsp"%>
 
@@ -8,29 +9,32 @@
   <div class="row row-cols-3 g-10 p-5">
     <div class="col-lg-3 col-md-4">
     	<div id="trip_thema">
-		     <select class="form-select" aria-label="Default select example" id="trip_thema">
-			  <option selected>#여행태마</option>
-			  <option value="1">#</option>
-			  <option value="2">#</option>
-			  <option value="3">#</option>
+		     <select class="form-select" aria-label="Default select example" name="trip_thema" id="trip_thema">
+			  <option selected>#여행테마</option>
+			  <option value="1">#힐링</option>
+			  <option value="2">#미식</option>
+			  <option value="3">#한류</option>
+			  <option value="4">#명소</option>
+			  <option value="5">#쇼핑</option>
 			</select>
 	    </div>
     </div>
     
     <div class="col-lg-3 col-md-4">
       <div id="trip_style">
-	      <select class="form-select" aria-label="Default select example" id="trip_style">
+	      <select class="form-select" aria-label="Default select example" name="trip_style" id="trip_style">
 			  <option selected>#여행 스타일</option>
 			  <option value="alone">#나 홀로 여행</option>
 			  <option value="friend">#친구와 함께</option>
 			  <option value="family">#가족과 함께</option>
+			  <option value="lover">#연인과 함께</option>
 			</select>
 	     </div>
     </div>
     
     <div class="col-lg-3 col-md-4">
       <div id="region">
-      <select class="form-select" aria-label="Default select example" id="region">
+      <select class="form-select" aria-label="Default select example" name="region" id="region">
 		  <option selected>세부지역(구)</option>
 		  <option value="1">강남구</option>
 		  <option value="2">강동구</option>
@@ -118,6 +122,8 @@
   	</div>
     
     <!-- spot -->
+    <!-- 의 카드들을 누르면... 일정리스트에 담기기 -->
+ 
   <div class="col-lg-3 col-md-4">
     <div class="container mx-auto ps-3">
 	  <label class="p-2">장소</label>
@@ -130,29 +136,44 @@
 	   
 	<!-- search panel -->
 		<div class="tab-content" id="nav-tabContent">
-		  <div class="tab-pane fade show active" id="search" role="tabpanel" aria-labelledby="search-tab" tabindex="0">
-		        <input type="text" placeholder="Search" aria-label="Search">
-		        <button class="btn btn-outline-success btn-sm" type="button">GO!</button>
-
+		  <div class="tab-pane fade show active" id="search" role="tabpanel" aria-labelledby="search-tab" tabindex="0" style="overflow:scroll; height:600px">
+			<form name="f" action="tourFind.do" method="post">
+		        <select class="form-select" aria-label="Default select example" name="searchType">
+				  <option value="1" seleted>문화</option>
+				  <option value="2">명소</option>
+				  <option value="3">자연</option>
+				  <option value="4">음식</option>
+				  <option value="5">숙소</option>
+				 </select>
+		        <input type="text" name="keyword">
+		        <button class="btn btn-outline-success btn-sm" type="submit">GO!</button>
+			</form>
+		
 		  <!-- 검색항목이 뜨는 부분 -->
-		  <a href="#">
-		  <div class="card border-dark pt-2 mx-auto" style="width: 90%; height:70px;">
+		  <c:if test="${empty findList}">
+		  	<div>장소를 검색해주세요</div>
+		  </c:if>
+		  <c:if test="${not empty findList}">
+		  	<c:forEach var="fdto" items="${findList}">
+		  		<div class="card border-dark pt-2 mx-auto" style="width: 90%; height:70px;">
 				  <div class="row g-0">
 				    <div class="col-md-4">
-				      <img src="resources/img/1.jpg" class="img-fluid-center rounded-start" style="width:70px; whight:70px">
+				      <img src="resources/img/1.jpg" class="img-fluid-center rounded-start" style="width:70px; height:50px">
 				    </div>
 				    <div class="col-md-7 mx-auto">
-				        <p class="card-text">장소 정보(주소)...</p>
+				        <h6 class="card-text">${fdto.tour_name}</h6>
+			 		 <a href="listAdd.do?tour_no=${fdto.tour_no}">[ADD]</a>
 				    </div>
 				  </div>
-				</div> 
-		  </a>
-		  </div>
-		</div>	
+				</div>
+			</c:forEach> 
+			</c:if>
+	 </div>
+	</div>	
+ 
 	  
 	  <!-- favorite panel -->
 		  <div class="tab-pane fade" id="favorite" role="tabpanel" aria-labelledby="favorite-tab" tabindex="0">
-		  	<a href="#">
 				<div class="card border-dark pt-2 mx-auto" style="width: 90%; height:70px;">
 				  <div class="row g-0">
 				    <div class="col-md-4">
@@ -162,31 +183,33 @@
 				        <p class="card-text">장소 정보(주소)...</p>
 				    </div>
 				  </div>
+		  		<a href="#" class="stretched-link"></a>
 				</div> 
-			</a>
 		  	</div>
 		</div>
     </div>
- 
-   
+
    <!-- schedule -->
    <div class="col-lg-3 col-md-4">
    	<div class="container mx-auto ps-3">
    		<label>일정</label>   
+   			
 				<div class="card border-dark pt-2" style="width: 100%; height:100px;">
 				  <div class="row g-0">
 				    <div class="col-md-4">
-				      <img src="resources/img/1.jpg" class="img-fluid-center rounded-start" style="width:70px; whight:70px">
+				      <img src="resources/img/1.jpg" class="img-fluid-center rounded-start" style="width:80px; whight:80px">
 				    </div>
 				    <div class="col-md-7 mx-auto">
-				        <p class="card-text" id="spot_info">장소명</p>
-				        <p class="card-text"><small class="text-muted" id="addr">의정부시 청사로 38</small></p>
+				        <p class="card-text" id="spot_info">노원역</p>
+				        <p class="card-text"><small class="text-muted" id="addr">노원구 상계로 69-1</small></p>
+				    	<a href="#" class="stretched-link"></a>
 				    </div>
 				  </div>
 				</div> 
+
 				
 		<input type="text" id="addre">	
-    	<button type="button" id="searchbtn">검색!</button>
+    	<input class="btn btn-outline-dark" type="submit" id="searchbtn" value="ROUTE!">
 	  		</div>
   	 </div>
 
@@ -196,9 +219,10 @@
      <div class="container mx-auto"> 
     	<div class="tab-content">
 	    <div id="map" style="width:100%;height:350px;"></div>
-			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7dfa24ca49ecafb1d1c5352143d4a441&libraries=services,clusterer,drawing"></script>
+			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7dfa24ca49ecafb1d1c5352143d4a441&libraries=services,clusterer,drawing"></script>				        
 			<!-- api는 head, body 상관없지만 코드 실행보다는 먼저 선언 -->
 			<%@ include file="kakaoMap.jsp" %>
+			
   	  	</div>
 	   	</div>
      </div>

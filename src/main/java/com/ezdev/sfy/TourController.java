@@ -35,6 +35,17 @@ public class TourController {
 		return "tour/tourList";
 	}
 	   
-	
+	@RequestMapping(value="/tourFind.do")
+	public String tourFind(HttpServletRequest req, @RequestParam(required=false)String keyword) {
+		HttpSession session = req.getSession();
+		if(session.getAttribute("tourList") == null) {
+			List<TourDTO> list = tourMapper.listTour();
+			session.setAttribute("tourList", list);			
+		}
+			List<TourDTO> find = tourMapper.findTour(keyword);
+			req.setAttribute("findList", find);
+		
+		return "myroute/myRoute";
+	}
 
 }
