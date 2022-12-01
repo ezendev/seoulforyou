@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ezdev.sfy.dto.MypageDTO;
 import com.ezdev.sfy.service.MypageMapper;
@@ -58,6 +59,18 @@ public class MypageController {
 			req.setAttribute("url", "mypage_friend.do");
 		}else {
 			req.setAttribute("msg", "친구 추가 실패");
+			req.setAttribute("url", "mypage_friend_do");
+		}
+		return "message";
+	}
+	@RequestMapping(value="/mypage_friend_delete.do")
+	public String mypage_friend_delete(HttpServletRequest req, @RequestParam(required = false) int friend_num) {
+		int res = mypageMapper.deleteFriend(friend_num);
+		if(res>0) {
+			req.setAttribute("msg", "친구 삭제 성공");
+			req.setAttribute("url", "mypage_friend.do");
+		}else {
+			req.setAttribute("msg", "친구 삭제 실패");
 			req.setAttribute("url", "mypage_friend_do");
 		}
 		return "message";

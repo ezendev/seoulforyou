@@ -20,4 +20,7 @@ public class MypageMapper {
 	public int insertFriend(MypageDTO dto) {
 		return sqlSession.insert("insertFriend", dto);
 	}
+	public int deleteFriend(int friend_num) {
+		return sqlSession.delete("deleteFriend", friend_num);
+	}
 }

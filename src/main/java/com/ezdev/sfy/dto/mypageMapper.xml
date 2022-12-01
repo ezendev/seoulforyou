@@ -8,7 +8,10 @@
  select * from friend
 </select>
 <insert id="insertFriend" parameterType="mypageDTO">
-insert into friend values(#{friend_id}, #{friend_name})
+insert into friend values(friend_seq.nextval, #{friend_id}, #{friend_name})
 </insert>
+<delete id="deleteFriend" parameterType="int">
+delete from friend where friend_num = #{friend_num}
+</delete>
 
 </mapper>
