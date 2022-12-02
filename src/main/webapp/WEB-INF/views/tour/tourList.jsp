@@ -142,17 +142,19 @@
 			</div>
 		</div>
 	</div>
-	<c:if test="${not empty tourList}">	
-		<c:if test="${startPage > pageBlock}">
-			[<a href="tourList.do?pageNum=${startPage-1}&tourType=${tourType}">이전</a>]
+	<div class="d-flex justify-content-center mt-3">
+		<c:if test="${not empty tourList}">	
+			<c:if test="${startPage > pageBlock}">
+				[<a href="tourList.do?pageNum=${startPage-1}&tourType=${tourType}">이전</a>]
+			</c:if>
+			<c:forEach var="i" begin="${startPage}" end="${endPage}">
+				[<a href="tourList.do?pageNum=${i}&tourType=${tourType}">${i}</a>]
+			</c:forEach>	
+			<c:if test="${pageCount > endPage}">
+				[<a href="tourList.do?pageNum=${endPage+1}&tourType=${tourType}">다음</a>]
+			</c:if>
 		</c:if>
-		<c:forEach var="i" begin="${startPage}" end="${endPage}">
-			[<a href="tourList.do?pageNum=${i}&tourType=${tourType}">${i}</a>]
-		</c:forEach>	
-		<c:if test="${pageCount > endPage}">
-			[<a href="tourList.do?pageNum=${endPage+1}&tourType=${tourType}">다음</a>]
-		</c:if>
-	</c:if>
+	</div>
 
 </div>
 
