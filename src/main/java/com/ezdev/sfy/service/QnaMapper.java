@@ -1,6 +1,7 @@
 package com.ezdev.sfy.service;
 
 import java.util.Hashtable;
+
 import java.util.List;
 import java.util.Map;
 
@@ -24,23 +25,23 @@ public class QnaMapper {
 	
 	public  int insertBoard(QnaDTO dto) {
 			String sql = null;
-			if (dto.getNum() == 0) {
-				sql = "update board set re_step = re_step + 1";
+			if (dto.getQna_no() == 0) {
+				sql = "update qna set qna_re_step = qna_re_step + 1";
 			}else {
-				sql = "update board set re_step = re_step + 1 where re_step > "+dto.getRe_step();
-				dto.setRe_step(dto.getRe_step()+1);
-				dto.setRe_level(dto.getRe_level()+1);
+				sql = "update qna set qna_re_step = qna_re_step + 1 where qna_re_step > "+dto.getQna_re_step();
+				dto.setQna_re_step(dto.getQna_re_step()+1);
+				dto.setQna_re_level(dto.getQna_re_level()+1);
 			}
 			Map<String, String> map = new Hashtable<>();
 			map.put("sql", sql);
 			sqlSession.update("plusRe_step", map);
 			return sqlSession.insert("insertBoard", dto);
 	}
-	public QnaDTO getBoard(int num, String mode) {
-		if (mode.equals("content")) {
-			sqlSession.update("plusReadcount", num);
+	public QnaDTO getBoard(int qna_no, String mode) {
+		if (mode.equals("qna_content")) {
+			sqlSession.update("plusReadcount", qna_no);
 		}
-		return  sqlSession.selectOne("getBoard", num);
+		return  sqlSession.selectOne("getBoard", qna_no);
 }
 	
 	public int getCount() {
