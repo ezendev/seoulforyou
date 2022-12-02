@@ -11,6 +11,6 @@
       select * from tour where tour_addr like '%${region}%'
    </select>
    <select id="findTour" parameterType="java.util.Map" resultType="tourDTO">
-		select * from tour where tour_name like '%${keyword}%'
+		${sql}
 	</select>
 </mapper>

@@ -1,6 +1,7 @@
 package com.ezdev.sfy;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -36,13 +37,26 @@ public class TourController {
 	}
 	   
 	@RequestMapping(value="/tourFind.do")
-	public String tourFind(HttpServletRequest req, @RequestParam(required=false)String keyword) {
+	public String tourFind(HttpServletRequest req, @RequestParam Map<String, String> map) {
 		HttpSession session = req.getSession();
 		if(session.getAttribute("tourList") == null) {
 			List<TourDTO> list = tourMapper.listTour();
 			session.setAttribute("tourList", list);			
 		}
-			List<TourDTO> find = tourMapper.findTour(keyword);
+		String sql=null;
+		int tour_type = Integer.parseInt(map.get("searchType"));
+		String word= map.get("keyword");
+		if(tour_type !=0) {
+			if(map.get("keyword").trim().equals("")) {
+				sql = "select*from tour where tour_type='"+tour_type+"'";
+			}else{
+				sql ="select*from (select*from tour where tour_type='"+tour_type+"')A where lower(tour_name) like lower('%"+word+"%')";
+			}
+		}else {
+			sql = "select*from tour where lower(tour_name) like lower('%"+word+"%')";
+		}
+		map.put("sql", sql);
+		List<TourDTO> find = tourMapper.findTour(map);
 			req.setAttribute("findList", find);
 		
 		return "myroute/myRoute";
