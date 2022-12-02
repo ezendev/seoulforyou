@@ -12,7 +12,7 @@
 	
 	<insert id="insertBoard" parameterType="QnaDTO">
 		insert into qna values(qna_seq.nextval,#{qna_writer},#{qna_subject},
-							#{qna_passwd},sysdate,0,#{qna_content},#{qna_re_step},#{qna_re_level})
+							#{qna_passwd},sysdate,0,#{qna_content},#{qna_re_step},#{qna_re_level},'','')
 	</insert>
 	
 	<update id="plusRe_step" parameterType="java.util.Map">
