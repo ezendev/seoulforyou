@@ -138,8 +138,9 @@
 		<div class="tab-content" id="nav-tabContent">
 		  <div class="tab-pane fade show active" id="search" role="tabpanel" aria-labelledby="search-tab" tabindex="0" style="overflow:scroll; height:600px">
 			<form name="f" action="tourFind.do" method="post">
-		        <select class="form-select" aria-label="Default select example" name="searchType">
-				  <option value="1" seleted>문화</option>
+		        <select class="form-select" aria-label="Default select example" name="searchType" id="searchType">
+				  <option value="0" selected>여행지 목록</option>
+				  <option value="1">문화</option>
 				  <option value="2">명소</option>
 				  <option value="3">자연</option>
 				  <option value="4">음식</option>
@@ -148,24 +149,27 @@
 		        <input type="text" name="keyword">
 		        <button class="btn btn-outline-success btn-sm" type="submit">GO!</button>
 			</form>
+			
 		
-		  <!-- 검색항목이 뜨는 부분 -->
+		    <!-- 검색항목이 뜨는 부분 -->
+		  <!-- 카드를 누르면 일정 list에 추가 -->
 		  <c:if test="${empty findList}">
 		  	<div>장소를 검색해주세요</div>
 		  </c:if>
 		  <c:if test="${not empty findList}">
-		  	<c:forEach var="fdto" items="${findList}">
-		  		<div class="card border-dark pt-2 mx-auto" style="width: 90%; height:70px;">
+		  	<c:forEach var="fdto" items="${findList}">	
+			 <button class="btn" type="button" onclick="location.href:listAdd.do?tourNo='${fdto.tour_no}'">
+		  		<div class="card border-dark mx-auto" style="width: 230px; height:80px;">
 				  <div class="row g-0">
 				    <div class="col-md-4">
-				      <img src="resources/img/1.jpg" class="img-fluid-center rounded-start" style="width:70px; height:50px">
+				      <img src="resources/img/1.jpg" class="img-fluid-center rounded-start pt-2" style="width:70px; height:70px">
 				    </div>
 				    <div class="col-md-7 mx-auto">
-				        <h6 class="card-text">${fdto.tour_name}</h6>
-			 		 <a href="listAdd.do?tour_no=${fdto.tour_no}">[ADD]</a>
+				        <p class="card-text pt-2">${fdto.tour_name}</p>
 				    </div>
 				  </div>
 				</div>
+			 </button>
 			</c:forEach> 
 			</c:if>
 	 </div>
@@ -173,8 +177,9 @@
  
 	  
 	  <!-- favorite panel -->
-		  <div class="tab-pane fade" id="favorite" role="tabpanel" aria-labelledby="favorite-tab" tabindex="0">
-				<div class="card border-dark pt-2 mx-auto" style="width: 90%; height:70px;">
+		  <div class="tab-pane fade" id="favorite" role="tabpanel" aria-labelledby="favorite-tab" tabindex="0" style="overflow:scroll; height:600px">
+			<button class="btn" type="button" onclick="javascript:mapMarker()">
+				<div class="card border-dark mx-auto" style="width: 90%; height:70px;">
 				  <div class="row g-0">
 				    <div class="col-md-4">
 				      <img src="resources/img/1.jpg" class="img-fluid-center rounded-start" style="width:70px; whight:70px">
@@ -183,8 +188,8 @@
 				        <p class="card-text">장소 정보(주소)...</p>
 				    </div>
 				  </div>
-		  		<a href="#" class="stretched-link"></a>
-				</div> 
+				</div>
+				</button> 
 		  	</div>
 		</div>
     </div>
