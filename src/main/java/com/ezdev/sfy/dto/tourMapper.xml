@@ -4,10 +4,6 @@
  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 
 <mapper namespace="com.ezdev.sfy.tourMapper">
-	<select id="getTourCount"  resultType="Integer">
-		select count(*) from tour
-	</select>
-	
 	<select id="listTour" resultType="tourDTO" parameterType="java.util.Map">
 		select * from (select rownum rn, A.* from(select * from tour order by tour_no)A)
 		where rn between #{start} and #{end}
@@ -21,6 +17,22 @@
       select * from (select rownum rn, A.* from(select * from tour where tour_type = #{type})A)
 		where rn between #{start} and #{end}
    </select>
+   
+   <select id="getTourCount"  resultType="Integer">
+		select count(*) from tour
+	</select>
+	
+	<select id="getTourCountByType"  resultType="Integer" parameterType="Integer">
+		select count(*) from tour where tour_type = #{type}
+	</select>
+	
+	<select id="getTourCountByRegion"  resultType="Integer" parameterType="java.util.Map">
+		select count(*) from tour where tour_addr like '%${region}%'
+	</select>
+	
+	<select id="getTourCountByRegionType"  resultType="Integer" parameterType="java.util.Map">
+		select count(*) from tour where tour_type = #{type} and tour_addr like '%${region}%'
+	</select>
    
    <select id="findTour" parameterType="java.util.Map" resultType="tourDTO">
 		${sql}
