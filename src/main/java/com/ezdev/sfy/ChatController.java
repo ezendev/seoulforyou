@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.ezdev.sfy.dto.MemberDTO;
-import com.ezdev.sfy.service.MemberMapper;
-
 
 @Controller
 public class ChatController {
@@ -20,7 +17,7 @@ public class ChatController {
 	//채팅 페이지
 	@RequestMapping("/chat.do")
 	public String chatting() {
-		return "chat/message_list";
+		return "chat/chat_list";
 	}
 	
 
