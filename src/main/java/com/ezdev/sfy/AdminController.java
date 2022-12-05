@@ -1,7 +1,18 @@
 package com.ezdev.sfy;
 
+import java.io.File;
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import jdk.nashorn.internal.runtime.logging.Logger;
+// @Controller -> Url, @Service ->처리, @Repository -> dao, @Component -> 구성, @RestController -> url과 ajax
 
 @Controller
 public class AdminController {
@@ -26,18 +37,6 @@ public class AdminController {
 	public String layoutSidenavLight() {
 		return "admin/layout-sidenav-light";
 	}
-	@RequestMapping("/401.do")
-	public String h401() {
-		return "admin/401";
-	}
-	@RequestMapping("/404.do")
-	public String h404() {
-		return "admin/404";
-	}
-	@RequestMapping("/500.do")
-	public String h500() {
-		return "admin/500";
-	}
 	@RequestMapping("/charts.do")
 	public String charts() {
 		return "admin/charts";
@@ -58,6 +57,40 @@ public class AdminController {
 	public String password() {
 		return "admin/password";
 	}
-	
+	@RequestMapping("/table_member.do")
+	public String tableMember() {
+		return "admin/table_member";
+	}
+	@RequestMapping("/table_qna.do")
+	public String tableQna() {
+		return "admin/table_qna";
+	}
+	@RequestMapping("/fileUpload_ok.do")
+		public void fileUpload(HttpServletRequest req) {
+		
+		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
+		MultipartFile mf = mr.getFile("filename");
+		String filename = mf.getOriginalFilename();
+		
+		if(filename==null||filename.trim().equals("")) {
+			System.out.println("파일전송이 안되었습니다");
+			return;
+		}
+		
+		HttpSession session = req.getSession();
+		String upPath = session.getServletContext().getRealPath("/monkey");
+		System.out.println("upPath =" + upPath);
+		System.out.println("filename =" + filename);
+		
+		File file = new File(upPath, filename);
+		try {
+			mf.transferTo(file);
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
 	
 }
