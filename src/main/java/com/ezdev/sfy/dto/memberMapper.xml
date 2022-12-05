@@ -29,9 +29,7 @@
 		delete from jsp_member where no = #{no}
 	</delete>
 	
-	<select id="getMember" parameterType="int" resultType="memberDTO">
-		select * from jsp_member where no = #{no}
-	</select>
+
 	
 	<update id="updateMember" parameterType="memberDTO">
 		update jsp_member set passwd=#{passwd}, email=#{email}, 
@@ -41,11 +39,19 @@
 	<select id="searchMember" parameterType="java.util.Map" resultType="String">
 		${sql}
 	</select>
-	
+		-->
 	<select id="getMember2" parameterType="String" resultType="memberDTO">
-		select * from jsp_member where id = #{id}
+		select * from member where member_id = #{member_id}
 	</select>
-	-->
+	
+	<select id="idCheck" parameterType="memberDTO" resultType="int">
+	SELECT COUNT(member_id) FROM T_MEMBER WHERE id= #{member_id}
+	</select>
+	<!--  
+		<select id="getMember" parameterType="int" resultType="memberDTO">
+		select * from member where member_no = #{member_no}
+	</select>
+-->
 </mapper> 	
 
 
