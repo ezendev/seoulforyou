@@ -64,9 +64,11 @@
       </ul>
 
       <div class="col-md-3 text-end">
-      	
-        <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal"
-        	data-bs-target="#chatModal">쪽지</button>
+
+        <button type="button" class="btn btn-outline-primary me-2" onclick="javascript:chat()">쪽지</button>
+        	      	
+<!--         <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal"
+        	data-bs-target="#chatModal">쪽지</button> -->
 
       	<button type="button" class="btn btn-primary" data-bs-toggle="modal"
         	data-bs-target="#loginModal">로그인</button>
