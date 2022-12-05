@@ -7,6 +7,7 @@ public class MemberDTO {
 	private String member_passwd;
 	private String member_email;
 	private String member_hp;
+	private String member_regdate;
 	public int getMember_no() {
 		return member_no;
 	}
@@ -43,4 +44,11 @@ public class MemberDTO {
 	public void setMember_hp(String member_hp) {
 		this.member_hp = member_hp;
 	}
+	public String getMember_regdate() {
+		return member_regdate;
+	}
+	public void setMember_regdate(String member_regdate) {
+		this.member_regdate = member_regdate;
+	}
+	
 }

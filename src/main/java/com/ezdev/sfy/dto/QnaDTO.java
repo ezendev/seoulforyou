@@ -1,83 +1,82 @@
 package com.ezdev.sfy.dto;
 
 public class QnaDTO {
-	private int num;
-	private String writer;
-	private String email;
-	private String subject;
-	private String passwd;
-	private String reg_date;
-	private int readcount;
-	private String content;
-	private String ip;
-	private int re_step;
-	private int re_level;
-	
-	public int getRe_step() {
-		return re_step;
+	private int qna_no;
+	private String qna_writer;
+	private String qna_subject;
+	private String qna_passwd;
+	private String qna_regdate;
+	private int qna_readcount;
+	private String qna_content;
+	private int qna_re_step;
+	private int qna_re_level;
+	private String qna_reply_content;
+	private String qna_reply_regdate;
+	public int getQna_no() {
+		return qna_no;
 	}
-	public void setRe_step(int re_step) {
-		this.re_step = re_step;
+	public void setQna_no(int qna_no) {
+		this.qna_no = qna_no;
 	}
-	public int getRe_level() {
-		return re_level;
+	public String getQna_writer() {
+		return qna_writer;
 	}
-	public void setRe_level(int re_level) {
-		this.re_level = re_level;
+	public void setQna_writer(String qna_writer) {
+		this.qna_writer = qna_writer;
+	}
+	public String getQna_subject() {
+		return qna_subject;
+	}
+	public void setQna_subject(String qna_subject) {
+		this.qna_subject = qna_subject;
+	}
+	public String getQna_passwd() {
+		return qna_passwd;
+	}
+	public void setQna_passwd(String qna_passwd) {
+		this.qna_passwd = qna_passwd;
+	}
+	public String getQna_regdate() {
+		return qna_regdate;
+	}
+	public void setQna_regdate(String qna_regdate) {
+		this.qna_regdate = qna_regdate;
+	}
+	public int getQna_readcount() {
+		return qna_readcount;
+	}
+	public void setQna_readcount(int qna_readcount) {
+		this.qna_readcount = qna_readcount;
+	}
+	public String getQna_content() {
+		return qna_content;
+	}
+	public void setQna_content(String qna_content) {
+		this.qna_content = qna_content;
+	}
+	public int getQna_re_step() {
+		return qna_re_step;
+	}
+	public void setQna_re_step(int qna_re_step) {
+		this.qna_re_step = qna_re_step;
+	}
+	public int getQna_re_level() {
+		return qna_re_level;
+	}
+	public void setQna_re_level(int qna_re_level) {
+		this.qna_re_level = qna_re_level;
+	}
+	public String getQna_reply_content() {
+		return qna_reply_content;
+	}
+	public void setQna_reply_content(String qna_reply_content) {
+		this.qna_reply_content = qna_reply_content;
+	}
+	public String getQna_reply_regdate() {
+		return qna_reply_regdate;
+	}
+	public void setQna_reply_regdate(String qna_reply_regdate) {
+		this.qna_reply_regdate = qna_reply_regdate;
 	}
 
-	public int getNum() {
-		return num;
-	}
-	public void setNum(int num) {
-		this.num = num;
-	}
-	public String getWriter() {
-		return writer;
-	}
-	public void setWriter(String writer) {
-		this.writer = writer;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getSubject() {
-		return subject;
-	}
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
-	public String getPasswd() {
-		return passwd;
-	}
-	public void setPasswd(String passwd) {
-		this.passwd = passwd;
-	}
-	public String getReg_date() {
-		return reg_date;
-	}
-	public void setReg_date(String reg_date) {
-		this.reg_date = reg_date;
-	}
-	public int getReadcount() {
-		return readcount;
-	}
-	public void setReadcount(int readcount) {
-		this.readcount = readcount;
-	}
-	public String getContent() {
-		return content;
-	}
-	public void setContent(String content) {
-		this.content = content;
-	}
-	public String getIp() {
-		return ip;
-	}
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
 }
