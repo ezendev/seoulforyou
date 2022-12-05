@@ -7,7 +7,7 @@
 <div class="container text-center clearfix">
 <form name="f" action="myRouteAfter.do" method="post">
   <div class="row row-cols-3 g-10 p-5">
-    <div class="col-lg-3 col-md-4">
+    <div class="col-lg-2 col-md-6">
     	<div id="trip_thema">
 		     <select class="form-select" aria-label="Default select example" name="trip_thema" id="trip_thema">
 			  <option selected>#여행테마</option>
@@ -20,19 +20,7 @@
 	    </div>
     </div>
     
-    <div class="col-lg-3 col-md-4">
-      <div id="trip_style">
-	      <select class="form-select" aria-label="Default select example" name="trip_style" id="trip_style">
-			  <option selected>#여행 스타일</option>
-			  <option value="alone">#나 홀로 여행</option>
-			  <option value="friend">#친구와 함께</option>
-			  <option value="family">#가족과 함께</option>
-			  <option value="lover">#연인과 함께</option>
-			</select>
-	     </div>
-    </div>
-    
-    <div class="col-lg-3 col-md-4">
+    <div class="col-lg-2 col-md-6">
       <div id="region">
       <select class="form-select" aria-label="Default select example" name="region" id="region">
 		  <option selected>세부지역(구)</option>
@@ -65,22 +53,10 @@
       </div>
     </div>
     
-    <div class="col-lg-3 p-2">
-		<input class="btn btn-outline-dark" type="reset" value="초기화">
-    	<input class="btn btn-outline-dark" type="submit" value="저장">
-    </div>
-    </div>
-	</form>
-  </div>
-
-<!-- main 2번 filter -->
-<div class="container text-center clearfix">
-  <div class="row row-cols-3 g-15">
-  <!-- calendar -->
-    <div class="col-lg-2 col-md-4">
-		<div class="container mx-auto ps-3">
-			<label class="p-2">여행일정</label>
-     			<p><input type="text" class="datepicker" value="시작일" id="startDate"></p>
+    <!-- calendar -->
+    <div class="col-lg-6 col-md-6 pt-2">
+     	<input type="text" class="datepicker" value="시작일" id="startDate"> ~
+     	<input type="text" class="datepicker" value="종료일" id="endDate">
      		<script>
      		$.datepicker.setDefaults({
      			  dateFormat: 'yy-mm-dd',
@@ -93,38 +69,29 @@
      			  dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
      			  showMonthAfterYear: true,
      			  yearSuffix: '년',
-     			  todayHighlight: true
      			});
      			$(function(){
      				$('.datepicker').datepicker();
-     			})
-     		</script>
      		
-     		<p><input type="text" class="datepicker" value="종료일" id="endDate"></p>
-     		<script>
-     		$.datepicker.setDefaults({
-     			  dateFormat: 'yy-mm-dd',
-     			  prevText: '이전 달',
-     			  nextText: '다음 달',
-     			  monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-     			  monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-     			  dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-     			  dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-     			  dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-     			  showMonthAfterYear: true,
-     			  yearSuffix: '년'
-     			});
-     			$(function(){
-     				$('.datepicker').datepicker();
      			})
      		</script>
     	</div>
-  	</div>
-    
-    <!-- spot -->
+
+    <div class="col-lg-2 col-md-6">
+		<input class="btn btn-outline-dark" type="reset" value="초기화">
+    	<input class="btn btn-outline-dark" type="submit" value="저장">
+    </div>
+    </div>
+	</form>
+  </div>
+
+<!-- main 2번 filter -->
+<div class="container text-center clearfix">
+  <div class="row row-cols-3 g-15"> 
+   
+   <!-- spot -->
     <!-- 의 카드들을 누르면... 일정리스트에 담기기 -->
- 
-  <div class="col-lg-3 col-md-4">
+  <div class="col-lg-3 col-md-6">
     <div class="container mx-auto ps-3">
 	  <label class="p-2">장소</label>
 	  <ul class="nav nav-tabs justify-content-center" id="spot_tab" role="tablist">
@@ -140,11 +107,11 @@
 			<form name="f" action="tourFind.do" method="post">
 		        <select class="form-select" aria-label="Default select example" name="searchType" id="searchType">
 				  <option value="0" selected>여행지 목록</option>
-				  <option value="1">문화</option>
-				  <option value="2">명소</option>
-				  <option value="3">자연</option>
-				  <option value="4">음식</option>
-				  <option value="5">숙소</option>
+				  <option value="1" <c:if test="${searchType=='1'}">selected</c:if>>문화</option>
+				  <option value="2" <c:if test="${searchType=='2'}">selected</c:if>>명소</option>
+				  <option value="3" <c:if test="${searchType=='3'}">selected</c:if>>자연</option>
+				  <option value="4" <c:if test="${searchType=='4'}">selected</c:if>>음식</option>
+				  <option value="5" <c:if test="${searchType=='5'}">selected</c:if>>숙소</option>
 				 </select>
 		        <input type="text" name="keyword">
 		        <button class="btn btn-outline-success btn-sm" type="submit">GO!</button>
@@ -158,7 +125,7 @@
 		  </c:if>
 		  <c:if test="${not empty findList}">
 		  	<c:forEach var="fdto" items="${findList}">	
-			 <button class="btn" type="button" onclick="location.href:listAdd.do?tourNo='${fdto.tour_no}'">
+			 <button class="btn" type="button" onclick="location.href='addList.do?tour_no=${fdto.tour_no}'; javascript:kakao();">
 		  		<div class="card border-dark mx-auto" style="width: 230px; height:80px;">
 				  <div class="row g-0">
 				    <div class="col-md-4">
@@ -171,59 +138,66 @@
 				</div>
 			 </button>
 			</c:forEach> 
-			</c:if>
+		</c:if>
 	 </div>
 	</div>	
  
 	  
 	  <!-- favorite panel -->
-		  <div class="tab-pane fade" id="favorite" role="tabpanel" aria-labelledby="favorite-tab" tabindex="0" style="overflow:scroll; height:600px">
-			<button class="btn" type="button" onclick="javascript:mapMarker()">
-				<div class="card border-dark mx-auto" style="width: 90%; height:70px;">
-				  <div class="row g-0">
-				    <div class="col-md-4">
+		<div class="tab-pane fade" id="favorite" role="tabpanel" aria-labelledby="favorite-tab" tabindex="0" style="overflow:scroll; height:600px">
+		<p></p>
+		<button class="btn" type="button">
+			<div class="card border-dark mx-auto" style="width: 90%; height:70px;">
+				<div class="row g-0">
+					<div class="col-md-4">
 				      <img src="resources/img/1.jpg" class="img-fluid-center rounded-start" style="width:70px; whight:70px">
 				    </div>
 				    <div class="col-md-7 mx-auto">
 				        <p class="card-text">장소 정보(주소)...</p>
 				    </div>
-				  </div>
-				</div>
-				</button> 
-		  	</div>
+				 </div>
+			</div>
+		</button> 
 		</div>
-    </div>
+	
+	</div>
+	</div>
 
    <!-- schedule -->
-   <div class="col-lg-3 col-md-4">
-   	<div class="container mx-auto ps-3">
-   		<label>일정</label>   
-   			
-				<div class="card border-dark pt-2" style="width: 100%; height:100px;">
-				  <div class="row g-0">
-				    <div class="col-md-4">
-				      <img src="resources/img/1.jpg" class="img-fluid-center rounded-start" style="width:80px; whight:80px">
+   <div class="col-lg-4 col-md-6">
+   	<div class="container mx-auto ps-3" style="overflow:scroll; height:700px">
+   		<label>일정 만들기</label> 
+   		<c:if test ="${empty myRoute}">
+   			<p>일정을 만들어보세요!</p>   		
+   		</c:if>
+   		<c:if test ="${not empty myRoute}">
+   		<input class="btn btn-outline-dark" type="submit" id="searchbtn" value="ROUTE!"> 
+   		<c:forEach var="rdto" items="${myRoute}">
+   		<p></p>
+   		<button class="btn" type="button" style="width:90%;">
+			<div class="card border-dark pt-2" style="width: 100%; height:120px;">
+				<div class="row g-0">
+					<div class="col-md-4">
+				      <img src="resources/img/1.jpg" class="img-fluid-center rounded-start pt-2" style="width:80px; height:80px">
 				    </div>
-				    <div class="col-md-7 mx-auto">
-				        <p class="card-text" id="spot_info">노원역</p>
-				        <p class="card-text"><small class="text-muted" id="addr">노원구 상계로 69-1</small></p>
-				    	<a href="#" class="stretched-link"></a>
-				    </div>
-				  </div>
-				</div> 
-
-				
-		<input type="text" id="addre">	
-    	<input class="btn btn-outline-dark" type="submit" id="searchbtn" value="ROUTE!">
-	  		</div>
+				    <div class="col-md-7">
+				        <p class="card-text" id="spot_info">${rdto.getTour_name()}</p>
+				        <small class="text-muted" id="addr">${rdto.getTour_addr()}</small>
+				   </div>
+				 </div>
+			</div> 
+   		</button>
+   		</c:forEach>
+   		</c:if>
+	  </div>
   	 </div>
 
     
   <!-- map -->
-   <div class="col-lg-4 col-md-12">
+   <div class="col-lg-5 col-md-12">
      <div class="container mx-auto"> 
     	<div class="tab-content">
-	    <div id="map" style="width:100%;height:350px;"></div>
+	    <div id="map" style="width:100%;height:600px;"></div>
 			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7dfa24ca49ecafb1d1c5352143d4a441&libraries=services,clusterer,drawing"></script>				        
 			<!-- api는 head, body 상관없지만 코드 실행보다는 먼저 선언 -->
 			<%@ include file="kakaoMap.jsp" %>

@@ -37,5 +37,7 @@
    <select id="findTour" parameterType="java.util.Map" resultType="tourDTO">
 		${sql}
 	</select>
-	
+	<select id="getTour" parameterType="Integer" resultType="tourDTO">
+		select * from tour where tour_no = #{tour_no}
+	</select>
 </mapper>
