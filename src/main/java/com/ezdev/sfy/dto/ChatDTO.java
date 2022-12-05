@@ -3,18 +3,18 @@ package com.ezdev.sfy.dto;
 public class ChatDTO {
 	private int chat_no;
 	private int chat_room;
-	private String chat_send_nick;
-	private String chat_recv_nick;
+	private int chat_send_no;
+	private int chat_recv_no;
 	private String chat_send_time;
 	private String chat_read_time;
 	private String chat_content;
 	private String chat_read_chk;
 	
-	// 현재 사용자의 메세지 상대 nick을 담는다.
-	private String other_nick;
+	// 현재 사용자의 메세지 상대 no를 담는다.
+	private int other_no;
 	
-	// 현재 사용자 nick
-	private String nick;
+	// 현재 사용자 no
+	private int no;
 	
 	// 안읽은 메세지 갯수
 	private int unread;
@@ -33,22 +33,6 @@ public class ChatDTO {
 
 	public void setChat_room(int chat_room) {
 		this.chat_room = chat_room;
-	}
-
-	public String getChat_send_nick() {
-		return chat_send_nick;
-	}
-
-	public void setChat_send_nick(String chat_send_nick) {
-		this.chat_send_nick = chat_send_nick;
-	}
-
-	public String getChat_recv_nick() {
-		return chat_recv_nick;
-	}
-
-	public void setChat_recv_nick(String chat_recv_nick) {
-		this.chat_recv_nick = chat_recv_nick;
 	}
 
 	public String getChat_send_time() {
@@ -82,21 +66,29 @@ public class ChatDTO {
 	public void setChat_read_chk(String chat_read_chk) {
 		this.chat_read_chk = chat_read_chk;
 	}
-
-	public String getOther_nick() {
-		return other_nick;
+	
+	public int getNo() {
+		return no;
 	}
 
-	public void setOther_nick(String other_nick) {
-		this.other_nick = other_nick;
+	public void setNo(int no) {
+		this.no = no;
 	}
 
-	public String getNick() {
-		return nick;
+	public int getOther_no() {
+		return other_no;
 	}
 
-	public void setNick(String nick) {
-		this.nick = nick;
+	public void setOther_no(int other_no) {
+		this.other_no = other_no;
+	}
+
+	public int getNick() {
+		return no;
+	}
+
+	public void setNick(int no) {
+		this.no = no;
 	}
 
 	public int getUnread() {
@@ -105,6 +97,22 @@ public class ChatDTO {
 
 	public void setUnread(int unread) {
 		this.unread = unread;
+	}
+
+	public int getChat_send_no() {
+		return chat_send_no;
+	}
+
+	public void setChat_send_no(int chat_send_no) {
+		this.chat_send_no = chat_send_no;
+	}
+
+	public int getChat_recv_no() {
+		return chat_recv_no;
+	}
+
+	public void setChat_recv_no(int chat_recv_no) {
+		this.chat_recv_no = chat_recv_no;
 	}
 	
 	

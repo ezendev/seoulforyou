@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../top.jsp"%>
 <!-- 채팅페이지-->
 <head>
@@ -109,18 +110,12 @@ a {
 			<div class="col-sm-4" style="height:700">
 				<div class="text-bg-light p-3" style="height:100%;">
 					<table class="table table-hover" >
-						<tr>
-							<th>강희찬</th>
-							<td>배고프다</td>
+					<c:forEach var="tmp" items="${list}">
+						<tr class="chat_list_box${tmp.chat_room}">
+							<th>${tmp.other_no}</th>
+							<td>${tmp.chat_content}</td>
 						</tr>
-						<tr>
-							<th>반재준</th>
-							<td>나 진짜 너무 배고픈데 그래도 아침에 운동해서 기분은 좋음</td>
-						</tr>	
-						<tr>
-							<th>고경현</th>
-							<td>ㅁㅁㅁ</td>
-						</tr>			
+					</c:forEach>
 					</table>
 		   		</div>
 			</div>
@@ -146,9 +141,9 @@ a {
 					            <div class="textbox">전철역 다녀와야 함</div>
 					        </div>
 					        <div class="position-absolute bottom-0 start-50 translate-middle-x">
-								<form class="d-flex" >
-									<input class="form-control me-2" type="textfiled"  aria-label="Search" style="width:700">
-									<button type="button" class="btn btn-outline-success btn px-4" id="search_btn" style="width:100">전송</button>
+								<form name="chatForm" method="post" class="d-flex" action="chatSubmit.do">
+									<input id="chatContent" name="chatContent" class="form-control me-2" type="textfiled"  aria-label="Search" style="width:700">
+									<button onclick="javascript:sendChat()" type="button" class="btn btn-outline-success btn px-4" id="search_btn" style="width:100">전송</button>
 								</form>
 							</div>
 				        </div>
@@ -158,4 +153,10 @@ a {
 		</div>
 	</div>
 </div>
+<script>
+	function sendChat(){
+		console.log($('#chatContent').val());
+		document.chatForm.submit();
+	}
+</script>
 <%@ include file="../bottom.jsp"%>
