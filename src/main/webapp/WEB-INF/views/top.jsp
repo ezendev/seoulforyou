@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -31,6 +31,19 @@
 		function login(){
 			location.href="login.do";
 		}
+		function login_ok(){
+			if(member_id.value==""){
+				alert("아이디를 입력해 주세요")
+				member_id.focus()
+				return
+			}
+			if(member_passwd.value==""){
+				alert("비밀번호를 입력해 주세요")
+				member_passwd.focus()
+				return
+			}
+			document.f.submit()
+		}
 		function join(){
 			location.href="join.do";
 		}
@@ -39,6 +52,9 @@
 		}
 		function qnaWrite(){
 			location.href="qnaWrite.do";
+		}
+		function logout(){
+			location.href="logout.do";
 		}
 	</script>
 	
@@ -64,14 +80,15 @@
       </ul>
 
       <div class="col-md-3 text-end">
-
-        <button type="button" class="btn btn-outline-primary me-2" onclick="javascript:chat()">쪽지</button>
-        	      	
-<!--         <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal"
-        	data-bs-target="#chatModal">쪽지</button> -->
-
+      	
+        <button onclick="javascript:chat()" type="button" class="btn btn-outline-primary me-2">쪽지</button>
+		<c:if test="${empty mdto}">
       	<button type="button" class="btn btn-primary" data-bs-toggle="modal"
         	data-bs-target="#loginModal">로그인</button>
+        </c:if>
+        <c:if test="${not empty mdto}">
+              	<button type="button" class="btn btn-primary" onclick="javascript:logout()" >로그아웃</button>
+        </c:if>
       </div>
     </header>
   </div>
@@ -79,7 +96,8 @@
 
 
   <!-- 로그인 모달-->
-	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalTitle" aria-hidden="true">
+<form name="f" action="login_ok.do" method="post">
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -87,20 +105,23 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-		   <form class="form-signin" align="center">
-		    <h1 class="h3 mb-3 font-weight-normal">로그인</h1>
-
-		    <input type="email" id="id" class="form-control" placeholder="아이디" required="" autofocus="">
-		    <input type="password" id="passwd" class="form-control" placeholder="비밀번호" required="">
-		    <div class="checkbox mb-3 p-2">
-		      <label>
-		        <input type="checkbox" value="remember-me"> 아이디 기억하기
-		      </label>
-			    </div>
-    	   	 </form>
-	        </div>
+			<h1 class="h3 mb-3 font-weight-normal">로그인</h1>
+			<c:if test="${empty cookie.saveId.value}"> 
+			   <input type="email" name="member_id" id="member_id" class="form-control" placeholder="아이디">
+			</c:if>
+			<c:if test="${not empty cookie.saveId.value}">
+			 <input type="email" name="member_id" id="member_id" class="form-control" placeholder="아이디">
+			 </c:if>
+			 
+				<input type="password" name="member_passwd" id="member_passwd" class="form-control" placeholder="비밀번호" >
+			<div class="checkbox mb-3 p-2">
+   				<label>
+        			<input type="checkbox" value="remember-me"> 아이디 기억하기
+   				</label>
+	    	</div>
+		</div>
 	        <div class="d-grid gap-2 d-md-block mx-auto pb-2">
-	         <button id="login-btn" class="btn btn-primary btn-block" type="button" onclick="javascript:login()">로그인</button>
+	         <button id="login-btn" class="btn btn-primary btn-block" type="button" onclick="javascript:login_ok()">로그인</button>
     	     <button id="join-btn" class="btn btn-primary btn-block" type="button" onclick="javascript:join()">회원가입</button>
 	        </div>
         <div class="modal-footer">
@@ -109,56 +130,4 @@
       </div>
     </div>
   </div>
-  
-  <!-- 쪽지 모달-->
-	<div class="modal fade" id="chatModal" tabindex="-1" role="dialog" aria-labelledby="chatModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="loginModalTitle">쪽지함</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-        	<div class="row row-cols-2">
-        		<!-- 친구목록 -->
-	       		<div class="inbox_friend col-4" style="background:lightgray">
-     				<table class="table table-hover">
-						<tr>
-							<td>무지</td>
-						</tr>
-						<tr>
-							<td>라이언</td>
-						</tr>	
-						<tr>
-							<td>어피치</td>
-						</tr>			
-					</table>
-				</div>
-				
-				<!-- 메세지 목록 -->
-    			<div class="chats col-8">
-    				<!-- 메시지 내용목록 -->
-    				<div class="chat_history" name="chatList">
-    					<!-- txt -->
-    				</div>
-    			</div>
-    			<div class="send_mchat">
-    			</div>
-    			<!-- 메시지 입력란이 올 자리 -->
-       		</div>
-	    </div>
-        <div class="modal-footer">
-    		<p class="mx-auto text-muted">© 2022 EzDev</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  
-  <script>
-  //메세지 전송 함수
-  const SendChat = function(room, other_nick){
-	  
-	  
-  }
-  </script>
+</form>
