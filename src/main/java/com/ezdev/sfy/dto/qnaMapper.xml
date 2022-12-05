@@ -6,14 +6,13 @@
 <mapper namespace="com.ezen.sfy.dto.qnaMapper">
 	<select id="listBoard" parameterType="java.util.Map" resultType="QnaDTO">
 		select * from (select rownum rn, A.* from 
-			(select * from board order by re_step asc)A) 
+			(select * from qna order by qna_re_step asc)A) 
 				where rn between #{start} and #{end}
 	</select>
 	
 	<insert id="insertBoard" parameterType="QnaDTO">
-		insert into board values(board_seq.nextval, #{writer},#{email},#{subject},
-							#{passwd},sysdate,0,#{content},#{ip},#{re_step},#{re_level})
-
+		insert into qna values(qna_seq.nextval,#{qna_writer},#{qna_subject},
+							#{qna_passwd},sysdate,0,#{qna_content},#{qna_re_step},#{qna_re_level},'','')
 	</insert>
 	
 	<update id="plusRe_step" parameterType="java.util.Map">
@@ -21,14 +20,14 @@
 	</update>
 	
 	<update id="plusReadcount" parameterType="int">
-		update board set readcount = readcount + 1 where num = #{num}
+		update qna set qna_readcount = qna_readcount + 1 where qna_no = #{qna_no}
 	</update>
 	
 	<select id="getBoard" parameterType="int" resultType="QnaDTO">
-		select * from board where num = #{num}
+		select * from qna where qna_no = #{qna_no}
 	</select>
 	
 	<select id="getCount"  resultType="Integer">
-		select count(*) from board
+		select count(*) from qna
 	</select>
 </mapper> 

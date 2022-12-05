@@ -1,25 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!-- writeForm.jsp -->
+<html>
 <head>
+	<title>±Û¾²±â</title>
 	<link rel="stylesheet" href="resources/css/bootstrap.min.css">
 	<script src="resources/js/bootstrap.bundle.min.js"></script>
-	<script>
-	function qnaWrite(){
-		location.href="qnaWrite.do";
-	} 
-	if (!f.subject.value){
-		alert("ì œëª©ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”!!")
-		f.subject.focus()
-		return false
-	}
-	if (f.content.value==""){
-		alert("ë‚´ìš©ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”!!")
-		f.content.focus()
-		return false
-	}
-	}
-	</script>
 	<link rel="stylesheet" href="resources/js/bootstrap.min.js">
 	<style>
     body {
@@ -46,58 +32,44 @@
       -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
       box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
     }
-	</style>		
-	<title>íšŒì›ê°€ì…</title>
+	</style>
 </head>
-
 <body>
-	<form name="f" action="write_board.do" method="post" onsubmit="return checkBoard()">
-		<input type="hidden" name="num" value="${param.num}"/>
-		<input type="hidden" name="re_step" value="${param.re_step}"/>
-		<input type="hidden" name="re_level" value="${param.re_level}"/>
+<div align="center">
+	<form name="f" action="qnaWrite.do" method="post" >
+		<input type="hidden" name="qna_no" value="${param.qna_no}"/>
+		<input type="hidden" name="qna_re_step" value="${param.qna_re_step}"/>
+		<input type="hidden" name="qna_re_level" value="${param.qna_re_level}"/>
 		<div class="container">
 			<div class="input-form-backgroud row">
 				<div class="input-form col-md-12 mx-auto">
-					<h4 class="mb-3">ë¬¸ì˜í•˜ê¸°</h4>
+					<h4 class="mb-3">¹®ÀÇÇÏ±â</h4>
 					<div class="mb-3" align="left">
-						<label for="exampleFormControlInput1" class="label">ì´ë¦„</label> 
-						<input
-							type="textfield" class="form-control"
-							id="exampleFormControlInput1" placeholder="">
+						<label for="exampleFormControlInput1" class="label">ÀÌ¸§</label> 
+						<input name="qna_writer" type="text" class="form-control">	
 					</div>
 					
 					<div class="mb-3" align="left">
-						<label for="exampleFormControlInput1" class="label">ì œëª©</label> 
-						<input
-							type="textfield" class="form-control"
-							id="exampleFormControlInput1" placeholder="title">
+						<label for="exampleFormControlInput1" class="label">Á¦¸ñ</label> 
+						<input name="qna_subject" type="text" class="form-control">		
+					</div>
+																					
+					<div class="mb-3" align="left">
+						<label for="exampleFormControlTextarea1" class="form-label">¹®ÀÇ³»¿ë</label>
+						<textarea name="qna_content" class="form-control" rows="3" cols="50"></textarea>	
 					</div>
 					
 					<div class="mb-3" align="left">
-						<label for="exampleFormControlInput1" class="label">email</label> 
+						<label for="password">ºñ¹Ğ¹øÈ£</label> 
 						<input
-							type="textfield" class="form-control"
-							id="exampleFormControlInput1" placeholder="">
-					</div>
-																	
-					<div class="mb-3" align="left">
-						<label for="exampleFormControlTextarea1" class="form-label">ë¬¸ì˜ë‚´ìš©</label>
-						<textarea class="form-control" id="exampleFormControlTextarea1"
-							rows="3"></textarea>
-					</div>
-					
-					<div class="mb-3" align="left">
-						<label for="password">ë¹„ë°€ë²ˆí˜¸</label> 
-						<input
-							input type="password" id="passwd" class="form-control" placeholder="Password">
+							input type="password" name="qna_passwd" class="form-control">
 					</div>						
 					<hr class="mb-4">
 					<div class="mb-4"></div>
 					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-						<input class="btn btn-outline-secondary" type="reset" value="ì·¨ì†Œ">
-						<input class="btn btn-primary" type="submit" value="ì œì¶œ">
+						<input class="btn btn-outline-secondary" type="reset" value="´Ù½ÃÀÛ¼º">
+						<input class="btn btn-primary" type="submit" value="Áú¹®Á¦Ãâ">
 					</div>
-
 				</div>
 			</div>
 			<footer class="my-3 text-center text-small">
@@ -105,5 +77,17 @@
 			</footer>
 		</div>
 	</form>
+</div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+

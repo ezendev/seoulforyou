@@ -1,7 +1,6 @@
 package com.ezdev.sfy;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,15 +21,12 @@ public class QnaController {
 	@Autowired
 	QnaMapper boardMapper;
 	
-	@RequestMapping("/qnalist.do")
-	public String index() {
-		return "pages/qnalist";
-	}
+	
 	@RequestMapping(value = {"/qnaWrite.do"})
 	public String qnaWrite() {
 		return "pages/qnaWrite";
 	}
-	@RequestMapping("/list_board.do")
+	@RequestMapping("/qnalist.do")
 	public String listBoard(HttpServletRequest req, @RequestParam(required = false) String pageNum) {
 		if (pageNum == null) {
 			pageNum = "1";
@@ -44,9 +40,9 @@ public class QnaController {
 		
 		//List<BoardDTO> list = boardDAO.listBoard(startRow, endRow);
 		List<QnaDTO> list = boardMapper.listBoard(startRow, endRow);
-		int num = countRow - (startRow - 1);
+		int qna_no = countRow - (startRow - 1);
 		req.setAttribute("listBoard", list);
-		req.setAttribute("num", num);
+		req.setAttribute("qna_no", qna_no);
 		int pageCount = countRow / pageSize + (countRow%pageSize==0 ? 0 : 1);
 		int pageBlock = 3;
 		int startPage = (currentPage - 1) / pageBlock * pageBlock + 1;
@@ -59,20 +55,19 @@ public class QnaController {
 		return "pages/qnalist";
 	}
 	
-	@RequestMapping(value="/write_board.do", method=RequestMethod.GET)
+	@RequestMapping(value="/qnaWrite.do", method=RequestMethod.GET)
 	public String writeForm_board() {
 		return "pages/qnaWrite";
 	}
 	
-	@RequestMapping(value="/write_board.do", method=RequestMethod.POST)
+	@RequestMapping(value="/qnaWrite.do", method=RequestMethod.POST)
 	public String writePro_board(HttpServletRequest req, 
 			@ModelAttribute QnaDTO dto, BindingResult result) {
 		if (result.hasErrors()) {
-			dto.setNum(0);
-			dto.setRe_step(0);
-			dto.setRe_level(0);
+			dto.setQna_no(0);
+			dto.setQna_re_step(0);
+			dto.setQna_re_level(0);
 		}
-		dto.setIp(req.getRemoteAddr());;
 		int res = boardMapper.insertBoard(dto);
 		if (res>0) {
 			req.setAttribute("msg", "게시글 등록 성공!! 게시글 목록 페이지로 이동합니다.");
@@ -81,11 +76,12 @@ public class QnaController {
 			req.setAttribute("msg", "게시글 등록 실패!! 게시글 등록 페이지로 이동합니다.");
 			req.setAttribute("url", "qnaWrite.do");
 		}
-		return "../message";
+
+		return "message";
 	}
 	@RequestMapping(value="/content_board.do")
-	public String content_board(HttpServletRequest req, @RequestParam int num){
-		QnaDTO dto = boardMapper.getBoard(num, "content");
+	public String content_board(HttpServletRequest req, @RequestParam int qna_no){
+		QnaDTO dto = boardMapper.getBoard(qna_no, "qna_content");
 		req.setAttribute("getBoard", dto);
 		return "pages/content";
 	}

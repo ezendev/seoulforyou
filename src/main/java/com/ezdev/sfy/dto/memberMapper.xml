@@ -2,19 +2,50 @@
 <!DOCTYPE mapper
  	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<!-- 	private int member_no;
+	private String member_name;
+	private String member_id;
+	private String member_passwd;
+	private String member_email;
+	private String member_hp;
+	private String member_regdate; -->
 
-<mapper namespace="com.ezdev.sfy.dto.memberMapper">
 
-	
+<mapper namespace="com.ezdev.sfy.dto.memberMapper">	
+<!-- 회원가입 -->
 	<insert id="insertMember" parameterType="memberDTO">
-		insert into member values(member_seq.nextval, #{member_name}, #{member_id}, #{member_passwd}, 
-					#{member_email}, #{member_hp})
+		insert into member values(member_seq.nextval, #{member_name}, #{member_id}, #{member_passwd}, #{member_email}, #{member_hp}, sysdate)
 	</insert>
 	
 	<select id="listMember" resultType="memberDTO">
 		select * from member
 	</select>
+<!--  	
+	<select id="findMember" parameterType="java.util.Map" resultType="memberDTO">
+		select * from jsp_member where ${search} = #{searchString}
+	</select>
 	
+	<delete id="deleteMember" parameterType="int">
+		delete from jsp_member where no = #{no}
+	</delete>
+	
+	<select id="getMember" parameterType="int" resultType="memberDTO">
+		select * from jsp_member where no = #{no}
+	</select>
+	
+	<update id="updateMember" parameterType="memberDTO">
+		update jsp_member set passwd=#{passwd}, email=#{email}, 
+					hp1=#{hp1}, hp2=#{hp2}, hp3=#{hp3} where no = #{no}
+	</update>
+	
+	<select id="searchMember" parameterType="java.util.Map" resultType="String">
+		${sql}
+	</select>
+	
+	<select id="getMember2" parameterType="String" resultType="memberDTO">
+		select * from jsp_member where id = #{id}
+	</select>
+	-->
 </mapper> 	
 
 

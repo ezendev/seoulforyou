@@ -10,23 +10,17 @@ import org.springframework.stereotype.Service;
 
 import com.ezdev.sfy.dto.MemberDTO;
 
+
 @Service
 public class MemberMapper {
 	
 	@Autowired 
 	private SqlSession sqlSession;
-	
-	public boolean checkMember(Map<String, String> map) {
-	
-			MemberDTO dto = sqlSession.selectOne("checkMember", map);
-			if (dto == null)	return false;
-			else 					return true;
-	}
-	
+		
 	public int insertMember(MemberDTO dto) {
 		return  sqlSession.insert("insertMember", dto);
 	}
-	
+	/*
 	public List<MemberDTO> listMember(){
 		return sqlSession.selectList("listMember");
 	}
@@ -54,5 +48,6 @@ public class MemberMapper {
 	public MemberDTO getMember(String id){
 		return sqlSession.selectOne("getMember2", id);
 	}
+	*/
 }
 

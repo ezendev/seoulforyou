@@ -31,28 +31,12 @@
       box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
     }
   </style>
-  		<script type="text/javascript">
-			function check(){
-				if (f.id.value==""){
-					alert("아이디를 입력해 주세요!!")
-					f.id.focus()
-					return
-				}
-				if (f.passwd.value==""){
-					alert("비밀번호를 입력해 주세요!!")
-					f.passwd.focus()
-					return
-				}
-				document.f.submit()
-			}
-		</script>
-	
 	<title>회원가입</title>
 	
 </head>
 
 <body>
-<form name="f" method="post" action="sign_up.do">
+<form name="f" method="post" action="join.do">
   <div class="container">
     <div class="input-form-backgroud row">
       <div class="input-form col-md-12 mx-auto">
@@ -61,8 +45,7 @@
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="name">이름</label>
-              <input type="text" class="form-control" id="name" placeholder=""  value="${member_name}" required>
-              <input type="hidden" name="name" value="sessionScope.name}"/>
+              <input type="text" class="form-control" name="member_name" id="name" placeholder=""  value="" required="">
               <div class="invalid-feedback">
                 	이름을 입력해주세요.
               </div>
@@ -70,7 +53,7 @@
             <div class="row">
             <div class="col-md-6 mb-3">
               <label for="name">아이디</label>
-              <input type="text" class="form-control" id="id" placeholder="" >
+              <input type="text" class="form-control" name="member_id" id="id" placeholder=""  required="">
               <div class="invalid-feedback">
                 	아이디를 입력해주세요.
               </div>
@@ -79,8 +62,7 @@
           </div>
             <div class="col-lg-8">
           	<label for="password">비밀번호</label>
-  			<input type="password" id="passwd" class="form-control" placeholder="Password" >
-  			
+  			<input type="password" name="member_passwd" id="passwd" class="form-control" placeholder="Password" required="">
 	            <div class="invalid-feedback">
 	              	비밀번호를 입력해 주세요.
 	            </div>
@@ -88,7 +70,7 @@
 
 	          <div class="col-lg-8">
 	            <label for="email">이메일</label>
-	            <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
+	            <input type="text" class="form-control" name="member_email" id="email" placeholder="you@example.com" required="">
 	            <div class="invalid-feedback">
 	              	이메일을 입력해주세요.
 	            </div>
@@ -97,7 +79,7 @@
 				<div class="form-group" id="divPhoneNumber">
                     <label for="inputPhoneNumber" class="col-lg-2 control-label">휴대폰 번호</label>
                     <div class="col-lg-8">
-                        <input type="tel" class="form-control onlyNumber" id="phoneNumber" data-rule-required="true" placeholder="-를 제외하고 숫자만 입력하세요." maxlength="11">
+                        <input type="text" class="form-control onlyNumber" name="member_hp" id="phoneNumber" required="" placeholder="-를 제외하고 숫자만 입력하세요." maxlength="11">
                     </div>
                 </div><br>
                 
