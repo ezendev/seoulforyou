@@ -32,11 +32,11 @@ public class MemberMapper {
 	public int deleteMember(int no) {
 		return sqlSession.delete("deleteMember", no);
 	}
-	
-	public MemberDTO getMember(int no){
-	return  sqlSession.selectOne("getMember", no);
-	}
-	
+	*/
+	//public MemberDTO getMember(int member_no){
+	//return  sqlSession.selectOne("getMember", member_no);
+	//}
+	/*
 	public int updateMember(MemberDTO dto) {
 	return sqlSession.update("updateMember", dto);
 	}
@@ -44,10 +44,13 @@ public class MemberMapper {
 	public String searchMember(Map<String, String> map) {
 		return  sqlSession.selectOne("searchMember", map);
 	}
-	
-	public MemberDTO getMember(String id){
-		return sqlSession.selectOne("getMember2", id);
-	}
 	*/
+	public MemberDTO getMember(String member_id){
+		return sqlSession.selectOne("getMember2", member_id);
+	}
+	public int idCheck(String member_id) {
+		return sqlSession.selectOne("idCheck", member_id);
+	}
+	
 }
 
