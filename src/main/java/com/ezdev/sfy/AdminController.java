@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import jdk.nashorn.internal.runtime.logging.Logger;
 // @Controller -> Url, @Service ->처리, @Repository -> dao, @Component -> 구성, @RestController -> url과 ajax
-
+//12.05재수정입니다
 @Controller
 public class AdminController {
 	//top.jsp 로고 -> 관리자페이지
