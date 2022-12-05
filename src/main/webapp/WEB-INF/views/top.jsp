@@ -65,7 +65,8 @@
 
       <div class="col-md-3 text-end">
       	
-        <button onclick="javascript:chat()" type="button" class="btn btn-outline-primary me-2">쪽지</button>
+        <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal"
+        	data-bs-target="#chatModal">쪽지</button>
 
       	<button type="button" class="btn btn-primary" data-bs-toggle="modal"
         	data-bs-target="#loginModal">로그인</button>
@@ -106,3 +107,56 @@
       </div>
     </div>
   </div>
+  
+  <!-- 쪽지 모달-->
+	<div class="modal fade" id="chatModal" tabindex="-1" role="dialog" aria-labelledby="chatModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginModalTitle">쪽지함</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        	<div class="row row-cols-2">
+        		<!-- 친구목록 -->
+	       		<div class="inbox_friend col-4" style="background:lightgray">
+     				<table class="table table-hover">
+						<tr>
+							<td>무지</td>
+						</tr>
+						<tr>
+							<td>라이언</td>
+						</tr>	
+						<tr>
+							<td>어피치</td>
+						</tr>			
+					</table>
+				</div>
+				
+				<!-- 메세지 목록 -->
+    			<div class="chats col-8">
+    				<!-- 메시지 내용목록 -->
+    				<div class="chat_history" name="chatList">
+    					<!-- txt -->
+    				</div>
+    			</div>
+    			<div class="send_mchat">
+    			</div>
+    			<!-- 메시지 입력란이 올 자리 -->
+       		</div>
+	    </div>
+        <div class="modal-footer">
+    		<p class="mx-auto text-muted">© 2022 EzDev</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <script>
+  //메세지 전송 함수
+  const SendChat = function(room, other_nick){
+	  
+	  
+  }
+  </script>
