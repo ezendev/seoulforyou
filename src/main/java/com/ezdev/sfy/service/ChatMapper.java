@@ -1,5 +1,6 @@
 package com.ezdev.sfy.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +44,24 @@ public class ChatMapper {
 		Map<String, String> map = new HashMap<>();
 		map.put("content", chatContent);
 		return sqlSession.insert("sendChat", map);
+	}
+
+	public ArrayList<ChatDTO> listMsg(ChatDTO dto) {
+		System.out.println("no: " + dto.getNo());
+		System.out.println("room: " + dto.getChat_room());
+		System.out.println("other_no: " + dto.getOther_no());
+		
+		//메세지 내역을 가져온다
+		ArrayList<ChatDTO> list = (ArrayList)sqlSession.selectList("listMsg", dto);
+		
+		for(ChatDTO to : list) {
+			System.out.println("보낸사람: "+ to.getChat_send_no());
+		}
+		
+		//해당 방의 메세지들 중 받는 사람이 현재사용자의 nick인 메세지를 모두 읽음 처리한다
+		//sqlSession.update("message_read_chk", dto);
+		
+		return list;
 	}
 
 }

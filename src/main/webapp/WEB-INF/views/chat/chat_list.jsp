@@ -104,14 +104,14 @@ a {
 	  		</div>
 	  		<!-- 대화창(이름) -->
 	  		<div class="col-sm-8">
-				<h5 align="left">반재준</h5>
+				<h5 align="left">라이언</h5>
 			</div>
 			<!-- 대화목록 -->
 			<div class="col-sm-4" style="height:700">
 				<div class="text-bg-light p-3" style="height:100%;">
 					<table class="table table-hover" >
-					<c:forEach var="tmp" items="${list}">
-						<tr class="chat_list_box${tmp.chat_room}">
+					<c:forEach var="tmp" items="${chatList}">
+						<tr class="chat_list_box${tmp.chat_room}" onclick="javascript:viewChat(${tmp.chat_room}, ${tmp.other_no})">
 							<th>${tmp.other_no}</th>
 							<td>${tmp.chat_content}</td>
 						</tr>
@@ -123,30 +123,9 @@ a {
 			<div class="col-sm-8" style="height:700">
 				<div class="position-relative">
 					<div class="text" style="height:100%; background-color:#F0F8FF">
-						<div class="wrap">
-					        <div class="chat ch1">
-					            <div class="icon"><i class="fa-solid fa-user"></i></div>
-					            <div class="textbox">오늘 점심 뭐먹</div>
-					        </div>
-					        <div class="chat ch2">
-					            <div class="icon"><i class="fa-solid fa-user"></i></div>
-					            <div class="textbox">못먹을듯</div>
-					        </div>
-					        <div class="chat ch1">
-					            <div class="icon"><i class="fa-solid fa-user"></i></div>
-					            <div class="textbox">왜?</div>
-					        </div>
-					        <div class="chat ch2">
-					            <div class="icon"><i class="fa-solid fa-user"></i></div>
-					            <div class="textbox">전철역 다녀와야 함</div>
-					        </div>
-					        <div class="position-absolute bottom-0 start-50 translate-middle-x">
-								<form name="chatForm" method="post" class="d-flex" action="chatSubmit.do">
-									<input id="chatContent" name="chatContent" class="form-control me-2" type="textfiled"  aria-label="Search" style="width:700">
-									<button onclick="javascript:sendChat()" type="button" class="btn btn-outline-success btn px-4" id="search_btn" style="width:100">전송</button>
-								</form>
-							</div>
-				        </div>
+						<div class="wrap chat_history">
+							<!-- 대화내역 올 자리 -->
+						</div>
 		    		</div>
 				</div>
 			</div>
@@ -157,6 +136,32 @@ a {
 	function sendChat(){
 		console.log($('#chatContent').val());
 		document.chatForm.submit();
+	}
+	
+	//대화목록에서 누르면 대화 상세정보
+	const viewChat = function(room, other_no){
+		
+		$.ajax({
+			url: "chatView.do",
+			method: "GET",
+			data:{
+				room: room,
+				other_no: other_no
+			},
+			success:function(data){
+				//메세지 내용을 html에 넣는다
+				$(".chat_history").html(data);
+				
+				//이 함수로 메세지 내용을 가져올때마다 스크롤을 맨아래로 가게 한다.
+				$(".chat_history").scrollTop($(".chat_history")[0].scrollHeight);
+			},
+			error: function(){
+				alert("서버 에러");
+			},
+		})
+		
+		//$('.unread'+room).empty(); //읽지 않은 메세지들을 읽음으로 바꾼다.
+		
 	}
 </script>
 <%@ include file="../bottom.jsp"%>
