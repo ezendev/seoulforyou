@@ -101,13 +101,13 @@ myModal.addEventListener('shown.bs.modal', () => {
 			<table class="table table-sm table-hover">
 				<thead>
 					<tr>
-						<th width="30">
+						<th width="20%">
 							아이디
 						</th>
-						<th width="30">
+						<th width="20%">
 							이름
 						</th>
-						<th width="30">
+						<th width="20%">
 						</th>
 					</tr>
 				</thead>
@@ -122,7 +122,9 @@ myModal.addEventListener('shown.bs.modal', () => {
 			<td width="30">${dto.friend_id}</td>
 			<td width="30">${dto.friend_name}</td>
 			<td width="30"><a href="mypage_friend_delete.do?friend_num=${dto.friend_num}">[삭제]</a></td>
+			</tr>
 	</c:forEach>
+	
 				</tbody>
 			</table>
 			<!-- 등록 팝업창 추가 -->
@@ -172,6 +174,3 @@ myModal.addEventListener('shown.bs.modal', () => {
 </body>
 </html>
 <%@ include file="../bottom.jsp"%>
-
-</body>
-</html>

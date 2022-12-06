@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ezdev.sfy.dto.*;
+import com.ezdev.sfy.mypage.Criteria;
 
 @Service
 public class MypageMapper {

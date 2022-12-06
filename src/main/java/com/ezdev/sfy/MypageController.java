@@ -6,11 +6,18 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.apache.ibatis.session.SqlSession;
 
+import com.ezdev.sfy.dao.mypage_routeService;
 import com.ezdev.sfy.dto.MypageDTO;
+import com.ezdev.sfy.mypage.Criteria;
+import com.ezdev.sfy.mypage.PageMaker;
+import com.ezdev.sfy.mypage.SearchCriteria;
 import com.ezdev.sfy.service.MypageMapper;
 
 @Controller
@@ -19,18 +26,16 @@ public class MypageController {
 	
 	@Autowired
 	MypageMapper mypageMapper;
+	@Autowired
+	mypage_routeService mypage_routeservice;
+	
 	
 	//bottom.jsp 페이스북 아이콘 -> 마이페이지
 	@RequestMapping("/mypage.do")
 	public String mypage() {
 		return "mypage/mypage";
 	}
-
-	@RequestMapping(value = {"/mypage_route.do"})
-	public String mypageRoute() {
-		return "mypage/mypage_route";
-	}
-	
+	 
 	@RequestMapping(value = {"/mypage_review.do"})
 	public String mypageReview() {
 		return "mypage/mypage_review";
@@ -75,4 +80,20 @@ public class MypageController {
 		}
 		return "message";
 	}
+	@GetMapping("/mypage_route.do")
+	 public String mypageRoute(Model model, @ModelAttribute("cri") SearchCriteria cri) throws Exception {
+		 model.addAttribute("mypage_route.do", mypage_routeservice.listRoutetest(cri));
+		 
+		 PageMaker pageMaker = new PageMaker();
+		 pageMaker.setCri(cri);
+		 pageMaker.setTotalCount(mypage_routeservice.routetestCount(cri));
+		 model.addAttribute("pagemaker", pageMaker);
+		 
+		 return "mypage/mypage_route";
+	 }
+	 @GetMapping("/mypage_routetest_insert.do")
+	 public String routetestinsert(MypageDTO dto) throws Exception {
+		 mypage_routeservice.insertRoutetest(dto);
+		 return "mypage/mypage_route";
+	 }
 }
