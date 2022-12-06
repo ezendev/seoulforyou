@@ -40,23 +40,13 @@ public class ChatMapper {
 		return list;
 	}
 
-	public int sendChat(String chatContent) {
-		Map<String, String> map = new HashMap<>();
-		map.put("content", chatContent);
-		return sqlSession.insert("sendChat", map);
+	public int sendChat(ChatDTO dto) {
+		return sqlSession.insert("sendChat", dto);
 	}
 
-	public ArrayList<ChatDTO> listMsg(ChatDTO dto) {
-		System.out.println("no: " + dto.getNo());
-		System.out.println("room: " + dto.getChat_room());
-		System.out.println("other_no: " + dto.getOther_no());
-		
+	public ArrayList<ChatDTO> listMsg(ChatDTO dto) {		
 		//메세지 내역을 가져온다
 		ArrayList<ChatDTO> list = (ArrayList)sqlSession.selectList("listMsg", dto);
-		
-		for(ChatDTO to : list) {
-			System.out.println("보낸사람: "+ to.getChat_send_no());
-		}
 		
 		//해당 방의 메세지들 중 받는 사람이 현재사용자의 nick인 메세지를 모두 읽음 처리한다
 		//sqlSession.update("message_read_chk", dto);

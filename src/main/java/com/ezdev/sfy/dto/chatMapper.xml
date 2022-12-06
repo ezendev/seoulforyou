@@ -4,24 +4,25 @@
  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 
 <mapper namespace="com.ezdev.sfy.chatMapper">
-	<!-- 메시지 보내기 -->
-	<insert id="sendChat" parameterType="java.util.Map">
+	<!-- 쪽지 보내기 -->
+	<insert id="sendChat" parameterType="chatDTO">
 		insert into chat(chat_no, chat_room, chat_send_no, chat_recv_no, chat_send_time,
 							chat_read_time, chat_content, chat_read_chk)
-		values(chat_seq.nextval,)
+		values(chat_seq.nextval, #{chat_room}, #{chat_send_no}, #{chat_recv_no}, sysdate, sysdate, #{chat_content}, 0)
 	</insert>
 	
-	<!-- 대화목록 -->
+	<!-- 채팅방 목록 -->
 	<select id="listChat" parameterType="chatDTO" resultType="chatDTO">
 		select * from chat
 		where chat_no in (select max(chat_no) from chat group by chat_room) and (chat_send_no = #{no} or chat_recv_no=#{no})
 		order by chat_no desc
 	</select>
 	
-	<!-- 대화상세보기 -->
+	<!-- 채팅내역 상세보기 -->
 	<select id="listMsg" parameterType="chatDTO" resultType="chatDTO">
 		select * from chat
 		where (chat_recv_no = #{other_no} and chat_send_no = #{no}) or (chat_send_no = #{other_no} and chat_recv_no = #{no})
+		order by chat_no
 	</select>
 	
 </mapper>

@@ -104,14 +104,14 @@ a {
 	  		</div>
 	  		<!-- 대화창(이름) -->
 	  		<div class="col-sm-8">
-				<h5 align="left">라이언</h5>
+					<h5 align="left">라이언</h5>
 			</div>
 			<!-- 대화목록 -->
 			<div class="col-sm-4" style="height:700">
 				<div class="text-bg-light p-3" style="height:100%;">
 					<table class="table table-hover" >
 					<c:forEach var="tmp" items="${chatList}">
-						<tr class="chat_list_box${tmp.chat_room}" onclick="javascript:viewChat(${tmp.chat_room}, ${tmp.other_no})">
+						<tr class="chat_list_box${tmp.chat_room}" onclick="javascript:viewChat(${tmp.other_no}, ${tmp.chat_room})">
 							<th>${tmp.other_no}</th>
 							<td>${tmp.chat_content}</td>
 						</tr>
@@ -125,6 +125,7 @@ a {
 					<div class="text" style="height:100%; background-color:#F0F8FF">
 						<div class="wrap chat_history">
 							<!-- 대화내역 올 자리 -->
+							<!-- 입력창 올 자리 -->
 						</div>
 		    		</div>
 				</div>
@@ -133,20 +134,46 @@ a {
 	</div>
 </div>
 <script>
-	function sendChat(){
-		console.log($('#chatContent').val());
-		document.chatForm.submit();
+
+	// 쪽지 보내기
+	function sendChat(partnerNo, roomNo){
+		let content = $('#chatContent').val();
+		content = content.trim();
+		
+		if(content == ""){
+			alert("메세지를 입력하세요!");
+		}else{
+			$.ajax({
+				url: "chatSubmit.do",
+				method: "GET",
+				data: {
+					other_no: partnerNo,
+					content: content,
+					chat_room: roomNo,
+				},
+				success: function(data){
+					//메세지 입력칸 비우기
+					$('#chatContent').val("");
+					
+					//메세지 내용 리로드
+					viewChat(partnerNo, roomNo);
+				},
+				error: function(){
+					alert('서버 에러');
+				}
+			})
+		}
 	}
 	
-	//대화목록에서 누르면 대화 상세정보
-	const viewChat = function(room, other_no){
+	// 대화목록에서 누르면 대화 상세정보
+	const viewChat = function(other_no, chat_room){
 		
 		$.ajax({
 			url: "chatView.do",
 			method: "GET",
 			data:{
-				room: room,
-				other_no: other_no
+				other_no: other_no,
+				chat_room: chat_room,
 			},
 			success:function(data){
 				//메세지 내용을 html에 넣는다
@@ -158,7 +185,7 @@ a {
 			error: function(){
 				alert("서버 에러");
 			},
-		})
+		});
 		
 		//$('.unread'+room).empty(); //읽지 않은 메세지들을 읽음으로 바꾼다.
 		
