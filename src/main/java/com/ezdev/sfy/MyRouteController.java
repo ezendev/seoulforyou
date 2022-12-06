@@ -55,7 +55,7 @@ public class MyRouteController {
 	}
 	
 	@RequestMapping(value="/addList.do", method=RequestMethod.GET)
-	public String listAdd(HttpServletRequest req, @RequestParam (required=false)int tour_no) {
+	public String addList(HttpServletRequest req, @RequestParam (required=false)int tour_no) {
 		HttpSession session =req.getSession();
 		TourDTO rdto =tourMapper.getTour(tour_no);
 		List<TourDTO> routeList = (List)session.getAttribute("myRoute");
@@ -68,11 +68,22 @@ public class MyRouteController {
 		 return "redirect: myRouteList.do";
 	}
 	
-	@RequestMapping(value="/myRouteList.do")
+	@RequestMapping(value="/myRouteList.do", method=RequestMethod.GET)
 	public String myRouteList() {
 		return "myroute/myRoute";
 	}
+	
+	@RequestMapping(value="/delList.do", method=RequestMethod.GET)
+	public String delList(HttpServletRequest req, @RequestParam (required=false)int tour_no) {
+		HttpSession session = req.getSession();
+		List<TourDTO> routeList = (List)session.getAttribute("myRoute");
+		for(TourDTO dto : routeList) {
+			if(tour_no == dto.getTour_no()) {
+				routeList.remove(dto);
+				break;
+			}
+		}
+		return "redirect: myRouteList.do";
+	}
 
 }
-
-	
