@@ -652,8 +652,10 @@
       					</div>
       					<!-- 모달header 끝입니다 -->
       					
+      			<form id="form2" name="f" action="fileUpload_ok.do" method="post" enctype="multipart/form-data">
+      							   </form>		
       				     <!-- 모달 등록내용입니다 -->
-      			<form name="f" action="admin_input_ok.do" method="post" enctype="multipart/form-data" > 
+      			<form name="f" action="admin_input_ok.do" method="post" > 
     				<div class="modal-body" style="height:320px">
   					<div class="border-1 rounded-lg">
               		<div class="row mb-3">
@@ -713,6 +715,7 @@
                     </div>
               		</div>
 
+					
 					<table class="form-floating mb-3 mb-md-0" >
 					<tbody>
 					<tr>
@@ -720,11 +723,13 @@
 					<tr>
 					<td>
 					<input type="file" name="admin_profileImg" id="admin_profileImg" accept=".jpg, .png">
+					<input type="submit" value="등록" form="form2">
 					<input type="reset" value="취소">
                      		</td>
                      		</tr>	
                      		</tbody>
-                     		</table>			
+                     		</table>
+                     		
                             	</div>
 	       							</div>
 	       							
@@ -734,6 +739,8 @@
         						   <input type="submit" class="btn btn-primary" value="등록">
       							   </div>
       							   </form>
+      							   
+      							   
       						 <!-- 모달footer끝입니다 -->
       							   </div>
       					   	<!-- 모달content끝입니다 -->
