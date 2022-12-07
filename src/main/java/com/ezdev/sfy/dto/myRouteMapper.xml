@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.ezdev.sfy.dto.tourMapper">
+	<select id="myRouteList" parameterType="java.util.Map" resultType="myRouteDTO">
+		select*from myRoute
+	</select>
+	<insert id="insertRoute" parameterType="myRouteDTO">
+		insert into route values(route_seq.nextval,#{mem_no, jdbcType=NUMERIC},#{route_subject, jdbcType=VARCHAR},#{route_content, jdbcType=VARCHAR},#{route_img, jdbcType=VARCHAR},#{route_itinerary, jdbcType=VARCHAR},#{route_tour, jdbcType=VARCHAR},0,#{route_region, jdbcType=VARCHAR}, #{route_hashtag, jdbcType=VARCHAR},sysdate)
+	</insert>
+
+</mapper>
