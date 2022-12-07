@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <!-- 인덱스입니다 -->
+
 <html lang="en">
 	<!-- 부트 스트랩 적용을 위한 환경구성 -->
     <head>
@@ -10,7 +13,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Dashboard - SB Admin</title>
+        <title>관리자 페이지</title>
 		<script src="reousrces/css/styles.css"></script>
 		<script src="resources/demo/chart-pie-demo.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
@@ -22,7 +25,7 @@
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="index.do">SeoulforUs 관리자</a>
-            <!-- Sidebar Toggle-->
+            <!-- fas fa-bars를 통해 토글버튼 기능 생성-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
@@ -34,6 +37,7 @@
             <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li class="nav-item dropdown">
+                <!-- fa-user로 기본 이미지 구현 -->
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="#!">프로필</a></li>
@@ -649,77 +653,98 @@
       					<!-- 모달header 끝입니다 -->
       					
       				     <!-- 모달 등록내용입니다 -->
-    					<div class="modal-body" style="height:300px">
-     				
-                	
-  			  <div class="border-1 rounded-lg">
-           
+      			<form name="f" action="admin_input_ok.do" method="post" enctype="multipart/form-data" > 
+    				<div class="modal-body" style="height:320px">
+  					<div class="border-1 rounded-lg">
               		<div class="row mb-3">
               		<div class="col-md-6">
                    <div class="form-floating mb-3 mb-md-0">
-                   <input class="form-control" id="inputId" type="text" placeholder="아이디를 입력하세요" />
-                   <label for="inputId">아이디</label>
+                   <input class="form-control" id="admin_id" name="admin_id" type="text" placeholder="아이디를 입력하세요" />
+                   <label for="admin_id">아이디</label>
                    </div>
                    </div>
               		
                    <div class="col-md-6">
                    <div class="form-floating">
-                   <input class="form-control" id="inputName" type="text" placeholder="이름을 입력하세요"/>
-                   <label for="inputName">성함</label>
+                   <input class="form-control" id="admin_name" name="admin_name" type="text" placeholder="이름을 입력하세요"/>
+                   <label for="admin_name">성함</label>
                    </div>
               		</div>
               		</div>
              
               	    <div class="form-floating mb-3">
-                   <input class="form-control" id="inputEmail" type="email" placeholder="email@seoulforus.com" />
-                   <label for="inputEmail">이메일 주소</label>
+              	    <input class="form-control" id="admin_email" name="admin_email" type="email" placeholder="email@seoulforus.com" />
+                   <label for="admin_email">이메일 주소</label>
               		</div>
               		
                	<div class="row mb-3">
                    <div class="col-md-6">
                    <div class="form-floating mb-3 mb-md-0">
-                   <input class="form-control" id="inputPassword" type="password" placeholder="비밀번호를 입력하세요" />
-                   <label for="inputPassword">비밀번호</label>
+                  <input class="form-control" id="admin_passwd" name="admin_passwd" type="password" placeholder="비밀번호를 입력하세요" />
+                   <label for="admin_passwd">비밀번호</label>
                    </div>
                    </div>
                    
                    <div class="col-md-6">
                    <div class="form-floating mb-3 mb-md-0">
-                   <input class="form-control" id="inputPasswordConfirm" type="password" placeholder="비밀번호 확인" />
-                   <label for="inputPasswordConfirm">비밀번호 확인</label>
-                   </div>
-                   </div>
+                    <input class="form-control" id="admin_passwd_confirm" name="admin_passwd_confirm" type="password" placeholder="비밀번호 확인" 
+                    onkeyup="passConfirm()"/>
+                    <div id="confirmMsg"></div>
+                    <label for="admin_passwd_confirm">비밀번호 확인</label>
+                    <script type="text/javascript">
+                            function passConfirm(){
+                           var admin_passwd = document.getElementById('admin_passwd');
+                           var admin_passwd_confirm = document.getElementById('admin_passwd_confirm');
+                           var confrimMsg = document.getElementById('confirmMsg');
+                           var correctColor = "blue";
+                           var wrongColor ="red";
+                            	
+                           if(admin_passwd.value == admin_passwd_confirm.value){
+                        	   confirmMsg.style.color = correctColor;
+                        	   confirmMsg.innerHTML ="비밀번호 일치";
+                           }else{
+                        	  	confirmMsg.style.color = wrongColor;
+                   				confirmMsg.innerHTML ="비밀번호 불일치";
+                           }
+                            }
+                            </script>
+                   
+                    </div>
+                    </div>
               		</div>
 
-							<form method="post" action="fileUpload_ok.do" enctype="multipart/form-data">
-							<table class="form-floating mb-3 mb-md-0" >
-							<tbody>
-							<tr>
-							<th>프로필 이미지 첨부 </th>
-							<tr>
-							<td>
-							<input type="file" name="image" accept=".jpg, .png">
-                       		<input type="submit" value="업로드" >
-                       		<input type="reset" value="수정">
-                       		</td>
-                       		</tr>	
-                       		</tbody>
-                       		</table>			
-                       		</form>
+					<table class="form-floating mb-3 mb-md-0" >
+					<tbody>
+					<tr>
+					<th>프로필 이미지 첨부 </th>
+					<tr>
+					<td>
+					<input type="file" name="admin_profileImg" id="admin_profileImg" accept=".jpg, .png">
+					<input type="reset" value="취소">
+                     		</td>
+                     		</tr>	
+                     		</tbody>
+                     		</table>			
                             	</div>
 	       							</div>
+	       							
       							<!-- 모달 footer입니다 -->
                                    <div class="modal-footer">
         						   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-        						   <button type="button" class="btn btn-primary">등록</button>
+        						   <input type="submit" class="btn btn-primary" value="등록">
       							   </div>
+      							   </form>
       						 <!-- 모달footer끝입니다 -->
       							   </div>
       					   	<!-- 모달content끝입니다 -->
     							   </div>
+    							  
     						<!-- 모달 dialog끝입니다 -->
  								   </div>
                             <!-- 관리자등록 모달 내용 끝입니다 -->
+                            
+                            
+                            
                   </body>
      
 </html>
