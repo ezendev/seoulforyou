@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ezdev.sfy.dto.*;
-import com.ezdev.sfy.mypage.Criteria;
 
 @Service
 public class MypageMapper {
@@ -18,10 +17,16 @@ public class MypageMapper {
 	public List<MypageDTO> listFriend(){
 		return sqlSession.selectList("listFriend");
 	}
-	public int insertFriend(MypageDTO dto) {
-		return sqlSession.insert("insertFriend", dto);
+	public int insertFriend(MemberDTO memberdto) {
+		return sqlSession.insert("insertFriend", memberdto);
 	}
 	public int deleteFriend(int friend_num) {
 		return sqlSession.delete("deleteFriend", friend_num);
+	}
+	public List<MemberDTO> listMypageMember(){
+		return sqlSession.selectList("listMypageMember");
+	}
+	public List<MemberDTO> findMypageMember(Map<String, String> map){
+		return sqlSession.selectList("findMypageMember", map);
 	}
 }

@@ -1,23 +1,19 @@
 package com.ezdev.sfy;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.apache.ibatis.session.SqlSession;
 
-import com.ezdev.sfy.dao.mypage_routeService;
+import com.ezdev.sfy.dto.MemberDTO;
 import com.ezdev.sfy.dto.MypageDTO;
-import com.ezdev.sfy.mypage.Criteria;
-import com.ezdev.sfy.mypage.PageMaker;
-import com.ezdev.sfy.mypage.SearchCriteria;
+import com.ezdev.sfy.service.MemberMapper;
 import com.ezdev.sfy.service.MypageMapper;
 
 @Controller
@@ -26,8 +22,10 @@ public class MypageController {
 	
 	@Autowired
 	MypageMapper mypageMapper;
-	@Autowired
-	mypage_routeService mypage_routeservice;
+	/*
+	 * @Autowired MemberMapper memberMapper;
+	 */
+	
 	
 	
 	//bottom.jsp 페이스북 아이콘 -> 마이페이지
@@ -39,6 +37,10 @@ public class MypageController {
 	@RequestMapping(value = {"/mypage_review.do"})
 	public String mypageReview() {
 		return "mypage/mypage_review";
+	}
+	@RequestMapping(value = {"/mypage_route.do"})
+	public String mypageRoute() {
+		return "mypage/mypage_route";
 	}
 	
 	@RequestMapping(value = {"/mypage_favorite.do"})
@@ -57,14 +59,14 @@ public class MypageController {
 		return "mypage/mypage_friend";
 	}
 	@RequestMapping(value="/mypage_friend_insert.do")
-	public String mypage_friend_insert(HttpServletRequest req, @ModelAttribute MypageDTO dto) {
-		int res = mypageMapper.insertFriend(dto);
+	public String mypage_friend_insert(HttpServletRequest req, @ModelAttribute MemberDTO memberdto) {
+		int res = mypageMapper.insertFriend(memberdto);
 		if(res>0) {
 			req.setAttribute("msg", "친구 추가 성공");
 			req.setAttribute("url", "mypage_friend.do");
 		}else {
 			req.setAttribute("msg", "친구 추가 실패");
-			req.setAttribute("url", "mypage_friend_do");
+			req.setAttribute("url", "mypage_friend.do");
 		}
 		return "message";
 	}
@@ -76,24 +78,21 @@ public class MypageController {
 			req.setAttribute("url", "mypage_friend.do");
 		}else {
 			req.setAttribute("msg", "친구 삭제 실패");
-			req.setAttribute("url", "mypage_friend_do");
+			req.setAttribute("url", "mypage_friend.do");
 		}
 		return "message";
 	}
-	@GetMapping("/mypage_route.do")
-	 public String mypageRoute(Model model, @ModelAttribute("cri") SearchCriteria cri) throws Exception {
-		 model.addAttribute("mypage_route.do", mypage_routeservice.listRoutetest(cri));
-		 
-		 PageMaker pageMaker = new PageMaker();
-		 pageMaker.setCri(cri);
-		 pageMaker.setTotalCount(mypage_routeservice.routetestCount(cri));
-		 model.addAttribute("pagemaker", pageMaker);
-		 
-		 return "mypage/mypage_route";
-	 }
-	 @GetMapping("/mypage_routetest_insert.do")
-	 public String routetestinsert(MypageDTO dto) throws Exception {
-		 mypage_routeservice.insertRoutetest(dto);
-		 return "mypage/mypage_route";
-	 }
+	@RequestMapping(value="/mypage_friend_listmember.do")
+	public String mypage_friend_listmember(HttpServletRequest req,  @RequestParam Map<String, String> map) {
+		List<MemberDTO> mlist = null;
+		if(!map.containsKey("mode")) {
+			mlist = mypageMapper.listMypageMember();
+		}else {
+			if(map.containsKey("search")) {
+				mlist = mypageMapper.findMypageMember(map);
+			}
+		}
+		req.setAttribute("listMypageMember", mlist);
+		return "mypage/mypage_friend_listmember";
+	}
 }

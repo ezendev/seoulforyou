@@ -21,6 +21,10 @@ $('.modal').on('hidden.bs.modal', function (e) {
     console.log('modal close');
   $(this).find('form')[0].reset()
 });
+<%-- 회원 검색창--%>
+function checkMember(){
+	window.open("mypage_friend_listmember.do", "", "width=800, height=800")
+}
 </script>
 <!-- <style type="text/css">
 const myModal = document.getElementById('myModal')
@@ -117,58 +121,25 @@ myModal.addEventListener('shown.bs.modal', () => {
 			<td colspan="2">등록된 친구가 없습니다.</td>
 		</tr>
 	</c:if>
-	<c:forEach var="dto" items="${listFriend}">
+	<c:forEach var="mypagedto" items="${listFriend}">
 		<tr>
-			<td width="30">${dto.friend_id}</td>
-			<td width="30">${dto.friend_name}</td>
-			<td width="30"><a href="mypage_friend_delete.do?friend_num=${dto.friend_num}">[삭제]</a></td>
+			<td width="30">${mypagedto.friend_id}</td>
+			<td width="30">${mypagedto.friend_name}</td>
+			<td width="30">
+			<a href="mypage_friend_delete.do?friend_num=${mypagedto.friend_num}">[삭제]</a>
+			</td>
 			</tr>
 	</c:forEach>
 	
 				</tbody>
 			</table>
-			<!-- 등록 팝업창 추가 -->
-						<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#friend_insert">
+						<!-- 회원 검색창 버튼  -->
+<a role="button" class="btn btn-primary" href="javascript:checkMember()">
  친구 추가
-</button>
-			<!-- Modal -->
-<div class="modal fade" id="friend_insert" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">친구 추가</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-         <form role="form" action="mypage_friend_insert.do" method="post">
-         <!-- 후에 value값,수정버튼에 자바스크립트값 추가 -->
-				<div class="form-group">
-					<label for="friend_id">
-						아이디
-					</label>
-					<input type="text" class="form-control" id="friend_id" name="friend_id" />
-				</div>
-				<div class="form-group">
-					<label for="friend_name">
-						이름
-					</label>
-					<input type="text" class="form-control" id="friend_name" name="friend_name" />
-				</div>
-			
-      </div>
-      <div class="modal-footer">
-        <input type="submit" class="btn btn-primary" value="입력">
-      <input type="reset" class="btn btn-secondary" data-bs-dismiss="modal" value="취소">
-      </div>
-      </form>
+</a>
     </div>
   </div>
 </div>
-</div>
-</div>
-</div>
-
 <script src="resources/js/jquery-3.6.1.min.js"></script>
    <script src="resources/js/bootstrap.bundle.js"></script>
 </body>

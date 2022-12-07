@@ -13,7 +13,10 @@ insert into friend values(friend_seq.nextval, #{friend_id}, #{friend_name})
 <delete id="deleteFriend" parameterType="int">
 delete from friend where friend_num = #{friend_num}
 </delete>
-<select id="listRoutetest" resultType="mypageDTO" parameterType="com.ezdev.sfy.mypage.Criteria">
+<select id="listMypageMember" resultType="memberDTO">
+ select * from member
+</select>
+<!-- <select id="listRoutetest" resultType="mypageDTO" parameterType="com.ezdev.sfy.mypage.Criteria">
  select * 
  from (select row_number() over(order by routetest_no desc) as rnum, lr.* from routetest lr)
  routetest
@@ -24,6 +27,6 @@ delete from friend where friend_num = #{friend_num}
 </select>
 <insert id="insertRoutetest" parameterType="mypageDTO">
 insert into routetest values(routetest_seq.nextval, #{routetest_subject}, sysdate)
-</insert>
+</insert>-->
 
 </mapper>
