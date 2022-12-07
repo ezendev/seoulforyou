@@ -8,7 +8,7 @@
 	<insert id="sendChat" parameterType="chatDTO">
 		insert into chat(chat_no, chat_room, chat_send_no, chat_recv_no, chat_send_time,
 							chat_read_time, chat_content, chat_read_chk)
-		values(chat_seq.nextval, #{chat_room}, #{chat_send_no}, #{chat_recv_no}, sysdate, sysdate, #{chat_content}, 0)
+		values(chat_seq.nextval, #{chat_room}, #{chat_send_no}, #{chat_recv_no}, to_char(sysdate,'mm.dd hh24:mi'), to_char(sysdate,'yyyy.mm.dd hh24:mi'), #{chat_content}, 0)
 	</insert>
 	
 	<!-- 채팅방 목록 -->
@@ -24,5 +24,24 @@
 		where (chat_recv_no = #{other_no} and chat_send_no = #{no}) or (chat_send_no = #{other_no} and chat_recv_no = #{no})
 		order by chat_no
 	</select>
+	
+	<!-- 안읽은 메세지 갯수 가져오기 -->
+	<select id="countUnread" parameterType="chatDTO" resultType="Int">
+		select count(*) from chat
+		where chat_recv_no = #{no} and chat_read_chk=0 and chat_room = #{chat_room}
+	</select>
+	
+	<!-- 메세지 읽음 처리 -->
+	<update id="chkRead" parameterType="chatDTO">
+		update chat set chat_read_chk=1
+		<choose>
+			<when test="chat_room != 0">
+				where chat_room = #{chat_room} and chat_read_chk=0 and chat_recv_no = #{no}
+			</when>
+			<otherwise>
+				where chat_send_no = #{chat_recv_no} and chat_read_chk = 0 and chat_recv_no = #{no}
+			</otherwise>
+		</choose>
+	</update>
 	
 </mapper>

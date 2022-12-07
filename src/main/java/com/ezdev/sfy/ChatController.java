@@ -75,11 +75,7 @@ public class ChatController {
 		dto.setChat_room(chat_room);
 		dto.setChat_recv_no(other_no);
 		dto.setChat_send_no(no);
-		
-		System.out.println(chatContent);
-		System.out.println(other_no);
-		System.out.println(no);
-		
+
 		int res = chatMapper.sendChat(dto);
 		if(res > 0) {
 			return "chat/chat_list";

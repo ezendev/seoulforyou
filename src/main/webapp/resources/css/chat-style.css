@@ -1,6 +1,32 @@
 @charset "UTF-8";
+
+.chat_history{
+	max-height: 30vw;
+	overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.unread{
+	background: paleturquoise;
+}
+
+.unread th{
+	font-weight: bold;
+}
+
+.unread td{
+	color: black;
+	font-weight: bold;
+}
+
+.badge{
+	width: 30px;
+	border-radius: 100%;
+	background: #198754;
+}
+
 table {border:1; width:100%; table-layout:fixed;}
-table tr {height:50;} 
+table tr {height:50; cursor:pointer;} 
 table tr th {text-align:center; width:30%;  height:auto;}
 table tr td {text-overflow: ellipsis; overflow:hidden; white-space: nowrap; text-align:left; color:gray;}
 
@@ -20,6 +46,7 @@ a {
     align-items: flex-start;
     padding: 20px;
 }
+
 
 .wrap .chat .icon {
     position: relative;
@@ -67,6 +94,13 @@ a {
     color: #ddd;
 }
 
+.wrap .ch1 span {
+	font-size: 9px;
+	margin-top: 30px;
+    margin-left: 5px;
+    max-width: calc(100% - 70px);
+}
+
 .wrap .ch2 {
     flex-direction: row-reverse;
 }
@@ -80,4 +114,11 @@ a {
     right: -15px;
     content: "▶";
     color: #F9EB54;
+}
+
+.wrap .ch2 span {
+	font-size: 9px;
+	margin-top: 30px;
+    margin-right: 5px;
+    max-width: calc(100% - 70px);
 }

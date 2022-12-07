@@ -7,30 +7,48 @@
 </head>
 <div class="container themed-container text-center">
 	<div class="container text-center">
+		<!-- 행1:: 제목 -->
 		<div class="row row-cols-2">
-	  		<!-- 대화목록(제목) -->
-			<div class="col-sm-4">
+			<div class="col-5 col-lg-4">
 	  			<h5>대화목록</h5>
 	  		</div>
-	  		<!-- 대화창(이름) -->
-	  		<div class="col-sm-8">
-					<h5 id="otherNo" align="left"></h5>
+	  		<div class="col-7 col-lg-8">
+	  			<!-- 대화상대 이름 -->
+				<h5 id="otherNo" align="left"></h5>
 			</div>
-			<!-- 대화목록 -->
-			<div class="col-sm-4" style="height:700">
+		</div>
+		
+		<!-- 행2:: 본문 -->
+		<div class="row row-cols-2">
+			<!-- 대화방 목록 -->
+			<div class="col-5 col-lg-4" style="height:700">
 				<div class="text-bg-light p-3" style="height:100%;">
 					<table class="table table-hover" >
 					<c:forEach var="tmp" items="${chatList}">
-						<tr class="chat_list_box${tmp.chat_room}" onclick="javascript:viewChat(${tmp.other_no}, ${tmp.chat_room})">
-							<th>${tmp.other_no}</th>
-							<td>${tmp.chat_content}</td>
-						</tr>
+						<c:choose>
+							<c:when test="${tmp.unread > 0}">
+							<!-- 만약 현재사용자가 안읽은 메세지가 있다면 -->
+								<tr class="chat_list_box${tmp.chat_room} unread" onclick="javascript:viewChat(${tmp.other_no}, ${tmp.chat_room})">
+									<th>${tmp.other_no}</th>
+									<td>
+										${tmp.chat_content}
+										<span class="badge badge${tmp.chat_room}">${tmp.unread}</span>
+									</td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<tr class="chat_list_box${tmp.chat_room}" onclick="javascript:viewChat(${tmp.other_no}, ${tmp.chat_room})">
+									<th>${tmp.other_no}</th>
+									<td>${tmp.chat_content}</td>
+								</tr>
+							</c:otherwise>
+						</c:choose>
 					</c:forEach>
 					</table>
 		   		</div>
 			</div>
-			<!-- 대화상자 -->
-			<div class="col-sm-8" style="height:700">
+			<!-- 대화내역 상세보기 -->
+			<div class="col-7 col-lg-8" style="height:700">
 				<div class="position-relative">
 					<div class="text" style="height:100%; background-color:#F0F8FF">
 						<div class="wrap chat_history">
@@ -44,7 +62,6 @@
 	</div>
 </div>
 <script>
-
 	// 쪽지 보내기
 	function sendChat(){
 		let content = $('#chatContent').val();
@@ -85,7 +102,7 @@
 			method: "GET",
 			data:{
 				other_no: other_no,
-				chat_room: chat_room,
+				chat_room: chat_room
 			},
 			success:function(data){
 				//메세지 내용을 html에 넣는다
@@ -101,7 +118,10 @@
 			},
 		});
 		
-		//$('.unread'+room).empty(); //읽지 않은 메세지들을 읽음으로 바꾼다.
+		// unread 클래스를 지워 읽지않음 표시를 없앤다.
+		$('.chat_list_box'+chat_room).removeClass('unread');
+		// 읽지않은 갯수 뱃지를 지운다.
+		$('.badge'+chat_room).empty();
 		
 	}
 </script>
