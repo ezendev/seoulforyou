@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../top.jsp"%>
 <!-- 채팅페이지-->
 <head>
@@ -103,24 +104,18 @@ a {
 	  		</div>
 	  		<!-- 대화창(이름) -->
 	  		<div class="col-sm-8">
-				<h5 align="left">반재준</h5>
+					<h5 align="left">라이언</h5>
 			</div>
 			<!-- 대화목록 -->
 			<div class="col-sm-4" style="height:700">
 				<div class="text-bg-light p-3" style="height:100%;">
 					<table class="table table-hover" >
-						<tr>
-							<th>강희찬</th>
-							<td>배고프다</td>
+					<c:forEach var="tmp" items="${chatList}">
+						<tr class="chat_list_box${tmp.chat_room}" onclick="javascript:viewChat(${tmp.other_no}, ${tmp.chat_room})">
+							<th>${tmp.other_no}</th>
+							<td>${tmp.chat_content}</td>
 						</tr>
-						<tr>
-							<th>반재준</th>
-							<td>나 진짜 너무 배고픈데 그래도 아침에 운동해서 기분은 좋음</td>
-						</tr>	
-						<tr>
-							<th>고경현</th>
-							<td>ㅁㅁㅁ</td>
-						</tr>			
+					</c:forEach>
 					</table>
 		   		</div>
 			</div>
@@ -128,34 +123,72 @@ a {
 			<div class="col-sm-8" style="height:700">
 				<div class="position-relative">
 					<div class="text" style="height:100%; background-color:#F0F8FF">
-						<div class="wrap">
-					        <div class="chat ch1">
-					            <div class="icon"><i class="fa-solid fa-user"></i></div>
-					            <div class="textbox">오늘 점심 뭐먹</div>
-					        </div>
-					        <div class="chat ch2">
-					            <div class="icon"><i class="fa-solid fa-user"></i></div>
-					            <div class="textbox">못먹을듯</div>
-					        </div>
-					        <div class="chat ch1">
-					            <div class="icon"><i class="fa-solid fa-user"></i></div>
-					            <div class="textbox">왜?</div>
-					        </div>
-					        <div class="chat ch2">
-					            <div class="icon"><i class="fa-solid fa-user"></i></div>
-					            <div class="textbox">전철역 다녀와야 함</div>
-					        </div>
-					        <div class="position-absolute bottom-0 start-50 translate-middle-x">
-								<form class="d-flex" >
-									<input class="form-control me-2" type="textfiled"  aria-label="Search" style="width:700">
-									<button type="button" class="btn btn-outline-success btn px-4" id="search_btn" style="width:100">전송</button>
-								</form>
-							</div>
-				        </div>
+						<div class="wrap chat_history">
+							<!-- 대화내역 올 자리 -->
+							<!-- 입력창 올 자리 -->
+						</div>
 		    		</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<script>
+
+	// 쪽지 보내기
+	function sendChat(partnerNo, roomNo){
+		let content = $('#chatContent').val();
+		content = content.trim();
+		
+		if(content == ""){
+			alert("메세지를 입력하세요!");
+		}else{
+			$.ajax({
+				url: "chatSubmit.do",
+				method: "GET",
+				data: {
+					other_no: partnerNo,
+					content: content,
+					chat_room: roomNo,
+				},
+				success: function(data){
+					//메세지 입력칸 비우기
+					$('#chatContent').val("");
+					
+					//메세지 내용 리로드
+					viewChat(partnerNo, roomNo);
+				},
+				error: function(){
+					alert('서버 에러');
+				}
+			})
+		}
+	}
+	
+	// 대화목록에서 누르면 대화 상세정보
+	const viewChat = function(other_no, chat_room){
+		
+		$.ajax({
+			url: "chatView.do",
+			method: "GET",
+			data:{
+				other_no: other_no,
+				chat_room: chat_room,
+			},
+			success:function(data){
+				//메세지 내용을 html에 넣는다
+				$(".chat_history").html(data);
+				
+				//이 함수로 메세지 내용을 가져올때마다 스크롤을 맨아래로 가게 한다.
+				$(".chat_history").scrollTop($(".chat_history")[0].scrollHeight);
+			},
+			error: function(){
+				alert("서버 에러");
+			},
+		});
+		
+		//$('.unread'+room).empty(); //읽지 않은 메세지들을 읽음으로 바꾼다.
+		
+	}
+</script>
 <%@ include file="../bottom.jsp"%>
