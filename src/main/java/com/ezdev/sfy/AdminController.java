@@ -51,22 +51,6 @@ public class AdminController {
 	public String charts() {
 		return "admin/charts";
 	}
-	@RequestMapping("/tables.do")
-	public String tables() {
-		return "admin/tables";
-	}
-	@RequestMapping("/login2.do")
-	public String login() {
-		return "admin/login2";
-	}
-	@RequestMapping("/register.do")
-	public String register() {
-		return "admin/register";
-	}
-	@RequestMapping("/password.do")
-	public String password() {
-		return "admin/password";
-	}
 	@RequestMapping("/table_member.do")
 	public String tableMember() {
 		return "admin/table_member";
@@ -78,19 +62,20 @@ public class AdminController {
 	@RequestMapping("/fileUpload_ok.do")
 		public String fileUpload(HttpServletRequest req) {
 		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
-		MultipartFile mf = mr.getFile("filename");
+		MultipartFile file = mr.getFile("admin_profileImg");
 		HttpSession session = req.getSession();
 		String upPath = session.getServletContext().getRealPath("/resources/adminImg");
-		System.out.println("upPath =" + upPath);
 		
-		File target = new File(upPath, mf.getOriginalFilename());
+		//System.out.println("upPath =" + upPath);
+		
+		File target = new File(upPath, file.getOriginalFilename());
+		
 		try {
-			mf.transferTo(target);
+			file.transferTo(target);
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
 		req.setAttribute("msg","파일업로드 성공");
-		req.setAttribute("url", "admin.do");
 		
 		return "message";
 		

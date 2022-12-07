@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 	
+<mapper namespace="com.ezdev.sfy.dto.adminMapper">
+
+<insert id="insertAdmin" parameterType="adminDTO">
+	insert into admin values(admin_seq.nextval,#{admin_id},#{admin_name},#{admin_passwd},#{admin_email},#{admin_profileImg})
+</insert>
+
+ 
+
+</mapper>
