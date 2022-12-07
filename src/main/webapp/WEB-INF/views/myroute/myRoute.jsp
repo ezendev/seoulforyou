@@ -3,19 +3,20 @@
 <!-- my_route_1.jsp -->
 <%@ include file="../top.jsp"%>
 
+
 <!-- main 1번 filter -->
 <div class="container text-center clearfix">
-<form name="f" action="myRouteAfter.do" method="post">
+<form name="mr" action="myRouteAfter.do" method="post">
   <div class="row row-cols-3 g-10 p-5">
     <div class="col-lg-2 col-md-6">
     	<div id="trip_thema">
 		     <select class="form-select" aria-label="Default select example" name="trip_thema" id="trip_thema">
 			  <option selected>#여행테마</option>
-			  <option value="1">#힐링</option>
-			  <option value="2">#미식</option>
-			  <option value="3">#한류</option>
-			  <option value="4">#명소</option>
-			  <option value="5">#쇼핑</option>
+			  <option value="healing">#힐링</option>
+			  <option value="food">#미식</option>
+			  <option value="k-cul">#한류</option>
+			  <option value="attraction">#명소</option>
+			  <option value="shopping">#쇼핑</option>
 			</select>
 	    </div>
     </div>
@@ -55,8 +56,8 @@
     
     <!-- calendar -->
     <div class="col-lg-6 col-md-6 pt-2">
-     	<input type="text" class="datepicker" value="시작일" id="startDate"> ~
-     	<input type="text" class="datepicker" value="종료일" id="endDate">
+     	<input type="text" class="datepicker" value="시작일" id="startDate" name="startDate"> ~
+     	<input type="text" class="datepicker" value="종료일" id="endDate" name="endDate">
      		<script>
      		$.datepicker.setDefaults({
      			  dateFormat: 'yy-mm-dd',
@@ -103,7 +104,7 @@
 	<!-- search panel -->
 		<div class="tab-content" id="nav-tabContent">
 		  <div class="tab-pane fade show active" id="search" role="tabpanel" aria-labelledby="search-tab" tabindex="0" style="overflow:scroll; height:600px">
-			<form name="f" action="tourFind.do" method="post">
+			<form name="mrs" action="tourFind.do" method="post">
 		        <select class="form-select" aria-label="Default select example" name="searchType" id="searchType">
 				  <option value="0" selected>여행지 목록</option>
 				  <option value="1" <c:if test="${searchType=='1'}">selected</c:if>>문화</option>

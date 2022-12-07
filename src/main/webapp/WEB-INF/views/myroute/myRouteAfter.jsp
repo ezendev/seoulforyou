@@ -5,14 +5,14 @@
 <script type="text/javascript">
 	
 	function routeAfter_check(){
-		if(f.title.value==""){
+		if(mra.title.value==""){
 			alert("제목을 입력해주세요")
-			f.title.focus()
+			mra.title.focus()
 			return
 		}
-		if(f.content.value==""){
+		if(mra.content.value==""){
 			alert("내용을 입력해주세요")
-			f.content.focus()
+			mra.content.focus()
 			return
 		}
 		
@@ -22,11 +22,11 @@
 </script>
 
 <!-- main--> 
-<form id="f" name="routeAfter" action="upload.do" method="post" enctype="multipart/form-data">
+<form id="mra" name="routeAfter" action="upload.do" method="post" enctype="multipart/form-data">
 	<div class="container">
 		<div class="row">
 			<div class="mx-auto pt-5">
- 			 <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해주세요" >
+ 			 <input type="text" class="form-control" id="title" name="route_subject" placeholder="제목을 입력해주세요" >
 			</div>
 		</div>
 	
@@ -34,7 +34,7 @@
 	<div class="row">
 		<div class="col-7 mx-auto pt-4">
 			<div class="form-floating pb-2">
-			  <textarea class="form-control" name="content" id="floatingTextarea2" style="height: 550px"></textarea>
+			  <textarea class="form-control" name="route_content" id="floatingTextarea2" style="height: 550px"></textarea>
 			  <label for="floatingTextarea2">내용을 입력해주세요!</label>
 			</div>
 			 <div class="mb-3">
@@ -55,7 +55,7 @@
 		
 		<div class="row p-3">
 			<div align="center">
-				<input class="btn btn-outline-dark" type="button" id="save" value="저장" onclick="routeAfter_check()">
+				<input class="btn btn-outline-dark" type="submit" id="save" value="저장" onclick="routeAfter_check()">
 				<input class="btn btn-outline-dark" type="button" id="reset" value="취소">
 			</div> 
 		</div>	
