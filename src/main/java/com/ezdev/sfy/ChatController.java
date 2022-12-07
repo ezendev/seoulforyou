@@ -56,9 +56,7 @@ public class ChatController {
 		ArrayList<ChatDTO> list = chatMapper.listMsg(dto);
 		
 		req.setAttribute("msgList", list);
-		session.setAttribute("nowUserNo", no); // 유저 no 세션에 저장 -> 로그인C에서 처리하면 좋겠다.. mdto만 넣기엔 값 꺼내오기가
-		session.setAttribute("partnerNo", other_no);
-		session.setAttribute("roomNo", chat_room);
+		req.setAttribute("nowUserNo", no); // 유저 no 세션에 저장 -> 로그인C에서 처리하면 좋겠다.. mdto만 넣기엔 값 꺼내오기가
 		
 		return "chat/chat_ajax_list";
 	}

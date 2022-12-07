@@ -104,7 +104,7 @@ a {
 	  		</div>
 	  		<!-- 대화창(이름) -->
 	  		<div class="col-sm-8">
-					<h5 align="left">라이언</h5>
+					<h5 id="otherNo" align="left"></h5>
 			</div>
 			<!-- 대화목록 -->
 			<div class="col-sm-4" style="height:700">
@@ -136,9 +136,11 @@ a {
 <script>
 
 	// 쪽지 보내기
-	function sendChat(partnerNo, roomNo){
+	function sendChat(){
 		let content = $('#chatContent').val();
 		content = content.trim();
+		let other_no = $('#otherNo').text();
+		let room_no = $('#roomNo').val();
 		
 		if(content == ""){
 			alert("메세지를 입력하세요!");
@@ -147,16 +149,16 @@ a {
 				url: "chatSubmit.do",
 				method: "GET",
 				data: {
-					other_no: partnerNo,
+					other_no: other_no,
 					content: content,
-					chat_room: roomNo,
+					chat_room: room_no,
 				},
 				success: function(data){
 					//메세지 입력칸 비우기
 					$('#chatContent').val("");
 					
 					//메세지 내용 리로드
-					viewChat(partnerNo, roomNo);
+					viewChat(other_no, room_no);
 				},
 				error: function(){
 					alert('서버 에러');
@@ -178,6 +180,8 @@ a {
 			success:function(data){
 				//메세지 내용을 html에 넣는다
 				$(".chat_history").html(data);
+				
+				$("#otherNo").text(other_no);
 				
 				//이 함수로 메세지 내용을 가져올때마다 스크롤을 맨아래로 가게 한다.
 				$(".chat_history").scrollTop($(".chat_history")[0].scrollHeight);
