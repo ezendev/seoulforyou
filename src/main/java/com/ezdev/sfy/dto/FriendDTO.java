@@ -1,12 +1,11 @@
 package com.ezdev.sfy.dto;
 
-public class MypageDTO {
+public class FriendDTO {
     
 	private String friend_num;
     private String friend_id;
     private String friend_name;
-	
-    
+
 	public String getFriend_num() {
 		return friend_num;
 	}
@@ -24,7 +23,5 @@ public class MypageDTO {
 	}
 	public void setFriend_name(String mypage_friend_name) {
 		this.friend_name = mypage_friend_name;
-	}
-    
-    
+	}   
 }

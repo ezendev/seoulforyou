@@ -23,9 +23,8 @@ public class ChatController {
 	@RequestMapping("/chat.do")
 	public String chat(HttpServletRequest req, HttpSession session) {
 
-		//세션에서 꺼내온 로그인 된 유저의 member 테이블 no 값 -> 로그인 안 했을 시 처리 해야 함, 아예 쪽지 메뉴가 안 보이게
-		MemberDTO mdto = (MemberDTO) session.getAttribute("mdto");
-		int no = mdto.getMember_no();
+		//세션에서 꺼내온 로그인 된 유저의 member 테이블 no 값
+		int no = (int) session.getAttribute("nowUserNo");
 		
 		ChatDTO dto = new ChatDTO();
 		dto.setNo(no);
@@ -40,10 +39,7 @@ public class ChatController {
 	@RequestMapping("/chatView.do")
 	public String chatView(HttpServletRequest req, HttpSession session) {
 		
-		MemberDTO mdto = (MemberDTO) session.getAttribute("mdto");
-		
-		//세션에서 꺼내온 로그인 된 유저의 member 테이블 no 값 -> 로그인 안 했을 시 처리 해야 함, 아예 쪽지 메뉴가 안 보이게
-		int no = mdto.getMember_no();
+		int no = (int) session.getAttribute("nowUserNo");
 		int other_no = Integer.parseInt(req.getParameter("other_no"));
 		int chat_room = Integer.parseInt(req.getParameter("chat_room"));
 		
@@ -66,9 +62,8 @@ public class ChatController {
 		int other_no = Integer.parseInt(req.getParameter("other_no"));
 		int chat_room = Integer.parseInt(req.getParameter("chat_room"));
 		String chatContent = req.getParameter("content");
-		//세션에서 꺼내온 로그인 된 유저의 member 테이블 no 값 -> 로그인 안 했을 시 처리 해야 함, 아예 쪽지 메뉴가 안 보이게
-		MemberDTO mdto = (MemberDTO) session.getAttribute("mdto");
-		int no = mdto.getMember_no();
+		
+		int no = (int) session.getAttribute("nowUserNo");
 		
 		ChatDTO dto = new ChatDTO();
 		dto.setChat_content(chatContent);
