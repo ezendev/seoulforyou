@@ -26,9 +26,12 @@ public class ChatMapper {
 
 		for (ChatDTO to : list) {
 			to.setNo(no);
-			//int unread = sqlSession.selectOne("count_unread", to);
+			
+			// 현재 사용자가 (현재) room에서 안읽은 메세지의 갯수를 가져온다.
+			int unread = sqlSession.selectOne("countUnread", to);
+			to.setUnread(unread);
+			
 			//String profile = sqlSession.selectOne("get_other_profile", to);
-			//to.setUnread(unread);
 			//to.setProfile(profile);
 			if(no == to.getChat_send_no()) { //로그인한 유저가 보냈다면
 				to.setOther_no(to.getChat_recv_no());
@@ -49,7 +52,7 @@ public class ChatMapper {
 		ArrayList<ChatDTO> list = (ArrayList)sqlSession.selectList("listMsg", dto);
 		
 		//해당 방의 메세지들 중 받는 사람이 현재사용자의 nick인 메세지를 모두 읽음 처리한다
-		//sqlSession.update("message_read_chk", dto);
+		sqlSession.update("chkRead", dto);
 		
 		return list;
 	}
