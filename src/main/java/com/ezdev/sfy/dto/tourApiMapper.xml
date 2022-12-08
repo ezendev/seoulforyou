@@ -5,18 +5,14 @@
 
 <mapper namespace="com.ezdev.sfy.tourApiMapper">
 	<insert id="insertDb" parameterType="java.util.List">
-		insert into tour(tour_no, tour_type, tour_name, tour_postal, tour_addr, tour_hp, tour_open_time, tour_open_day, tour_close_day, tour_traffic)
+		insert into tour(tour_no, tour_type, tour_name, tour_postal, tour_addr, tour_hp)
 		select tour_seq.nextval, A.* from(
 			<foreach collection="list" item="item" separator="UNION ALL ">
 				select #{item.tour_type, jdbcType=NUMERIC} as tour_type,
 						#{item.tour_name, jdbcType=VARCHAR} as tour_name,
 						#{item.tour_postal, jdbcType=VARCHAR} as tour_postal,
 						#{item.tour_addr, jdbcType=VARCHAR} as tour_addr,
-						#{item.tour_hp, jdbcType=VARCHAR} as tour_hp,
-						#{item.tour_open_time, jdbcType=VARCHAR} as tour_open_time,
-						#{item.tour_open_day, jdbcType=VARCHAR} as tour_open_day,
-						#{item.tour_close_day, jdbcType=VARCHAR} as tour_close_day,
-						#{item.tour_traffic, jdbcType=VARCHAR} as tour_traffic
+						#{item.tour_hp, jdbcType=VARCHAR} as tour_hp
 				from dual
 			</foreach>) A		
 	</insert>
