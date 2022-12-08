@@ -21,9 +21,9 @@
 		</div>
 	</div>
 	
-	<form name="f" method="post" action="tourList.do">
-		<input type="hidden" name="tourType">
-	</form>
+	<form id="tourForm" name="f" method="post" action="tourList.do">
+      <input type="hidden" id="tourType" name="tourType">
+   </form>
 	
 	<!-- 여행지 리스트 -->
 	<div class="tourrow row row-cols-1 row-cols-lg-4 row-cols-md-2 row-cols-sm-2 g-4 mx-0">
@@ -205,11 +205,12 @@ $(document).ready(function() {
 });
 </script>
 <script>
-	function searchFilter(event){
-	    const tourType = $("#filterByType option:selected").val();
-	    document.f.tourType.value = tourType;
-	    f.submit();
-	}
+   function searchFilter(event){
+       const tourType = $("#filterByType option:selected").val();
+       $('#tourType').val(tourType);
+       console.log($('#tourType').val());
+       $('#tourForm').submit();
+   }
 </script>
     
 <%@ include file="../bottom.jsp"%>
