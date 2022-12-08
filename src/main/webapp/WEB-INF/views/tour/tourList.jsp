@@ -35,7 +35,7 @@
 					data-bs-toggle="modal" data-bs-target="#tourView">
 			    	<div class="card h-100">
 			    		<!-- 여행지 이미지 -->
-				    	<img src="resources/img/111.jpeg" class="card-img-top" alt="..."
+				    	<img src="resources/img/seoul2.jpg" class="card-img-top" alt="..."
 				    		style="width:100%; height:20vw; object-fit:cover;">
 						<!-- 여행지 -->
 			    		<div class="tour-card-body card-body">
@@ -81,7 +81,7 @@
 		     	 <div class="container-fluid">
 		  			<div class="row">
 		    			<div class="col-lg-6">
-		     				 <p><img src="resources/img/k1.jpg" class="rounded float-start" alt="" width="100%" height="260"></p>
+		     				 <p><img src="resources/img/seoul2.jpg" class="rounded float-start" alt="" width="100%" height="260"></p>
 		    			</div>
 		   			 	<div class="col-sm-12 col-md-12 col-lg-6">
 			     			 <p><img src="resources/icon/geo-alt.svg">이름: <input id="name" style="display:none" /></p>
