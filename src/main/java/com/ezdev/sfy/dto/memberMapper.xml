@@ -20,11 +20,15 @@
 	<select id="listMember" resultType="memberDTO">
 		select * from member
 	</select>
+<<<<<<< HEAD
 	
 	<select id="listMember2" resultType="memberDTO">
 		select member_no, member_name, member_id, member_passwd, member_email,
 		member_hp from member  
 	</select>
+=======
+
+>>>>>>> branch 'main' of https://github.com/ezendev/seoulforyou.git
 <!--  	
 	<select id="findMember" parameterType="java.util.Map" resultType="memberDTO">
 		select * from jsp_member where ${search} = #{searchString}
@@ -45,18 +49,15 @@
 		${sql}
 	</select>
 		-->
-	<select id="getMember2" parameterType="String" resultType="memberDTO">
+	<select id="getMemberId" parameterType="String" resultType="memberDTO">
 		select * from member where member_id = #{member_id}
 	</select>
-	
-	<select id="idCheck" parameterType="memberDTO" resultType="int">
-	SELECT COUNT(member_id) FROM T_MEMBER WHERE id= #{member_id}
-	</select>
-	<!--  
-		<select id="getMember" parameterType="int" resultType="memberDTO">
+
+ 
+		<select id="getMemberNo" parameterType="int" resultType="memberDTO">
 		select * from member where member_no = #{member_no}
 	</select>
--->
+
 </mapper> 	
 
 
