@@ -72,9 +72,10 @@ public class ChatMapper {
 		//메세지 내역을 가져온다
 		ArrayList<ChatDTO> list = (ArrayList)sqlSession.selectList("listMsg", dto);
 
-		// 각 메세지에 other_name 세팅
+		// 각 메세지에 other_name과 other_no 세팅
 		for(ChatDTO to : list) {
 			to.setOther_name(other_name);
+			to.setOther_no(other_no);
 		}
 		
 		//해당 방의 메세지들 중 받는 사람이 현재사용자의 nick인 메세지를 모두 읽음 처리한다

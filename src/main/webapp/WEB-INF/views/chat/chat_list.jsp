@@ -66,7 +66,7 @@
 	function sendChat(){
 		let content = $('#chatContent').val();
 		content = content.trim();
-		let other_no = $('#otherNo').text();
+		let other_no = $('#otherNo').val();
 		let room_no = $('#roomNo').val();
 		
 		if(content == ""){
