@@ -42,5 +42,11 @@ delete from friend where friend_num = #{friend_num}
 <insert id="insertRoutetest" parameterType="mypageDTO">
 insert into routetest values(routetest_seq.nextval, #{routetest_subject}, sysdate)
 </insert>-->
-
+<update id="updateFavorite" parameterType="java.util.Map" >
+update mypage
+	set mypage_favorite_tour =
+	case when mypage_favorite_tour is null then #{tour_no}
+		else  mypage_favorite_tour||','||#{tour_no} end 
+	where mem_no = #{no}
+</update>
 </mapper>

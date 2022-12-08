@@ -1,6 +1,6 @@
 package com.ezdev.sfy.dto;
 
-public class MypageDTO {
+public class FriendDTO {
     
 	private String friend_num;
     private String friend_id;

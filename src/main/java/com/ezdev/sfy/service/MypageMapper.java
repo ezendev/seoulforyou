@@ -15,7 +15,7 @@ public class MypageMapper {
 	@Autowired
 	private SqlSession sqlSession;
 
-	public List<MypageDTO> listFriend(){
+	public List<FriendDTO> listFriend(){
 		return sqlSession.selectList("listFriend");
 	}
 	public int insertFriend(MemberDTO memberdto) {
@@ -36,4 +36,9 @@ public class MypageMapper {
 	public List<MemberDTO> findMember(Map<String, String> find){
 		return sqlSession.selectList("findMember", find);
 	}
-}
+	public int updateFavorite(Map<String,Object> map) {
+		   return sqlSession.update("updateFavorite", map);
+	   }
+	   
+	}
+
