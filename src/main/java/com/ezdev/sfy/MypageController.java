@@ -1,5 +1,6 @@
 package com.ezdev.sfy;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ezdev.sfy.dto.MemberDTO;
-import com.ezdev.sfy.dto.MypageDTO;
+import com.ezdev.sfy.dto.FriendDTO;
 import com.ezdev.sfy.dto.TourDTO;
 import com.ezdev.sfy.service.MemberMapper;
 import com.ezdev.sfy.service.MypageMapper;
@@ -55,7 +56,7 @@ public class MypageController {
 	}
 	@RequestMapping(value="/mypage_friend.do")
 	public String mypage_friend(HttpServletRequest req) {
-		List<MypageDTO> list = mypageMapper.listFriend();
+		List<FriendDTO> list = mypageMapper.listFriend();
 		req.setAttribute("listFriend", list);
 		return "mypage/mypage_friend";
 	}
@@ -117,6 +118,21 @@ public class MypageController {
 		
 			return "mypage/mypage_friend_listmember";
 	}
-	
+	@RequestMapping(value = {"/mypage_favorite.do"})
+	public String mypageFavorite(HttpServletRequest req,HttpSession session) {
+		Map<String,Object> map=new HashMap<>(); 
+		String tour_no =req.getParameter("f_no");
+		 MemberDTO mdto = (MemberDTO) session.getAttribute("mdto");	
+	      int no = mdto.getMember_no();	  
+	      map.put("tour_no", tour_no);
+	      map.put("no", no);	      
+		int res =mypageMapper.updateFavorite(map);
+		if(res>0) {
+			req.setAttribute("msg", "즐겨찾기가 등록되었습니다!");
+			req.setAttribute("url", "tourList.do");
+			return "message";
+		}
+		return null;	
+	}
 	
 }
