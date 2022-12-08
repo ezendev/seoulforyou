@@ -10,12 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ezdev.sfy.dto.ChatDTO;
+import com.ezdev.sfy.dto.MemberDTO;
 
 @Service
 public class ChatMapper {
 	
 	@Autowired
 	private SqlSession sqlSession;
+	
+	@Autowired
+	private MemberMapper memberMapper;
 
 	public List<ChatDTO> listChat(ChatDTO dto) {
 		int no = dto.getNo();
@@ -33,10 +37,22 @@ public class ChatMapper {
 			
 			//String profile = sqlSession.selectOne("get_other_profile", to);
 			//to.setProfile(profile);
+			
 			if(no == to.getChat_send_no()) { //로그인한 유저가 보냈다면
-				to.setOther_no(to.getChat_recv_no());
+				// 받은 사람의 no로 other_no과 other_name 세팅
+				int other_no = to.getChat_recv_no();
+				MemberDTO mdto = memberMapper.getMemberNo(other_no);
+				String other_name = mdto.getMember_name();
+				to.setOther_no(other_no);
+				to.setOther_name(other_name);
+				
 			}else { // 로그인한 유저가 받았다면
-				to.setOther_no(to.getChat_send_no());
+				// 보낸 사람의 no로 other_no과 other_name 세팅
+				int other_no = to.getChat_send_no();
+				MemberDTO mdto = memberMapper.getMemberNo(other_no);
+				String other_name = mdto.getMember_name();
+				to.setOther_no(other_no);
+				to.setOther_name(other_name);
 			}
 		}
 		

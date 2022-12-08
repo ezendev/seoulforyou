@@ -29,7 +29,7 @@
 							<c:when test="${tmp.unread > 0}">
 							<!-- 만약 현재사용자가 안읽은 메세지가 있다면 -->
 								<tr class="chat_list_box${tmp.chat_room} unread" onclick="javascript:viewChat(${tmp.other_no}, ${tmp.chat_room})">
-									<th>${tmp.other_no}</th>
+									<th>${tmp.other_name}</th>
 									<td>
 										${tmp.chat_content}
 										<span class="badge badge${tmp.chat_room}">${tmp.unread}</span>
@@ -38,7 +38,7 @@
 							</c:when>
 							<c:otherwise>
 								<tr class="chat_list_box${tmp.chat_room}" onclick="javascript:viewChat(${tmp.other_no}, ${tmp.chat_room})">
-									<th>${tmp.other_no}</th>
+									<th>${tmp.other_name}</th>
 									<td>${tmp.chat_content}</td>
 								</tr>
 							</c:otherwise>
