@@ -23,7 +23,7 @@
 		</c:otherwise>
 	</c:choose>
 </c:forEach>
-<div class="position-absolute bottom-0 start-50 translate-middle-x">
+<div class="position-sticky">
 	<form name="chatForm" method="post" class="d-flex" action="chatSubmit.do">
 		<input id="chatContent" name="chatContent" class="form-control me-2" type="textfiled"  aria-label="Search" style="width:700">
 		<button onclick="javascript:sendChat()" type="button" class="btn btn-outline-success btn px-4" id="search_btn" style="width:100">전송</button>
