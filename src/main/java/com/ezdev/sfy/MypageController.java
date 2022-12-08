@@ -36,31 +36,26 @@ public class MypageController {
 		return "mypage/mypage";
 	}
 	 
-	@RequestMapping(value = {"/mypage_review.do"})
+	@RequestMapping("/mypage_review.do")
 	public String mypageReview() {
 		return "mypage/mypage_review";
 	}
-	@RequestMapping(value = {"/mypage_route.do"})
+	@RequestMapping("/mypage_route.do")
 	public String mypageRoute() {
 		return "mypage/mypage_route";
 	}
 	
-	@RequestMapping(value = {"/mypage_favorite.do"})
-	public String mypageFavorite() {
-		return "mypage/mypage_favorite";
-	}
-	
-	@RequestMapping(value = {"/mypage_qna.do"})
+	@RequestMapping("/mypage_qna.do")
 	public String mypageQna() {
 		return "mypage/mypage_qna";
 	}
-	@RequestMapping(value="/mypage_friend.do")
+	@RequestMapping("/mypage_friend.do")
 	public String mypage_friend(HttpServletRequest req) {
 		List<FriendDTO> list = mypageMapper.listFriend();
 		req.setAttribute("listFriend", list);
 		return "mypage/mypage_friend";
 	}
-	@RequestMapping(value="/mypage_friend_insert.do")
+	@RequestMapping("/mypage_friend_insert.do")
 	public String mypage_friend_insert(HttpServletRequest req, @ModelAttribute MemberDTO memberdto) {
 		int res = mypageMapper.insertFriend(memberdto);
 		if(res>0) {
@@ -72,7 +67,7 @@ public class MypageController {
 		}
 		return "message";
 	}
-	@RequestMapping(value="/mypage_friend_delete.do")
+	@RequestMapping("/mypage_friend_delete.do")
 	public String mypage_friend_delete(HttpServletRequest req, @RequestParam(required = false) int friend_num) {
 		int res = mypageMapper.deleteFriend(friend_num);
 		if(res>0) {
@@ -84,7 +79,7 @@ public class MypageController {
 		}
 		return "message";
 	}
-	@RequestMapping(value="/mypage_friend_listmember.do")
+	@RequestMapping("/mypage_friend_listmember.do")
 	public String mypage_friend_listmember(HttpServletRequest req, @RequestParam(required = false) String pageNum, Map<String, String> find) {
 		int pageSize = 5;
 		if (pageNum == null){
@@ -113,12 +108,12 @@ public class MypageController {
 			
 		return "mypage/mypage_friend_listmember";
 	}
-	@RequestMapping(value="/mypage_findmember.do")//미완성
+	@RequestMapping("/mypage_findmember.do")//미완성
 	public String mypage_findmember(HttpServletRequest req, @RequestParam Map<String, String> find) {
 		
 			return "mypage/mypage_friend_listmember";
 	}
-	@RequestMapping(value = {"/mypage_favorite.do"})
+	@RequestMapping("/mypage_favorite.do")
 	public String mypageFavorite(HttpServletRequest req,HttpSession session) {
 		Map<String,Object> map=new HashMap<>(); 
 		String tour_no =req.getParameter("f_no");
