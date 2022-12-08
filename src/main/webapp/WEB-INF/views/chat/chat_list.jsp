@@ -2,125 +2,53 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../top.jsp"%>
-<!-- 채팅페이지-->
 <head>
-	<link href="resources/css/bootstrap.min.css" rel="stylesheet">
-	<script src="resources/js/bootstrap.bundle.min.js"></script>
-	<script src="resources/js/jquery-3.6.1.min.js"></script>
-	<script src="resources/js/bootstrap.min.js"></script>
-	
-<style>
-	 table {border:1; width:100%; table-layout:fixed;}
-	 table tr {height:50;} 
-	 table tr th {text-align:center; width:30%;  height:auto;}
-	 table tr td {text-overflow: ellipsis; overflow:hidden; white-space: nowrap; text-align:left; color:gray;}
-	 {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-a {
-    text-decoration: none;
-}
-
-
-.wrap .chat {
-    display: flex;
-    align-items: flex-start;
-    padding: 20px;
-}
-
-.wrap .chat .icon {
-    position: relative;
-    overflow: hidden;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #eee;
-}
-
-.wrap .chat .icon i {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    font-size: 2.5rem;
-    color: #aaa;
-    transform: translateX(-50%);
-}
-
-.wrap .chat .textbox {
-    position: relative;
-    display: inline-block;
-    max-width: calc(100% - 70px);
-    padding: 10px;
-    margin-top: 7px;
-    font-size: 13px;
-    border-radius: 10px;
-}
-
-.wrap .chat .textbox::before {
-    position: absolute;
-    display: block;
-    top: 0;
-    font-size: 1.5rem;
-}
-
-.wrap .ch1 .textbox {
-    margin-left: 20px;
-    background-color: #ddd;
-}
-
-.wrap .ch1 .textbox::before {
-    left: -15px;
-    content: "◀";
-    color: #ddd;
-}
-
-.wrap .ch2 {
-    flex-direction: row-reverse;
-}
-
-.wrap .ch2 .textbox {
-    margin-right: 20px;
-    background-color: #F9EB54;
-}
-
-.wrap .ch2 .textbox::before {
-    right: -15px;
-    content: "▶";
-    color: #F9EB54;
-}
-</style>
-	
-<title>Chatting_Page</title>
+	<link href="resources/css/chat-style.css" rel="stylesheet">
 </head>
 <div class="container themed-container text-center">
 	<div class="container text-center">
+		<!-- 행1:: 제목 -->
 		<div class="row row-cols-2">
-	  		<!-- 대화목록(제목) -->
-			<div class="col-sm-4">
+			<div class="col-5 col-lg-4">
 	  			<h5>대화목록</h5>
 	  		</div>
-	  		<!-- 대화창(이름) -->
-	  		<div class="col-sm-8">
-					<h5 align="left">라이언</h5>
+	  		<div class="col-7 col-lg-8">
+	  			<!-- 대화상대 이름 -->
+				<h5 id="otherNo" align="left"></h5>
 			</div>
-			<!-- 대화목록 -->
-			<div class="col-sm-4" style="height:700">
+		</div>
+		
+		<!-- 행2:: 본문 -->
+		<div class="row row-cols-2">
+			<!-- 대화방 목록 -->
+			<div class="col-5 col-lg-4" style="height:700">
 				<div class="text-bg-light p-3" style="height:100%;">
 					<table class="table table-hover" >
 					<c:forEach var="tmp" items="${chatList}">
-						<tr class="chat_list_box${tmp.chat_room}" onclick="javascript:viewChat(${tmp.other_no}, ${tmp.chat_room})">
-							<th>${tmp.other_no}</th>
-							<td>${tmp.chat_content}</td>
-						</tr>
+						<c:choose>
+							<c:when test="${tmp.unread > 0}">
+							<!-- 만약 현재사용자가 안읽은 메세지가 있다면 -->
+								<tr class="chat_list_box${tmp.chat_room} unread" onclick="javascript:viewChat(${tmp.other_no}, ${tmp.chat_room})">
+									<th>${tmp.other_no}</th>
+									<td>
+										${tmp.chat_content}
+										<span class="badge badge${tmp.chat_room}">${tmp.unread}</span>
+									</td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<tr class="chat_list_box${tmp.chat_room}" onclick="javascript:viewChat(${tmp.other_no}, ${tmp.chat_room})">
+									<th>${tmp.other_no}</th>
+									<td>${tmp.chat_content}</td>
+								</tr>
+							</c:otherwise>
+						</c:choose>
 					</c:forEach>
 					</table>
 		   		</div>
 			</div>
-			<!-- 대화상자 -->
-			<div class="col-sm-8" style="height:700">
+			<!-- 대화내역 상세보기 -->
+			<div class="col-7 col-lg-8" style="height:700">
 				<div class="position-relative">
 					<div class="text" style="height:100%; background-color:#F0F8FF">
 						<div class="wrap chat_history">
@@ -134,11 +62,12 @@ a {
 	</div>
 </div>
 <script>
-
 	// 쪽지 보내기
-	function sendChat(partnerNo, roomNo){
+	function sendChat(){
 		let content = $('#chatContent').val();
 		content = content.trim();
+		let other_no = $('#otherNo').text();
+		let room_no = $('#roomNo').val();
 		
 		if(content == ""){
 			alert("메세지를 입력하세요!");
@@ -147,16 +76,16 @@ a {
 				url: "chatSubmit.do",
 				method: "GET",
 				data: {
-					other_no: partnerNo,
+					other_no: other_no,
 					content: content,
-					chat_room: roomNo,
+					chat_room: room_no,
 				},
 				success: function(data){
 					//메세지 입력칸 비우기
 					$('#chatContent').val("");
 					
 					//메세지 내용 리로드
-					viewChat(partnerNo, roomNo);
+					viewChat(other_no, room_no);
 				},
 				error: function(){
 					alert('서버 에러');
@@ -173,11 +102,13 @@ a {
 			method: "GET",
 			data:{
 				other_no: other_no,
-				chat_room: chat_room,
+				chat_room: chat_room
 			},
 			success:function(data){
 				//메세지 내용을 html에 넣는다
 				$(".chat_history").html(data);
+				
+				$("#otherNo").text(other_no);
 				
 				//이 함수로 메세지 내용을 가져올때마다 스크롤을 맨아래로 가게 한다.
 				$(".chat_history").scrollTop($(".chat_history")[0].scrollHeight);
@@ -187,7 +118,10 @@ a {
 			},
 		});
 		
-		//$('.unread'+room).empty(); //읽지 않은 메세지들을 읽음으로 바꾼다.
+		// unread 클래스를 지워 읽지않음 표시를 없앤다.
+		$('.chat_list_box'+chat_room).removeClass('unread');
+		// 읽지않은 갯수 뱃지를 지운다.
+		$('.badge'+chat_room).empty();
 		
 	}
 </script>

@@ -22,8 +22,51 @@
 	
 	<!-- from review_page -->
 	<script src="resources/js/bootstrap.bundle.min.js"></script>
-
 	
+	<!-- 플로팅 버튼 -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css" />
+	
+	<style>
+	/*플로팅 버튼 수정*/
+	.floating-button {
+	  display: flex;
+	  position: fixed;
+	  right: 10px;
+	  bottom: 15px;
+	  z-index: 999;
+	}
+	 
+	/*플로팅 버튼 스타일 */
+	.qnalist-btn {
+		width: 100%;
+		height: 100%;
+		opacity: 1;
+		border-radius: 50%;
+		font-size: 1.15em;
+		font-family: 'HYHeadLine';
+		color: #FFFAFA;
+		text-align: center;
+	}
+	 
+	/*플로팅 버튼 스타일========*/
+	.move-qnalist {
+		float: left;
+		display: flex;
+		position: relative;
+		width: 32px;
+		height: 32px;
+		border-radius: 50%;
+		cursor: pointer;
+		justify-content: center;
+		align-items: center;
+		margin-left: 5px;
+		/*사용자 설정 파트*/	
+		font-weight: 700;
+		background-color: #5F9EA0;
+		border: 2px solid #5F9EA0;
+	  
+	}
+	</style>
 	<script>
 		function admin(){
 			location.href="admin.do";
@@ -57,6 +100,7 @@
 			location.href="logout.do";
 		}
 	</script>
+
 	
 	<title>Seoul For You</title>
   
@@ -76,12 +120,16 @@
         <li><a href="index.do" class="nav-link px-2 link-secondary">Home</a></li>
         <li><a href="tourList.do" class="nav-link px-2 link-dark">여행지</a></li>
         <li><a href="routeList.do" class="nav-link px-2 link-dark">여행루트</a></li>
-        <li><a href="myRoute.do" class="nav-link px-2 link-dark">나의여행 만들기</a></li>
+        
+        <li><a href="myRoute.do" class="nav-link px-2 link-dark" onclick="make()">나의여행 만들기</a></li>
       </ul>
-
+      
+<!-- 쪽지버튼은 로그인해야 나타남 -->
       <div class="col-md-3 text-end">
-      	
+      	<c:if test="${not empty mdto}">
         <button onclick="javascript:chat()" type="button" class="btn btn-outline-primary me-2">쪽지</button>
+       	
+        </c:if>
 		<c:if test="${empty mdto}">
       	<button type="button" class="btn btn-primary" data-bs-toggle="modal"
         	data-bs-target="#loginModal">로그인</button>
@@ -91,9 +139,15 @@
         </c:if>
       </div>
     </header>
+    
+<!-- 플로팅 버튼(qnalist로 이동) -->
   </div>
-
-
+	<div class="floating-button">
+		<span class="move-qnalist">
+    		<a class="qnalist-btn" href="qnalist.do">Q</a>
+		</span>
+	</div>
+</body>
 
   <!-- 로그인 모달-->
 <form name="f" action="login_ok.do" method="post">
@@ -131,3 +185,4 @@
     </div>
   </div>
 </form>
+</html>
