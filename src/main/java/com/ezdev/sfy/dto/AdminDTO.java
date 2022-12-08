@@ -2,19 +2,19 @@ package com.ezdev.sfy.dto;
 
 public class AdminDTO {
 	
+	private String admin_no;
 	private String admin_id;
 	private String admin_name;
 	private String admin_passwd;
-	private String admin_passwd_confirm;
 	private String admin_email;
 	private String admin_profileImg;
 	
 	
-	public String getAdmin_passwd_confirm() {
-		return admin_passwd_confirm;
+	public String getAdmin_no() {
+		return admin_no;
 	}
-	public void setAdmin_passwd_confirm(String admin_passwd_confirm) {
-		this.admin_passwd_confirm = admin_passwd_confirm;
+	public void setAdmin_no(String admin_no) {
+		this.admin_no = admin_no;
 	}
 	public String getAdmin_id() {
 		return admin_id;

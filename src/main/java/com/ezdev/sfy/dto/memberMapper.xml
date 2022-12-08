@@ -20,6 +20,11 @@
 	<select id="listMember" resultType="memberDTO">
 		select * from member
 	</select>
+	
+	<select id="listMember2" resultType="memberDTO">
+		select member_no, member_name, member_id, member_passwd, member_email,
+		member_hp from member  
+	</select>
 <!--  	
 	<select id="findMember" parameterType="java.util.Map" resultType="memberDTO">
 		select * from jsp_member where ${search} = #{searchString}

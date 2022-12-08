@@ -51,6 +51,8 @@ public class MemberMapper {
 	public int idCheck(String member_id) {
 		return sqlSession.selectOne("idCheck", member_id);
 	}
-	
+	public List<MemberDTO> listMember2(){
+		return sqlSession.selectList("listMember2");
+	}
 }
 
