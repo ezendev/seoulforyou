@@ -28,7 +28,7 @@ public class MemberController {
 	//로그인
 	@RequestMapping(value="/login_ok.do", method =RequestMethod.POST)
 	public String login_ok(HttpServletRequest req, HttpServletResponse resp, @RequestParam Map<String, String>map) {
-		MemberDTO dto = memberMapper.getMember(map.get("member_id"));
+		MemberDTO dto = memberMapper.getMemberId(map.get("member_id"));
 		int member_no = dto.getMember_no();
 		if(dto == null) {
 			req.setAttribute("msg", "해당하는 아이디가 없습니다. 다시 확인하시고 입력해 주세요");

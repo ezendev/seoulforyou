@@ -41,15 +41,15 @@
 		${sql}
 	</select>
 		-->
-	<select id="getMember2" parameterType="String" resultType="memberDTO">
+	<select id="getMemberId" parameterType="String" resultType="memberDTO">
 		select * from member where member_id = #{member_id}
 	</select>
 
-	<!--  
-		<select id="getMember" parameterType="int" resultType="memberDTO">
+ 
+		<select id="getMemberNo" parameterType="int" resultType="memberDTO">
 		select * from member where member_no = #{member_no}
 	</select>
--->
+
 </mapper> 	
 
 
