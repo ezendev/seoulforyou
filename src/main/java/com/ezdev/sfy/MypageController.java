@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ezdev.sfy.dto.MemberDTO;
 import com.ezdev.sfy.dto.MypageDTO;
+import com.ezdev.sfy.dto.TourDTO;
 import com.ezdev.sfy.service.MemberMapper;
 import com.ezdev.sfy.service.MypageMapper;
+
 
 @Controller
 public class MypageController {
@@ -25,8 +28,6 @@ public class MypageController {
 	/*
 	 * @Autowired MemberMapper memberMapper;
 	 */
-	
-	
 	
 	//bottom.jsp 페이스북 아이콘 -> 마이페이지
 	@RequestMapping("/mypage.do")
@@ -83,16 +84,39 @@ public class MypageController {
 		return "message";
 	}
 	@RequestMapping(value="/mypage_friend_listmember.do")
-	public String mypage_friend_listmember(HttpServletRequest req,  @RequestParam Map<String, String> map) {
-		List<MemberDTO> mlist = null;
-		if(!map.containsKey("mode")) {
-			mlist = mypageMapper.listMypageMember();
-		}else {
-			if(map.containsKey("search")) {
-				mlist = mypageMapper.findMypageMember(map);
-			}
+	public String mypage_friend_listmember(HttpServletRequest req, @RequestParam(required = false) String pageNum, Map<String, String> find) {
+		int pageSize = 5;
+		if (pageNum == null){
+			pageNum = "1";
 		}
-		req.setAttribute("listMypageMember", mlist);
+		int currentPage = Integer.parseInt(pageNum);
+		int startRow = (currentPage-1) * pageSize + 1;
+		int endRow = startRow + pageSize - 1;
+		
+		int countRow = mypageMapper.listMypageMemberCount();
+		if (endRow > countRow) endRow = countRow;
+		
+		List<MemberDTO> list = mypageMapper.listMypageMember(startRow, endRow);
+		int num = countRow - (startRow - 1);
+		req.setAttribute("listMypageMember", list);
+		req.setAttribute("num", num);
+		int pageCount = countRow / pageSize + (countRow%pageSize==0 ? 0 : 1);
+		int pageBlock = 3;
+		int startPage = (currentPage - 1) / pageBlock * pageBlock + 1;
+		int endPage = startPage + pageBlock - 1;
+		if (endPage > pageCount) endPage = pageCount;		
+		req.setAttribute("pageCount", pageCount);
+		req.setAttribute("pageBlock", pageBlock);
+		req.setAttribute("startPage", startPage);
+		req.setAttribute("endPage", endPage);
+			
 		return "mypage/mypage_friend_listmember";
 	}
+	@RequestMapping(value="/mypage_findmember.do")//미완성
+	public String mypage_findmember(HttpServletRequest req, @RequestParam Map<String, String> find) {
+		
+			return "mypage/mypage_friend_listmember";
+	}
+	
+	
 }

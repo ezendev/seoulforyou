@@ -8,12 +8,13 @@ import org.springframework.stereotype.Service;
 
 import com.ezdev.sfy.dto.*;
 
+
 @Service
 public class MypageMapper {
 
 	@Autowired
 	private SqlSession sqlSession;
-	
+
 	public List<MypageDTO> listFriend(){
 		return sqlSession.selectList("listFriend");
 	}
@@ -23,10 +24,16 @@ public class MypageMapper {
 	public int deleteFriend(int friend_num) {
 		return sqlSession.delete("deleteFriend", friend_num);
 	}
-	public List<MemberDTO> listMypageMember(){
-		return sqlSession.selectList("listMypageMember");
+	public List<MemberDTO> listMypageMember(int startRow, int endRow){
+		Map<String, Integer> map = new Hashtable<>();
+		map.put("start", startRow);
+		map.put("end", endRow);
+		return sqlSession.selectList("listMypageMember", map);
 	}
-	public List<MemberDTO> findMypageMember(Map<String, String> map){
-		return sqlSession.selectList("findMypageMember", map);
+	public int listMypageMemberCount() {
+		return sqlSession.selectOne("listMypageMemberCount");
+	}
+	public List<MemberDTO> findMember(Map<String, String> find){
+		return sqlSession.selectList("findMember", find);
 	}
 }
