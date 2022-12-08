@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ezdev.sfy.dto.MemberDTO;
 import com.ezdev.sfy.service.MemberMapper;
@@ -29,6 +29,7 @@ public class MemberController {
 	@RequestMapping(value="/login_ok.do", method =RequestMethod.POST)
 	public String login_ok(HttpServletRequest req, HttpServletResponse resp, @RequestParam Map<String, String>map) {
 		MemberDTO dto = memberMapper.getMember(map.get("member_id"));
+		int member_no = dto.getMember_no();
 		if(dto == null) {
 			req.setAttribute("msg", "해당하는 아이디가 없습니다. 다시 확인하시고 입력해 주세요");
 			req.setAttribute("url", "index.do");
@@ -41,6 +42,7 @@ public class MemberController {
 				//세션에 저장
 				HttpSession session = req.getSession();
 				session.setAttribute("mdto", dto);
+				session.setAttribute("nowUserNo", member_no);
 				//쿠키 전송
 				Cookie cookie = new Cookie("saveId", map.get("member_id"));
 				if(map.containsKey("saveId")) cookie.setMaxAge(24*60*60);
@@ -82,11 +84,6 @@ public class MemberController {
 			return "message";
 		}
 	}
-	@RequestMapping(value="./idCheck")
-	public int idCheck(@RequestParam("member_id") String member_id) {
-		int cnt = memberMapper.idCheck(member_id);
-		return cnt;
-	}
-	
+
 		
 }

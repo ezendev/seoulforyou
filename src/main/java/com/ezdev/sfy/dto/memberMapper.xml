@@ -20,6 +20,7 @@
 	<select id="listMember" resultType="memberDTO">
 		select * from member
 	</select>
+
 <!--  	
 	<select id="findMember" parameterType="java.util.Map" resultType="memberDTO">
 		select * from jsp_member where ${search} = #{searchString}
@@ -43,10 +44,7 @@
 	<select id="getMember2" parameterType="String" resultType="memberDTO">
 		select * from member where member_id = #{member_id}
 	</select>
-	
-	<select id="idCheck" parameterType="memberDTO" resultType="int">
-	SELECT COUNT(member_id) FROM T_MEMBER WHERE id= #{member_id}
-	</select>
+
 	<!--  
 		<select id="getMember" parameterType="int" resultType="memberDTO">
 		select * from member where member_no = #{member_no}

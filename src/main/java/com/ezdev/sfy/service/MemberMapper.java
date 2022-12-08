@@ -48,9 +48,5 @@ public class MemberMapper {
 	public MemberDTO getMember(String member_id){
 		return sqlSession.selectOne("getMember2", member_id);
 	}
-	public int idCheck(String member_id) {
-		return sqlSession.selectOne("idCheck", member_id);
-	}
-	
 }
 
