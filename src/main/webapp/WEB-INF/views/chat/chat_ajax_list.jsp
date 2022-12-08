@@ -4,6 +4,7 @@
 
 <c:forEach var="tmp" items="${msgList}">
 	<input type="hidden" id="roomNo" value="${tmp.chat_room}" />
+	<input type="hidden" id="otherName" value="${tmp.other_name}" />
 	<c:choose>
 		<c:when test="${nowUserNo ne tmp.chat_send_no}">
 			<!-- 만약 현재 로그인된 유저가 받은 메시지라면 -->
