@@ -30,8 +30,7 @@
 		<c:forEach var="tdto" items="${tourList}">
 			<!-- 여행지 -->
 			<div class="tourcol col ${tdto.tour_type}">
-				<a onclick="valueSetting('${tdto.tour_no}', '${tdto.tour_name}','${tdto.tour_postal}','${tdto.tour_addr}','${tdto.tour_hp}'
-											)"
+				<a onclick="valueSetting('${tdto.tour_no}', '${tdto.tour_name}','${tdto.tour_postal}','${tdto.tour_addr}','${tdto.tour_hp}')"
 					data-bs-toggle="modal" data-bs-target="#tourView">
 			    	<div class="card h-100">
 			    		<!-- 여행지 이미지 -->
@@ -84,10 +83,10 @@
 		     				 <p><img src="resources/img/seoul2.jpg" class="rounded float-start" alt="" width="100%" height="260"></p>
 		    			</div>
 		   			 	<div class="col-sm-12 col-md-12 col-lg-6">
-			     			 <p><img src="resources/icon/geo-alt.svg">이름: <input id="name" style="display:none" /></p>
-			     			 <p><img src="resources/icon/clock.svg">우편번호: <input id="postal" style="display:none" /></p>
-			     			 <p><img src="resources/icon/clock.svg"> 주소: <input id="addr" style="display:none" /></p>
-			     			 <p><img src="resources/icon/telephone.svg"> 전화번호: <input id="hp" style="display:none" /></p>
+			     			 <p><img src="resources/icon/geo-alt.svg">이름: <input class="name"  /></p>
+			     			 <p><img src="resources/icon/clock.svg">우편번호: <input class="postal"  /></p>
+			     			 <p><img src="resources/icon/clock.svg"> 주소: <input class="addr"  /></p>
+			     			 <p><img src="resources/icon/telephone.svg"> 전화번호: <input class="hp"  /></p>
 		    			</div>
 		 		 	</div>
 				</div>
@@ -166,7 +165,7 @@ function makeFavorite(){
 	$('.f_no').val(no);
 	document.f2.submit();
 	
-}
+}  
 </script>
 
 
@@ -175,11 +174,11 @@ function makeFavorite(){
 //각 여행지 눌렀을 때 해당 dto값을 모달영역에 띄워주는 함수
 function valueSetting(no, name, postal, addr, hp){
 	//모달input에 dto값 설정
-	$('.no').val(no);
-	$('.name').val(name);
-	$('.postal').val(postal);
-	$('.addr').val(addr);
-	$('.hp').val(hp);	
+	$('.no').attr("value", no);
+	$('.name').attr("value", name);
+	$('.postal').attr("value", postal);
+	$('.addr').attr("value", addr);
+	$('.hp').attr("value", hp);	
 }
 </script>
 
