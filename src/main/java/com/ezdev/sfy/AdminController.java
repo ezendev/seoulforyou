@@ -70,6 +70,7 @@ public class AdminController {
 	public String updateMember(HttpServletRequest req, @ModelAttribute MemberDTO dto,
 			BindingResult result) {
 		int res = memberMapper.updateMember2(dto);
+		
 		System.out.println(res);
 		
 		if(res>0) {
