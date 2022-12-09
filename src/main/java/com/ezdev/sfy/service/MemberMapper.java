@@ -36,11 +36,11 @@ public class MemberMapper {
 	public MemberDTO getMemberNo(int member_no){
 	return  sqlSession.selectOne("getMemberNo", member_no);
 	}
-	/*
+	
 	public int updateMember(MemberDTO dto) {
 	return sqlSession.update("updateMember", dto);
 	}
-	
+	/*
 	public String searchMember(Map<String, String> map) {
 		return  sqlSession.selectOne("searchMember", map);
 	}
