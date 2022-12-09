@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -64,6 +65,10 @@ public class MyRouteController {
 			MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
 			MultipartFile file = mr.getFile("filename");
 			String file_name = file.getOriginalFilename();
+			
+			//파일이름이 동일하면 덮어씌워지기 때문에 이를 보완하기 위해 UUID사용('랜덤이름_원래 이름'으로 저장)
+			String uuid = UUID.randomUUID().toString();
+			file_name = uuid +'_'+file_name;
 			if(file_name==null || file_name.trim().equals("")) {
 				req.setAttribute("msg", "이미지를 등록해주세요");
 				req.setAttribute("url", "myRouteAfter.do");
@@ -105,6 +110,7 @@ public class MyRouteController {
 					tour += ','+ tour_no;
 					}
 			}
+			//첫 번째 루트 번호에서도 ','가 찍혀서 인덱스 1번을 제거
 			String route_tour=tour.substring(1);
 			dto.setRoute_tour(route_tour);
 			
@@ -115,6 +121,14 @@ public class MyRouteController {
 			
 			int res = myRouteMapper.insertRoute(dto);
 			if(res>0) {
+				//여행루트 만든 후에 선택되었던 필터가 리셋되기 위해 세션 종료
+				session.removeAttribute("myRoute");
+				session.removeAttribute("findList");
+				session.removeAttribute("searchType");
+				session.removeAttribute("trip_thema");
+				session.removeAttribute("region");
+				session.removeAttribute("startDate");
+				session.removeAttribute("endDate");
 				req.setAttribute("msg", "나의 여행이 등록되었습니다. 마이페이지로 이동합니다.");//일단은 인덱스로 이동
 				req.setAttribute("url", "index.do");
 			}else {

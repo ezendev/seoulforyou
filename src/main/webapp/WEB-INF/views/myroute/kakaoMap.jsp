@@ -5,7 +5,7 @@
 <!-- api키와 지도를 형성하는 <div id="map">은 지도를 넣고 싶은 위치에 넣기 -->
 				<script>
 			
-			 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+				var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 			    mapOption = {
 			        center: new kakao.maps.LatLng(37.6562677764281, 127.063030448739), // 지도의 중심좌표(노원역)
 			        level: 6 // 지도의 확대 레벨
@@ -18,9 +18,7 @@
 			var route ='${myRoute}';
 			var addrArr=[]; //주소 담을 배열
 			var infoArr=[]; //info 담을 배열
-			var markers=[];	//마커 담을 배열
-			var linePath=[]; //라인 그릴 좌표 담음 배열
-
+			
 			//controller에 myRoute불러오기
 			<c:forEach items='${myRoute}' var='rdto'>
 					var info ='${rdto.getTour_name()}'; 
@@ -36,8 +34,10 @@
 			addrArr.forEach(function(address, index) {
 			    geocoder.addressSearch(address, function(result, status) {
 			        if (status === kakao.maps.services.Status.OK) {
-			            //좌표 받기
+			        	//좌표 받기
 			        	var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+			            var lat = result[0].y;
+			            var lng = result[0].x;
 			            
 			            //positions라는 객체에 info와 좌표 담기
 			            var positions=[{
@@ -53,47 +53,60 @@
 					            clickable: true
 					        });
 				            map.setCenter(coords);
-					        markers.push(marker);
-					        
 					      
-			            
 			            var infowindow = new kakao.maps.InfoWindow({
 				            content: positions[i].content
 				        });
 				        kakao.maps.event.addListener(marker, 'click', marker_click(map, marker, infowindow));
-						
-				        addLine(markers);
-				        console.log(markers);
-			          		  };
+					
+			            };
 			     		   }
 			 		   });
 					});
 						
-			         function addLine(markers){
-			        	 markers.forEach(function(marker, index){
-							var linePath=[];
-			        		 for(var j=0; j<markers.length; j++){							
-								linePath.push(markers[j].getPosition());   
-							}
-			        		 
-				        
-				      //선 그리기
-						var polyline = new kakao.maps.Polyline({
-					 	    path: linePath, // 선을 구성하는 좌표배열 입니다
-					 	    strokeWeight: 5, // 선의 두께 입니다
-					 	    strokeColor: 'red', // 선의 색깔입니다
-					 	    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-					 	    strokeStyle: 'solid' // 선의 스타일입니다
-					 	});
-						      
-					 	// 지도에 선을 표시합니다
-					 
-				 		polyline.setMap(map);  
-								        
-			           		})
-			        	 }
-			
-			
+			var linePath = [];
+
+			var polyline = new kakao.maps.Polyline({
+			    path: linePath,
+			    strokeWeight: 3,
+			    strokeOpacity: 1,
+			    strokeColor: 'red',
+			    strokeStyle: 'solid'
+			});
+
+			const addressSearch = address => {
+			    return new Promise((resolve, reject) => {
+			        geocoder.addressSearch(address, function(result, status) {
+			            if (status === kakao.maps.services.Status.OK) {
+			                resolve(result);
+			            } else {
+			                reject(status);
+			            }
+			        });
+			    });
+			};
+
+			(async () => {
+			    try {
+			        for(var address of addrArr) {
+			            const result = await addressSearch(address);
+			            setPolyLine(result);
+			        }
+			    } catch (e) {
+			        console.log(e);
+			    }
+			})();
+
+			function setPolyLine(result) {
+			    const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+			    linePath.push(coords);
+			    polyline.setPath(linePath);
+
+			    if(!polyline.getMap()) {
+			        polyline.setMap(map);
+			    }
+			}
+					 	
 				//마커를 누르면 장소명이 뜸(이 부분은 추후에 디테일하게 바꿔야함..)
 		        function marker_click(map, marker, infowindow){ 	 
 		        	return function() {

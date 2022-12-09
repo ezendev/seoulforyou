@@ -118,9 +118,13 @@ public class TourController {
 		}
 		map.put("sql", sql);
 		List<TourDTO> find = tourMapper.findTour(map);
+		
 			session.setAttribute("findList", find);
 			session.setAttribute("searchType", map.get("searchType"));
-		return "myroute/myRoute";
+			session.setAttribute("trip_thema", map.get("trip_thema"));
+			session.setAttribute("region", map.get("region"));
+			session.setAttribute("startDate", map.get("startDate"));
+			session.setAttribute("endDate", map.get("endDate"));
+			return "myroute/myRoute";
 	}
-
 }
