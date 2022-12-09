@@ -20,11 +20,11 @@ public class MemberMapper {
 	public int insertMember(MemberDTO dto) {
 		return  sqlSession.insert("insertMember", dto);
 	}
-	/*
+	
 	public List<MemberDTO> listMember(){
 		return sqlSession.selectList("listMember");
 	}
-	
+	/*
 	public  List<MemberDTO> findMember(Map<String, String> map){
 		return  sqlSession.selectList("findMember", map);
 	}
