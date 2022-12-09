@@ -37,13 +37,15 @@
                    </tr>
                    </c:if>
                    <c:forEach var="memberdto" items="${listMypageMember}">
-		           <tr>
-			<td width="30">${memberdto.member_id}</td>
-			<td width="30">${memberdto.member_name}</td>
-			<td width="30">
-			<a href="mypage_friend_insert.do?member_no=${memberdto.member_no}">[추가]</a>
-			</td>
-			</tr>
+		           		<c:if test="${sessionScope.nowUserNo ne memberdto.member_no}">
+			           		 <tr>
+			           		 	<td width="30">${memberdto.member_id}</td>
+								<td width="30">${memberdto.member_name}</td>
+								<td width="30">
+								<a href="mypage_friend_insert.do?member_no=${memberdto.member_no}">[추가]</a>
+								</td>
+							</tr>
+			           	</c:if>
 	                 </c:forEach>
                                </tbody>
                                 </table>

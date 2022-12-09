@@ -88,5 +88,9 @@ public class ChatMapper {
 		
 		return list;
 	}
+	
+	public int deleteChat(Map<String, Integer> map) {
+		return sqlSession.delete("deleteChat", map);
+	}
 
 }

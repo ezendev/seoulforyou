@@ -49,4 +49,10 @@
 		</choose>
 	</update>
 	
+	<delete id="deleteChat" parameterType="java.util.Map">
+		delete from chat
+		where (chat_recv_no = #{friend_no, jdbcType=NUMERIC} and chat_send_no = #{no, jdbcType=NUMERIC}) or
+		 (chat_send_no = #{friend_no, jdbcType=NUMERIC} and chat_recv_no = #{no, jdbcType=NUMERIC})
+	</delete>
+	
 </mapper>
