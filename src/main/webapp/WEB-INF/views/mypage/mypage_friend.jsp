@@ -121,12 +121,12 @@ myModal.addEventListener('shown.bs.modal', () => {
 			<td colspan="2">등록된 친구가 없습니다.</td>
 		</tr>
 	</c:if>
-	<c:forEach var="mypagedto" items="${listFriend}">
+	<c:forEach var="mdto" items="${listFriend}">
 		<tr>
-			<td width="30">${mypagedto.friend_id}</td>
-			<td width="30">${mypagedto.friend_name}</td>
+			<td width="30">${mdto.member_id}</td>
+			<td width="30">${mdto.member_name}</td>
 			<td width="30">
-			<a href="mypage_friend_delete.do?friend_num=${mypagedto.friend_num}">[삭제]</a>
+			<a href="mypage_friend_delete.do?friend_no=${mdto.member_no}">[삭제]</a>
 			</td>
 			</tr>
 	</c:forEach>

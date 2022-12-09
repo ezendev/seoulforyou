@@ -18,6 +18,11 @@
 		order by chat_no desc
 	</select>
 	
+	<!-- 채팅방 최댓값 세기-->
+	<select id="sizeRoom" resultType="int">
+		select max(chat_room) from chat
+	</select>
+		
 	<!-- 채팅내역 상세보기 -->
 	<select id="listMsg" parameterType="chatDTO" resultType="chatDTO">
 		select * from chat
@@ -43,5 +48,11 @@
 			</otherwise>
 		</choose>
 	</update>
+	
+	<delete id="deleteChat" parameterType="java.util.Map">
+		delete from chat
+		where (chat_recv_no = #{friend_no, jdbcType=NUMERIC} and chat_send_no = #{no, jdbcType=NUMERIC}) or
+		 (chat_send_no = #{friend_no, jdbcType=NUMERIC} and chat_recv_no = #{no, jdbcType=NUMERIC})
+	</delete>
 	
 </mapper>
