@@ -9,25 +9,12 @@
 <head>
 <title>마이페이지</title>
 <script>
-function getselect() {
-    const value = e.value;
-
-    document.getElementById('result').innerText = value;
-   
-}
+<%-- 모달창 끄면 이전 입력 정보 사라짐 --%>
 $('.modal').on('hidden.bs.modal', function (e) {
     console.log('modal close');
   $(this).find('form')[0].reset()
 });
 </script>
-<style type="text/css">
-const myModal = document.getElementById('myModal')
-const myInput = document.getElementById('myInput')
-
-myModal.addEventListener('shown.bs.modal', () => {
-  myInput.focus()
-})
-</style>
  <link rel="stylesheet" href="resources/css/bootstrap.min.css">
 </head>
 <body>
@@ -47,7 +34,6 @@ myModal.addEventListener('shown.bs.modal', () => {
         </a>
       </li>
       <li>
-        <%-- 클릭시 mypage_route 페이지로 넘어가게 수정 <a href="mypage_route.do"> --%>
         <a class="nav-link js-scroll-trigger" href="mypage_route.do">
           <svg class="bi pe-none me-2" width="16" height="16"></svg>
           나의 여행 루트
@@ -95,6 +81,7 @@ myModal.addEventListener('shown.bs.modal', () => {
 		<div class="col-md-9">
         <h3>프로필</h3>
         <table class="table table-sm">
+        <c:forEach var="mdto" items="${myMember }">
         <tr>
         <th>아이디</th>
         <td>member_id</td>
@@ -111,6 +98,7 @@ myModal.addEventListener('shown.bs.modal', () => {
         <th>전화번호</th>
         <td>member_hp</td>
         </tr>
+        </c:forEach>
         </table>
        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#profile_update">
                  수정

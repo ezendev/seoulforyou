@@ -1,21 +1,21 @@
 package com.ezdev.sfy.mypage;
 
 public class SearchCriteria extends Criteria {
-   private String searchType = "";
-   private String keyword= "";
+   private String msearchType = "";
+   private String mkeyword= "";
 
    
-   public String getSearchType() {
-	return searchType;
+   public String getMsearchType() {
+	return msearchType;
 }
-public void setSearchType(String searchType) {
-	this.searchType = searchType;
+public void setMsearchType(String msearchType) {
+	this.msearchType = msearchType;
 }
-public String getKeyword() {
-	return keyword;
+public String getMkeyword() {
+	return mkeyword;
 }
-public void setKeyword(String keyword) {
-	this.keyword = keyword;
+public void setMkeyword(String mkeyword) {
+	this.mkeyword = mkeyword;
 }
    
    

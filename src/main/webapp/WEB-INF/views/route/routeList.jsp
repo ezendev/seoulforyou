@@ -24,7 +24,7 @@
 	<!-- row -->
 	<div class="row row-cols-1 row-cols-lg-4 row-cols-md-2 row-cols-sm-2 g-4 mx-0">
 	  <div class="col 숙소">
-	  	<a data-bs-toggle="modal" data-bs-target="#tourView">
+	  	<a data-bs-toggle="modal" data-bs-target="#routeView">
 		    <div class="card h-100">
 		      <img src="resources/img/111.jpeg" class="card-img-top" alt="..."
 		      style="width:100%   ; height:20vw ; object-fit:cover;">
@@ -124,7 +124,9 @@
       			<div class="mb-3">
 					<textarea class="form-control" id="exampleFormControlTextarea1" rows="7"></textarea><br>
 					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-  					<button class="btn btn-primary" type="submit">Button</button>
+  					<f:hidden path="review_no" />
+                    <f:hidden path="member_no" />
+  					<button class="btn btn-primary" type="submit">등록</button>
 					</div><br><br>
 			<!--내가 등록한 리뷰? --> 
 				<h5	align="left">내가 등록한 리뷰?</h5>

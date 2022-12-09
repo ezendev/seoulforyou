@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.ezdev.sfy.dto.reviewMapper">
+<select id="getUserByNo" resultType="Integer">
+select member_id from member where member_no = #{member_no}
+</select>
+
+
+
+
+
+
+
+</mapper>

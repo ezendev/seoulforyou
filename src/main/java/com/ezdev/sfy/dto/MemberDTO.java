@@ -8,6 +8,7 @@ public class MemberDTO {
 	private String member_email;
 	private String member_hp;
 	private String member_regdate;
+	
 	public int getMember_no() {
 		return member_no;
 	}
