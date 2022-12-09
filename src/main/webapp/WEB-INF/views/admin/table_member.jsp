@@ -5,6 +5,25 @@
 <!-- 회원리스트입니다 -->
 <html lang="en">
     <head>
+ 
+ <style>
+ .modalBackground { 
+  opacity: 0.9;
+  background-color: gray;
+ } 
+ </style>
+ 
+ <script>
+ function valueSetting(name,id,passwd,email,hp){
+	 $('#name').attr("value", name);
+	 $('#id').attr("value", id);
+	 $('#passwd').attr("value", passwd);
+	 $('#email').attr("value", email);
+	 $('#hp').attr("value", hp);
+ }
+ 
+ 
+ </script>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -14,7 +33,12 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="resources/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-    </head>
+       
+		 <link href="resources/css/bootstrap.min.css" rel="stylesheet">
+	     <script src="resources/js/jquery-3.6.1.min.js"></script>
+		 <script src="resources/js/bootstrap.min.js"></script>
+	
+</head>
     <!-- 상단 네비바 구성 -->
      <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -124,21 +148,7 @@
                                      	<td colspan="6">등록된 회원이 없습니다</td>
                                      	</tr>
                                      </c:if>
-                                     
-                                     <tbody>
-                                      <c:forEach var="memberDTO" items= "${listMember2}">	
-                                        <tr>
-                                            <td>${dto.member_no}</td>
-                                            <td>${dto.member_name}</td>
-                                            <td>${dto.member_id}</td>
-                                            <td>${dto.member_passwd}</td>
-                                            <td>${dto.member_email}</td>
-                                            <td>${dto.member_hp}</td>
-                                        </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                    
-                                    <tfoot>
+                                      <tfoot>
                                         <tr>
                                             <th>번호</th>
                                             <th>이름</th>
@@ -148,7 +158,23 @@
                                             <th>전화번호</th>
                                         </tr>
                                     </tfoot>
-                                   
+                                    
+                                     <tbody>
+                                         <c:forEach var="dto" items= "${listMember2}">	
+                                        <tr>
+                                            <td>${dto.member_no}</td>
+                                            <td class="member_name" data-bs-toggle="modal" data-bs-target="#member_name" 
+                                             style="color:blue"> <a onclick="valueSetting('${dto.member_name}',
+                                             '${dto.member_id}','${dto.member_passwd}','${dto.member_email}','${dto.member_hp}',)
+                                             "><strong>${dto.member_name}
+                                             </strong></a></td>
+                                            <td>${dto.member_id}</td>
+                                            <td>${dto.member_passwd}</td>
+                                            <td>${dto.member_email}</td>
+                                            <td>${dto.member_hp}</td>
+                                        </tr>
+                                        </c:forEach> 
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -241,5 +267,59 @@
 					<!-- 모달 dialog끝입니다 -->
 				   </div>
 		                     <!-- 관리자등록 모달 내용 끝입니다 -->
-    </body>
+		   
+		     <!-- 회원상세보기 모달창입니다 -->
+		     <div class="modal fade modalBackground modalPopupWrap" id="member_name">
+               <div class="modal-dialog">
+             
+			  <div class="modal-content">
+			  <div class="modal-header justify-content-center">
+			  		<h1 class="h3 fw-normal">관리자 정보 수정</h1> 
+			  </div>
+			   <div class="modal-body ">
+			   <form name="f" action="member_update.do" method="post">
+			   <input type="hidden" id="no" value="${member_no}">
+			  			<div class="mb-3">
+						<label class="form-label">이름</label> 				
+						<input type="text" class="form-control" id="name"  readonly>
+						</div>
+			   
+						<div class="mb-3">
+						<label class="form-label">아이디</label> 				
+						<input type="text" class="form-control" id="id" name="member_id" value="${member_id}">
+						</div>
+						
+						<div class="mb-3">
+						<label class="form-label">비밀번호</label>
+						<input type="text" class="form-control" id="passwd" name="member_passwd" value="${member_passwd}">
+						</div>
+					
+						<div class="mb-3">
+						<label>이메일</label>
+						<input type="email" class="form-control" id="email" name="member_email" value="${member_email}">
+						</div>					
+				
+						<div class="mb-3">
+						<label class="form-label">전화번호</label>
+						<input type="text" class="form-control" id="hp" name="member_hp" value="${member_hp}">
+						</div>
+					
+						<div class="mb-3">
+						<a type="button" style="color:white" class="w-100 btn btn-secondary btn-lg" 
+						data-bs-dismiss="modal">취소</a>
+						</div>	
+
+						<div class="mb-3">
+						<button class="w-100 btn btn-lg btn-primary" type="submit"  >수정</button>
+						</div>
+
+						<div class="mb-3">
+						<button class="w-100 btn btn-lg btn-danger" type="submit">삭제</button>
+						</div>
+						</form>
+					</div>
+			  	 </div>
+			  </div>
+			</div>
+	    </body>
 </html>

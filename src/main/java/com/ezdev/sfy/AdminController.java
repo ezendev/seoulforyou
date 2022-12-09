@@ -2,6 +2,7 @@ package com.ezdev.sfy;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -28,6 +28,8 @@ public class AdminController {
 	
 	@Autowired
 	AdminMapper adminMapper;
+	
+	@Autowired
 	MemberMapper memberMapper;
 
 	
@@ -61,7 +63,24 @@ public class AdminController {
 	public String tableMember(HttpServletRequest req) {
 		List<MemberDTO> list = memberMapper.listMember2();
 		req.setAttribute("listMember2", list);
+		System.out.println(list);
 		return "admin/table_member";
+	}
+	@RequestMapping("/member_update.do")
+	public String updateMember(HttpServletRequest req, @ModelAttribute MemberDTO dto,
+			BindingResult result) {
+		int res = memberMapper.updateMember2(dto);
+		System.out.println(res);
+		
+		if(res>0) {
+			req.setAttribute("msg", "관리자 정보 수정완료");
+			req.setAttribute("url", "table_member.do");
+			
+		}else{
+			req.setAttribute("msg", "관리자 정보 수정실패 힘내자");
+			req.setAttribute("url", "table_member.do");
+		}
+		return "forward:message.jsp";
 	}
 	
 	@RequestMapping("/table_qna.do")

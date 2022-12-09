@@ -2,8 +2,6 @@ package com.ezdev.sfy.service;
 
 import java.util.List;
 
-import java.util.Map;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +17,12 @@ public class MemberMapper {
 		
 	public int insertMember(MemberDTO dto) {
 		return  sqlSession.insert("insertMember", dto);
+	}
+	public List<MemberDTO> listMember2(){
+		return sqlSession.selectList("listMember2");
+	}
+	public int updateMember2(MemberDTO dto) {
+		return sqlSession.update("updateMember2", dto);
 	}
 	/*
 	public List<MemberDTO> listMember(){
@@ -48,14 +52,6 @@ public class MemberMapper {
 	public MemberDTO getMemberId(String member_id){
 		return sqlSession.selectOne("getMemberId", member_id);
 	}
-<<<<<<< HEAD
-	public int idCheck(String member_id) {
-		return sqlSession.selectOne("idCheck", member_id);
-	}
-	public List<MemberDTO> listMember2(){
-		return sqlSession.selectList("listMember2");
-	}
-=======
->>>>>>> branch 'main' of https://github.com/ezendev/seoulforyou.git
+	
 }
 
