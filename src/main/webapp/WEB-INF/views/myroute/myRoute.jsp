@@ -3,8 +3,6 @@
 <!-- my_route_1.jsp -->
 <%@ include file="../top.jsp"%>
 
-
-
 <!-- main 1번 filter -->
 <form name="mr" action="myRouteAfter.do" method="post">
  <form name="mrs" action="tourFind.do" method="post">

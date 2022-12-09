@@ -120,12 +120,11 @@ public class TourController {
 		List<TourDTO> find = tourMapper.findTour(map);
 		
 			session.setAttribute("findList", find);
-			req.setAttribute("searchType", map.get("searchType"));
-			req.setAttribute("trip_thema", map.get("trip_thema"));
-			req.setAttribute("region", map.get("region"));
-			req.setAttribute("startDate", map.get("startDate"));
-			req.setAttribute("endDate", map.get("endDate"));
-		return "myroute/myRoute";
+			session.setAttribute("searchType", map.get("searchType"));
+			session.setAttribute("trip_thema", map.get("trip_thema"));
+			session.setAttribute("region", map.get("region"));
+			session.setAttribute("startDate", map.get("startDate"));
+			session.setAttribute("endDate", map.get("endDate"));
+			return "myroute/myRoute";
 	}
-
 }
