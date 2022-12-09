@@ -13,5 +13,40 @@ insert into friend values(friend_seq.nextval, #{friend_id}, #{friend_name})
 <delete id="deleteFriend" parameterType="int">
 delete from friend where friend_num = #{friend_num}
 </delete>
-
+<select id="listMypageMember" parameterType="java.util.Map" resultType="memberDTO">
+ select * from (select rownum rn, A.* from 
+			(select * from member order by member_no asc)A) 
+				where rn between #{start} and #{end}
+</select>
+<select id="listMypageMemberCount" resultType="Integer">
+ select count(*) from member
+</select>
+<select id="findMember" parameterType="java.util.Map" resultType="memberDTO">
+		${sql}
+	</select>
+<!-- <sql id="search"> <include refid="search"/>
+ <if test="msearchType!=null"> 
+  <if test="msearchType == 'id'.toString()">where member_id like '%' || #{mkeyword} || '%'</if>
+  <if test="msearchType == 'name'.toString()">where member_name like '%' || #{mkeyword} || '%'</if>
+ </if>
+</sql> -->
+<!-- <select id="listRoutetest" resultType="mypageDTO" parameterType="com.ezdev.sfy.mypage.Criteria">
+ select * 
+ from (select row_number() over(order by routetest_no desc) as rnum, lr.* from routetest lr)
+ routetest
+ where rnum between #{rowStart} and #{rowEnd}
+</select>
+<select id="routetestCount" resultType="int">
+ select count(*) from routetest
+</select>
+<insert id="insertRoutetest" parameterType="mypageDTO">
+insert into routetest values(routetest_seq.nextval, #{routetest_subject}, sysdate)
+</insert>-->
+<update id="updateFavorite" parameterType="java.util.Map" >
+update mypage
+	set mypage_favorite_tour =
+	case when mypage_favorite_tour is null then #{tour_no}
+		else  mypage_favorite_tour||','||#{tour_no} end 
+	where mem_no = #{no}
+</update>
 </mapper>

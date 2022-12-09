@@ -13,6 +13,9 @@ public class ChatDTO {
 	// 현재 사용자의 메세지 상대 no를 담는다.
 	private int other_no;
 	
+	// 현재 사용자의 메세지 상대 name을 담는다.
+	private String other_name;
+	
 	// 현재 사용자 no
 	private int no;
 	
@@ -113,6 +116,14 @@ public class ChatDTO {
 
 	public void setChat_recv_no(int chat_recv_no) {
 		this.chat_recv_no = chat_recv_no;
+	}
+
+	public String getOther_name() {
+		return other_name;
+	}
+
+	public void setOther_name(String other_name) {
+		this.other_name = other_name;
 	}
 	
 	
