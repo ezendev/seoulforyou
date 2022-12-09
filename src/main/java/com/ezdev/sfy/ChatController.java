@@ -56,7 +56,7 @@ public class ChatController {
 			map.put("friends", list);
 			
 			List<MemberDTO> friend_list = mypageMapper.listFriend(map);
-			req.setAttribute("listFriend", friend_list);
+			session.setAttribute("listFriend", friend_list);
 		}
 		
 		req.setAttribute("chatList", chat_list);
@@ -115,8 +115,42 @@ public class ChatController {
 	//새 쪽지 시작
 	@RequestMapping("/startChat.do")
 	public String startChat(HttpServletRequest req, HttpSession session) {
-		System.out.println("야호");
-		return null;
+
+		int no = (int) session.getAttribute("nowUserNo");
+		int other_no = Integer.parseInt(req.getParameter("friend_no"));
+		
+		ChatDTO dto = new ChatDTO();
+		dto.setNo(no);
+		dto.setOther_no(other_no);
+		
+		//메세지 내용을 가져온다.
+		ArrayList<ChatDTO> list = chatMapper.listMsg(dto);
+		
+		//만약 만들어진 방이 있다면
+		if(list.size() != 0) {
+			
+			ArrayList<ChatDTO> chat_list = (ArrayList)chatMapper.listChat(dto);
+			req.setAttribute("chatList", chat_list);
+			
+			return "chat/chat_list";
+			
+		}else { //만약 만들어진 방이 없다면
+			
+			dto.setChat_content(" ");
+			dto.setChat_recv_no(other_no);
+			dto.setChat_send_no(no);
+			
+			int res = chatMapper.sendChat(dto);
+
+			if(res > 0) {
+				return "chat/chat_list";
+			}else {
+				req.setAttribute("msg", "채팅 보내기 실패!");
+				req.setAttribute("url", "/chat.do");
+				return "message.jsp";
+			}
+		}
+
 	}
 
 	

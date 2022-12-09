@@ -60,6 +60,11 @@ public class ChatMapper {
 	}
 
 	public int sendChat(ChatDTO dto) {
+		if(dto.getChat_room()==0) { //방이 없다면(메시지 처음 보낸다면)
+			int max_room = sqlSession.selectOne("sizeRoom");
+			dto.setChat_room(max_room+1);
+		}
+		
 		return sqlSession.insert("sendChat", dto);
 	}
 

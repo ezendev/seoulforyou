@@ -79,16 +79,16 @@
                <!-- Modal body -->
                <div class="modal-body d-flex justify-content-center">
                		<table class="table table-hover">
-               			<c:if test="${empty listFriend}">
-               				<tr>
+               			<c:if test="${empty sessionScope.listFriend}">
+               				<tr onClick="location.href='startChat.do?friend_no=${fdto.member_no}'">
 								<td colspan="2">등록된 친구가 없습니다.</td>
 							</tr>
                			</c:if>
-               			<c:forEach var="mdto" items="${listFriend}">
-	               			<tr onclick="javascript:startChat()">
-		               			<th>${mdto.member_id}</th>
-		               			<td>${mdto.member_name}</td>
-		               		</tr>
+               			<c:forEach var="fdto" items="${sessionScope.listFriend}">
+		               			<tr onClick="location.href='startChat.do?friend_no=${fdto.member_no}'">
+			               			<th>${fdto.member_id}</th>
+			               			<td>${fdto.member_name}</td>
+			               		</tr>
 	               		</c:forEach>
                		</table>
                </div>
@@ -99,8 +99,8 @@
 
 <script>
 	//쪽지 새로 시작하기
-	function startChat(){
-		location.href="startChat.do"
+	function startChat(friend_no){
+		location.href="/startChat.do?friend_no="+friend_no;
 	}
 </script>
 
