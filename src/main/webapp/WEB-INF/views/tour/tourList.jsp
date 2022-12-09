@@ -161,7 +161,6 @@
 
 </div>
 <script>
-<<<<<<< HEAD
 
 // 각 여행지 눌렀을 때 해당 dto값을 모달영역에 띄워주는 함수
 function valueSetting(name, postal, addr, hp, open_time, open_day, close_day, traffic){
@@ -174,12 +173,7 @@ function valueSetting(name, postal, addr, hp, open_time, open_day, close_day, tr
 	$('#open_day').val(open_day);	$('#open_day').show();
 	$('#close_day').val(close_day);	$('#close_day').show();
 	$('#traffic').val(traffic);	$('#traffic').show();
-=======
-function makeFavorite(){
-	const no = $('.no').val();
-	$('.f_no').val(no);
-	document.f2.submit();
->>>>>>> branch 'main' of https://github.com/ezendev/seoulforyou.git
+
 	
 }
 </script>
