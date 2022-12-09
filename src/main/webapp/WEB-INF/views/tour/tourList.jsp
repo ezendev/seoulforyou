@@ -21,21 +21,21 @@
 		</div>
 	</div>
 	
-	<form name="f" method="post" action="tourList.do">
-		<input type="hidden" name="tourType">
-	</form>
+	<form id="tourForm" name="f" method="post" action="tourList.do">
+      <input type="hidden" id="tourType" name="tourType">
+   </form>
 	
 	<!-- 여행지 리스트 -->
 	<div class="tourrow row row-cols-1 row-cols-lg-4 row-cols-md-2 row-cols-sm-2 g-4 mx-0">
 		<c:forEach var="tdto" items="${tourList}">
 			<!-- 여행지 -->
 			<div class="tourcol col ${tdto.tour_type}">
-				<a onclick="valueSetting('${tdto.tour_name}','${tdto.tour_postal}','${tdto.tour_addr}','${tdto.tour_hp}'
-											,'${tdto.tour_open_time}','${tdto.tour_open_day}','${tdto.tour_close_day}','${tdto.tour_traffic}')"
+				<a onclick="valueSetting('${tdto.tour_no}', '${tdto.tour_name}','${tdto.tour_postal}','${tdto.tour_addr}','${tdto.tour_hp}'
+											)"
 					data-bs-toggle="modal" data-bs-target="#tourView">
 			    	<div class="card h-100">
 			    		<!-- 여행지 이미지 -->
-				    	<img src="resources/img/111.jpeg" class="card-img-top" alt="..."
+				    	<img src="resources/img/seoul2.jpg" class="card-img-top" alt="..."
 				    		style="width:100%; height:20vw; object-fit:cover;">
 						<!-- 여행지 -->
 			    		<div class="tour-card-body card-body">
@@ -66,7 +66,14 @@
 		      <!-- Modal Header -->
 		      <div class="modal-header">
 		      		<!-- 즐겨찾기 이미지 -->
-			 		<a href="#" id="favorite" title="즐겨찾기 등록"><img src="resources/icon/star-fill.svg"></a>
+			 		<iframe id="iframe1" name="iframe1" style="display:none"></iframe>
+			 		<form name="f2" action="mypage_favorite.do" method="post" target="iframe1">
+			 		
+			 		<input name="f_no" class="f_no" type="hidden" />	 		
+			 		
+					<button type="button"   onclick="javascript:makeFavorite()"><img src="resources/icon/star.svg" alt="" ></button>
+					
+			 	</form>
 		      </div>
 		      
 		      <!-- Modal body -->
@@ -74,17 +81,13 @@
 		     	 <div class="container-fluid">
 		  			<div class="row">
 		    			<div class="col-lg-6">
-		     				 <p><img src="resources/img/k1.jpg" class="rounded float-start" alt="" width="100%" height="260"></p>
+		     				 <p><img src="resources/img/seoul2.jpg" class="rounded float-start" alt="" width="100%" height="260"></p>
 		    			</div>
 		   			 	<div class="col-sm-12 col-md-12 col-lg-6">
 			     			 <p><img src="resources/icon/geo-alt.svg">이름: <input id="name" style="display:none" /></p>
 			     			 <p><img src="resources/icon/clock.svg">우편번호: <input id="postal" style="display:none" /></p>
 			     			 <p><img src="resources/icon/clock.svg"> 주소: <input id="addr" style="display:none" /></p>
 			     			 <p><img src="resources/icon/telephone.svg"> 전화번호: <input id="hp" style="display:none" /></p>
-			     			 <p><img src="resources/icon/house-door.svg"> 운영시간: <textarea id="open_time" style="display:none"></textarea></p>
-			     			 <p><img src="resources/icon/house-door.svg"> 운영요일: <textarea id="open_day" style="display:none"></textarea></p>
-			     			 <p><img src="resources/icon/house-door.svg"> 휴무일: <textarea id="close_day" style="display:none"></textarea></p>
-			     			 <p><img src="resources/icon/shop-window.svg"> 교통정보: <textarea id="traffic" style="display:none"></textarea></p>
 		    			</div>
 		 		 	</div>
 				</div>
@@ -157,9 +160,8 @@
 	</div>
 
 </div>
-
-
 <script>
+<<<<<<< HEAD
 
 // 각 여행지 눌렀을 때 해당 dto값을 모달영역에 띄워주는 함수
 function valueSetting(name, postal, addr, hp, open_time, open_day, close_day, traffic){
@@ -172,44 +174,38 @@ function valueSetting(name, postal, addr, hp, open_time, open_day, close_day, tr
 	$('#open_day').val(open_day);	$('#open_day').show();
 	$('#close_day').val(close_day);	$('#close_day').show();
 	$('#traffic').val(traffic);	$('#traffic').show();
+=======
+function makeFavorite(){
+	const no = $('.no').val();
+	$('.f_no').val(no);
+	document.f2.submit();
+>>>>>>> branch 'main' of https://github.com/ezendev/seoulforyou.git
 	
 }
 </script>
 
+
 <script>
-$(document).ready(function() {
-    $('#favorite').on('click', function(e) {
-        var bookmarkURL = window.location.href;
-        var bookmarkTitle = document.title;
-        var triggerDefault = false;
-        if (window.sidebar && window.sidebar.addPanel) {
-            // Firefox version < 23
-            window.sidebar.addPanel(bookmarkTitle, bookmarkURL, '');
-        } else if ((window.sidebar && (navigator.userAgent.toLowerCase().indexOf('firefox') > -1)) || (window.opera && window.print)) {
-            // Firefox version >= 23 and Opera Hotlist
-            var $this = $(this);
-            $this.attr('href', bookmarkURL);
-            $this.attr('title', bookmarkTitle);
-            $this.attr('rel', 'sidebar');
-            $this.off(e);
-            triggerDefault = true;
-        } else if (window.external && ('AddFavorite' in window.external)) {
-            // IE Favorite
-            window.external.AddFavorite(bookmarkURL, bookmarkTitle);
-        } else {
-            // WebKit - Safari/Chrome
-            alert((navigator.userAgent.toLowerCase().indexOf('mac') != -1 ? 'Cmd' : 'Ctrl') + '+D 키를 눌러 즐겨찾기에 등록하실 수 있습니다.');
-        }
-        return triggerDefault;
-    });
-});
+
+//각 여행지 눌렀을 때 해당 dto값을 모달영역에 띄워주는 함수
+function valueSetting(no, name, postal, addr, hp){
+	//모달input에 dto값 설정
+	$('.no').val(no);
+	$('.name').val(name);
+	$('.postal').val(postal);
+	$('.addr').val(addr);
+	$('.hp').val(hp);	
+}
 </script>
+
+
 <script>
-	function searchFilter(event){
-	    const tourType = $("#filterByType option:selected").val();
-	    document.f.tourType.value = tourType;
-	    f.submit();
-	}
+   function searchFilter(event){
+       const tourType = $("#filterByType option:selected").val();
+       $('#tourType').val(tourType);
+       console.log($('#tourType').val());
+       $('#tourForm').submit();
+   }
 </script>
     
 <%@ include file="../bottom.jsp"%>

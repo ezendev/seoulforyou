@@ -14,7 +14,7 @@
 	  		</div>
 	  		<div class="col-7 col-lg-8">
 	  			<!-- 대화상대 이름 -->
-				<h5 id="otherNo" align="left"></h5>
+				<h5 id="other_name" align="left"></h5>
 			</div>
 		</div>
 		
@@ -23,13 +23,13 @@
 			<!-- 대화방 목록 -->
 			<div class="col-5 col-lg-4" style="height:700">
 				<div class="text-bg-light p-3" style="height:100%;">
-					<table class="table table-hover" >
+					<table class="chat_table table table-hover" >
 					<c:forEach var="tmp" items="${chatList}">
 						<c:choose>
 							<c:when test="${tmp.unread > 0}">
 							<!-- 만약 현재사용자가 안읽은 메세지가 있다면 -->
-								<tr class="chat_list_box${tmp.chat_room} unread" onclick="javascript:viewChat(${tmp.other_no}, ${tmp.chat_room})">
-									<th>${tmp.other_no}</th>
+								<tr class="chat_list_box chat_list_box${tmp.chat_room} unread" onclick="javascript:viewChat(${tmp.other_no}, ${tmp.chat_room})">
+									<th>${tmp.other_name}</th>
 									<td>
 										${tmp.chat_content}
 										<span class="badge badge${tmp.chat_room}">${tmp.unread}</span>
@@ -37,8 +37,8 @@
 								</tr>
 							</c:when>
 							<c:otherwise>
-								<tr class="chat_list_box${tmp.chat_room}" onclick="javascript:viewChat(${tmp.other_no}, ${tmp.chat_room})">
-									<th>${tmp.other_no}</th>
+								<tr class="chat_list_box chat_list_box${tmp.chat_room}" onclick="javascript:viewChat(${tmp.other_no}, ${tmp.chat_room})">
+									<th>${tmp.other_name}</th>
 									<td>${tmp.chat_content}</td>
 								</tr>
 							</c:otherwise>
@@ -66,7 +66,7 @@
 	function sendChat(){
 		let content = $('#chatContent').val();
 		content = content.trim();
-		let other_no = $('#otherNo').text();
+		let other_no = $('#otherNo').val();
 		let room_no = $('#roomNo').val();
 		
 		if(content == ""){
@@ -105,10 +105,12 @@
 				chat_room: chat_room
 			},
 			success:function(data){
-				//메세지 내용을 html에 넣는다
+				//메세지 내용을 html에 넣는다.
 				$(".chat_history").html(data);
 				
-				$("#otherNo").text(other_no);
+				//chat_ajax_list의 otherName값을 chat_list에 넣는다.
+				const name = $('#otherName').val();
+				$("#other_name").text(name);
 				
 				//이 함수로 메세지 내용을 가져올때마다 스크롤을 맨아래로 가게 한다.
 				$(".chat_history").scrollTop($(".chat_history")[0].scrollHeight);
@@ -122,6 +124,9 @@
 		$('.chat_list_box'+chat_room).removeClass('unread');
 		// 읽지않은 갯수 뱃지를 지운다.
 		$('.badge'+chat_room).empty();
+		// 채팅방 선택표시를 지우고 현재채팅방을 선택표시한다.
+		$('.chat_table').find('tr.choosed').removeClass('choosed');
+		$('.chat_list_box'+chat_room).addClass('choosed');
 		
 	}
 </script>

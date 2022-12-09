@@ -1,13 +1,27 @@
 @charset "UTF-8";
 
+html{
+	max-height: 80vh;
+	-ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+html::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+
 .chat_history{
-	max-height: 30vw;
+	max-height: 70vh;
 	overflow-x: hidden;
     overflow-y: scroll;
 }
 
+.choosed{
+	background-color: #dee2e6;
+}
+
 .unread{
-	background: paleturquoise;
+	background-color: paleturquoise;
 }
 
 .unread th{

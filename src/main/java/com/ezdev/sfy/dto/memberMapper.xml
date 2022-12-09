@@ -20,6 +20,10 @@
 	<select id="listMember" resultType="memberDTO">
 		select * from member
 	</select>
+	<update id="updateMember" parameterType="memberDTO">
+		update member set member_id=#{member_id}, member_email=#{member_email}, member_name=#{member_name},
+					member_hp=#{member_hp}, where member_no = #{member_no}
+	</update>
 
 
 	<select id="listMember2" resultType="memberDTO">
@@ -43,10 +47,7 @@
 	
 
 	
-	<update id="updateMember" parameterType="memberDTO">
-		update jsp_member set passwd=#{passwd}, email=#{email}, 
-					hp1=#{hp1}, hp2=#{hp2}, hp3=#{hp3} where no = #{no}
-	</update>
+
 	
 	<select id="searchMember" parameterType="java.util.Map" resultType="String">
 		${sql}

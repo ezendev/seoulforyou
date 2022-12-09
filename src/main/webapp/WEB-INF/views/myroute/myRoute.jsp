@@ -3,61 +3,69 @@
 <!-- my_route_1.jsp -->
 <%@ include file="../top.jsp"%>
 
-
 <!-- main 1번 filter -->
-<div class="container text-center clearfix">
 <form name="mr" action="myRouteAfter.do" method="post">
-  <div class="row row-cols-3 g-10 p-5">
+ <form name="mrs" action="tourFind.do" method="post">
+<div class="container text-center clearfix">
+  	<div class="row row-cols-3 g-10 p-5">
     <div class="col-lg-2 col-md-6">
-    	<div id="trip_thema">
+    	<div id="thema">
 		     <select class="form-select" aria-label="Default select example" name="trip_thema" id="trip_thema">
 			  <option selected>#여행테마</option>
-			  <option value="healing">#힐링</option>
-			  <option value="food">#미식</option>
-			  <option value="k-cul">#한류</option>
-			  <option value="attraction">#명소</option>
-			  <option value="shopping">#쇼핑</option>
+			  <option value="healing" <c:if test="${trip_thema=='healing'}">selected</c:if>>#힐링</option>
+			  <option value="food" <c:if test="${trip_thema=='food'}">selected</c:if>>#미식</option>
+			  <option value="k-cul" <c:if test="${trip_thema=='k-cul'}">selected</c:if>>#한류</option>
+			  <option value="attraction" <c:if test="${trip_thema=='attraction'}">selected</c:if>>#명소</option>
+			  <option value="shopping" <c:if test="${trip_thema=='shopping'}">selected</c:if>>#쇼핑</option>
 			</select>
 	    </div>
     </div>
     
     <div class="col-lg-2 col-md-6">
-      <div id="region">
+      <div id="regionSelect">
       <select class="form-select" aria-label="Default select example" name="region" id="region">
 		  <option selected>세부지역(구)</option>
-		  <option value="1">강남구</option>
-		  <option value="2">강동구</option>
-		  <option value="3">강북구</option>
-		  <option value="4">강서구</option>
-		  <option value="5">관악구</option>
-		  <option value="6">광진구</option>
-		  <option value="7">구로구</option>
-		  <option value="8">금천구</option>
-		  <option value="9">노원구</option>
-		  <option value="10">도봉구</option>
-		  <option value="11">동대문구</option>
-		  <option value="12">동작구</option>
-		  <option value="13">마포구</option>
-		  <option value="14">서대문구</option>
-		  <option value="15">서초구</option>
-		  <option value="16">성동구</option>
-		  <option value="17">성북구</option>
-		  <option value="18">송파구</option>
-		  <option value="19">양천구</option>
-		  <option value="20">영등포구</option>
-		  <option value="21">용산구</option>
-		  <option value="22">은평구</option>
-		  <option value="23">종로구</option>
-		  <option value="24">중구</option>
-		  <option value="25">중랑구</option>
+		  <option value="1"<c:if test="${region=='1'}">selected</c:if>>강남구</option>
+		  <option value="2"<c:if test="${region=='2'}">selected</c:if>>강동구</option>
+		  <option value="3"<c:if test="${region=='3'}">selected</c:if>>강북구</option>
+		  <option value="4"<c:if test="${region=='4'}">selected</c:if>>강서구</option>
+		  <option value="5"<c:if test="${region=='5'}">selected</c:if>>관악구</option>
+		  <option value="6"<c:if test="${region=='6'}">selected</c:if>>광진구</option>
+		  <option value="7"<c:if test="${region=='7'}">selected</c:if>>구로구</option>
+		  <option value="8"<c:if test="${region=='8'}">selected</c:if>>금천구</option>
+		  <option value="9"<c:if test="${region=='9'}">selected</c:if>>노원구</option>
+		  <option value="10"<c:if test="${region=='10'}">selected</c:if>>도봉구</option>
+		  <option value="11"<c:if test="${region=='11'}">selected</c:if>>동대문구</option>
+		  <option value="12"<c:if test="${region=='12'}">selected</c:if>>동작구</option>
+		  <option value="13"<c:if test="${region=='13'}">selected</c:if>>마포구</option>
+		  <option value="14"<c:if test="${region=='14'}">selected</c:if>>서대문구</option>
+		  <option value="15"<c:if test="${region=='15'}">selected</c:if>>서초구</option>
+		  <option value="16"<c:if test="${region=='16'}">selected</c:if>>성동구</option>
+		  <option value="17"<c:if test="${region=='17'}">selected</c:if>>성북구</option>
+		  <option value="18"<c:if test="${region=='18'}">selected</c:if>>송파구</option>
+		  <option value="19"<c:if test="${region=='19'}">selected</c:if>>양천구</option>
+		  <option value="20"<c:if test="${region=='20'}">selected</c:if>>영등포구</option>
+		  <option value="21"<c:if test="${region=='21'}">selected</c:if>>용산구</option>
+		  <option value="22"<c:if test="${region=='22'}">selected</c:if>>은평구</option>
+		  <option value="23"<c:if test="${region=='23'}">selected</c:if>>종로구</option>
+		  <option value="24"<c:if test="${region=='24'}">selected</c:if>>중구</option>
+		  <option value="25"<c:if test="${region=='25'}">selected</c:if>>중랑구</option>
 		</select>
       </div>
     </div>
+      
     
     <!-- calendar -->
     <div class="col-lg-6 col-md-6 pt-2">
-     	<input type="text" class="datepicker" value="시작일" id="startDate" name="startDate"> ~
-     	<input type="text" class="datepicker" value="종료일" id="endDate" name="endDate">
+		<c:if test="${startDate =='시작일' || endDate =='종료일'}">
+       		<input type="text" class="datepicker" value="시작일" id="startDate" name="startDate"> ~
+     		<input type="text" class="datepicker" value="종료일" id="endDate" name="endDate">
+		</c:if>
+    	<c:if test="${startDate != '시작일' && endDate != '종료일'}">
+    			<input type="text" class="datepicker" value="${startDate}" id="startDate" name="startDate"> ~
+	     		<input type="text" class="datepicker" value="${endDate}" id="endDate" name="endDate">
+    	</c:if>
+
      		<script>
      		$.datepicker.setDefaults({
      			  dateFormat: 'yy-mm-dd',
@@ -83,8 +91,8 @@
     	<input class="btn btn-outline-dark" type="submit" value="저장">
     </div>
     </div>
-	</form>
-  </div>
+
+</div>
 
 <!-- main 2번 filter -->
 <div class="container text-center clearfix">
@@ -104,7 +112,6 @@
 	<!-- search panel -->
 		<div class="tab-content" id="nav-tabContent">
 		  <div class="tab-pane fade show active" id="search" role="tabpanel" aria-labelledby="search-tab" tabindex="0" style="overflow:scroll; height:600px">
-			<form name="mrs" action="tourFind.do" method="post">
 		        <select class="form-select" aria-label="Default select example" name="searchType" id="searchType">
 				  <option value="0" selected>여행지 목록</option>
 				  <option value="1" <c:if test="${searchType=='1'}">selected</c:if>>문화</option>
@@ -114,9 +121,18 @@
 				  <option value="5" <c:if test="${searchType=='5'}">selected</c:if>>숙소</option>
 				 </select>
 		        <input type="text" name="keyword">
-		        <button class="btn btn-outline-success btn-sm" type="submit">GO!</button>
-			</form>
+		        <button class="btn btn-outline-success btn-sm" type="submit" formaction="tourFind.do">GO!</button>
 			
+			<script>
+			//enter키 막음
+				document.addEventListener('keydown', function(event){
+					if(event.keyCode ===13){
+						event.preventDefault();
+						};
+					}, true);
+			
+				
+			</script>
 		
 		    <!-- 검색항목이 뜨는 부분 -->
 		  <!-- 카드를 누르면 일정 list에 추가 -->
@@ -211,5 +227,7 @@
      </div>
   </div>
 </div>
+</form>
+</form>
 
 <%@ include file="../bottom.jsp"%>

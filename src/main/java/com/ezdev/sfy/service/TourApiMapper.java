@@ -43,14 +43,6 @@ public class TourApiMapper {
 			String name = (String)objectRow.get("POST_SJ");			
 			//전화번호
 			String hp = (String)objectRow.get("CMMN_TELNO");
-			//운영시간
-			String open_time = (String)objectRow.get("CMMN_USE_TIME");
-			//운영요일
-			String open_day = (String)objectRow.get("CMMN_BSNDE");
-			//휴무일
-			String close_day = (String)objectRow.get("CMMN_RSTDE");
-			//교통정보
-			String traffic = (String)objectRow.get("CMMN_RSTDE");
 			
 			if(lang.trim().equals("ko")) { //언어가 한글이면
 				if(!addr.replace(" ","").equals("")) { //주소가 존재 하면
@@ -96,10 +88,6 @@ public class TourApiMapper {
 				tdto.setTour_postal(postal);
 				tdto.setTour_addr(addr);
 				tdto.setTour_hp(hp);
-				tdto.setTour_open_time(open_time);
-				tdto.setTour_open_day(open_day);
-				tdto.setTour_close_day(close_day);
-				tdto.setTour_traffic(traffic);
 				
 				// tlist에 tdto 넣기
 				tlist.add(tdto);
@@ -126,14 +114,6 @@ public class TourApiMapper {
 			String name = (String)objectRow.get("BPLCNM");			
 			//전화번호
 			String hp = (String)objectRow.get("SITETEL");
-			//운영시간
-			String open_time = "";
-			//운영요일
-			String open_day = "";
-			//휴무일
-			String close_day = "";
-			//교통정보
-			String traffic = "";
 			
 			// tdto 객체 만들기
 			TourDTO tdto = new TourDTO();
@@ -142,10 +122,6 @@ public class TourApiMapper {
 			tdto.setTour_postal(postal);
 			tdto.setTour_addr(addr);
 			tdto.setTour_hp(hp);
-			tdto.setTour_open_time(open_time);
-			tdto.setTour_open_day(open_day);
-			tdto.setTour_close_day(close_day);
-			tdto.setTour_traffic(traffic);
 			
 			// tlist에 tdto 넣기
 			tlist.add(tdto);
