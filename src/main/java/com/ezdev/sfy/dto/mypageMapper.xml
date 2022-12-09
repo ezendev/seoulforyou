@@ -4,15 +4,39 @@
  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 
 <mapper namespace="com.ezdev.sfy.dto.mypageMapper">
-<select id="listFriend" resultType="mypageDTO">
- select * from friend
+
+<select id="getMyPage" resultType="mypageDTO">
+	select * from mypage where mem_no = #{no}
 </select>
-<insert id="insertFriend" parameterType="mypageDTO">
-insert into friend values(friend_seq.nextval, #{friend_id}, #{friend_name})
-</insert>
-<delete id="deleteFriend" parameterType="int">
-delete from friend where friend_num = #{friend_num}
-</delete>
+
+<select id="listFriend" parameterType="java.util.Map" resultType="memberDTO">
+	select * from member where
+		<foreach collection="friends" item="fr" separator="or">
+				member_no = #{fr,jdbcType=VARCHAR}
+		</foreach>
+</select>
+
+<update id="insertFriendMe" parameterType="java.util.Map" >
+	update mypage
+		set mypage_friend =
+			mypage_friend||#{friend_no}||CHR(044)
+	where mem_no = #{no}
+</update>
+
+<update id="insertFriendYou" parameterType="java.util.Map" >
+	update mypage
+		set mypage_friend =
+			mypage_friend||#{no}||CHR(044)
+	where mem_no = #{friend_no}
+</update>
+
+<update id="deleteFriend" parameterType="java.util.Map">
+	update mypage
+		set mypage_friend =
+		replace(mypage_friend, #{friend_no}||CHR(044), '')
+	where mem_no = #{no}
+</update>
+
 <select id="listMypageMember" parameterType="java.util.Map" resultType="memberDTO">
  select * from (select rownum rn, A.* from 
 			(select * from member order by member_no asc)A) 

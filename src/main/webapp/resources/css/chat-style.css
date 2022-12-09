@@ -10,6 +10,14 @@ html::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
 }
 
+#startChat{
+	color: white;
+	cursor:pointer;
+	background-color: #0d6efd;
+	height: 30%;
+	width: 60%;
+}
+
 .chat_history{
 	max-height: 70vh;
 	overflow-x: hidden;

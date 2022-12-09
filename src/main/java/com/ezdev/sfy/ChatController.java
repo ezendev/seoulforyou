@@ -1,6 +1,9 @@
 package com.ezdev.sfy;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,15 +14,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ezdev.sfy.dto.ChatDTO;
 import com.ezdev.sfy.dto.MemberDTO;
+import com.ezdev.sfy.dto.MyPageDTO;
 import com.ezdev.sfy.service.ChatMapper;
+import com.ezdev.sfy.service.MypageMapper;
 
 
 @Controller
 public class ChatController {
 	@Autowired
 	private ChatMapper chatMapper;
+	@Autowired
+	private MypageMapper mypageMapper;
 
-	//쪽지 페이지 접속 + 대화목록 불러오기
+	//쪽지 페이지 접속 + 대화목록 + 친구목록 불러오기
 	@RequestMapping("/chat.do")
 	public String chat(HttpServletRequest req, HttpSession session) {
 
@@ -29,9 +36,30 @@ public class ChatController {
 		ChatDTO dto = new ChatDTO();
 		dto.setNo(no);
 		
-		ArrayList<ChatDTO> list = (ArrayList)chatMapper.listChat(dto);
+		ArrayList<ChatDTO> chat_list = (ArrayList)chatMapper.listChat(dto);
 		
-		req.setAttribute("chatList", list);
+		// 친구 리스트 불러오기
+			// 로그인한 유저의 mypageDTO에서 친구 불러오기
+		MyPageDTO mdto = mypageMapper.getMyPage(no);
+		String friends = mdto.getMypage_friend();
+
+		if(friends != null) {
+			//콤마를 기준으로 배열에 넣고 mybatis foreach 처리를 위해 리스트에 넣기
+			String[] arr = friends.split(",");
+			List list = new ArrayList();
+			for(int i=0; i<arr.length; i++) {
+				list.add(arr[i]);
+			}
+			
+			//mybatis String 매개변수 처리를 위해 map에 넣기
+			Map<String, Object> map = new HashMap<>();
+			map.put("friends", list);
+			
+			List<MemberDTO> friend_list = mypageMapper.listFriend(map);
+			session.setAttribute("listFriend", friend_list);
+		}
+		
+		req.setAttribute("chatList", chat_list);
 		return "chat/chat_list";
 	}
 	
@@ -57,6 +85,7 @@ public class ChatController {
 		return "chat/chat_ajax_list";
 	}
 	
+	//쪽지 전송
 	@RequestMapping("/chatSubmit.do")
 	public String chatSubmit(HttpServletRequest req, HttpSession session) {
 		int other_no = Integer.parseInt(req.getParameter("other_no"));
@@ -81,6 +110,47 @@ public class ChatController {
 		}
 		
 		
+	}
+	
+	//새 쪽지 시작
+	@RequestMapping("/startChat.do")
+	public String startChat(HttpServletRequest req, HttpSession session) {
+
+		int no = (int) session.getAttribute("nowUserNo");
+		int other_no = Integer.parseInt(req.getParameter("friend_no"));
+		
+		ChatDTO dto = new ChatDTO();
+		dto.setNo(no);
+		dto.setOther_no(other_no);
+		
+		//메세지 내용을 가져온다.
+		ArrayList<ChatDTO> list = chatMapper.listMsg(dto);
+		
+		//만약 만들어진 방이 있다면
+		if(list.size() != 0) {
+			
+			ArrayList<ChatDTO> chat_list = (ArrayList)chatMapper.listChat(dto);
+			req.setAttribute("chatList", chat_list);
+			
+			return "chat/chat_list";
+			
+		}else { //만약 만들어진 방이 없다면
+			
+			dto.setChat_content(" ");
+			dto.setChat_recv_no(other_no);
+			dto.setChat_send_no(no);
+			
+			int res = chatMapper.sendChat(dto);
+
+			if(res > 0) {
+				return "chat/chat_list";
+			}else {
+				req.setAttribute("msg", "채팅 보내기 실패!");
+				req.setAttribute("url", "/chat.do");
+				return "message.jsp";
+			}
+		}
+
 	}
 
 	

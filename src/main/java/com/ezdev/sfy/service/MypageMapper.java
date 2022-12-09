@@ -14,15 +14,20 @@ public class MypageMapper {
 
 	@Autowired
 	private SqlSession sqlSession;
+	
+	public MyPageDTO getMyPage(int no) {
+		return sqlSession.selectOne("getMyPage", no);
+	}
 
-	public List<FriendDTO> listFriend(){
-		return sqlSession.selectList("listFriend");
+	public List<MemberDTO> listFriend(Map<String, Object> map){
+		return sqlSession.selectList("listFriend", map);
 	}
-	public int insertFriend(MemberDTO memberdto) {
-		return sqlSession.insert("insertFriend", memberdto);
+	public int insertFriend(Map<String, Object> map) {
+		sqlSession.insert("insertFriendMe", map);
+		return sqlSession.insert("insertFriendYou", map);
 	}
-	public int deleteFriend(int friend_num) {
-		return sqlSession.delete("deleteFriend", friend_num);
+	public int deleteFriend(Map<String, Integer> map) {
+		return sqlSession.delete("deleteFriend", map);
 	}
 	public List<MemberDTO> listMypageMember(int startRow, int endRow){
 		Map<String, Integer> map = new Hashtable<>();

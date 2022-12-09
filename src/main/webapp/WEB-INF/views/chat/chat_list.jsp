@@ -45,6 +45,10 @@
 						</c:choose>
 					</c:forEach>
 					</table>
+					<button data-bs-toggle="modal" data-bs-target="#friendsModal"
+						type="button" class="btn btn-outline-primary me-2" style="width:100%">
+						새 쪽지 보내기
+					</button>
 		   		</div>
 			</div>
 			<!-- 대화내역 상세보기 -->
@@ -61,6 +65,45 @@
 		</div>
 	</div>
 </div>
+
+<!-- 친구목록- 새 채팅시작 모달 -->
+<div class="modal fade" id="friendsModal">
+       <div class="modal-dialog">
+          <div class="modal-content">
+          
+               <!-- Modal Header -->
+               <div class="modal-header d-flex justify-content-center">
+               	<h5>친구목록</h5>
+               </div>
+            
+               <!-- Modal body -->
+               <div class="modal-body d-flex justify-content-center">
+               		<table class="table table-hover">
+               			<c:if test="${empty sessionScope.listFriend}">
+               				<tr onClick="location.href='startChat.do?friend_no=${fdto.member_no}'">
+								<td colspan="2">등록된 친구가 없습니다.</td>
+							</tr>
+               			</c:if>
+               			<c:forEach var="fdto" items="${sessionScope.listFriend}">
+		               			<tr onClick="location.href='startChat.do?friend_no=${fdto.member_no}'">
+			               			<th>${fdto.member_id}</th>
+			               			<td>${fdto.member_name}</td>
+			               		</tr>
+	               		</c:forEach>
+               		</table>
+               </div>
+            
+      </div>
+      </div>
+   </div>
+
+<script>
+	//쪽지 새로 시작하기
+	function startChat(friend_no){
+		location.href="/startChat.do?friend_no="+friend_no;
+	}
+</script>
+
 <script>
 	// 쪽지 보내기
 	function sendChat(){
