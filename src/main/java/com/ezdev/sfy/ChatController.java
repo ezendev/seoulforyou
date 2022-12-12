@@ -118,6 +118,7 @@ public class ChatController {
 
 		int no = (int) session.getAttribute("nowUserNo");
 		int other_no = Integer.parseInt(req.getParameter("friend_no"));
+		String content = req.getParameter("content");
 		
 		ChatDTO dto = new ChatDTO();
 		dto.setNo(no);
@@ -125,18 +126,32 @@ public class ChatController {
 		
 		//메세지 내용을 가져온다.
 		ArrayList<ChatDTO> list = chatMapper.listMsg(dto);
+
+		int chat_room = 0;
+		for(ChatDTO to : list) {
+			chat_room = to.getChat_room();
+		}
 		
 		//만약 만들어진 방이 있다면
 		if(list.size() != 0) {
 			
+			dto.setChat_content(content);
+			dto.setChat_recv_no(other_no);
+			dto.setChat_send_no(no);
+			dto.setChat_room(chat_room);
+			int res = chatMapper.sendChat(dto);
+			
 			ArrayList<ChatDTO> chat_list = (ArrayList)chatMapper.listChat(dto);
 			req.setAttribute("chatList", chat_list);
+
+			
+			
 			
 			return "chat/chat_list";
 			
 		}else { //만약 만들어진 방이 없다면
 			
-			dto.setChat_content("첫 메세지!");
+			dto.setChat_content(content);
 			dto.setChat_recv_no(other_no);
 			dto.setChat_send_no(no);
 			

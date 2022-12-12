@@ -91,10 +91,12 @@
 							</tr>
                			</c:if>
                			<c:forEach var="fdto" items="${sessionScope.listFriend}">
-		               			<tr onClick="location.href='startChat.do?friend_no=${fdto.member_no}'">
+		               			<tr onclick="javascript:nextModal(${fdto.member_no})"
+		               				data-bs-toggle="modal" data-bs-target="#friendsNextModal"
+		               			>
 			               			<th>${fdto.member_id}</th>
 			               			<td>${fdto.member_name}</td>
-			               		</tr>
+			               		</tr>			               		
 	               		</c:forEach>
                		</table>
                </div>
@@ -103,7 +105,37 @@
       </div>
    </div>
 
+<!-- 쪽지 보내기- 새 채팅시작 모달 next -->
+<div class="modal fade" id="friendsNextModal">
+       <div class="modal-dialog">
+          <div class="modal-content">
+          
+               <!-- Modal Header -->
+               <div class="modal-header d-flex justify-content-center">
+               	<h5>쪽지 보내기</h5>
+               </div>
+            
+               <!-- Modal body -->
+               <div class="modal-body d-flex justify-content-center">
+               		<form id="chatF" method="post" action="startChat.do">
+               			<textarea name="content" placeholder="내용을 입력하세요."></textarea>
+               			<input name="friend_no" type="hidden" id="friend_no"/>
+               			<button type="submit">전송</button>
+               		</form>
+               		
+               </div>
+            
+      	</div>
+      </div>
+   </div>
+
 <script>
+	function nextModal(member_no){
+		$('#friendsModal').modal('hide');
+		$('#friend_no').val(member_no);
+		
+	}
+
 	//이미 있는 대화방의 친구와 쪽지를 시작하면
 	$(document).ready(function selectChat(){
 		var name = new Request("friend_no");
@@ -118,10 +150,6 @@
 		
 	})
 
-	//쪽지 새로 시작하기
-	function startChat(friend_no){
-		location.href="/startChat.do?friend_no="+friend_no;
-	}
 </script>
 
 <script>
