@@ -1,10 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!-- my_route_1.jsp -->
 <%@ include file="../top.jsp"%>
-
 <script>
-	function route_check(){
+		//enter키 막음
+		document.addEventListener('keydown', function(event){
+			if(event.keyCode ===13){
+				event.preventDefault();
+				};
+			}, true);
+	
+		
+		function route_check(){
 		if(mr.trip_thema.value==""){
 			alert("테마를 선택해주세요")
 			mr.trip_thema.focus()
@@ -32,13 +40,13 @@
 </script>
 
 <!-- main 1번 filter -->
-<form name="mr" action="myRouteAfter.do" method="post">
+<form name="mr" action="myroute_editRoute_after.do" method="post">
 <div class="container text-center clearfix">
   	<div class="row row-cols-3 g-10 p-5">
     <div class="col-lg-2 col-md-6">
     	<div id="thema">
 		     <select class="form-select" aria-label="Default select example" name="trip_thema" id="trip_thema">
-			  <option value="" selected>#여행테마</option>
+			  <option value="${getRoute.route_hashtag}" selected>#${getRoute.route_hashtag}</option>
 			  <option value="힐링" <c:if test="${trip_thema=='힐링'}">selected</c:if>>#힐링</option>
 			  <option value="미식" <c:if test="${trip_thema=='미식'}">selected</c:if>>#미식</option>
 			  <option value="한류" <c:if test="${trip_thema=='한류'}">selected</c:if>>#한류</option>
@@ -51,7 +59,7 @@
     <div class="col-lg-2 col-md-6">
       <div id="regionSelect">
       <select class="form-select" aria-label="Default select example" name="region" id="region">
-		 <option value="" selected>세부지역(구)</option>
+		 <option value="${getRoute.route_region}" selected>세부지역(구)</option>
 		  <option value="1"<c:if test="${region=='1'}">selected</c:if>>강남구</option>
 		  <option value="2"<c:if test="${region=='2'}">selected</c:if>>강동구</option>
 		  <option value="3"<c:if test="${region=='3'}">selected</c:if>>강북구</option>
@@ -109,7 +117,7 @@
     	</div>
 
     <div class="col-lg-2 col-md-6">
-		<input class="btn btn-outline-dark" type="button" value="초기화" onclick="location.href='myRoute.do'">
+		<input class="btn btn-outline-dark" type="button" value="원래대로" onclick ="location.href='myroute_editRoute.do?route_no=${getRoute.route_no}'">
     	<input class="btn btn-outline-dark" type="button" value="저장" onclick="route_check()">
     </div>
     </div>
@@ -120,7 +128,6 @@
 <div class="container text-center clearfix">
   <div class="row row-cols-3 g-15"> 
    
-<form name="mrs" action="tourFind.do" method="post">
    <!-- spot -->
   <div class="col-lg-3 col-md-6">
     <div class="container mx-auto ps-3">
@@ -135,8 +142,9 @@
 	<!-- search panel -->
 		<div class="tab-content" id="nav-tabContent">
 		  <div class="tab-pane fade show active" id="search" role="tabpanel" aria-labelledby="search-tab" tabindex="0" style="overflow:scroll; height:600px">
+		     <form name="mrs" action="eidt_tourFind.do" method="post">
 		        <select class="form-select" aria-label="Default select example" name="searchType" id="searchType">
-				  <option value="0" selected>여행지 목록</option>
+				 <option value="0" selected>여행지 목록</option>
 				  <option value="1" <c:if test="${searchType=='1'}">selected</c:if>>문화</option>
 				  <option value="2" <c:if test="${searchType=='2'}">selected</c:if>>명소</option>
 				  <option value="3" <c:if test="${searchType=='3'}">selected</c:if>>자연</option>
@@ -144,20 +152,9 @@
 				  <option value="5" <c:if test="${searchType=='5'}">selected</c:if>>숙소</option>
 				 </select>
 		        <input type="text" name="keyword">
-		        <button class="btn btn-outline-success btn-sm" type="submit" formaction="tourFind.do">GO!</button>
+		        <button class="btn btn-outline-success btn-sm" type="submit" formaction="edit_tourFind.do">GO!</button>
+			</form>
 			
-			
-			<script>
-			//enter키 막음
-				document.addEventListener('keydown', function(event){
-					if(event.keyCode ===13){
-						event.preventDefault();
-						};
-					}, true);
-			
-				
-			</script>
-		
 		    <!-- 검색항목이 뜨는 부분 -->
 		  <!-- 카드를 누르면 일정 list에 추가 -->
 		  <c:if test="${empty findList}">
@@ -165,7 +162,7 @@
 		  </c:if>
 		  <c:if test="${not empty findList}">
 		  	<c:forEach var="fdto" items="${findList}">	
-			 <button class="btn" type="button" id="tourbtn" name="tourbtn" onclick="location.href='addList.do?tour_no=${fdto.tour_no}'">
+			 <button class="btn" type="button" id="tourbtn" name="tourbtn" onclick="location.href='edit_addList.do?tour_no=${fdto.tour_no}'">
 		  		<div class="card border-dark mx-auto" style="width: 230px; height:80px;">
 				  <div class="row g-0">
 				    <div class="col-md-4">
@@ -202,18 +199,17 @@
 	
 	</div>
 	</div>
-</form>
 
    <!-- schedule -->
    <div class="col-lg-4 col-md-6">
    	<div class="container mx-auto ps-3" style="overflow:scroll; height:700px">
    		<label>일정 만들기</label>    		
    		<p></p>
-   		<c:if test ="${empty myRoute}">
-   			<p>일정을 만들어보세요!</p>   		
+   		<c:if test ="${empty editRoute}">
+   			<p>일정이 비어있습니다.</p>   		
    		</c:if>
-   		<c:if test ="${not empty myRoute}">
-   		<c:forEach var="rdto" items="${myRoute}">
+   		<c:if test ="${not empty editRoute}">
+   		<c:forEach var="rdto" items="${editRoute}">
    		<p></p>
 			<div class="card border-dark pt-2" style="width: 100%; height:120px;">
 				<div class="row g-0">
@@ -225,7 +221,7 @@
 				        <small class="text-muted" id="addr">${rdto.getTour_addr()}</small>
 				   </div>
 				   <div class="col-md-2">
-					<button class="btn" type="button" onclick ="location.href='delList.do?tour_no=${rdto.getTour_no()}'">
+					<button class="btn" type="button" onclick ="location.href='edit_delList.do?tour_no=${rdto.getTour_no()}'">
 				   	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
   						<path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
 					</svg></button>
@@ -247,12 +243,13 @@
 			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7dfa24ca49ecafb1d1c5352143d4a441&libraries=services,clusterer,drawing"></script>				        
 			<!-- api는 head, body 상관없지만 코드 실행보다는 먼저 선언 -->
 			
-			<%@ include file ="kakaoMap.jsp" %>
+			<%@ include file ="edit_kakaoMap.jsp" %>
   	  	</div>
 	   	</div>
      </div>
   </div>
 </div>
 </form>
+
 
 <%@ include file="../bottom.jsp"%>

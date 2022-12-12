@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ezdev.sfy.dto.TourDTO;
 import com.ezdev.sfy.dto.MemberDTO;
 import com.ezdev.sfy.dto.MyRouteDTO;
 
@@ -20,7 +21,24 @@ public class MyRouteMapper {
 	}
 	
 	public int insertRoute(MyRouteDTO dto) throws Exception{
-		return sqlSession.insert("insertRoute", dto);
-		
+		return sqlSession.insert("insertRoute", dto);	
 	}
+	
+	public MyRouteDTO getRoute(int route_no) {
+		return sqlSession.selectOne("getRoute", route_no);
+	}
+	
+	public int updateRoute(MyRouteDTO dto)throws Exception{
+		return sqlSession.update("updateRoute", dto);
+	}
+	public int delMyroute(int route_no) {
+		return sqlSession.delete("delMyroute", route_no);
+	}
+	
+	public List<TourDTO> findTour(Map<String, String> sqlMap){
+		return sqlSession.selectList("findTour", sqlMap);
+	}
+	  public TourDTO getTour(int tour_no) {
+	   return sqlSession.selectOne("getTour", tour_no);
+  }
 }
