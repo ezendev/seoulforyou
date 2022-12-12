@@ -14,7 +14,8 @@
  </style>
  
  <script>
- function valueSetting(name,id,passwd,email,hp){
+ function valueSetting(no,name,id,passwd,email,hp){
+	 $('#no').attr("value", no);
 	 $('#name').attr("value", name);
 	 $('#id').attr("value", id);
 	 $('#passwd').attr("value", passwd);
@@ -163,11 +164,10 @@
                                          <c:forEach var="dto" items= "${listMember2}">	
                                         <tr>
                                             <td>${dto.member_no}</td>
-                                            <td class="member_name" data-bs-toggle="modal" data-bs-target="#member_name" 
-                                             style="color:blue"> <a onclick="valueSetting('${dto.member_name}',
-                                             '${dto.member_id}','${dto.member_passwd}','${dto.member_email}','${dto.member_hp}',)
-                                             "><strong>${dto.member_name}
-                                             </strong></a></td>
+                                            <td class="member_no" data-bs-toggle="modal" data-bs-target="#member_no" style="color:blue"> 
+                                            <a onclick="valueSetting('${dto.member_no}','${dto.member_name}',
+                                             '${dto.member_id}','${dto.member_passwd}','${dto.member_email}','${dto.member_hp}')">
+                                             <strong>${dto.member_name}</strong></a></td>
                                             <td>${dto.member_id}</td>
                                             <td>${dto.member_passwd}</td>
                                             <td>${dto.member_email}</td>
@@ -198,9 +198,7 @@
         <script src="resources/js/scripts.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="resources/js/datatables-simple-demo.js"></script>
-		     <!-- 관리자등록 모달 내용 --> 	
-		    					 
-		    					 	
+		   						  <!-- 관리자등록 모달 내용 --> 	
 		                 		<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 		                      	<div class="modal-dialog">
 		                      	<div class="modal-content">
@@ -269,7 +267,7 @@
 		                     <!-- 관리자등록 모달 내용 끝입니다 -->
 		   
 		     <!-- 회원상세보기 모달창입니다 -->
-		     <div class="modal fade modalBackground modalPopupWrap" id="member_name">
+		     <div class="modal fade modalBackground modalPopupWrap" id="member_no">
                <div class="modal-dialog">
              
 			  <div class="modal-content">
@@ -278,10 +276,15 @@
 			  </div>
 			   <div class="modal-body ">
 			   <form name="f" action="member_update.do" method="post">
-			   <input type="hidden" id="no" value="${member_no}">
+			  			
+			  			<div class="mb-3">
+						<label class="form-label">번호</label>		
+						<input type="text" class="form-control" id="no" name="member_no" value="${member_no}" readonly>
+			  			</div>
+			  			
 			  			<div class="mb-3">
 						<label class="form-label">이름</label> 				
-						<input type="text" class="form-control" id="name"  readonly>
+						<input type="text" class="form-control" id="name" name="member_name" value="${member_name}">
 						</div>
 			   
 						<div class="mb-3">
@@ -295,7 +298,7 @@
 						</div>
 					
 						<div class="mb-3">
-						<label>이메일</label>
+						<label class="form-label">이메일</label>
 						<input type="email" class="form-control" id="email" name="member_email" value="${member_email}">
 						</div>					
 				
@@ -310,13 +313,13 @@
 						</div>	
 
 						<div class="mb-3">
-						<button class="w-100 btn btn-lg btn-primary" type="submit"  >수정</button>
-						</div>
-
-						<div class="mb-3">
-						<button class="w-100 btn btn-lg btn-danger" type="submit">삭제</button>
+						<button class="w-100 btn btn-lg btn-primary" type="submit" >수정</button>
 						</div>
 						</form>
+
+						<div class="mb-3">
+						<button class="w-100 btn btn-lg btn-danger">삭제</button>
+						</div>
 					</div>
 			  	 </div>
 			  </div>

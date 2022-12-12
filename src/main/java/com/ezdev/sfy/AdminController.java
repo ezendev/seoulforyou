@@ -68,7 +68,7 @@ public class AdminController {
 	}
 	@RequestMapping("/member_update.do")
 	public String updateMember(HttpServletRequest req, @ModelAttribute MemberDTO dto,
-			BindingResult result) {
+	BindingResult result) {
 		int res = memberMapper.updateMember2(dto);
 		
 		System.out.println(res);
@@ -78,10 +78,10 @@ public class AdminController {
 			req.setAttribute("url", "table_member.do");
 			
 		}else{
-			req.setAttribute("msg", "관리자 정보 수정실패 힘내자");
+			req.setAttribute("msg", "관리자 정보 수정실패");
 			req.setAttribute("url", "table_member.do");
 		}
-		return "forward:message.jsp";
+		return "message";
 	}
 	
 	@RequestMapping("/table_qna.do")

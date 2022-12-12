@@ -27,6 +27,7 @@ public class MemberMapper {
 	}
 	public int updateMember2(MemberDTO dto) {
 		return sqlSession.update("updateMember2", dto);
+		
 	}
 	/*
 	public  List<MemberDTO> findMember(Map<String, String> map){

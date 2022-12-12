@@ -30,10 +30,12 @@ public class MemberController {
 	public String login_ok(HttpServletRequest req, HttpServletResponse resp, @RequestParam Map<String, String>map) {
 		MemberDTO dto = memberMapper.getMemberId(map.get("member_id"));
 		int member_no = dto.getMember_no();
+		
+		System.out.println(member_no);
 		if(dto == null) {
 			req.setAttribute("msg", "해당하는 아이디가 없습니다. 다시 확인하시고 입력해 주세요");
 			req.setAttribute("url", "index.do");
-		}
+			}
 		else {
 			if(dto.getMember_passwd().equals(map.get("member_passwd"))) {
 				req.setAttribute("msg", dto.getMember_name()+"님, 환영합니다");
@@ -52,7 +54,7 @@ public class MemberController {
 				req.setAttribute("msg", "비밀번호가 틀렸습니다. 다시 확인하시고 입력해 주세요");
 				req.setAttribute("url", "index.do");
 			}
-			}
+		}
 		
 		return "message";
 	}

@@ -32,9 +32,9 @@
 	</select>
 	
 	<update id="updateMember2" parameterType="memberDTO">
-		update member set member_id=#{member_id},member_passwd=#{member_passwd}, 
-		member_email=#{member_email},member_hp=#{member_hp} 
-		where member_no = #{member_no}	
+		update member set member_name=#{member_name},member_id=#{member_id},
+		member_passwd=#{member_passwd},member_email=#{member_email},
+		member_hp=#{member_hp} where member_no = #{member_no}	
 	</update>
 <!--  	
 	<select id="findMember" parameterType="java.util.Map" resultType="memberDTO">

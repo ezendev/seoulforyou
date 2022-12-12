@@ -160,7 +160,7 @@
 
 </div>
 <script>
-
+ 
 // 각 여행지 눌렀을 때 해당 dto값을 모달영역에 띄워주는 함수
 function valueSetting(name, postal, addr, hp, open_time, open_day, close_day, traffic){
 	//모달input에 dto값 설정 후 보이기
