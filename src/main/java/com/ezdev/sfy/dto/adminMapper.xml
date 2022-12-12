@@ -4,7 +4,8 @@
 <mapper namespace="com.ezdev.sfy.dto.adminMapper">
 
 <insert id="insertAdmin" parameterType="adminDTO">
-	insert into admin values(admin_seq.nextval,#{admin_id},#{admin_name},#{admin_passwd},#{admin_email},#{admin_profileImg})
+	insert into admin values(admin_seq.nextval,#{admin_id},#{admin_name},
+	#{admin_passwd},#{admin_email},#{admin_profileImg})
 </insert>
 
  

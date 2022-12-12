@@ -652,12 +652,12 @@
       					</div>
       					<!-- 모달header 끝입니다 -->
       					
-      			<form id="form2" name="f" action="fileUpload_ok.do" method="post" enctype="multipart/form-data">
-      							   </form>		
+      				
       				     <!-- 모달 등록내용입니다 -->
-      			<form name="f" action="admin_input_ok.do" method="post" > 
-    				<div class="modal-body" style="height:320px">
+    				<div class="modal-body" style="height:380px">
   					<div class="border-1 rounded-lg">
+  					<!-- form 테그 시작 -->
+  					<form name="f" action="admin_input_ok.do" method="post" enctype="multipart/form-data">
               		<div class="row mb-3">
               		<div class="col-md-6">
                    <div class="form-floating mb-3 mb-md-0">
@@ -710,42 +710,35 @@
                            }
                             }
                             </script>
-                   
-                    </div>
-                    </div>
+                    	</div>
+                   	 </div>
               		</div>
-
-					
+              		<!-- 파일 업로드 -->
 					<table class="form-floating mb-3 mb-md-0" >
 					<tbody>
 					<tr>
 					<th>프로필 이미지 첨부 </th>
-					<tr>
-					<td>
-					<input type="file" name="admin_profileImg" id="admin_profileImg" accept=".jpg, .png">
-					<input type="submit" value="등록" form="form2">
-					<input type="reset" value="취소">
+						<tr>
+						<td>
+					<input type="file" name="admin_profileImg" id="admin_profileImg">
+					<input type="reset" value="취소" >
                      		</td>
                      		</tr>	
                      		</tbody>
                      		</table>
                      		
-                            	</div>
-	       							</div>
-	       							
-      							<!-- 모달 footer입니다 -->
-                                   <div class="modal-footer">
-        						   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-        						   <input type="submit" class="btn btn-primary" value="등록">
-      							   </div>
-      							   </form>
-      							   
-      							   
+							<!-- 모달 footer입니다 -->
+			               <div class="modal-footer">
+						   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+						   <input type="submit" class="btn btn-primary" value="등록">
+					  	   </div>
+      						</form>
+      						</div>
+      						</div>
       						 <!-- 모달footer끝입니다 -->
       							   </div>
       					   	<!-- 모달content끝입니다 -->
     							   </div>
-    							  
     						<!-- 모달 dialog끝입니다 -->
  								   </div>
                             <!-- 관리자등록 모달 내용 끝입니다 -->
