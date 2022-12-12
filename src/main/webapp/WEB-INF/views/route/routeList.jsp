@@ -122,11 +122,22 @@
     		<div class="col">
     			<h2 align="left">리뷰</h2>
       			<div class="mb-3">
-					<textarea class="form-control" id="exampleFormControlTextarea1" rows="7"></textarea><br>
+      			
+      			<form  action="insert_review.do" method="post">
+      			<label>평점 : </label>
+      			<select name="review_star">
+      			 <option value="☆☆☆☆☆">☆☆☆☆☆</option>
+      			 <option value="★☆☆☆☆">★☆☆☆☆</option>
+      			 <option value="★★☆☆☆">★★☆☆☆</option>
+      			 <option value="★★★☆☆">★★★☆☆</option>
+      			 <option value="★★★★☆">★★★★☆</option>
+      			 <option value="★★★★★">★★★★★</option>
+                 </select>
+					<textarea class="form-control" name="review_content" rows="7"></textarea><br>
 					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-  					<f:hidden path="review_no" />
-                    <f:hidden path="member_no" />
-  					<button class="btn btn-primary" type="submit">등록</button>
+  					<input class="btn btn-primary" type="submit" value="등록">
+					</div>
+					</form>
 					</div><br><br>
 			<!--내가 등록한 리뷰? --> 
 				<h5	align="left">내가 등록한 리뷰?</h5>

@@ -73,4 +73,12 @@ update mypage
 		else  mypage_favorite_tour||','||#{tour_no} end 
 	where mem_no = #{no}
 </update>
+<select id="listReview" resultType="reviewDTO">
+select * from (select rownum rn, B.* from
+              (select * from review order by review_no asc)B)
+              where rn between #{start} and #{end}
+</select>
+<select id="listReviewCount" resultType="Integer">
+ select count(*) from review
+</select>
 </mapper>

@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ezdev.sfy.dto.MemberDTO;
 import com.ezdev.sfy.dto.MyPageDTO;
+import com.ezdev.sfy.dto.ReviewDTO;
 import com.ezdev.sfy.dto.FriendDTO;
 import com.ezdev.sfy.dto.TourDTO;
 import com.ezdev.sfy.service.ChatMapper;
 import com.ezdev.sfy.service.MemberMapper;
 import com.ezdev.sfy.service.MypageMapper;
+import com.ezdev.sfy.service.ReviewMapper;
 
 
 @Controller
@@ -43,10 +45,10 @@ public class MypageController {
 		return "mypage/mypage";
 	}
 	 
-	@RequestMapping("/mypage_review.do")
-	public String mypageReview() {
-		return "mypage/mypage_review";
-	}
+	/*
+	 * @RequestMapping("/mypage_review.do") public String mypageReview() { return
+	 * "mypage/mypage_review"; }
+	 */
 	@RequestMapping("/mypage_route.do")
 	public String mypageRoute() {
 		return "mypage/mypage_route";
@@ -212,5 +214,30 @@ public class MypageController {
 		}
 		return null;	
 	}
-	
+	@RequestMapping(value="/mypage_review.do")
+	   public String listReview(HttpServletRequest req, @RequestParam(required = false) String pageNum, Map<String, String> map) {
+		int pageSize = 10;
+		if (pageNum == null){
+			pageNum = "1";
+		}
+		int currentPage = Integer.parseInt(pageNum);
+		int startRow = (currentPage-1) * pageSize + 1;
+		int endRow = startRow + pageSize - 1;   
+		int countRow = mypageMapper.listReviewCount();
+		if (endRow > countRow) endRow = countRow;
+		List<ReviewDTO> rlist = mypageMapper.listReview(startRow, endRow);
+		int num = countRow - (startRow - 1);
+		req.setAttribute("listReview", rlist);
+		req.setAttribute("num", num);
+		int pageCount = countRow / pageSize + (countRow%pageSize==0 ? 0 : 1);
+		int pageBlock = 3;
+		int startPage = (currentPage - 1) / pageBlock * pageBlock + 1;
+		int endPage = startPage + pageBlock - 1;
+		if (endPage > pageCount) endPage = pageCount;		
+		req.setAttribute("pageCount", pageCount);
+		req.setAttribute("pageBlock", pageBlock);
+		req.setAttribute("startPage", startPage);
+		req.setAttribute("endPage", endPage);
+		   return "mypage/mypage_review";
+	   }
 }

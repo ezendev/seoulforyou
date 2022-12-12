@@ -1,11 +1,13 @@
 package com.ezdev.sfy.dto;
 
 public class ReviewDTO {
-   private int froute_no; //아이디 역할, 마이루트dto route_no 외래키
-   private int mem_no;//아이디 역할, 멤버dto member_no 외래키
-   private int review_no;//아이디 역할
+   private int review_no;//아이디 역할(id)
+   private int froute_no; //아이디 역할(book_id), 마이루트dto route_no 외래키
+   private int mem_no;//아이디 역할(user_id), 멤버dto member_no 외래키
    private String review_content;//리뷰내용
-   private int review_rating;//별점
+   private String review_star;//별점
+   private int review_like;
+   private String review_regdate;
 
    
    
@@ -25,7 +27,7 @@ public int getReview_no() {
 	return review_no;
 }
 public void setReview_no(int review_no) {
-	this.review_no = review_no;
+	this.review_no = review_no;  
 }
 public String getReview_content() {
 	return review_content;
@@ -33,11 +35,23 @@ public String getReview_content() {
 public void setReview_content(String review_content) {
 	this.review_content = review_content;
 }
-public int getReview_rating() {
-	return review_rating;
+public String getReview_star() {
+	return review_star;
 }
-public void setReview_rating(int review_rating) {
-	this.review_rating = review_rating;
+public void setReview_star(String review_star) {
+	this.review_star = review_star;
+}
+public int getReview_like() {
+	return review_like;
+}
+public void setReview_like(int review_like) {
+	this.review_like = review_like;
+}
+public String getReview_regdate() {
+	return review_regdate;
+}
+public void setReview_regdate(String review_regdate) {
+	this.review_regdate = review_regdate;
 }
    
 }

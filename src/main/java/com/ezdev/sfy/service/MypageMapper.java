@@ -44,6 +44,14 @@ public class MypageMapper {
 	public int updateFavorite(Map<String,Object> map) {
 		   return sqlSession.update("updateFavorite", map);
 	   }
-	   
+	 public List<ReviewDTO> listReview(int startRow, int endRow){
+		 Map<String, Integer> map = new Hashtable<>();
+			map.put("start", startRow);
+			map.put("end", endRow);
+		 return sqlSession.selectList("listReview", map);
+	    }
+	 public int listReviewCount() {
+		 return sqlSession.selectOne("listReviewCount");
+	 }
 	}
 
