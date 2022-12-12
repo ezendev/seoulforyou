@@ -25,6 +25,17 @@
 					member_hp=#{member_hp}, where member_no = #{member_no}
 	</update>
 
+
+	<select id="listMember2" resultType="memberDTO">
+		select member_no, member_name, member_id, member_passwd, member_email,
+		member_hp from member order by member_no  
+	</select>
+	
+	<update id="updateMember2" parameterType="memberDTO">
+		update member set member_name=#{member_name},member_id=#{member_id},
+		member_passwd=#{member_passwd},member_email=#{member_email},
+		member_hp=#{member_hp} where member_no = #{member_no}	
+	</update>
 <!--  	
 	<select id="findMember" parameterType="java.util.Map" resultType="memberDTO">
 		select * from jsp_member where ${search} = #{searchString}
