@@ -136,14 +136,14 @@ public class ChatController {
 			
 		}else { //만약 만들어진 방이 없다면
 			
-			dto.setChat_content(" ");
+			dto.setChat_content("첫 메세지!");
 			dto.setChat_recv_no(other_no);
 			dto.setChat_send_no(no);
 			
 			int res = chatMapper.sendChat(dto);
 
 			if(res > 0) {
-				return "chat/chat_list";
+				return "forward:chat.do";
 			}else {
 				req.setAttribute("msg", "채팅 보내기 실패!");
 				req.setAttribute("url", "/chat.do");
