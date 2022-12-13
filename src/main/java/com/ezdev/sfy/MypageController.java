@@ -247,7 +247,7 @@ public class MypageController {
 	@RequestMapping("/mypage_favorite.do")
 	public String mypageFavorite(HttpServletRequest req,HttpSession session) {
 		Map<String,Object> map=new HashMap<>(); 
-		String tour_no =req.getParameter("f_no");
+		int tour_no = Integer.parseInt(req.getParameter("f_no"));
 		 MemberDTO mdto = (MemberDTO) session.getAttribute("mdto");	
 	      int no = mdto.getMember_no();	  
 	      map.put("tour_no", tour_no);

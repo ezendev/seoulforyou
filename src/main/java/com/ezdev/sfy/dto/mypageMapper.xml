@@ -57,10 +57,8 @@
 
 <update id="updateFavorite" parameterType="java.util.Map" >
 update mypage
-	set mypage_favorite_tour =
-	case when mypage_favorite_tour is null then #{tour_no}
-		else  mypage_favorite_tour||','||#{tour_no} end 
-	where mem_no = #{no}
+	set mypage_favorite_tour = mypage_favorite_tour||#{tour_no, jdbcType=NUMERIC}||','
+	where mem_no = #{no, jdbcType=NUMERIC}
 </update>
 <!-- MyRoute -->
 <select id="getCountRoute" resultType="int">
