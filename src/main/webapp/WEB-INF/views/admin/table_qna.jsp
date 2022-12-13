@@ -27,10 +27,10 @@
                             <table id="datatablesSimple">
                               <thead>
                                   <tr>
-                                      <th style="min-width:20px">문의번호</th>
+                                      <th style="min-width:100px">문의번호</th>
                                       <th>문의제목</th>
                                       <th>문의내용</th>
-                                      <th>등록기간</th>
+                                      <th style="min-width:100px">등록기간</th>
                                   </tr>
                               </thead>
                             
@@ -42,21 +42,21 @@
                              
                             <tfoot>
                                 <tr>
-                                    <th style="min-width:20px">문의번호</th>
+                                    <th style="min-width:100px">문의번호</th>
                                     <th>문의제목</th>
                                     <th>문의내용</th>
-                                    <th>등록기간</th>
+                                    <th style="min-width:100px">등록기간</th>
                                 </tr>
                             </tfoot>
                                     
                            <tbody>
                             <c:forEach var="dto" items= "${listQna2}">
                                <tr>
-                                   <td>${dto.qna_no}</td>
+                                   <td style="min-width:100px">${dto.qna_no}</td>
                                    <td>${dto.qna_subject}</td>
                                    <td class="qna_content" data-bs-toggle="modal" data-bs-target="#qna_content" style="color:blue">
                                    ${dto.qna_content}</td>
-                                   <td>${dto.qna_regdate}</td>
+                                   <td style="min-width:100px">${dto.qna_regdate}</td>
                                </tr>
                               </c:forEach>
                            </tbody>
@@ -93,8 +93,8 @@
 			  		<h1 class="h3 fw-normal">문의사항 답글</h1> 
 			   		</div>
 			   
-			   		<div class="modal-body d-flex justify-content-center" style="width:300px; height:400px">
-			  		<textarea rows="5" cols="100" placeholder="답글을 작성해주세요"></textarea>
+			   		<div class="modal-body d-flex justify-content-center" style="width:500px; height:400px">
+			  		<textarea rows="5" cols="200" placeholder="답글을 작성해주세요" class="d-flex justify-content-center"></textarea>
 					</div>
 					
 					<div class="modal-footer">
