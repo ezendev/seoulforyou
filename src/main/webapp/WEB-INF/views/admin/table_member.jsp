@@ -29,7 +29,7 @@
        
 </head>
     <!-- 상단 네비바 구성 -->
-                <!-- 회원 목록 내용입니다 -->
+                <!-- 회원 목록 내용입니다. -->
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">회원목록</h1><br>
                         <div class="card mb-4"></div>

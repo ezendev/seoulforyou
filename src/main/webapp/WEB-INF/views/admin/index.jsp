@@ -20,7 +20,7 @@
                   	 <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
                      </div>
                  	</div>
-                 <!-- 통계항목 입니다 -->
+                 <!-- 통계항목 입니다. -->
                  <div class="col-xl-6">
                      <div class="card mb-4">
                          <div class="card-header">
