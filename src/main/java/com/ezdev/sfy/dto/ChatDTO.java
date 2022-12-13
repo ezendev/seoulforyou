@@ -8,7 +8,7 @@ public class ChatDTO {
 	private String chat_send_time;
 	private String chat_read_time;
 	private String chat_content;
-	private String chat_read_chk;
+	private int chat_read_chk;
 	
 	// 현재 사용자의 메세지 상대 no를 담는다.
 	private int other_no;
@@ -61,15 +61,15 @@ public class ChatDTO {
 	public void setChat_content(String chat_content) {
 		this.chat_content = chat_content;
 	}
-
-	public String getChat_read_chk() {
+	
+	public int getChat_read_chk() {
 		return chat_read_chk;
 	}
 
-	public void setChat_read_chk(String chat_read_chk) {
+	public void setChat_read_chk(int chat_read_chk) {
 		this.chat_read_chk = chat_read_chk;
 	}
-	
+
 	public int getNo() {
 		return no;
 	}
