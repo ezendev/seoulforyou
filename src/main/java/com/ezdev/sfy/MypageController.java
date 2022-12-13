@@ -50,7 +50,20 @@ public class MypageController {
 		session.setAttribute("getMember", dto);
 		return "mypage/mypage_main";
 	}
-
+	@RequestMapping("/update.do")
+	public String mypage(HttpServletRequest req,@ModelAttribute MemberDTO dto) {				
+		HttpSession session=req.getSession();
+		int res=memberMapper.updateMember(dto);
+		if(res>0) {
+			session.setAttribute("mdto", dto);
+			req.setAttribute("msg", "수정 완료");
+			req.setAttribute("url", "mypage.do");
+		}else {
+			req.setAttribute("msg", "수정 실패");
+			req.setAttribute("url", "mypage.do");
+		}
+		return "message";
+	}
 	@RequestMapping(value = "/mypage_route.do" ,method=RequestMethod.GET)
 	public String mypageRoute(HttpServletRequest req, HttpSession session, @RequestParam (required=false) String pageNum) {
 		//유저 접속
