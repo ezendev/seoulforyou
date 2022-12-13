@@ -3,13 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="navBar.jsp" %>
 <!DOCTYPE html>
+<!-- 통계입니다 -->
 <html lang="en"> 
 <title>통계</title>
 <!-- 통계입니다 -->
    
-     <!-- 프로필 설정 항목 살려주기 -->
+     <!-- 프로필 설정 항목 살려주기. -->
              
             <!-- 본문 내용 시작입니다 -->
+                <main>
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">통계</h1>
                         <ol class="breadcrumb mb-4">

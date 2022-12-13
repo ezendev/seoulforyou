@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <title>문의리스트</title>
-<!-- 문의리스트입니다 -->
+<!-- 문의리스트입니다. -->
     
     <head>
 	<script>
