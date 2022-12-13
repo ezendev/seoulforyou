@@ -25,7 +25,6 @@
 					member_hp=#{member_hp}, where member_no = #{member_no}
 	</update>
 
-
 	<select id="listMember2" resultType="memberDTO">
 		select member_no, member_name, member_id, member_passwd, member_email,
 		member_hp from member order by member_no  
@@ -36,6 +35,10 @@
 		member_passwd=#{member_passwd},member_email=#{member_email},
 		member_hp=#{member_hp} where member_no = #{member_no}	
 	</update>
+	
+	<delete id="deleteMember2" parameterType="memberDTO">
+	  delete from member where member_no = #{member_no} 
+	</delete>
 <!--  	
 	<select id="findMember" parameterType="java.util.Map" resultType="memberDTO">
 		select * from jsp_member where ${search} = #{searchString}

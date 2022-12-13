@@ -29,6 +29,9 @@ public class MemberMapper {
 		return sqlSession.update("updateMember2", dto);
 		
 	}
+	public int deleteMember2(MemberDTO dto) {
+		return sqlSession.delete("deleteMember2", dto);
+	}
 	/*
 	public  List<MemberDTO> findMember(Map<String, String> map){
 		return  sqlSession.selectList("findMember", map);
