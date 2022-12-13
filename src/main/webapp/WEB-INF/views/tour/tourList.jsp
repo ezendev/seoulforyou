@@ -21,7 +21,7 @@
 		</div>
 	</div>
 	
-	<form id="tourForm" name="f" method="post" action="tourList.do">
+	<form id="tourForm" name="f1" method="post" action="tourList.do">
       <input type="hidden" id="tourType" name="tourType">
    </form>
 	
@@ -83,6 +83,7 @@
 		     				 <p><img src="resources/img/seoul2.jpg" class="rounded float-start" alt="" width="100%" height="260"></p>
 		    			</div>
 		   			 	<div class="col-sm-12 col-md-12 col-lg-6">
+		   			 		<p><input class="no" type="hidden" /></p>
 			     			 <p><img src="resources/icon/geo-alt.svg">이름: <input class="name"  /></p>
 			     			 <p><img src="resources/icon/clock.svg">우편번호: <input class="postal"  /></p>
 			     			 <p><img src="resources/icon/clock.svg"> 주소: <input class="addr"  /></p>

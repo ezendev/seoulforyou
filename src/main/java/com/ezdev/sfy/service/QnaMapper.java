@@ -47,4 +47,8 @@ public class QnaMapper {
 	public int getCount() {
 			return sqlSession.selectOne("getCount");
 	}
+	
+	public List<QnaDTO> listQna2(){
+		return sqlSession.selectList("listQna2");
+	}
 }
