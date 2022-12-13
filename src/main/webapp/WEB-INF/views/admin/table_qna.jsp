@@ -98,8 +98,9 @@
 					</div>
 					
 					<div class="modal-footer">
-					<button type="button" class="btn btn-primary">저장</button>
-					<button type="button" class="btn btn-secondary">완료</button>				
+					<button type="button" class="btn btn-secondary">저장</button>
+					<button type="button" class="btn btn-secondary">수정</button>
+					<button type="button" class="btn btn-primary">완료</button>				
 					</div>
 				  </div>
 				 </div>
