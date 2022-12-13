@@ -18,6 +18,8 @@ $('.modal').on('hidden.bs.modal', function (e) {
  <link rel="stylesheet" href="resources/css/bootstrap.min.css">
 </head>
 <body>
+<script src="resources/js/jquery-3.6.1.min.js"></script>
+<script src="resources/js/bootstrap.bundle.js"></script>
    <div class="container">
 	<div class="row">
 		<aside class="bd-aside sticky-xl-top text-muted align-self-start d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
@@ -30,50 +32,49 @@ $('.modal').on('hidden.bs.modal', function (e) {
       <li class="nav-item">
         <a class="nav-link js-scroll-trigger" aria-current="page" href="#profile">
           <svg class="bi pe-none me-2" width="16" height="16"></svg>
-          내정보
-        </a>
+         	 내정보</a>
       </li>
+      
       <li>
         <a class="nav-link js-scroll-trigger" href="mypage_route.do">
           <svg class="bi pe-none me-2" width="16" height="16"></svg>
-          나의 여행 루트
-        </a>
+          	나의 여행 루트 </a>
       </li>
+      
       <li>
         <a class="nav-link js-scroll-trigger" href="mypage_review.do">
           <svg class="bi pe-none me-2" width="16" height="16"></svg>
-          나의 리뷰
-        </a>
+        	나의 리뷰</a>
       </li>
+      
       <li>
         <a class="nav-link js-scroll-trigger" href="mypage_favorite.do">
           <svg class="bi pe-none me-2" width="16" height="16"></svg>
-          나의 즐겨찾기
-        </a>
+         	나의 즐겨찾기</a>
       </li>
+      
       <li>
         <a class="nav-link js-scroll-trigger" href="mypage_friend.do">
           <svg class="bi pe-none me-2" width="16" height="16"></svg>
-          친구 목록
-        </a>
+         	 친구 목록</a>
       </li>
+      
       <li>
         <a class="nav-link js-scroll-trigger" href="mypage_qna.do">
           <svg class="bi pe-none me-2" width="16" height="16"></svg>
-          문의 내역
-        </a>
+          	문의 내역</a>
       </li>
+      
       <li>
         <a class="nav-link link-dark" href="#">
           <svg class="bi pe-none me-2" width="16" height="16"></svg>
-          회원 탈퇴
-        </a>
+          	회원 탈퇴</a>
       </li>
+      
       <li>
         <a class="nav-link active" href="#">
           <svg class="bi pe-none me-2" width="16" height="16"></svg>
-          로그아웃
-        </a>
+         	 로그아웃</a>
       </li>
     </ul>
     <hr>
@@ -174,3 +175,5 @@ $('.modal').on('hidden.bs.modal', function (e) {
 </body>
 </html>
 <%@ include file="../bottom.jsp"%>
+  </aside>
+

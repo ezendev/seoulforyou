@@ -54,18 +54,7 @@
   <if test="msearchType == 'name'.toString()">where member_name like '%' || #{mkeyword} || '%'</if>
  </if>
 </sql> -->
-<!-- <select id="listRoutetest" resultType="mypageDTO" parameterType="com.ezdev.sfy.mypage.Criteria">
- select * 
- from (select row_number() over(order by routetest_no desc) as rnum, lr.* from routetest lr)
- routetest
- where rnum between #{rowStart} and #{rowEnd}
-</select>
-<select id="routetestCount" resultType="int">
- select count(*) from routetest
-</select>
-<insert id="insertRoutetest" parameterType="mypageDTO">
-insert into routetest values(routetest_seq.nextval, #{routetest_subject}, sysdate)
-</insert>-->
+
 <update id="updateFavorite" parameterType="java.util.Map" >
 update mypage
 	set mypage_favorite_tour =
@@ -73,6 +62,7 @@ update mypage
 		else  mypage_favorite_tour||','||#{tour_no} end 
 	where mem_no = #{no}
 </update>
+
 <select id="listReview" resultType="reviewDTO">
 select * from (select rownum rn, B.* from
               (select * from review order by review_no asc)B)
@@ -81,4 +71,16 @@ select * from (select rownum rn, B.* from
 <select id="listReviewCount" resultType="Integer">
  select count(*) from review
 </select>
+
+<!-- MyRoute -->
+<select id="getCountRoute" resultType="int">
+ select count(*) from route where mem_no=#{no}
+</select>
+
+<select id="listMyroute" resultType="myRouteDTO" parameterType="java.util.Map">
+ select * from (select rownum rn, A.* from 
+	(select * from route where mem_no = #{no} order by route_no desc)A) 
+		where rn between #{start} and #{end} 
+</select>
+
 </mapper>
