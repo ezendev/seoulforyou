@@ -1,174 +1,139 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!-- mypage_route.jsp -->
-<%@ include file="../top.jsp"%>
-<html>
-<head>
-<title>나의 여행루트</title>
-<script>
-function getselect() {
-	<%-- 검색 관련 기능 --%>
-	const value = e.value;
 
-    document.getElementById('result').innerText = value;
-   
+<!-- mypage_route.jsp -->
+<%@ include file="mypage.jsp"%>
+
+<style>
+a {
+  text-decoration: none;
+  color: black;
 }
-<%-- 모달창 끄면 내용 초기화 시켜줌 --%>
-$('.modal').on('hidden.bs.modal', function (e) { 
-    console.log('modal close');
-  $(this).find('form')[0].reset()
-});
-<%-- 검색 기능 스크립트 --%>
-$(function(){
-	$('#searchBtn').click(function(){
-		var url = document.location.href;
-		url = url + "?searchType=" + $("#searchBtn").val();
-		url = url + "&keyword=" + $("#keywordInput").val();
-		location.href = url;
-	});
-});
-</script>
- <link rel="stylesheet" href="resources/css/bootstrap.min.css">
-</head>
-<body>
-   <div class="container">
-	<div class="row">
-		<aside class="bd-aside sticky-xl-top text-muted align-self-start d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
-    <a href="index.do" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-      <svg class="bi pe-none me-2" width="40" height="32"></svg>
-      <span class="fs-4">Seoul for you</span>
-    </a>
-    <hr>
-    <ul class="nav nav-pills flex-column mb-auto">
-      <li class="nav-item">
-        <a class="nav-link js-scroll-trigger" aria-current="page" href="mypage.do">
-          <svg class="bi pe-none me-2" width="16" height="16"></svg>
-          내정보
-        </a>
-      </li>
-      <li>
-        <a class="nav-link js-scroll-trigger" href="#mypage_route">
-          <svg class="bi pe-none me-2" width="16" height="16"></svg>
-          나의 여행 루트
-        </a>
-      </li>
-      <li>
-        <a class="nav-link js-scroll-trigger" href="mypage_review.do">
-          <svg class="bi pe-none me-2" width="16" height="16"></svg>
-          나의 리뷰
-        </a>
-      </li>
-      <li>
-        <a class="nav-link js-scroll-trigger" href="mypage_favorite.do">
-          <svg class="bi pe-none me-2" width="16" height="16"></svg>
-          나의 즐겨찾기
-        </a>
-      </li>
-      <li>
-        <a class="nav-link js-scroll-trigger" href="mypage_friend.do">
-          <svg class="bi pe-none me-2" width="16" height="16"></svg>
-          친구 목록
-        </a>
-      </li>
-      <li>
-        <a class="nav-link js-scroll-trigger" href="mypage_qna.do">
-          <svg class="bi pe-none me-2" width="16" height="16"></svg>
-          문의 내역
-        </a>
-      </li>
-      <li>
-        <a class="nav-link link-dark" href="#">
-          <svg class="bi pe-none me-2" width="16" height="16"></svg>
-          회원 탈퇴
-        </a>
-      </li>
-      <li>
-        <a class="nav-link active" href="#">
-          <svg class="bi pe-none me-2" width="16" height="16"></svg>
-          로그아웃
-        </a>
-      </li>
-    </ul>
-    <hr>
-  </aside>
+</style>
+<!-- 나의 여행 루트 페이지 -->
   <div class="wrapper col-md-9">
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-            <section class="content-header">
-            <h2 id="mypage_route">
-                나의 여행 루트
-            </h2>
-            </section>
-            <section class="content container-fluid">
-            <div class="col-lg-12">
-                <div class="box box-primary">
-                <div class="box-body">
-        <!-- Main content -->
-      <table class="table table-sm table-hover">
-         <tbody>
-            <tr>
-               <th style="width: 30px">#</th>
-               <th>제목</th>
-               <th style="width: 150px">작성시간</th>
-               </tr>
-            	<c:if test="${empty listRoutetest}">
-		<tr>
-			<td colspan="2">등록된 여행 루트가 없습니다.</td>
-		</tr>
-	            </c:if>
-              <c:forEach items="${listRoutetest}" var="dto">
-               <tr>
-                <td>${dto.routetest_no}</td>
-                  <%-- 
-                                    제목 누르면 루트 쪽 페이지로 넘어가게 경로 재설정 필요
-                    <td><a href="${path}/article/read?articleNo=${article.articleNo}">${article.title}</a></td>       
-                  --%>
-                  <td>${dto.routetest_subject}
-             <td>${dto.routetest_regdate}</td>
-             </tr>
-             </c:forEach>
-             </tbody>
-             </table>
-             </div>
-             </div>
-             </div>
-         
-        <select name="searchType">
-            <option value="fn" <c:out value="${cri.searchType == null ? 'selected' : ''}"/>>선택</option>
-            <option value="all" <c:out value="${cri.searchType eq 'all' ? 'selected' : ''}"/>>전체</option>
-            <option value="routetest_subject" <c:out value="${cri.searchType eq 'routetest_subject' ? 'selected' : ''}"/>>제목</option>
-        </select>
+       <section class="content-header">
+          <h2 id="mypage_route" align="center">나의 여행 루트</h2>	    
+       </section>
        
-        <input type="text" name="keyword" id="keywordInput" size="50" maxlength="20" value="${cri.keyword}"/>
-        <button class="btn btn-primary btn-flat" id="searchBtn" type="button">검색</button>
-      
-            <div class="box-footer">
-    <div class="text-center">
-        <ul class="pagination">
-            <c:if test="${pagemaker.prev}">
-                <li>
-                <a href='<c:url value="mypage_route?page=${pagemaker.startPage - 1}"/>'>이전</a>
-                </li>
-            </c:if>
-            <c:forEach begin="${pagemaker.startPage}" end="${pagemaker.endPage}" var="pageNum"> 
-                <li>
-                <a href="mypage_route?page=${pageNum}">${pageNum}</a> 
-                </li>
-            </c:forEach>
-            <c:if test="${pagemaker.next && pagemaker.endPage > 0}">
-                <li><a href='<c:url value="mypage_route?page=${pagemaker.startPage + 1}"/>'>다음</a></li>
-            </c:if>
-        </ul>
+    	<section class="content container-fluid">
+          <div class="col-lg-12">
+            <div class="box box-primary">
+               <div class="box-body">
+        
+		        <!-- Main content -->
+		      	<table class="table table-sm table-hover">
+		         <tbody>
+		            <tr>
+		               <th style="width: 10%">NO</th>
+		               <th style="width: 10%">#테마</th>
+		               <th style="width: 40%">제목</th>
+		               <th style="width: 10%">작성일</th>
+		               <th style="width: 10%">조회수</th>
+		               <th style="width: 10%">수정</th>
+		               <th style="width: 10%">삭제</th>
+		            </tr>
+		           <c:if test="${empty listMyroute}">
+					<tr>
+						<td colspan="6">등록된 여행 루트가 없습니다.</td>
+					</tr>
+			       </c:if>
+			       <c:set var="num" value="${requestScope.num}"/>
+			       <c:if test="${not empty listMyroute}">
+			          <c:forEach items="${listMyroute}" var="dto">
+		               	<tr>
+		                	<td style="width: 10%">
+		                		<c:out value="${num}"/>
+		                		<c:set var="num" value="${num-1}"/>
+		                	</td>
+		                	<td style="width: 10%">#${dto.route_hashtag}</td>
+		                 	<td style="width: 40%">${dto.route_subject}</td>
+			             	<td style="width: 10%">${dto.route_regdate}</td>
+		                 	<td style="width: 10%">${dto.route_readcount}</td>		                 	
+		                 	<td style="width: 10%">
+		                 	<button type="button" class="btn btn-light" onclick="location.href='myroute_editRoute.do?route_no=${dto.route_no}'" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .3rem;">
+						   		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+								<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+								<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+								</svg></button>
+		                 	</td>
+		                 	<td style="width: 10%">
+			                 	<button type="button" class="btn btn-light"  style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .3rem;"  data-bs-toggle="modal" data-bs-target="#exampleModal">
+						   		<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+		  						<path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+								</svg></button>
+		                 	</td>
+		             	</tr> 
+            
+<!-- Modal -->
+<form name="mypageroutedel" action="myroute_delRoute.do?route_no=${dto.route_no}" method="post">
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">나의 루트 삭제</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       	<p class="mx-auto">루트를 삭제하시려면 비밀번호를 입력해주세요</p>
+       	<input type="password" class="mx-auto" name="passwd">
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">삭제</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+      </div>
     </div>
+  </div>
 </div>
-</section>
+</form>
+  
+		             </c:forEach>
+					</c:if>
+		          </tbody>
+		         </table>
+		        </div>
+             </div>
+            </div>
+       <!-- 검색창 -->
+      <form name="mpsearch" action="mypage_findRoute.do" method="post">
+	      <div class="row" align="center">
+	      	<div class="col-3">
+	    	<select class="form-select" aria-label="Default select example" name="searchRoute" id="searchRoute" style="width:80%">
+	           	<option value="route_subject">제목</option>
+	           	<option value="route_hashtag">테마</option>           
+	           	<option value="route_region">지역</option>
+		   	</select>
+	      	</div>
+			<div class="col-5">
+	       	 <input type="text" name="keyword" id="keyword" size="60" maxlength="20"/>
+			</div>
+			<div class="col-4">
+	       	 <button class="btn btn-primary btn-flat" id="searchBtn" type="submit">검색</button>
+			</div>
+	      </div>
+      </form>
+      <form name="mpnext" method="get">
+	     <div class="box-footer">
+		    <div class="text-center">
+		       <c:if test="${not empty listMyroute}">
+		       	<c:if test ="${startPage >pageBlock }">
+		       		[<a href="mypage_route.do?pageNum=${startPage-1}">이전</a>]
+		       	</c:if>
+		       	<c:forEach var ="i" begin="${startPage}" end="${endPage}">
+		       		[<a href ="mypage_route.do?pageNum=${i}">${i}</a>]
+		       	</c:forEach>     	
+		        <c:if test="${pageCount> endPage}">
+		        	[<a href="mypage_route.do?pageNum=${endPage+1}">다음</a>]    
+		       	</c:if>
+		       </c:if>
+		    </div>
+		</div>
+      </form>
+		</section>
+	</div>
 </div>
-</div>
-</div>
-</div>
-  <script src="resources/js/jquery-3.6.1.min.js"></script>
-   <script src="resources/js/bootstrap.bundle.js"></script>
-  </body>
-  </html>
-  <%@ include file="../bottom.jsp"%>
+
+<%@ include file="../bottom.jsp"%>

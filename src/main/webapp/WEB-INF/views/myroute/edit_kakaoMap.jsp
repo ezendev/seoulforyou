@@ -15,12 +15,12 @@
 			var map = new kakao.maps.Map(mapContainer, mapOption); 
 			
 			//일정에 담기 리스트 불러오기
-			var route ='${myRoute}';
+			var route ='${editRoute}';
 			var addrArr=[]; //주소 담을 배열
 			var infoArr=[]; //info 담을 배열
 			
 			//controller에 myRoute불러오기
-			<c:forEach items='${myRoute}' var='rdto'>
+			<c:forEach items='${editRoute}' var='rdto'>
 					var info ='${rdto.getTour_name()}'; 
 					var address ='${rdto.getTour_addr()}';
 					addrArr.push(address);

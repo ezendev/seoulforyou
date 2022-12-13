@@ -33,11 +33,5 @@
 	<select id="getTourCountByRegionType"  resultType="Integer" parameterType="java.util.Map">
 		select count(*) from tour where tour_type = #{type} and tour_addr like '%${region}%'
 	</select>
-   
-   <select id="findTour" parameterType="java.util.Map" resultType="tourDTO">
-		${sql}
-	</select>
-	<select id="getTour" parameterType="Integer" resultType="tourDTO">
-		select * from tour where tour_no = #{tour_no}
-	</select>
+ 
 </mapper>
