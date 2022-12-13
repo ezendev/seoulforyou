@@ -3,20 +3,17 @@
  	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="com.ezdev.sfy.dto.reviewMapper">
-<select id="getUserById" parameterType="String" resultType="memberDTO">
-select member_no from member where member_id = #{member_id}
-</select>
 <insert id="insertReview" parameterType="reviewDTO">
-insert into review values (review_seq.nextval, #{review_star}, #{review_content}, sysdate)
+insert into review values(review_seq.nextval, #{mem_no}, #{review_content}, #{review_star}, sysdate)
 </insert>
-<select id="getReview" parameterType="int" resultType="reviewDTO">
-select * from review where froute_no = #{froute_no}
+<select id="getReview" resultType="Integer"> 
+select * from review where review_no = #{review_no}
 </select>
-<!-- <select id="listReview" resultType="reviewDTO">
-select * from review
-</select> -->
-
-
-
+<delete id="deleteReview" parameterType="int">
+delete from review where review_no = #{review_no}
+</delete>
+<update id="updateReview" parameterType="reviewDTO">
+update review set review_content = #{review_content}, review_star = #{review_star} where review_no = #{review_no}
+</update>
 
 </mapper>

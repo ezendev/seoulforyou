@@ -9,6 +9,13 @@
 
 <head>
 <title>나의 리뷰</title>
+<script>
+<%-- 모달창 끄면 이전 입력 정보 사라짐 --%>
+$('.modal').on('hidden.bs.modal', function (e) {
+    console.log('modal close');
+  $(this).find('form')[0].reset()
+});
+</script>
  <link rel="stylesheet" href="resources/css/bootstrap.min.css">
  <link href="css/star-rating.css" media="all" rel="stylesheet" type="text/css" />
 </head>
@@ -85,23 +92,28 @@
                                 <th width="10%">평점</th>
                                 <th width="20%">제목</th>
                                 <th width="15%">작성시간</th>
+                                <th width="10%"></th>
                             </tr>
                             </thead>
                             <tbody>
                             <c:if test="${empty listReview}">
                             <tr>
-                            <td colspan="3">등록된 리뷰가 없습니다.</td>
+                            <td colspan="5">등록된 리뷰가 없습니다.</td>
                             </tr>
                             </c:if>
+                            <c:set var="num" value="${requestScope.num}"/>
                             <c:forEach var="redto" items="${listReview}" varStatus="status">
                             <tr>
-                                <td>${redto.review_no}</td>
+                                <td>
+                                <c:out value="${num}"/>
+                                <c:set var="num" value="${num-1}"/>
+                                </td>
                                 <td>${redto.review_star}</td>
                                 <td title="${redto.review_content}">
                                 <c:choose>
-                                <c:when test="${fn:length(redto.review_content)>10}">
+                                <c:when test="${fn:length(redto.review_content)>15}">
                                 </span>
-                                <c:out value="${fn:substring(redto.review_content,0,9)}"/>....
+                                <c:out value="${fn:substring(redto.review_content,0,14)}"/>....
                                 </c:when>
                                 <c:otherwise>
                                 <c:out value="${redto.review_content}"/>
@@ -109,6 +121,14 @@
                                 </c:choose> 
                                 </td>
                                 <td>${redto.review_regdate}</td>
+                                <td>
+			                   <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#review_update">
+                                                             수정
+                               </button>
+			                    <a type="button" class="btn btn-outline-primary btn-sm" href="delete_review.do?review_no=${redto.review_no}">
+			                                      삭제
+			                    </a>
+			                    </td>
                             </tr>
                             </c:forEach>
                             </tbody>
@@ -129,6 +149,36 @@
              </div>
              </div>
             </div>
+            <!-- Modal -->
+<div class="modal fade" id="review_update" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">리뷰 수정</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+         <form role="form" action="update_review.do" method="post">
+				<div class="form-group">
+					<label>평점 : </label>
+      			<select name="review_star">
+      			 <option value="★☆☆☆☆">★☆☆☆☆</option>
+      			 <option value="★★☆☆☆">★★☆☆☆</option>
+      			 <option value="★★★☆☆">★★★☆☆</option>
+      			 <option value="★★★★☆">★★★★☆</option>
+      			 <option value="★★★★★">★★★★★</option>
+                 </select>
+					<textarea class="form-control" name="review_content" rows="7"></textarea><br>
+				</div>
+      </div>
+      <div class="modal-footer">
+        <input type="submit" class="btn btn-primary" value="입력">
+      <input type="reset" class="btn btn-secondary" data-bs-dismiss="modal" value="취소">
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
         <!-- /.content -->
   <script src="resources/js/jquery-3.6.1.min.js"></script>
    <script src="resources/js/bootstrap.bundle.js"></script>

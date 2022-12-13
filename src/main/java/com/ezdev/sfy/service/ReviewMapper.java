@@ -17,13 +17,13 @@ public class ReviewMapper {
     public int insertReview(ReviewDTO redto) {
     	return sqlSession.insert("insertReview", redto);
     }
-    public int getUserById(String member_id) {
-		return sqlSession.selectOne("getUserByEmail", member_id);
-	} 
-	public ReviewDTO getReview(int froute_no, String mode) {
-		if(mode.equals("review_content")) {	
-		}
-		return sqlSession.selectOne("getReview", froute_no);
-	}
-	
+    public int deleteReview(int review_no) {
+    	return sqlSession.delete("deleteReview", review_no);
+    }
+    public int updateReview(ReviewDTO redto) {
+    	return sqlSession.update("updateReview", redto);
+    }
+    public ReviewDTO getReview(int review_no) {
+    	return sqlSession.selectOne("getReview", review_no);
+    }
 }

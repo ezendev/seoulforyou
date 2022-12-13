@@ -62,14 +62,14 @@ update mypage
 		else  mypage_favorite_tour||','||#{tour_no} end 
 	where mem_no = #{no}
 </update>
-
-<select id="listReview" resultType="reviewDTO">
+<!-- review -->
+<select id="listReview" parameterType="java.util.Map" resultType="reviewDTO">
 select * from (select rownum rn, B.* from
-              (select * from review order by review_no asc)B)
+              (select * from review where mem_no = #{no} order by review_no asc)B)
               where rn between #{start} and #{end}
 </select>
 <select id="listReviewCount" resultType="Integer">
- select count(*) from review
+ select count(*) from review where mem_no = #{no}
 </select>
 
 <!-- MyRoute -->

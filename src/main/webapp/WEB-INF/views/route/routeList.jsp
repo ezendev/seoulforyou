@@ -126,7 +126,6 @@
       			<form  action="insert_review.do" method="post">
       			<label>평점 : </label>
       			<select name="review_star">
-      			 <option value="☆☆☆☆☆">☆☆☆☆☆</option>
       			 <option value="★☆☆☆☆">★☆☆☆☆</option>
       			 <option value="★★☆☆☆">★★☆☆☆</option>
       			 <option value="★★★☆☆">★★★☆☆</option>

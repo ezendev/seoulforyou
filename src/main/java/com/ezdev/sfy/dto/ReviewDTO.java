@@ -11,7 +11,7 @@ public class ReviewDTO {
 
    
    
-   public int getFroute_no() {
+public int getFroute_no() {
 	return froute_no;
 }
 public void setFroute_no(int froute_no) {

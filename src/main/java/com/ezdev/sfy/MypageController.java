@@ -249,7 +249,10 @@ public class MypageController {
 		return null;	
 	}
 	@RequestMapping(value="/mypage_review.do")
-	   public String listReview(HttpServletRequest req, @RequestParam(required = false) String pageNum, Map<String, String> map) {
+	   public String listReview(HttpServletRequest req, @RequestParam(required = false) String pageNum, Map<String, String> map, HttpSession session) {
+		// 로그인한 유저의 no값
+				int no = (int) session.getAttribute("nowUserNo");
+				
 		int pageSize = 10;
 		if (pageNum == null){
 			pageNum = "1";
@@ -257,9 +260,9 @@ public class MypageController {
 		int currentPage = Integer.parseInt(pageNum);
 		int startRow = (currentPage-1) * pageSize + 1;
 		int endRow = startRow + pageSize - 1;   
-		int countRow = mypageMapper.listReviewCount();
+		int countRow = mypageMapper.listReviewCount(no);
 		if (endRow > countRow) endRow = countRow;
-		List<ReviewDTO> rlist = mypageMapper.listReview(startRow, endRow);
+		List<ReviewDTO> rlist = mypageMapper.listReview(startRow, endRow, no);
 		int num = countRow - (startRow - 1);
 		req.setAttribute("listReview", rlist);
 		req.setAttribute("num", num);
