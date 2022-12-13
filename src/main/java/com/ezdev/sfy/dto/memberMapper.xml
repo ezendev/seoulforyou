@@ -21,8 +21,8 @@
 		select * from member
 	</select>
 	<update id="updateMember" parameterType="memberDTO">
-		update member set member_id=#{member_id}, member_email=#{member_email}, member_name=#{member_name},
-					member_hp=#{member_hp}, where member_no = #{member_no}
+		update member set member_passwd=#{member_passwd,jdbcType=VARCHAR}, member_email=#{member_email,jdbcType=VARCHAR}, 
+					member_hp=#{member_hp,jdbcType=VARCHAR} where member_no = #{member_no}
 	</update>
 
 

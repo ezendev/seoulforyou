@@ -10,14 +10,14 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ezdev.sfy.dto.MemberDTO;
 import com.ezdev.sfy.dto.MyPageDTO;
-import com.ezdev.sfy.dto.FriendDTO;
-import com.ezdev.sfy.dto.TourDTO;
 import com.ezdev.sfy.service.ChatMapper;
 import com.ezdev.sfy.service.MemberMapper;
 import com.ezdev.sfy.service.MypageMapper;
@@ -33,15 +33,29 @@ public class MypageController {
 	@Autowired
 	ChatMapper chatMapper;
 	
-	/*
-	 * @Autowired MemberMapper memberMapper;
-	 */
 	
-	//bottom.jsp 페이스북 아이콘 -> 마이페이지
+	@Autowired MemberMapper memberMapper;
+	
 	@RequestMapping("/mypage.do")
-	public String mypage() {
+	public String mypage1() {
 		return "mypage/mypage";
+	} 
+	//bottom.jsp 페이스북 아이콘 -> 마이페이지
+	@RequestMapping("/update.do")
+	public String mypage(HttpServletRequest req,@ModelAttribute MemberDTO dto) {				
+		HttpSession session=req.getSession();
+		int res=memberMapper.updateMember(dto);
+		if(res>0) {
+			session.setAttribute("mdto", dto);
+			req.setAttribute("msg", "수정 완료");
+			req.setAttribute("url", "mypage.do");
+		}else {
+			req.setAttribute("msg", "수정 실패");
+			req.setAttribute("url", "mypage.do");
+		}
+		return "message";
 	}
+	
 	 
 	@RequestMapping("/mypage_review.do")
 	public String mypageReview() {

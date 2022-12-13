@@ -97,19 +97,19 @@ myModal.addEventListener('shown.bs.modal', () => {
         <table class="table table-sm">
         <tr>
         <th>아이디</th>
-        <td>member_id</td>
+        <td>${mdto.member_id}</td>
         </tr>
         <tr>
         <th>이름</th>
-        <td>member_name</td>
+        <td>${mdto.member_name} </td>
         </tr>
         <tr>
         <th>이메일</th>
-        <td>member_email</td>
+        <td>${mdto.member_email }</td>
         </tr>
         <tr>
         <th>전화번호</th>
-        <td>member_hp</td>
+        <td>${mdto.member_hp}</td>
         </tr>
         </table>
        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#profile_update">
@@ -125,27 +125,39 @@ myModal.addEventListener('shown.bs.modal', () => {
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-         <form role="form">
+         <form role="form" action="update.do" method="post">
          <!-- 후에 value값,수정버튼에 자바스크립트값 추가 update.do 추가 name추가 -->
          <%-- <input type="text" name="email" class="box" value="${getMember.email}">--%>
 				<div class="form-group">
+				<label for="member_id">
+						아이디
+					</label>
+					<input type="text" class="form-control" name="member_id" value="${mdto.member_id }" />
+				<label for="member_hp">
+						이름
+					</label>
+					<input type="text" class="form-control" name="member_name" value="${mdto.member_name }" />				
+				<label for="member_passwd">
+						
+					</label>
+					<input type="hidden" class="form-control" name="member_no" value="${mdto.member_no}" />
 					<label for="member_passwd">
 						비밀번호
 					</label>
-					<input type="password" class="form-control" id="member_passwd" />
+					<input type="text" class="form-control" name="member_passwd" value="${mdto.member_passwd}" />
 				</div>
 				<div class="form-group">
 					 
 					<label for="member_email">
 						이메일
 					</label>
-					<input type="text" class="form-control" id="member_email" />
+					<input type="text" class="form-control" name="member_email" value="${mdto.member_email}"  />
 				</div>
 				<div class="form-group">
 					<label for="member_hp">
 						전화번호
 					</label>
-					<input type="text" class="form-control" id="member_hp" />
+					<input type="text" class="form-control" name="member_hp" value="${mdto.member_hp }" />
 				</div>
 			
       </div>
