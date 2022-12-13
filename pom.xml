@@ -140,9 +140,6 @@
 			    <version>12.2.0.1</version>
 			</dependency>
 	
-	
-	
-
 		<!-- mybatis -->
 		<dependency>
 		    <groupId>org.mybatis</groupId>
