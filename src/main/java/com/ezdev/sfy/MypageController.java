@@ -10,14 +10,17 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ezdev.sfy.dto.MemberDTO;
 import com.ezdev.sfy.dto.MyPageDTO;
+import com.ezdev.sfy.dto.MyRouteDTO;
+import com.ezdev.sfy.service.MyRouteMapper;
+import com.ezdev.sfy.dto.FriendDTO;
+import com.ezdev.sfy.dto.TourDTO;
 import com.ezdev.sfy.service.ChatMapper;
 import com.ezdev.sfy.service.MemberMapper;
 import com.ezdev.sfy.service.MypageMapper;
@@ -33,37 +36,55 @@ public class MypageController {
 	@Autowired
 	ChatMapper chatMapper;
 	
+	@Autowired
+	MemberMapper memberMapper;
 	
-	@Autowired MemberMapper memberMapper;
+	@Autowired
+	MyRouteMapper myrouteMapper;
 	
+	//bottom.jsp 페이스북 아이콘 -> 마이페이지	 
 	@RequestMapping("/mypage.do")
-	public String mypage1() {
-		return "mypage/mypage";
-	} 
-	//bottom.jsp 페이스북 아이콘 -> 마이페이지
-	@RequestMapping("/update.do")
-	public String mypage(HttpServletRequest req,@ModelAttribute MemberDTO dto) {				
-		HttpSession session=req.getSession();
-		int res=memberMapper.updateMember(dto);
-		if(res>0) {
-			session.setAttribute("mdto", dto);
-			req.setAttribute("msg", "수정 완료");
-			req.setAttribute("url", "mypage.do");
-		}else {
-			req.setAttribute("msg", "수정 실패");
-			req.setAttribute("url", "mypage.do");
+	public String mypage(HttpServletRequest req, HttpSession session) {
+		int no =(int) session.getAttribute("nowUserNo");
+		MemberDTO dto = memberMapper.getMemberNo(no);
+		session.setAttribute("getMember", dto);
+		return "mypage/mypage_main";
+	}
+
+	@RequestMapping(value = "/mypage_route.do" ,method=RequestMethod.GET)
+	public String mypageRoute(HttpServletRequest req, HttpSession session, @RequestParam (required=false) String pageNum) {
+		//유저 접속
+		int no =(int) session.getAttribute("nowUserNo");
+		
+		if(pageNum==null) {
+			pageNum="1";
 		}
-		return "message";
+		int currentPage = Integer.parseInt(pageNum);
+		int pageSize=5;
+		int startRow = (currentPage-1)*pageSize+1;
+		int endRow = startRow +pageSize-1;
+		int countRow = mypageMapper.getCountRoute(no);
+		if(endRow>countRow) endRow=countRow;
+		
+		List<MyRouteDTO> list = mypageMapper.listMyroute(no, startRow, endRow);
+		int num = countRow-(startRow-1);
+		req.setAttribute("listMyroute", list);
+		req.setAttribute("num", num);
+		int pageCount = countRow/pageSize +(countRow%pageSize==0? 0:1);
+		int pageBlock=3;
+		int startPage=(currentPage -1)/pageBlock*pageBlock+1;
+		int endPage = startPage +pageBlock -1;
+		if(endPage> pageCount)endPage = pageCount;
+		req.setAttribute("pageCount", pageCount);
+		req.setAttribute("pageBlock", pageBlock);
+		req.setAttribute("startPage", startPage);
+		req.setAttribute("endPage", endPage);
+		return "mypage/mypage_route";
 	}
 	
-	 
 	@RequestMapping("/mypage_review.do")
 	public String mypageReview() {
 		return "mypage/mypage_review";
-	}
-	@RequestMapping("/mypage_route.do")
-	public String mypageRoute() {
-		return "mypage/mypage_route";
 	}
 	
 	@RequestMapping("/mypage_qna.do")
