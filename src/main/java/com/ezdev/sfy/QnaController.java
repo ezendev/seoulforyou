@@ -2,7 +2,10 @@ package com.ezdev.sfy;
 
 import java.util.List;
 
+
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,22 +15,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ezdev.sfy.dto.MemberDTO;
 import com.ezdev.sfy.dto.QnaDTO;
 import com.ezdev.sfy.service.QnaMapper;
+
 
 @Controller
 public class QnaController {
 	
 	@Autowired
 	QnaMapper boardMapper;
+
 	
-	
-	@RequestMapping(value = {"/qnaWrite.do"})
-	public String qnaWrite() {
-		return "pages/qnaWrite";
-	}
 	@RequestMapping("/qnalist.do")
-	public String listBoard(HttpServletRequest req, @RequestParam(required = false) String pageNum) {
+	public String listBoard(HttpServletRequest req, @RequestParam(required = false) String pageNum) {		
 		if (pageNum == null) {
 			pageNum = "1";
 		}
@@ -52,6 +53,9 @@ public class QnaController {
 		req.setAttribute("pageBlock", pageBlock);
 		req.setAttribute("startPage", startPage);
 		req.setAttribute("endPage", endPage);
+		
+		
+		
 		return "pages/qnalist";
 	}
 	
@@ -61,8 +65,12 @@ public class QnaController {
 	}
 	
 	@RequestMapping(value="/qnaWrite.do", method=RequestMethod.POST)
-	public String writePro_board(HttpServletRequest req, 
-			@ModelAttribute QnaDTO dto, BindingResult result) {
+	public String writePro_board(HttpServletRequest req, @ModelAttribute QnaDTO dto, BindingResult result) {
+		HttpSession session = req.getSession();
+		String member_id = (String)session.getAttribute("nowUserId");
+		dto.setQna_writer(member_id);
+		
+		session.setAttribute("mdto", dto);
 		if (result.hasErrors()) {
 			dto.setQna_no(0);
 			dto.setQna_re_step(0);
@@ -76,6 +84,7 @@ public class QnaController {
 			req.setAttribute("msg", "게시글 등록 실패!! 게시글 등록 페이지로 이동합니다.");
 			req.setAttribute("url", "qnaWrite.do");
 		}
+
 
 		return "message";
 	}

@@ -1,12 +1,36 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!-- writeForm.jsp -->
 <html>
 <head>
-	<title>±Û¾²±â</title>
+	<title>ê¸€ì“°ê¸°</title>
 	<link rel="stylesheet" href="resources/css/bootstrap.min.css">
 	<script src="resources/js/bootstrap.bundle.min.js"></script>
 	<link rel="stylesheet" href="resources/js/bootstrap.min.js">
+	<script>
+	function go_qnalist(){
+		history.back();
+	}
+	function qna_submit(){
+		if(qna_subject.value ==""){
+			alert("ì œëª©ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”")
+			qna_subject.focus()
+			return
+		}
+		if(qna_content.value ==""){
+			alert("ë‚´ìš©ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”")
+			qna_content.focus()
+			return
+		}
+		if(qna_passwd.value ==""){
+			alert("ë¹„ë°€ë²ˆí˜¸ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”")
+			qna_passwd.focus()
+			return
+		}
+		document.f.submit();
+	}
+	</script>
+	
 	<style>
     body {
       min-height: 100vh;
@@ -43,32 +67,30 @@
 		<div class="container">
 			<div class="input-form-backgroud row">
 				<div class="input-form col-md-12 mx-auto">
-					<h4 class="mb-3">¹®ÀÇÇÏ±â</h4>
-					<div class="mb-3" align="left">
-						<label for="exampleFormControlInput1" class="label">ÀÌ¸§</label> 
-						<input name="qna_writer" type="text" class="form-control">	
-					</div>
+					<h4 class="mb-3">ë¬¸ì˜í•˜ê¸°</h4>
+
 					
 					<div class="mb-3" align="left">
-						<label for="exampleFormControlInput1" class="label">Á¦¸ñ</label> 
-						<input name="qna_subject" type="text" class="form-control">		
+						<label for="exampleFormControlInput1" class="label">ì œëª©</label> 
+						<input name="qna_subject" id="qna_subject"type="text" class="form-control">		
 					</div>
 																					
 					<div class="mb-3" align="left">
-						<label for="exampleFormControlTextarea1" class="form-label">¹®ÀÇ³»¿ë</label>
-						<textarea name="qna_content" class="form-control" rows="3" cols="50"></textarea>	
+						<label for="exampleFormControlTextarea1" class="form-label">ë¬¸ì˜ë‚´ìš©</label>
+						<textarea name="qna_content" id="qna_content" class="form-control" rows="3" cols="50"></textarea>	
 					</div>
 					
 					<div class="mb-3" align="left">
-						<label for="password">ºñ¹Ğ¹øÈ£</label> 
+						<label for="password">ë¹„ë°€ë²ˆí˜¸</label> 
 						<input
-							input type="password" name="qna_passwd" class="form-control">
+							 type="password" name="qna_passwd"id="qna_passwd" class="form-control">
 					</div>						
 					<hr class="mb-4">
 					<div class="mb-4"></div>
-					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-						<input class="btn btn-outline-secondary" type="reset" value="´Ù½ÃÀÛ¼º">
-						<input class="btn btn-primary" type="submit" value="Áú¹®Á¦Ãâ">
+					<div class="d-grid gap-1 d-md-flex justify-content-md-end">
+						<input class="btn btn-primary" type="button" value="ì§ˆë¬¸ì œì¶œ" onclick="javascript:qna_submit()">
+						<input class="btn btn-outline-secondary" type="reset" value="ë‹¤ì‹œì‘ì„±">
+						<input class="btn btn-outline-secondary" type="button" style= "width:90px" value="ëª©ë¡ë³´ê¸°" onclick="javascript:go_qnalist()"> 	
 					</div>
 				</div>
 			</div>
