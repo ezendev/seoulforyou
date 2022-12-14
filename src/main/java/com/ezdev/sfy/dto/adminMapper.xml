@@ -8,6 +8,16 @@
 	#{admin_passwd},#{admin_email},#{admin_profileImg})
 </insert>
 
+<select id="countMemberByWeek" resultType="java.util.Map" parameterType="java.util.Map">
+	${sql}
+</select>
+
+<select id="countReviewByWeek" resultType="java.util.Map" parameterType="java.util.Map">
+	${sql}
+</select>
  
+<select id="countRouteByHash" parameterType="java.util.Map" resultType="int">
+	select count(*) from route where route_hashtag = #{hashtag}
+</select>
 
 </mapper>

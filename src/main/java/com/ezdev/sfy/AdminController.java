@@ -2,7 +2,12 @@ package com.ezdev.sfy;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,6 +25,7 @@ import com.ezdev.sfy.dto.MemberDTO;
 import com.ezdev.sfy.dto.QnaDTO;
 import com.ezdev.sfy.service.AdminMapper;
 import com.ezdev.sfy.service.MemberMapper;
+import com.ezdev.sfy.service.MyRouteMapper;
 import com.ezdev.sfy.service.QnaMapper;
 
 // @Controller -> Url, @Service ->처리, @Repository -> dao, @Component -> 구성, @RestController -> url과 ajax
@@ -36,10 +42,42 @@ public class AdminController {
 	@Autowired	
 	QnaMapper qnaMapper;
 	
+	@Autowired
+	MyRouteMapper myrouteMapper;
+	
 	//top.jsp 로고 -> 관리자페이지
 	@RequestMapping("/admin.do")
 
-	public String admin() {
+	public String admin(HttpSession session) {
+		
+		// 1. 2주간 회원가입자 수 집계
+		int[] memberChartArr = adminMapper.countMemberByWeek();
+		session.setAttribute("memberChartValue", memberChartArr);
+
+
+		/*
+		// 2. 요일별 리뷰갯수가 들어갈 배열
+		int[] reviewChartArr = adminMapper.countReviewByWeek();
+		session.setAttribute("reviewChartValue", routeChartArr);
+		*/
+
+
+		// 3. 루트테마별 갯수가 들어갈 배열
+		int[] routeChartArr = new int[5];
+		// 루트테마 이름이 들어간 배열
+		String[] routeHashArr = new String[] {"힐링", "미식", "한류", "명소", "쇼핑"};
+		
+		// 루트테마 이름으로 갯수를 세서 배열에 넣기
+		for(int i=0; i<routeChartArr.length; i++) {
+			// 최종 넘겨줄 map
+			Map<String, String> map = new HashMap<>();
+			map.put("hashtag", routeHashArr[i]);
+			int num = adminMapper.countRouteByHash(map);
+			routeChartArr[i] = num;
+		}
+		session.setAttribute("routeChartValue", routeChartArr);
+		
+		
 		return "admin/index";
 	}
 	@RequestMapping("/Sample.do")
