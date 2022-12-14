@@ -13,24 +13,13 @@
             <!-- 본문 내용 시작입니다 -->
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">통계</h1>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="index.do">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Charts</li>
-                        </ol>
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                Chart.js is a third party plugin that is used to generate the charts in this template. The charts below have been customized - for further customization options, please visit the official
-                                <a target="_blank" href="https://www.chartjs.org/docs/latest/">Chart.js documentation</a>
-                                .
-                            </div>
-                        </div>
+                        <h1 class="mt-4">통계자료</h1>
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-chart-area me-1"></i>
-                                Area Chart Example
+                                	회원가입 추이
                             </div>
-                            <div class="card-body"><canvas id="myAreaChart" width="100%" height="30"></canvas></div>
+                            <div class="card-body"><canvas id="memberChart" width="100%" height="30"></canvas></div>
                             <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
                         </div>
                         <div class="row">
@@ -38,20 +27,20 @@
                                 <div class="card mb-4">
                                     <div class="card-header">
                                         <i class="fas fa-chart-bar me-1"></i>
-                                        Bar Chart Example
+                                        	주간 리뷰 수
                                     </div>
-                                    <div class="card-body"><canvas id="myBarChart" width="100%" height="50"></canvas></div>
-                                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                                    <div class="card-body"><canvas id="reviewChart" width="100%" height="50"></canvas></div>
+                                    <div class="card-footer small text-muted"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="card mb-4">
                                     <div class="card-header">
                                         <i class="fas fa-chart-pie me-1"></i>
-                                        Pie Chart Example
+                                        	여행루트 테마
                                     </div>
-                                    <div class="card-body"><canvas id="myPieChart" width="100%" height="50"></canvas></div>
-                                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                                    <div class="card-body"><canvas id="routeChart" width="100%" height="50"></canvas></div>
+                                    <div class="card-footer small text-muted"></div>
                                 </div>
                             </div>
                         </div>
@@ -71,12 +60,191 @@
                 </footer>
             </div>
         </div>
+        
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        
+        <script>
+        	//지난주, 이번주 회원가입 인원수 차트
+        	const memberCtx = document.getElementById('memberChart');
+        	
+        	const WEEKS = [
+        		  '지난 월',
+        		  '지난 화',
+        		  '지난 수',
+        		  '지난 목',
+        		  '지난 금',
+        		  '지난 토',
+        		  '지난 일',
+        		  '월',
+        		  '화',
+        		  '수',
+        		  '목',
+        		  '금',
+        		  '토',
+        		  '일'
+        		];
+
+        	function weeks(config) {
+        		  var cfg = config || {};
+        		  var count = cfg.count || 14;
+        		  var section = cfg.section;
+        		  var values = [];
+        		  var i, value;
+
+        		  for (i = 0; i < count; ++i) {
+        		    value = WEEKS[Math.ceil(i) % 14];
+        		    values.push(value.substring(0, section));
+        		  }
+
+        		  return values;
+        		}
+        	
+        	const labels = weeks({count: 14});
+        	
+        	var memberChart = new Chart(memberCtx, {
+    		    type: 'line',
+    		    data: {
+    		    	labels: labels,
+    		    	  datasets: [{
+    		    	    label: '가입자 수',
+    		    	    data: [10, 50, 100, 20, 30, 10, 20, 10, 50, 100, 20, 30, 10, 20],
+    		    	    fill: false,
+    		    	    borderColor: 'rgb(75, 192, 192)',
+    		    	    tension: 0.1
+    		    	  }
+    		    	  ]
+    		    }
+    		  });
+        	
+        	
+        	var datas = []; // 데이터 담을 배열
+	        <c:forEach items='${memberChartValue}' var='num'>
+		        var num = '${num}'; 
+		        datas.push(num);
+	        </c:forEach>
+	     	// 배열 거꾸로
+	        const reverse = datas.reverse();
+	     	console.log(reverse);
+	        
+		  
+		  var dataset = memberChart.data.datasets;
+		  for(var i=0; i<dataset.length; i++){
+				//데이터 갯수 만큼 반복
+				var data = dataset[i].data;
+				for(var j=0 ; j < data.length ; j++){
+					data[j] = datas[j];
+				}
+			}
+			
+			memberChart.update();
+        	
+        </script>
+        
+        <script>
+        	//이번주 리뷰수 차트
+        	const reviewCtx = document.getElementById('reviewChart');
+        	var reviewChart = new Chart(reviewCtx, {
+    		    type: 'bar',
+    		    data: {
+    		    	labels: [
+    		    	    '월',
+    		    	    '화',
+    		    	    '수',
+    		    	    '목',
+    		    	    '금',
+    		    	    '토',
+    		    	    '일'
+    		    	  ],
+    		    	  datasets: [{
+    		    	    label: '리뷰 수',
+    		    	    data: [0, 0, 0, 0, 0, 0, 0],
+    		    	    borderWidth: 1
+    		    	  }
+    		    	  ]
+    		    },
+    		    options: {
+    		        scales: {
+    		          y: {
+    		            beginAtZero: true
+    		          }
+    		        }
+    		      }
+    		  });
+        	
+        	var datas = []; // 일별 리뷰갯수 담을 배열
+	        <c:forEach items='${reviewChartValue}' var='num'>
+	        var num ='${num}';
+	        datas.push(num);
+	     	</c:forEach>
+		  
+		  var dataset = reviewChart.data.datasets;
+
+		  for(var i=0; i<dataset.length; i++){
+				//데이터 갯수 만큼 반복
+				var data = dataset[i].data;
+				for(var j=0 ; j < data.length ; j++){
+					data[j] = datas[j];
+				}
+			}
+			
+			reviewChart.update();
+        </script>
+        
+        
+        <script>
+        	//여행루트테마 차트	        
+		  const routeCtx = document.getElementById('routeChart');
+		
+		  var routeChart = new Chart(routeCtx, {
+		    type: 'pie',
+		    data: {
+		    	labels: [
+		    	    '힐링',
+		    	    '미식',
+		    	    '한류',
+		    	    '명소',
+		    	    '쇼핑'
+		    	  ],
+		    	  datasets: [{
+		    	    label: '여행테마',
+		    	    data: [10, 50, 100, 20, 30],
+		    	    backgroundColor: [
+		    	      'rgb(255, 99, 132)',
+		    	      'rgb(54, 162, 235)',
+		    	      'rgb(255, 205, 86)',
+		    	      'rgb(135, 219, 84)',
+		    	      'rgb(216, 113, 207)'
+		    	    ],
+		    	    hoverOffset: 4
+		    	  }
+		    	  ]
+		    }
+		  });
+		  
+		  var datas = []; // 각 테마별 갯수 담을 배열
+	        <c:forEach items='${routeChartValue}' var='num'>
+	        var num = '${num}'; 
+	        datas.push(num);
+	     	</c:forEach>
+		  
+		  var dataset = routeChart.data.datasets;
+
+		  for(var i=0; i<dataset.length; i++){
+				//데이터 갯수 만큼 반복
+				var data = dataset[i].data;
+				for(var j=0 ; j < data.length ; j++){
+					data[j] = datas[j];
+				}
+			}
+			
+			routeChart.update();
+		  
+		</script>
+        
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="resources/js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="resources/demo/chart-area-demo.js"></script>
-        <script src="resources/demo/chart-bar-demo.js"></script>
-        <script src="resources/demo/chart-pie-demo.js"></script>
         
 		         <!-- 관리자등록 모달 내용 --> 	
 		    					 
