@@ -8,7 +8,7 @@
 				var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 			    mapOption = {
 			        center: new kakao.maps.LatLng(37.6562677764281, 127.063030448739), // 지도의 중심좌표(노원역)
-			        level: 7 // 지도의 확대 레벨
+			        level: 6 // 지도의 확대 레벨
 			    };  
 			
 			// 지도를 생성합니다    
@@ -41,28 +41,35 @@
 			            
 			            //positions라는 객체에 info와 좌표 담기
 			            var positions=[{
-			            	content: '<div>'+infoArr[index]+'</div>',
+			            	content: '<div style="width:200px; height:50px;" align="center">'+infoArr[index]+'</div>',
 							latlng: coords
 			            }];
-			            
-			            //마커 찍기
+			          //마커 찍기
 			            for(var i=0; i<positions.length; i++){
 					        var marker = new kakao.maps.Marker({
 					            map: map,
 					            position: positions[i].latlng,
 					            clickable: true
 					        });
-				            map.setCenter(coords);
-					      
+     
+    
 			            var infowindow = new kakao.maps.InfoWindow({
 				            content: positions[i].content
 				        });
-				        kakao.maps.event.addListener(marker, 'click', marker_click(map, marker, infowindow));
-					
+			         	 //마커에 마우스를 놓으면 인포윈도우 보여짐
+			            kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+			           	//인포윈도우 사라짐
+			            kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+						
+			           	//마커 확인
+				        map.setCenter(coords);
+				        
+			           
 			            };
 			     		   }
 			 		   });
 					});
+	
 						
 			var linePath = [];
 
@@ -101,18 +108,25 @@
 			    const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 			    linePath.push(coords);
 			    polyline.setPath(linePath);
-
+			    
+				
 			    if(!polyline.getMap()) {
 			        polyline.setMap(map);
 			    }
 			}
-					 	
-				//마커를 누르면 장소명이 뜸(이 부분은 추후에 디테일하게 바꿔야함..)
-		        function marker_click(map, marker, infowindow){ 	 
-		        	return function() {
-		        	infowindow.open(map, marker);
-		        			};
-		        	}  	  
+			// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+			function makeOverListener(map, marker, infowindow) {
+			    return function() {
+			        infowindow.open(map, marker);
+			    };
+			}
+
+			// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+			function makeOutListener(infowindow) {
+			    return function() {
+			        infowindow.close();
+			    };
+			}
 					      
 				
 				</script>

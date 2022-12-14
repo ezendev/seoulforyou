@@ -8,7 +8,7 @@
 				var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 			    mapOption = {
 			        center: new kakao.maps.LatLng(37.6562677764281, 127.063030448739), // 지도의 중심좌표(노원역)
-			        level: 7 // 지도의 확대 레벨
+			        level: 6 // 지도의 확대 레벨
 			    };  
 			
 			// 지도를 생성합니다    
@@ -18,7 +18,6 @@
 			var route ='${editRoute}';
 			var addrArr=[]; //주소 담을 배열
 			var infoArr=[]; //info 담을 배열
-			
 			//controller에 myRoute불러오기
 			<c:forEach items='${editRoute}' var='rdto'>
 					var info ='${rdto.getTour_name()}'; 
@@ -36,12 +35,10 @@
 			        if (status === kakao.maps.services.Status.OK) {
 			        	//좌표 받기
 			        	var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-			            var lat = result[0].y;
-			            var lng = result[0].x;
 			            
 			            //positions라는 객체에 info와 좌표 담기
 			            var positions=[{
-			            	content: '<div>'+infoArr[index]+'</div>',
+			            	content: '<div style="width:150px">'+infoArr[index]+'</div>',
 							latlng: coords
 			            }];
 			            
@@ -52,18 +49,27 @@
 					            position: positions[i].latlng,
 					            clickable: true
 					        });
-				            map.setCenter(coords);
-					      
+     
+    
 			            var infowindow = new kakao.maps.InfoWindow({
 				            content: positions[i].content
 				        });
-				        kakao.maps.event.addListener(marker, 'click', marker_click(map, marker, infowindow));
-					
+			         	 //마커에 마우스를 놓으면 인포윈도우 보여짐
+			            kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+			           	//인포윈도우 사라짐
+			            kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+						
+			           	//마커들이 지도에 한 번에 보여지도록 
+				        marker.setMap(map);
+				        
+			           
 			            };
+			           	
 			     		   }
 			 		   });
 					});
 						
+			var bounds = new kakao.maps.LatLngBounds();
 			var linePath = [];
 
 			var polyline = new kakao.maps.Polyline({
@@ -79,7 +85,7 @@
 			        geocoder.addressSearch(address, function(result, status) {
 			            if (status === kakao.maps.services.Status.OK) {
 			                resolve(result);
-			            } else {
+			          } else {
 			                reject(status);
 			            }
 			        });
@@ -101,18 +107,25 @@
 			    const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 			    linePath.push(coords);
 			    polyline.setPath(linePath);
-
+			    bounds.extend(coords);
+				map.setBounds(bounds);
+			    
 			    if(!polyline.getMap()) {
 			        polyline.setMap(map);
 			    }
 			}
-					 	
-				//마커를 누르면 장소명이 뜸(이 부분은 추후에 디테일하게 바꿔야함..)
-		        function marker_click(map, marker, infowindow){ 	 
-		        	return function() {
-		        	infowindow.open(map, marker);
-		        			};
-		        	}  	  
-					      
-				
+			// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+			function makeOverListener(map, marker, infowindow) {
+			    return function() {
+			        infowindow.open(map, marker);
+			    };
+			}
+
+			// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+			function makeOutListener(infowindow) {
+			    return function() {
+			        infowindow.close();
+			    };
+			}
+			
 				</script>

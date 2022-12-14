@@ -22,9 +22,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ezdev.sfy.service.MyRouteMapper;
+import com.ezdev.sfy.service.MypageMapper;
 import com.ezdev.sfy.service.TourMapper;
 import com.ezdev.sfy.service.MemberMapper;
 import com.ezdev.sfy.dto.MemberDTO;
+import com.ezdev.sfy.dto.MyPageDTO;
 import com.ezdev.sfy.dto.MyRouteDTO;
 import com.ezdev.sfy.dto.TourDTO;
 
@@ -36,12 +38,19 @@ public class MyRouteController {
 	MyRouteMapper myrouteMapper;
 	@Autowired
 	MemberMapper memberMapper;
+	@Autowired
+	MypageMapper mypageMapper;
 	
 	
 	//나의여행 만들기페이지로 이동
 	@RequestMapping("/myRoute.do")
 	public String my_route_1(HttpServletRequest req) {
 		HttpSession session = req.getSession();
+		if(session.getAttribute("nowUserNo")==null) {
+			req.setAttribute("msg", "로그인 후에  이용이 가능합니다.");
+			req.setAttribute("url", "index.do");
+			return "message";
+		}
 		session.removeAttribute("myRoute");
 		session.removeAttribute("findList");
 		session.removeAttribute("trip_thema");
@@ -49,6 +58,26 @@ public class MyRouteController {
 		session.removeAttribute("startDate");
 		session.removeAttribute("endDate");
 		session.removeAttribute("searchType");
+		session.removeAttribute("favorite");
+		
+		int no =(int)session.getAttribute("nowUserNo");
+		MemberDTO dto= memberMapper.getMemberNo(no);
+		session.setAttribute("getMemberNo", dto);
+		MyPageDTO pdto = mypageMapper.getMyPage(no);
+		String tour= pdto.getMypage_favorite_tour();
+		String[]array = tour.split(",");
+		List<TourDTO> favorite = (List)session.getAttribute("favorite");
+		if(favorite==null) {
+			favorite = new ArrayList<>();
+		}
+		int tour_no=0;
+		for(int i=0; i<array.length; i++) {
+			tour_no=(int) Integer.parseInt(array[i]);
+			TourDTO rdto = myrouteMapper.getTour(tour_no);
+			favorite.add(rdto);
+			}
+		session.setAttribute("favorite", favorite);
+		
 		return "myroute/myRoute";
 	}
 
@@ -86,8 +115,8 @@ public class MyRouteController {
 	
 	//일정 만들기
 	//일정에 장소 추가
-	@RequestMapping(value="/addList.do", method=RequestMethod.GET)
-	public String addList(HttpServletRequest req, @RequestParam (required=false)int tour_no) {
+	@RequestMapping(value="/addList.do")
+	public String addList(HttpServletRequest req, @RequestParam (required=false)int tour_no, @RequestParam Map<String, String>map) {
 		HttpSession session =req.getSession();
 		TourDTO rdto =myrouteMapper.getTour(tour_no);
 		List<TourDTO> routeList = (List)session.getAttribute("myRoute");
@@ -96,12 +125,18 @@ public class MyRouteController {
 		}
 		routeList.add(rdto);
 		session.setAttribute("myRoute", routeList);
+		session.setAttribute("searchType", map.get("searchType"));
+		session.setAttribute("trip_thema", map.get("trip_thema"));
+		session.setAttribute("region", map.get("region"));
+		session.setAttribute("startDate", map.get("startDate"));
+		session.setAttribute("endDate", map.get("endDate"));
 		return "redirect: myRouteList.do";
 	}
 	
 	//페이지로 이동	
 	@RequestMapping(value="/myRouteList.do", method=RequestMethod.GET)
-	public String myRouteList() {
+	public String myRouteList(HttpServletRequest req) {
+		HttpSession session = req.getSession();
 		return "myroute/myRoute";
 	}
 	
@@ -170,10 +205,13 @@ public class MyRouteController {
 		dto.setRoute_content(afterMap.get("route_content"));
 		
 		//앞 페이지의 hashtag, itinerary, region을 dto에 넣기		
-		dto.setRoute_hashtag((String)session.getAttribute("trip_thema"));
-		dto.setRoute_itinerary((String)session.getAttribute("route_itinerary"));
-		dto.setRoute_region((String)session.getAttribute("region"));
-			
+		String route_hashtag=(String)session.getAttribute("trip_thema");
+		String route_region=(String)session.getAttribute("region");
+		String route_itinerary=(String)session.getAttribute("route_itinerary");
+		dto.setRoute_hashtag(route_hashtag);
+		dto.setRoute_itinerary(route_itinerary);
+		dto.setRoute_region(route_region);
+
 		//myRoute는 세션에 담겨 있던 것이므로 session에서 꺼내기(','를 구분자 tour_no를 정렬)
 		List<TourDTO> routeList = (List<TourDTO>)session.getAttribute("myRoute");
 		if(routeList==null) {
@@ -243,6 +281,7 @@ public class MyRouteController {
 	@RequestMapping(value ="/myroute_editRoute.do", method=RequestMethod.GET)
 	public String mypageRoute_edit(HttpServletRequest req, @RequestParam int route_no) {
 		HttpSession session = req.getSession();
+		//원래대로 버튼 누르면 이전 session 초기화
 		session.removeAttribute("findList");
 		session.removeAttribute("searchType");
 		session.removeAttribute("trip_thema");
@@ -250,21 +289,42 @@ public class MyRouteController {
 		session.removeAttribute("startDate");
 		session.removeAttribute("endDate");
 		session.removeAttribute("editRoute");
+		session.removeAttribute("favorite");
 		
+		//유저 접속
+		int no = (int)session.getAttribute("nowUserNo");
+		MyPageDTO pdto = mypageMapper.getMyPage(no);
+		
+		//즐겨찾기(tour)가져오기& ','별로 나눠서 배열에 담기
+		String tour= pdto.getMypage_favorite_tour();
+		String[]array1 = tour.split(",");
+		List<TourDTO> favorite = (List)session.getAttribute("favorite");
+		if(favorite==null) {
+			favorite = new ArrayList<>();
+		}
+		//favorite이라는 리스트에 여행지dto담기
+		for(int i=0; i<array1.length; i++) {
+			int tour_no=(int) Integer.parseInt(array1[i]);
+			TourDTO rdto = myrouteMapper.getTour(tour_no);
+			favorite.add(rdto);
+		}
+		session.setAttribute("favorite", favorite);
+		
+		//내 루트에서 만든 투어 목록 가져오기& ','별로 나눠서 배열에 담기
 		MyRouteDTO dto = myrouteMapper.getRoute(route_no);
 		String route= dto.getRoute_tour();
-		String[]array =route.split(",");
+		String[]array2 =route.split(",");
 		int tour_no;
 		List<TourDTO> editRoute = (List)session.getAttribute("editRoute");
 		if(editRoute==null) {
 			editRoute = new ArrayList<>();
 		}
-		for(int i=0; i<array.length; i++) {
-			tour_no=(int) Integer.parseInt(array[i]);
+		//editRoute라는 리스트에 담기
+		for(int i=0; i<array2.length; i++) {
+			tour_no=(int) Integer.parseInt(array2[i]);
 			TourDTO rdto =myrouteMapper.getTour(tour_no);
 			editRoute.add(rdto);
 		}
-		
 		session.setAttribute("editRoute", editRoute);
 		session.setAttribute("getRoute", dto);
 			
@@ -310,13 +370,18 @@ public class MyRouteController {
 		}
 	//일정 만들기
 	//일정에 장소 추가
-	@RequestMapping(value="/edit_addList.do", method=RequestMethod.GET)
-	public String edit_addList(HttpServletRequest req, @RequestParam (required=false)int tour_no) {
+	@RequestMapping(value="/edit_addList.do")
+	public String edit_addList(HttpServletRequest req, @RequestParam (required=false)int tour_no, @RequestParam Map <String, String> map) {
 		HttpSession session =req.getSession();
 		TourDTO rdto =myrouteMapper.getTour(tour_no);
 		List<TourDTO> editRoute = (List)session.getAttribute("editRoute");
 		editRoute.add(rdto);
 		session.setAttribute("editRoute", editRoute);
+		session.setAttribute("searchType", map.get("searchType"));
+		session.setAttribute("trip_thema", map.get("trip_thema"));
+		session.setAttribute("region", map.get("region"));
+		session.setAttribute("startDate", map.get("startDate"));
+		session.setAttribute("endDate", map.get("endDate"));
 		return "redirect: myroute_editList.do";
 	}
 		

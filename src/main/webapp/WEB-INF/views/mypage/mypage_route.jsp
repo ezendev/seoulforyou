@@ -16,9 +16,26 @@ a {
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
        <section class="content-header">
-          <h2 id="mypage_route" align="center">나의 여행 루트</h2>	    
+          <h2 id="mypage_route" align="center">나의 여행 루트</h2>   
        </section>
-       
+       <div class="row mt-2">
+		<div align="right">
+			<div class="col-12 mb-3 col-md-2" style="float:right" >
+	          <select class="form-select" id="hashtagFilter" onchange="hashtagFilter()">
+	             <option value="" <c:if test="${route_hashtag==''}"> selected </c:if>>#여행 테마</option>      
+	             <option value="힐링" <c:if test="${route_hashtag=='힐링'}"> selected </c:if>>#힐링</option>
+	             <option value="미식" <c:if test="${route_hashtag=='미식'}"> selected </c:if>>#미식</option>
+	             <option value="한류" <c:if test="${route_hashtag=='한류'}"> selected </c:if>>#한류</option>
+	             <option value="명소" <c:if test="${route_hashtag=='명소'}"> selected </c:if>>#명소</option>
+	             <option value="쇼핑" <c:if test="${route_hashtag=='쇼핑'}"> selected </c:if>>#쇼핑</option>
+	          </select>
+			</div>
+		</div>
+	</div>
+	
+	<form id="routeForm" name="f" method="post" action="mypage_route.do">
+      <input type="hidden" id="route_hashtag" name="route_hashtag">
+   </form>
     	<section class="content container-fluid">
           <div class="col-lg-12">
             <div class="box box-primary">
@@ -97,24 +114,7 @@ a {
 		        </div>
              </div>
             </div>
-       <!-- 검색창 -->
-      <form name="mpsearch" action="mypage_findRoute.do" method="post">
-	      <div class="row" align="center">
-	      	<div class="col-3">
-	    	<select class="form-select" aria-label="Default select example" name="searchRoute" id="searchRoute" style="width:80%">
-	           	<option value="route_subject">제목</option>
-	           	<option value="route_hashtag">테마</option>           
-	           	<option value="route_region">지역</option>
-		   	</select>
-	      	</div>
-			<div class="col-5">
-	       	 <input type="text" name="keyword" id="keyword" size="60" maxlength="20"/>
-			</div>
-			<div class="col-4">
-	       	 <button class="btn btn-primary btn-flat" id="searchBtn" type="submit">검색</button>
-			</div>
-	      </div>
-      </form>
+       
       <form name="mpnext" method="get">
 	     <div class="box-footer">
 		    <div class="text-center">
@@ -135,5 +135,14 @@ a {
 		</section>
 	</div>
 </div>
+
+<script>
+	function hashtagFilter(event){
+		const route_hashtag = $("#hashtagFilter option:selected").val();
+		$('#route_hashtag').val(route_hashtag);
+		console.log($('#route_hashtag').val());
+		$('#routeForm').submit();
+	}
+</script>
 
 <%@ include file="../bottom.jsp"%>
