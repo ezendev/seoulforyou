@@ -60,6 +60,16 @@ update mypage
 	set mypage_favorite_tour = mypage_favorite_tour||#{tour_no, jdbcType=NUMERIC}||','
 	where mem_no = #{no, jdbcType=NUMERIC}
 </update>
+<!-- review -->
+<select id="listReview" parameterType="java.util.Map" resultType="reviewDTO">
+select * from (select rownum rn, B.* from
+              (select * from review where mem_no = #{no} order by review_no asc)B)
+              where rn between #{start} and #{end}
+</select>
+<select id="listReviewCount" resultType="Integer">
+ select count(*) from review where mem_no = #{no}
+</select>
+
 <!-- MyRoute -->
 <select id="getCountRoute" resultType="int">
  select count(*) from route where mem_no=#{no}
