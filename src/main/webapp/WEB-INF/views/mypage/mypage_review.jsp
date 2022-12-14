@@ -3,83 +3,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!-- mypage_review.jsp -->
-<%@ include file="../top.jsp"%>
-
-<html>
-
-<head>
-<title>나의 리뷰</title>
-<script>
+<%@include file = "mypage.jsp" %>
+ <script>
 <%-- 모달창 끄면 이전 입력 정보 사라짐 --%>
 $('.modal').on('hidden.bs.modal', function (e) {
     console.log('modal close');
   $(this).find('form')[0].reset()
 });
 </script>
- <link rel="stylesheet" href="resources/css/bootstrap.min.css">
- <link href="css/star-rating.css" media="all" rel="stylesheet" type="text/css" />
-</head>
-<body>
-   <div class="container">
-	<div class="row">
-		<aside class="bd-aside sticky-xl-top text-muted align-self-start d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
-    <a href="index.do" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-      <svg class="bi pe-none me-2" width="40" height="32"></svg>
-      <span class="fs-4">Seoul for you</span>
-    </a>
-    <hr>
-    <ul class="nav nav-pills flex-column mb-auto">
-      <li class="nav-item">
-        <a class="nav-link js-scroll-trigger" aria-current="page" href="mypage.do">
-          <svg class="bi pe-none me-2" width="16" height="16"></svg>
-          내정보
-        </a>
-      </li>
-      <li>
-        <a class="nav-link js-scroll-trigger" href="mypage_route.do">
-          <svg class="bi pe-none me-2" width="16" height="16"></svg>
-          나의 여행 루트
-        </a>
-      </li>
-      <li>
-        <a class="nav-link js-scroll-trigger" href="#mypage_review">
-          <svg class="bi pe-none me-2" width="16" height="16"></svg>
-          나의 리뷰
-        </a>
-      </li>
-      <li>
-        <a class="nav-link js-scroll-trigger" href="mypage_favorite.do">
-          <svg class="bi pe-none me-2" width="16" height="16"></svg>
-          나의 즐겨찾기
-        </a>
-      </li>
-      <li>
-        <a class="nav-link js-scroll-trigger" href="mypage_friend.do">
-          <svg class="bi pe-none me-2" width="16" height="16"></svg>
-          친구 목록
-        </a>
-      </li>
-      <li>
-        <a class="nav-link js-scroll-trigger" href="mypage_qna.do">
-          <svg class="bi pe-none me-2" width="16" height="16"></svg>
-          문의 내역
-        </a>
-      </li>
-      <li>
-        <a class="nav-link link-dark" href="#">
-          <svg class="bi pe-none me-2" width="16" height="16"></svg>
-          회원 탈퇴
-        </a>
-      </li>
-      <li>
-        <a class="nav-link active" href="#">
-          <svg class="bi pe-none me-2" width="16" height="16"></svg>
-          로그아웃
-        </a>
-      </li>
-    </ul>
-    <hr>
-  </aside>
  <div class="wrapper col-md-9">   
             <h3 id="mypage_review">
                 나의 리뷰
@@ -90,7 +21,7 @@ $('.modal').on('hidden.bs.modal', function (e) {
                             <tr>
                                 <th width="5%">#</th>
                                 <th width="10%">평점</th>
-                                <th width="20%">제목</th>
+                                <th width="20%">내용</th>
                                 <th width="15%">작성시간</th>
                                 <th width="10%"></th>
                             </tr>
@@ -122,7 +53,7 @@ $('.modal').on('hidden.bs.modal', function (e) {
                                 </td>
                                 <td>${redto.review_regdate}</td>
                                 <td>
-			                   <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#review_update">
+			                   <button onclick="valueSetting('${redto.review_no}','${redto.review_content}')" type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#review_update">
                                                              수정
                                </button>
 			                    <a type="button" class="btn btn-outline-primary btn-sm" href="delete_review.do?review_no=${redto.review_no}">
@@ -149,27 +80,33 @@ $('.modal').on('hidden.bs.modal', function (e) {
              </div>
              </div>
             </div>
-            <!-- Modal -->
+ <!-- Modal -->
 <div class="modal fade" id="review_update" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">
+     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">리뷰 수정</h1>
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">정보 수정</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-         <form role="form" action="update_review.do" method="post">
+         <form name="f" action="update_review.do" method="post">
+				<input type="hidden" id="review_no" name="review_no" />
 				<div class="form-group">
-					<label>평점 : </label>
-      			<select name="review_star">
+				<label for="review_star">
+						평점 : 
+				</label>
+					<select name="review_star" class="form-control">
       			 <option value="★☆☆☆☆">★☆☆☆☆</option>
       			 <option value="★★☆☆☆">★★☆☆☆</option>
       			 <option value="★★★☆☆">★★★☆☆</option>
       			 <option value="★★★★☆">★★★★☆</option>
       			 <option value="★★★★★">★★★★★</option>
                  </select>
-					<textarea class="form-control" name="review_content" rows="7"></textarea><br>
-				</div>
+				<label for="review_content">
+						내용
+			    </label>
+			<textarea class="form-control" id="review_content" name="review_content" rows="7"></textarea><br>
+		</div>
       </div>
       <div class="modal-footer">
         <input type="submit" class="btn btn-primary" value="입력">
@@ -180,6 +117,14 @@ $('.modal').on('hidden.bs.modal', function (e) {
   </div>
 </div>
         <!-- /.content -->
+   <script>
+   	function valueSetting(no, content){
+   		console.log(no);
+   		console.log(content);
+   		$('#review_no').attr("value", no);
+   		$('#review_content').val(content);
+   	}
+   </script>
   <script src="resources/js/jquery-3.6.1.min.js"></script>
    <script src="resources/js/bootstrap.bundle.js"></script>
    <script src="js/star-rating.js" type="text/javascript"></script>

@@ -6,7 +6,7 @@
 <insert id="insertReview" parameterType="reviewDTO">
 insert into review values(review_seq.nextval, #{mem_no}, #{review_content}, #{review_star}, sysdate)
 </insert>
-<select id="getReview" resultType="Integer"> 
+<select id="getReview" parameterType="int" resultType="reviewDTO"> 
 select * from review where review_no = #{review_no}
 </select>
 <delete id="deleteReview" parameterType="int">

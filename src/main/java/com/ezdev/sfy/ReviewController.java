@@ -59,8 +59,13 @@ public class ReviewController {
 	       }
 		   return "message";
 	}
-	
-	@RequestMapping(value="/update_review.do")
+	@RequestMapping(value="/update_review.do", method=RequestMethod.GET)
+	public String updatereview(HttpServletRequest req, @RequestParam (required = false)int review_no) {
+		ReviewDTO redto = reviewMapper.getReview(review_no);
+		req.setAttribute("getReview", redto);
+		return "mypage/mypage_review";
+	}
+	@RequestMapping(value="/update_review.do", method=RequestMethod.POST)
 	 public String updatereview(HttpServletRequest req, @ModelAttribute ReviewDTO redto) {
 		int res = reviewMapper.updateReview(redto);
 			if(res>0) {
@@ -69,7 +74,7 @@ public class ReviewController {
 		       }else {
 		    	   req.setAttribute("msg", "리뷰 수정 실패");
 		    	   req.setAttribute("url", "mypage_review.do");
-		       }
-			   return "message";
+		       }   
+			return "message";
 	 }
 }
