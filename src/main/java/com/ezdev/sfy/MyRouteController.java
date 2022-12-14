@@ -64,6 +64,8 @@ public class MyRouteController {
 		MemberDTO dto= memberMapper.getMemberNo(no);
 		session.setAttribute("getMemberNo", dto);
 		MyPageDTO pdto = mypageMapper.getMyPage(no);
+		
+		if(pdto.getMypage_favorite_tour() !=null) {
 		String tour= pdto.getMypage_favorite_tour();
 		String[]array = tour.split(",");
 		List<TourDTO> favorite = (List)session.getAttribute("favorite");
@@ -77,6 +79,7 @@ public class MyRouteController {
 			favorite.add(rdto);
 			}
 		session.setAttribute("favorite", favorite);
+		}
 		
 		return "myroute/myRoute";
 	}
@@ -295,6 +298,7 @@ public class MyRouteController {
 		int no = (int)session.getAttribute("nowUserNo");
 		MyPageDTO pdto = mypageMapper.getMyPage(no);
 		
+		if(pdto.getMypage_favorite_tour() != null) {
 		//즐겨찾기(tour)가져오기& ','별로 나눠서 배열에 담기
 		String tour= pdto.getMypage_favorite_tour();
 		String[]array1 = tour.split(",");
@@ -309,6 +313,7 @@ public class MyRouteController {
 			favorite.add(rdto);
 		}
 		session.setAttribute("favorite", favorite);
+		}
 		
 		//내 루트에서 만든 투어 목록 가져오기& ','별로 나눠서 배열에 담기
 		MyRouteDTO dto = myrouteMapper.getRoute(route_no);
