@@ -26,17 +26,16 @@ public class MemberController {
 	MemberMapper memberMapper;
 
 	//로그인
-	@RequestMapping(value="/login_ok.do", method =RequestMethod.POST)
+	@RequestMapping(value="/login_ok.do" , method =RequestMethod.POST)
 	public String login_ok(HttpServletRequest req, HttpServletResponse resp, @RequestParam Map<String, String>map) {
-		MemberDTO dto = memberMapper.getMemberId(map.get("member_id"));
-		int member_no = dto.getMember_no();
+		MemberDTO dto = memberMapper.getMemberId(map.get("member_id"));	
 		
-		System.out.println(member_no);
 		if(dto == null) {
 			req.setAttribute("msg", "해당하는 아이디가 없습니다. 다시 확인하시고 입력해 주세요");
 			req.setAttribute("url", "index.do");
-			}
-		else {
+		} else {
+			int member_no = dto.getMember_no();
+			String member_id = dto.getMember_id();
 			if(dto.getMember_passwd().equals(map.get("member_passwd"))) {
 				req.setAttribute("msg", dto.getMember_name()+"님, 환영합니다");
 				req.setAttribute("url", "index.do");
@@ -45,6 +44,7 @@ public class MemberController {
 				HttpSession session = req.getSession();
 				session.setAttribute("mdto", dto);
 				session.setAttribute("nowUserNo", member_no);
+				session.setAttribute("nowUserId", member_id);
 				//쿠키 전송
 				Cookie cookie = new Cookie("saveId", map.get("member_id"));
 				if(map.containsKey("saveId")) cookie.setMaxAge(24*60*60);
@@ -55,9 +55,10 @@ public class MemberController {
 				req.setAttribute("url", "index.do");
 			}
 		}
-		
 		return "message";
 	}
+
+
 		@RequestMapping("/logout.do")
 		public String logout(HttpServletRequest req) {
 			HttpSession session = req.getSession();
@@ -86,6 +87,6 @@ public class MemberController {
 			return "message";
 		}
 	}
-
+	
 		
 }
