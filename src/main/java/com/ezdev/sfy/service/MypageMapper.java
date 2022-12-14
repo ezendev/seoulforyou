@@ -45,7 +45,18 @@ public class MypageMapper {
 	public int updateFavorite(Map<String,Object> map) {
 		   return sqlSession.update("updateFavorite", map);
 	   }
-	
+
+	 public List<ReviewDTO> listReview(int startRow, int endRow, int no){
+		 Map<String, Integer> map = new Hashtable<>();
+			map.put("start", startRow);
+			map.put("end", endRow);
+			map.put("no", no);
+		 return sqlSession.selectList("listReview", map);
+	    }
+	 public int listReviewCount(int no) {
+		 return sqlSession.selectOne("listReviewCount", no);
+	 }
+
 	//myRoute(list, find만 mypage에서)
 	public List<MyRouteDTO> listMyroute(int no, int startRow, int endRow) {
 		Map<String, Integer> map = new Hashtable<>();
@@ -58,5 +69,6 @@ public class MypageMapper {
 		return sqlSession.selectOne("getCountRoute", no);
 	}
 	   
+
 	}
 
