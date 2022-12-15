@@ -78,6 +78,10 @@ public class MypageMapper {
 		public List<MyRouteDTO> filterMyroute(Map<String, Object> filterMap) {
 			return sqlSession.selectList("filterMyroute", filterMap);
 		}
+
+		public int deleteFavorite(Map<String, Object> map) {
+			return sqlSession.update("deleteFavorite", map);
+		}
 	   
 
 	}
