@@ -48,7 +48,20 @@ public class QnaMapper {
 			return sqlSession.selectOne("getCount");
 	}
 	
+//Qna 수정	
+	public int updateBoard(QnaDTO dto) {
+		QnaDTO dto2 = getBoard(dto.getQna_no(), "password");
+		if (dto.getQna_passwd().equals(dto2.getQna_passwd())) {
+				return sqlSession.update("updateBoard", dto);
+		}else {
+			return -1;
+		}
+	}
+	public int deleteQna(int qna_no) {
+		return sqlSession.delete("deleteQna", qna_no);
+	}
 	public List<QnaDTO> listQna2(){
 		return sqlSession.selectList("listQna2");
 	}
+	
 }
