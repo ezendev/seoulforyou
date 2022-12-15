@@ -7,7 +7,5 @@
 	insert into admin values(admin_seq.nextval,#{admin_id},#{admin_name},
 	#{admin_passwd},#{admin_email},#{admin_profileImg})
 </insert>
-
  
-
 </mapper>

@@ -18,4 +18,5 @@ public class AdminMapper {
 			int res = sqlSession.insert("insertAdmin", dto);
 			return res;
 	}
+	
 }
