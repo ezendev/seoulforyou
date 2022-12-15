@@ -74,11 +74,17 @@ select * from (select rownum rn, B.* from
 <select id="getCountRoute" resultType="int">
  select count(*) from route where mem_no=#{no}
 </select>
-
+<select id="getCountRouteFilter" resultType="int">
+ select count(*) from route where mem_no = #{no} and route_hashtag=#{route_hashtag}
+</select>
 <select id="listMyroute" resultType="myRouteDTO" parameterType="java.util.Map">
  select * from (select rownum rn, A.* from 
 	(select * from route where mem_no = #{no} order by route_no desc)A) 
 		where rn between #{start} and #{end} 
 </select>
-
+<select id="filterMyroute" resultType="myRouteDTO" parameterType="java.util.Map">
+ select * from (select rownum rn, A.* from 
+	(select * from route where mem_no = #{no} and route_hashtag = #{route_hashtag, jdbcType=VARCHAR} order by route_no desc)A) 
+		where rn between #{start, jdbcType=NUMERIC} and #{end, jdbcType=NUMERIC} 
+</select>
 </mapper>

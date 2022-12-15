@@ -2,6 +2,7 @@ package com.ezdev.sfy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -17,18 +18,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ezdev.sfy.dto.MemberDTO;
 import com.ezdev.sfy.dto.MyPageDTO;
-
-import com.ezdev.sfy.dto.ReviewDTO;
-
 import com.ezdev.sfy.dto.MyRouteDTO;
 import com.ezdev.sfy.service.MyRouteMapper;
-
 import com.ezdev.sfy.dto.FriendDTO;
 import com.ezdev.sfy.dto.TourDTO;
 import com.ezdev.sfy.service.ChatMapper;
 import com.ezdev.sfy.service.MemberMapper;
 import com.ezdev.sfy.service.MypageMapper;
-import com.ezdev.sfy.service.ReviewMapper;
 
 
 @Controller
@@ -69,11 +65,18 @@ public class MypageController {
 		}
 		return "message";
 	}
-	@RequestMapping(value = "/mypage_route.do" ,method=RequestMethod.GET)
-	public String mypageRoute(HttpServletRequest req, HttpSession session, @RequestParam (required=false) String pageNum) {
+	@RequestMapping(value = "/mypage_route.do")
+	public String mypageRoute(HttpServletRequest req, HttpSession session, @RequestParam (required=false) String pageNum, @RequestParam(required =false)String route_hashtag) {
 		//유저 접속
 		int no =(int) session.getAttribute("nowUserNo");
-		
+		//테마로 필터링
+		int countRow =0;
+		if(route_hashtag == null ||route_hashtag.trim()=="") {
+			route_hashtag="0";
+			countRow = mypageMapper.getCountRoute(no);
+		}else {
+			countRow = mypageMapper.getCountRouteFilter(no, route_hashtag);
+		}
 		if(pageNum==null) {
 			pageNum="1";
 		}
@@ -81,30 +84,45 @@ public class MypageController {
 		int pageSize=5;
 		int startRow = (currentPage-1)*pageSize+1;
 		int endRow = startRow +pageSize-1;
-		int countRow = mypageMapper.getCountRoute(no);
 		if(endRow>countRow) endRow=countRow;
-		
-		List<MyRouteDTO> list = mypageMapper.listMyroute(no, startRow, endRow);
+			
 		int num = countRow-(startRow-1);
-		req.setAttribute("listMyroute", list);
-		req.setAttribute("num", num);
 		int pageCount = countRow/pageSize +(countRow%pageSize==0? 0:1);
 		int pageBlock=3;
 		int startPage=(currentPage -1)/pageBlock*pageBlock+1;
 		int endPage = startPage +pageBlock -1;
 		if(endPage> pageCount)endPage = pageCount;
+		
+		List<MyRouteDTO> list= null;
+		if(!route_hashtag.trim().equals("0")) {
+			Map<String, Object>filterMap = new Hashtable<>();
+			filterMap.put("no", no);
+			filterMap.put("start", startRow);
+			filterMap.put("end", endRow);
+			filterMap.put("route_hashtag", route_hashtag);
+			list = mypageMapper.filterMyroute(filterMap);
+		}else{
+			list = mypageMapper.listMyroute(no, startRow, endRow);
+		}
+		
+		req.setAttribute("route_hashtag", route_hashtag);
+		req.setAttribute("listMyroute", list);
+		req.setAttribute("num", num);
 		req.setAttribute("pageCount", pageCount);
 		req.setAttribute("pageBlock", pageBlock);
 		req.setAttribute("startPage", startPage);
 		req.setAttribute("endPage", endPage);
 		return "mypage/mypage_route";
 	}
+	@RequestMapping("/mypage_review.do")
+	public String mypageReview() {
+		return "mypage/mypage_review";
+	}
 	
 	@RequestMapping("/mypage_qna.do")
 	public String mypageQna() {
 		return "mypage/mypage_qna";
 	}
-	
 	@RequestMapping("/mypage_friend.do")
 	public String mypage_friend(HttpServletRequest req, HttpSession session) {
 		
@@ -261,33 +279,5 @@ public class MypageController {
 		}
 		return null;	
 	}
-	@RequestMapping(value="/mypage_review.do")
-	   public String listReview(HttpServletRequest req, @RequestParam(required = false) String pageNum, Map<String, String> map, HttpSession session) {
-		// 로그인한 유저의 no값
-				int no = (int) session.getAttribute("nowUserNo");
-				
-		int pageSize = 10;
-		if (pageNum == null){
-			pageNum = "1";
-		}
-		int currentPage = Integer.parseInt(pageNum);
-		int startRow = (currentPage-1) * pageSize + 1;
-		int endRow = startRow + pageSize - 1;   
-		int countRow = mypageMapper.listReviewCount(no);
-		if (endRow > countRow) endRow = countRow;
-		List<ReviewDTO> rlist = mypageMapper.listReview(startRow, endRow, no);
-		int num = countRow - (startRow - 1);
-		req.setAttribute("listReview", rlist);
-		req.setAttribute("num", num);
-		int pageCount = countRow / pageSize + (countRow%pageSize==0 ? 0 : 1);
-		int pageBlock = 3;
-		int startPage = (currentPage - 1) / pageBlock * pageBlock + 1;
-		int endPage = startPage + pageBlock - 1;
-		if (endPage > pageCount) endPage = pageCount;		
-		req.setAttribute("pageCount", pageCount);
-		req.setAttribute("pageBlock", pageBlock);
-		req.setAttribute("startPage", startPage);
-		req.setAttribute("endPage", endPage);
-		   return "mypage/mypage_review";
-	   }
+	
 }

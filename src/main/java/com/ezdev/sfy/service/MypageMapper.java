@@ -58,16 +58,26 @@ public class MypageMapper {
 	 }
 
 	//myRoute(list, find만 mypage에서)
-	public List<MyRouteDTO> listMyroute(int no, int startRow, int endRow) {
-		Map<String, Integer> map = new Hashtable<>();
-		map.put("no", no);
-		map.put("start", startRow);
-		map.put("end", endRow);
-		return sqlSession.selectList("listMyroute", map);
-	}
-	public int getCountRoute(int no) {
-		return sqlSession.selectOne("getCountRoute", no);
-	}
+		public List<MyRouteDTO> listMyroute(int no, int startRow, int endRow) {
+			Map<String, Integer> map = new Hashtable<>();
+			map.put("no", no);
+			map.put("start", startRow);
+			map.put("end", endRow);
+			return sqlSession.selectList("listMyroute", map);
+		}
+		public int getCountRoute(int no) {
+			return sqlSession.selectOne("getCountRoute", no);
+		}
+		
+		public int getCountRouteFilter(int no, String route_hashtag) {
+			Map<String, Object> map = new Hashtable<>();
+			map.put("no", no);
+			map.put("route_hashtag", route_hashtag);
+			return sqlSession.selectOne("getCountRouteFilter", map);
+		}
+		public List<MyRouteDTO> filterMyroute(Map<String, Object> filterMap) {
+			return sqlSession.selectList("filterMyroute", filterMap);
+		}
 	   
 
 	}
