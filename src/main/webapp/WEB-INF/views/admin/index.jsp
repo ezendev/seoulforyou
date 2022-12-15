@@ -5,75 +5,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <title>관리자 페이지</title>
-	<!-- 부트 스트랩 적용을 위한 환경구성 -->
-                            
+
     <!-- 대시보드 항목입니다 -->
     <div class="container-fluid px-4">
-        <h1 class="mt-4">대시보드</h1><br>
+        <h1 class="mt-4">대시보드</h1>
         <div class="row">
-            <div class="col-xl-6">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-chart-area me-1"></i>
-                        Area Chart Example
-                    </div>
-                  	 <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                     </div>
-                 	</div>
-                 <!-- 통계항목 입니다. -->
-                 <div class="col-xl-6">
-                     <div class="card mb-4">
-                         <div class="card-header">
-                             <i class="fas fa-chart-bar me-1"></i>
-                             Bar Chart Example
-                         </div>
-                         <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
-                     </div>
-                 </div>
-             </div><br>
-             <!-- 목차항목입니다 -->
-             <div class="card mb-4">
-                 <div class="card-header">
-                     <i class="fas fa-table me-1"></i>
-                     DataTable Example
-                 </div>
-                 <div class="card-body">
-                     <table id="datatablesSimple">
-                         <thead>
-                             <tr>
-                                 <th>Name</th>
-                                 <th>Position</th>
-                                 <th>Office</th>
-                                 <th>Age</th>
-                                 <th>Start date</th>
-                                 <th>Salary</th>
-                             </tr>
-                         </thead>
-                         <tfoot>
-                             <tr>
-                                 <th>Name</th>
-                                 <th>Position</th>
-                                 <th>Office</th>
-                                 <th>Age</th>
-                                 <th>Start date</th>
-                                 <th>Salary</th>
-                             </tr>
-                         </tfoot>
-                         <tbody>
-                             <tr>
-                                 <td>Tiger Nixon</td>
-                                 <td>System Architect</td>
-                                 <td>Edinburgh</td>
-                                 <td>61</td>
-                                 <td>2011/04/25</td>
-                                 <td>$320,800</td>
-                             </tr>
-                            </tbody>
-                         </table>
-                     </div>
-                 </div>
-             </div>
-         </main>
+			<div class="col-xl-6">
+				<div class="card mb-4">
+					<div class="card-header">
+						<i class="fas fa-chart-area me-1"></i>
+                           	회원가입 추이
+					</div>
+					<div class="card-body">
+						<canvas id="memberChart" width="100%" height="50"></canvas>
+					</div>
+					<div class="card-footer small text-muted"></div>
+				</div>
+            </div>
+			<div class="col-xl-6">
+				<div class="card mb-4">
+					<div class="card-header">
+						<i class="fas fa-chart-bar me-1"></i>
+                         	주간 리뷰 수
+					</div>
+					<div class="card-body">
+						<canvas id="reviewChart" width="100%" height="50"></canvas>
+					</div>
+					<div class="card-footer small text-muted"></div>
+				</div>
+			</div>
+		</div>
+          
+        <!-- 목차항목입니다 -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                DataTable Example
+            </div>
+            <div class="card-body">
+                <table id="datatablesSimple">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Age</th>
+                            <th>Start date</th>
+                            <th>Salary</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Age</th>
+                            <th>Start date</th>
+                            <th>Salary</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr>
+                            <td>Tiger Nixon</td>
+                            <td>System Architect</td>
+                            <td>Edinburgh</td>
+                            <td>61</td>
+                            <td>2011/04/25</td>
+                            <td>$320,800</td>
+                        </tr>
+                       </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
 			                <footer class="py-4 bg-light mt-auto">
 			                    <div class="container-fluid px-4">
 			                        <div class="d-flex align-items-center justify-content-between small">
@@ -198,8 +203,146 @@
     						<!-- 모달 dialog끝입니다 -->
  								   </div>
                             <!-- 관리자등록 모달 내용 끝입니다 -->
-                            
-                            
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    	//지난주, 이번주 회원가입 인원수 차트
+    	const memberCtx = document.getElementById('memberChart');
+    	
+    	const WEEKS = [
+    		  '지난 월',
+    		  '지난 화',
+    		  '지난 수',
+    		  '지난 목',
+    		  '지난 금',
+    		  '지난 토',
+    		  '지난 일',
+    		  '월',
+    		  '화',
+    		  '수',
+    		  '목',
+    		  '금',
+    		  '토',
+    		  '일'
+    		];
+
+    	function weeks(config) {
+    		  var cfg = config || {};
+    		  var count = cfg.count || 14;
+    		  var section = cfg.section;
+    		  var values = [];
+    		  var i, value;
+
+    		  for (i = 0; i < count; ++i) {
+    		    value = WEEKS[Math.ceil(i) % 14];
+    		    values.push(value.substring(0, section));
+    		  }
+
+    		  return values;
+    		}
+    	
+    	const labels = weeks({count: 14});
+    	
+    	var memberChart = new Chart(memberCtx, {
+		    type: 'line',
+		    data: {
+		    	labels: labels,
+		    	  datasets: [{
+		    	    label: '가입자 수',
+		    	    data: [10, 50, 100, 20, 30, 10, 20, 10, 50, 100, 20, 30, 10, 20],
+		    	    fill: false,
+		    	    borderColor: 'rgb(75, 192, 192)',
+		    	    tension: 0.1
+		    	  }
+		    	  ]
+		    },options:{
+ 		  		scales:{
+ 		  			y: {
+ 		  				suggestedMin: 10
+ 		  			}
+ 		  		},
+		    	ticks:{
+		    		stepSize: 1
+		    		}
+		    }
+		  });
+    	
+    	
+    	var datas = []; // 데이터 담을 배열
+     <c:forEach items='${memberChartValue}' var='num'>
+      var num = '${num}'; 
+      datas.push(num);
+     </c:forEach>
+  	// 배열 거꾸로
+     const reverse = datas.reverse();
+      
+ 
+ var dataset = memberChart.data.datasets;
+ for(var i=0; i<dataset.length; i++){
+	//데이터 갯수 만큼 반복
+	var data = dataset[i].data;
+	for(var j=0 ; j < data.length ; j++){
+		data[j] = datas[j];
+	}
+}
+
+memberChart.update();
+     	
+</script>
+ 
+ <script>
+     	//이번주 리뷰수 차트
+     	const reviewCtx = document.getElementById('reviewChart');
+     	var reviewChart = new Chart(reviewCtx, {
+ 		    type: 'bar',
+ 		    data: {
+ 		    	labels: [
+ 		    	    '월',
+ 		    	    '화',
+ 		    	    '수',
+ 		    	    '목',
+ 		    	    '금',
+ 		    	    '토',
+ 		    	    '일'
+ 		    	  ],
+ 		    	  datasets: [{
+ 		    	    label: '리뷰 수',
+ 		    	    data: [0, 0, 0, 0, 0, 0, 0],
+ 		    	    borderWidth: 1
+ 		    	  }
+ 		    	  ]
+ 		    },
+ 		  	 options:{
+ 		  		scales:{
+ 		  			y: {
+ 		  				suggestedMin: 10
+ 		  			}
+ 		  		},
+		    	ticks:{
+		    		stepSize: 1
+		    		}
+		    }
+ 		  });
+     	
+     	var datas = []; // 일별 리뷰갯수 담을 배열
+      <c:forEach items='${reviewChartValue}' var='num'>
+      var num ='${num}';
+      datas.push(num);
+   	</c:forEach>
+ 
+ var dataset = reviewChart.data.datasets;
+
+ for(var i=0; i<dataset.length; i++){
+	//데이터 갯수 만큼 반복
+	var data = dataset[i].data;
+	for(var j=0 ; j < data.length ; j++){
+		data[j] = datas[j];
+	}
+}
+
+reviewChart.update();
+</script>
+
                   </body>
      
 </html>
