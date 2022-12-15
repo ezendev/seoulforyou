@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ezdev.sfy.dto.MemberDTO;
 import com.ezdev.sfy.dto.MyPageDTO;
 import com.ezdev.sfy.dto.MyRouteDTO;
+import com.ezdev.sfy.dto.ReviewDTO;
 import com.ezdev.sfy.service.MyRouteMapper;
 import com.ezdev.sfy.dto.FriendDTO;
 import com.ezdev.sfy.dto.TourDTO;
@@ -114,11 +115,35 @@ public class MypageController {
 		req.setAttribute("endPage", endPage);
 		return "mypage/mypage_route";
 	}
-	@RequestMapping("/mypage_review.do")
-	public String mypageReview() {
-		return "mypage/mypage_review";
-	}
-	
+	@RequestMapping(value="/mypage_review.do")
+	   public String listReview(HttpServletRequest req, @RequestParam(required = false) String pageNum, Map<String, String> map, HttpSession session) {
+		// 로그인한 유저의 no값
+				int no = (int) session.getAttribute("nowUserNo");
+
+		int pageSize = 10;
+		if (pageNum == null){
+			pageNum = "1";
+		}
+		int currentPage = Integer.parseInt(pageNum);
+		int startRow = (currentPage-1) * pageSize + 1;
+		int endRow = startRow + pageSize - 1;   
+		int countRow = mypageMapper.listReviewCount(no);
+		if (endRow > countRow) endRow = countRow;
+		List<ReviewDTO> rlist = mypageMapper.listReview(startRow, endRow, no);
+		int num = countRow - (startRow - 1);
+		req.setAttribute("listReview", rlist);
+		req.setAttribute("num", num);
+		int pageCount = countRow / pageSize + (countRow%pageSize==0 ? 0 : 1);
+		int pageBlock = 3;
+		int startPage = (currentPage - 1) / pageBlock * pageBlock + 1;
+		int endPage = startPage + pageBlock - 1;
+		if (endPage > pageCount) endPage = pageCount;		
+		req.setAttribute("pageCount", pageCount);
+		req.setAttribute("pageBlock", pageBlock);
+		req.setAttribute("startPage", startPage);
+		req.setAttribute("endPage", endPage);
+		   return "mypage/mypage_review";
+	   }
 	@RequestMapping("/mypage_qna.do")
 	public String mypageQna() {
 		return "mypage/mypage_qna";
