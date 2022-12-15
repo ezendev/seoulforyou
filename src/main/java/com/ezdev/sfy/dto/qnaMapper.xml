@@ -35,4 +35,12 @@
 		select qna_no, qna_subject, qna_content, qna_regdate 
 		from qna
 	</select>
+	
+	<update id="updateBoard" parameterType="QnaDTO">
+		update qna set qna_subject=#{qna_subject}, qna_content=#{qna_content} where qna_no = #{qna_no}
+	</update>
+	
+	<delete id="deleteQna" parameterType="int">
+		delete from qna where qna_no = #{qna_no}
+	</delete>
 </mapper> 
