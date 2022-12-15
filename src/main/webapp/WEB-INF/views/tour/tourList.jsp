@@ -66,13 +66,9 @@
 		      <div class="modal-header">
 		      		<!-- 즐겨찾기 이미지 -->
 			 		<iframe id="iframe1" name="iframe1" style="display:none"></iframe>
-			 		<form name="f2" action="mypage_favorite.do" method="post" target="iframe1">
-			 		
-			 		<input name="f_no" class="f_no" type="hidden" />	 		
-			 		
-					<button type="button"   onclick="javascript:makeFavorite()"><img src="resources/icon/star.svg" alt="" ></button>
-					
-			 	</form>
+			 		<button type="button" style="border:0; background:transparent" onclick="javascript:makeFavorite()">
+						<img id="favoriteStar" src="resources/icon/star.svg" alt="" >
+					</button>
 		      </div>
 		      
 		      <!-- Modal body -->
@@ -83,7 +79,7 @@
 		     				 <p><img src="resources/img/seoul2.jpg" class="rounded float-start" alt="" width="100%" height="260"></p>
 		    			</div>
 		   			 	<div class="col-sm-12 col-md-12 col-lg-6">
-		   			 		<p><input class="no" type="hidden" /></p>
+		   			 		<p><input type="hidden" class="no" /></p>
 			     			 <p><img src="resources/icon/geo-alt.svg">이름: <input class="name"  /></p>
 			     			 <p><img src="resources/icon/clock.svg">우편번호: <input class="postal"  /></p>
 			     			 <p><img src="resources/icon/clock.svg"> 주소: <input class="addr"  /></p>
@@ -161,10 +157,44 @@
 
 </div>
 <script>
+function checkFavorite(){
+	const no = $('.no').val();
+	$.ajax({
+		url: "mypage_favorite_check.do",
+        type: "POST",
+        data: {
+            no: no
+        },
+        success: function (data) {
+        	if(data == "existFavorite"){
+        		$("#favoriteStar").attr("src", "resources/icon/star-fill.svg" );
+        	}else{
+        		$("#favoriteStar").attr("src", "resources/icon/star.svg" );
+        	}
+        },
+	})
+}
+
 function makeFavorite(){
 	const no = $('.no').val();
-	$('.f_no').val(no);
-	document.f2.submit();
+	$.ajax({
+		url: "mypage_favorite.do",
+        type: "POST",
+        data: {
+            no: no
+        },
+        success: function (data) {
+        	if(data=="loginFirst"){
+        		alert("로그인을 해주세요.");
+        	}else if(data=="add"){
+        		alert("즐겨찾기에 추가되었습니다.")
+        		checkFavorite();
+        	}else if(data=="delete"){
+        		alert("즐겨찾기가 해제되었습니다.")
+        		checkFavorite();
+        	}
+        },
+	})
 	
 }  
 </script>
@@ -180,6 +210,9 @@ function valueSetting(no, name, postal, addr, hp){
 	$('.postal').attr("value", postal);
 	$('.addr').attr("value", addr);
 	$('.hp').attr("value", hp);	
+	
+	//즐겨찾기 여부 확인
+	checkFavorite();
 }
 </script>
 
@@ -188,7 +221,6 @@ function valueSetting(no, name, postal, addr, hp){
    function searchFilter(event){
        const tourType = $("#filterByType option:selected").val();
        $('#tourType').val(tourType);
-       console.log($('#tourType').val());
        $('#tourForm').submit();
    }
 </script>

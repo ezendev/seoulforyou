@@ -60,6 +60,13 @@ update mypage
 	set mypage_favorite_tour = mypage_favorite_tour||#{tour_no, jdbcType=NUMERIC}||','
 	where mem_no = #{no, jdbcType=NUMERIC}
 </update>
+
+<update id="deleteFavorite" parameterType="java.util.Map">
+update mypage
+	set mypage_favorite_tour = #{tour}
+	where mem_no = #{no, jdbcType=NUMERIC}
+</update>
+
 <!-- review -->
 <select id="listReview" parameterType="java.util.Map" resultType="reviewDTO">
 select * from (select rownum rn, B.* from
