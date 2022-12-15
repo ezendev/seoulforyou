@@ -3,16 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../top.jsp"%>
 
-<head>
-<style>
-div{white-space: normal;}
-
-</style>
-</head>
 <body>
 <%String qna_writer =(String)session.getAttribute("member_id"); %>
 <div class="container themed-container text-center">
-<h1 class="display-5 fw-bold" align="center">질문게시판</h1><br><br><br>
+<h1 class="display -5 fw-bold" align="center">질문게시판</h1><br><br><br>
 
 <!-- 버튼 생성 : 나의문의내역확인 & 검색창 -->
 	<div class="position-relative">
@@ -54,17 +48,17 @@ div{white-space: normal;}
 				<c:out value="${qna_no}"/>
 				<c:set var="qna_no" value="${qna_no-1}"/>
 			</td>
-	<!-- 제목을 클릭시 질문 상세보기  : onclick시 Setting된 value실행-->
+<!-- 제목을 클릭시 질문 상세보기-->
 			<td>
-			<a onclick="valueSetting('${dto.qna_subject}','${dto.qna_content}','${dto.qna_writer}','${dto.qna_regdate}')"
-				data-bs-toggle="modal" data-bs-target="#write">  ${dto.qna_subject} 
+			<a href="qnaContent.do?qna_no=${dto.qna_no}">
+			 ${dto.qna_subject}
 			</a>
 			</td>
+			
 			<td>${dto.qna_writer}</td>
 			<td>${dto.qna_regdate}</td>			
 		</tr>
 	</c:forEach>
-	
 	</tbody>
 	</table>
 <!-- 페이징 처리 -->
@@ -102,69 +96,11 @@ div{white-space: normal;}
 <br>	
 <%@ include file="../bottom.jsp"%>
 
-<!-- Q&A 상세보기 -->
-<div class="modal" tabindex="-1" id="write">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Q&A</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-      		<div class="mb-3 row">			       		
-       			<label for="staticEmail" class="col-sm-2 col-form-label" style="text-align:center">작성자</label>
-       			<div class="col-sm-10" align="center">
-       				<input type="text" class="qna_writer form-control-plaintext" readonly aria-label="readonly input example" style="align:center;text-align:left;"/>	
-       			</div>        
-	        </div>      
-      
-      		<div class="mb-3 row">			       		
-       			<label for="staticEmail" class="col-sm-2 col-form-label" style="text-align:center">제      목</label>
-       			<div class="col-sm-8" align="center">
-       				<input type="text" readonly class="qna_subject form-control" style="text-align:left; width:100%">	
-       			</div>        
-	        </div>
-	           
-	        <div class="mb-3 row">
-	        	<label for="staticEmail" class="col-sm-2 col-form-label" style="text-align:center">내      용</label>
-        		<div class="col-sm-8" align="center">
-        			<input type="text" readonly class="qna_content form-control" style="text-align:left; width:100%">
-        		</div>
-	        </div>
-	        
-	        
-    
-      		<div class="mb-3 row">			       		
-       			<label for="staticEmail" class="col-sm-2 col-form-label" style="text-align:center">작성일</label>
-       			<div class="col-sm-10" align="center">
-       				<input type="text" readonly class="qna_regdate form-control-plaintext"  aria-label="readonly input example" style="align:center;text-align:left;"/>	
-       			</div>        
-	        </div>
-	       </div>
-      <div class="modal-footer">
-      	<button type="button" class="btn btn-secondary">삭제</button>
-        <button type="button" class="btn btn-secondary">수정</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
-      </div>
-    </div>
-  </div>
- </div>
-
-<script>
-
-//각 질문제목을 눌렀을 때 해당 dto값을 모달영역에 띄워주는 함수
-function valueSetting(qna_subject, qna_content, qna_writer, qna_regdate){
-	//모달input에 dto값 설정
-	$('.qna_subject').attr("value", qna_subject);
-	$('.qna_content').attr("value", qna_content);
-	$('.qna_writer').attr("value", qna_writer);
-	$('.qna_regdate').attr("value", qna_regdate);	
-}
-</script>
 <style>
 modal-body.input{
 	class:form-control;
 	type: text;
 }
+div{white-space: normal;}
 </style>
 
