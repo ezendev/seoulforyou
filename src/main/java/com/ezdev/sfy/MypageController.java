@@ -1,6 +1,7 @@
 package com.ezdev.sfy;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ezdev.sfy.dto.MemberDTO;
 import com.ezdev.sfy.dto.MyPageDTO;
@@ -238,9 +240,7 @@ public class MypageController {
 				
 				int res = mypageMapper.deleteFriend(map); //친구 삭제
 				int res2 = chatMapper.deleteChat(map); //친구와 주고받은 쪽지 삭제
-				
-				System.out.println(res2);
-				
+								
 				if(res>0) {
 					req.setAttribute("msg", "친구를 삭제했습니다.");
 					req.setAttribute("url", "mypage_friend.do");
@@ -288,21 +288,75 @@ public class MypageController {
 		
 			return "mypage/mypage_friend_listmember";
 	}
-	@RequestMapping("/mypage_favorite.do")
+	@RequestMapping(value="/mypage_favorite.do", produces = "application/text; charset=utf8")
+	@ResponseBody
 	public String mypageFavorite(HttpServletRequest req,HttpSession session) {
 		Map<String,Object> map=new HashMap<>(); 
-		int tour_no = Integer.parseInt(req.getParameter("f_no"));
-		 MemberDTO mdto = (MemberDTO) session.getAttribute("mdto");	
-	      int no = mdto.getMember_no();	  
-	      map.put("tour_no", tour_no);
-	      map.put("no", no);	      
-		int res =mypageMapper.updateFavorite(map);
-		if(res>0) {
-			req.setAttribute("msg", "즐겨찾기가 등록되었습니다!");
-			req.setAttribute("url", "tourList.do");
-			return "message";
+		int tour_no = Integer.parseInt(req.getParameter("no"));
+		
+		// 로그인 안 되어있으면
+		if(session.getAttribute("nowUserNo") == null) {
+			return "loginFirst";
 		}
-		return null;	
+		
+		int no = (int) session.getAttribute("nowUserNo");
+	    MyPageDTO pdto = mypageMapper.getMyPage(no);
+		
+		// 기존 즐겨찾기가 존재하면
+		if(pdto.getMypage_favorite_tour() != null) {
+			//즐겨찾기(tour)가져오기& ','별로 나눠서 배열에 담기
+			String tour= pdto.getMypage_favorite_tour();
+			String[] arr = tour.split(",");
+			
+			//현재 tour_no가 즐겨찾기 안에 있는지 검색
+			for(String list_tno : arr) {
+				int tno = Integer.parseInt(list_tno);
+				
+				if(tno == tour_no) { //즐겨찾기 해제
+					String update_tour = tour.replace(String.valueOf(tour_no)+",", "");
+					map.put("tour", update_tour);
+				    map.put("no", no);
+				    int res = mypageMapper.deleteFavorite(map);
+				    
+					return "delete";
+					}
+				}
+			
+		}
+			// 즐겨찾기 리스트가 존재하지 않거나 tour_no가 즐겨찾기에 없다면
+			map.put("tour_no", tour_no);
+		    map.put("no", no);
+			int res = mypageMapper.updateFavorite(map);
+			return "add";
+		
 	}
+	
+	
+	//즐겨찾기 여부 체크
+	@RequestMapping("/mypage_favorite_check.do")
+	@ResponseBody
+	public String mypageFavoriteCheck(HttpServletRequest req,HttpSession session) {
+		int tour_no = Integer.parseInt(req.getParameter("no"));
+		int no = (int) session.getAttribute("nowUserNo");
+		
+		MyPageDTO pdto = mypageMapper.getMyPage(no);
+		
+		// 기존 즐겨찾기가 존재하면
+		if(pdto.getMypage_favorite_tour() != null) {
+			//즐겨찾기(tour)가져오기& ','별로 나눠서 배열에 담기
+			String tour= pdto.getMypage_favorite_tour();
+			String[] arr = tour.split(",");
+			
+			//현재 tour_no가 즐겨찾이 안에 있는지 검색
+			for(String tno : arr) {
+				int list_tno = Integer.parseInt(tno);
+				if(list_tno == tour_no) { // 있으면
+					return "existFavorite";
+				}
+			}
+		}
+		return null;
+}
+
 	
 }

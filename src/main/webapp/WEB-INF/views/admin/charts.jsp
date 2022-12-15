@@ -19,8 +19,8 @@
                                 <i class="fas fa-chart-area me-1"></i>
                                 	회원가입 추이
                             </div>
-                            <div class="card-body"><canvas id="memberChart" width="100%" height="30"></canvas></div>
-                            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                            <div class="card-body"><canvas id="memberChart" width="100%" height="20"></canvas></div>
+                            <div class="card-footer small text-muted"></div>
                         </div>
                         <div class="row">
                             <div class="col-lg-6">
@@ -39,7 +39,7 @@
                                         <i class="fas fa-chart-pie me-1"></i>
                                         	여행루트 테마
                                     </div>
-                                    <div class="card-body"><canvas id="routeChart" width="100%" height="50"></canvas></div>
+                                    <div class="card-body"><canvas id="routeChart" style="height:40vh;"></canvas></div>
                                     <div class="card-footer small text-muted"></div>
                                 </div>
                             </div>
@@ -113,6 +113,15 @@
     		    	    tension: 0.1
     		    	  }
     		    	  ]
+    		    }, options:{
+     		  		scales:{
+     		  			y: {
+     		  				suggestedMin: 10
+     		  			}
+     		  		},
+    		    	ticks:{
+    		    		stepSize: 1
+    		    		}
     		    }
     		  });
         	
@@ -124,7 +133,6 @@
 	        </c:forEach>
 	     	// 배열 거꾸로
 	        const reverse = datas.reverse();
-	     	console.log(reverse);
 	        
 		  
 		  var dataset = memberChart.data.datasets;
@@ -157,18 +165,21 @@
     		    	  ],
     		    	  datasets: [{
     		    	    label: '리뷰 수',
-    		    	    data: [0, 0, 0, 0, 0, 0, 0],
+    		    	    data: [10, 5, 10, 20, 5, 5, 10],
     		    	    borderWidth: 1
     		    	  }
     		    	  ]
     		    },
-    		    options: {
-    		        scales: {
-    		          y: {
-    		            beginAtZero: true
-    		          }
-    		        }
-    		      }
+    		    options:{
+     		  		scales:{
+     		  			y: {
+     		  				suggestedMin: 10
+     		  			}
+     		  		},
+    		    	ticks:{
+    		    		stepSize: 1
+    		    		}
+    		    }
     		  });
         	
         	var datas = []; // 일별 리뷰갯수 담을 배열
@@ -218,7 +229,16 @@
 		    	    hoverOffset: 4
 		    	  }
 		    	  ]
-		    }
+		    },options: {
+	              responsive: false,
+	              scales: {
+	                  yAxes: [{
+	                      ticks: {
+	                          beginAtZero: true
+	                      }
+	                  }]
+	              },
+	          }
 		  });
 		  
 		  var datas = []; // 각 테마별 갯수 담을 배열
