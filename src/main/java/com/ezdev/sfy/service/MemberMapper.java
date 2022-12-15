@@ -18,6 +18,10 @@ public class MemberMapper {
 	public int insertMember(MemberDTO dto) {
 		return  sqlSession.insert("insertMember", dto);
 	}
+	
+	public int insertMypage(MemberDTO dto) {
+		return sqlSession.insert("insertMypage", dto);
+	}
 
 	public List<MemberDTO> listMember(){
 		return sqlSession.selectList("listMember");
