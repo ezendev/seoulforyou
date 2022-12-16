@@ -122,6 +122,35 @@ public class MypageController {
 		return "mypage/mypage_route";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/mypage_routeView.do", method=RequestMethod.POST)
+	public Map<String, Object>map(HttpServletRequest req, @RequestParam ("route_no") int route_no) throws Exception {
+		HttpSession session = req.getSession();
+		MyRouteDTO dto = myrouteMapper.getRoute(route_no);
+		String route= dto.getRoute_tour();
+		String []array =route.split(",");
+		int tour_no;
+		List<TourDTO> routeView = (List)session.getAttribute("routeView");
+		if(routeView==null) {
+			routeView = new ArrayList<>();
+		}
+		//리스트에 담기
+		for(int i=0; i<array.length; i++) {
+			tour_no=(int) Integer.parseInt(array[i]);
+			TourDTO rdto =tourMapper.getTour(tour_no);
+			routeView.add(rdto);
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+			map.put("subject", dto.getRoute_subject());
+			map.put("content", dto.getRoute_content());
+			map.put("img", dto.getRoute_img());
+			map.put("hashtag", dto.getRoute_hashtag());
+			map.put("routeView", routeView);
+		
+		return map;
+	}
+	
 	@RequestMapping(value="/mypage_review.do")
 	   public String listReview(HttpServletRequest req, @RequestParam(required = false) String pageNum, Map<String, String> map, HttpSession session) {
 		// 로그인한 유저의 no값
