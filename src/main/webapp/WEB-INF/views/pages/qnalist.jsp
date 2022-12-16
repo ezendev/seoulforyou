@@ -1,13 +1,12 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../top.jsp"%>
 
-<head>
-
-</head>
 <body>
+<%String qna_writer =(String)session.getAttribute("member_id"); %>
 <div class="container themed-container text-center">
-<h1 class="display-5 fw-bold" align="center">질문하랑께</h1><br><br><br>
+<h1 class="display -5 fw-bold" align="center">질문게시판</h1><br><br><br>
 
 <!-- 버튼 생성 : 나의문의내역확인 & 검색창 -->
 	<div class="position-relative">
@@ -28,40 +27,41 @@
     </div><br><br><br>
 <!--게시판 -->
 	<table class="table table-hover">
-	  <thead align="center">
-	    <tr>
-	      <th scope="col">No.</th>
-	      <th scope="col" width="60%">제  목</th>
-	      <th scope="col">작성자</th>
-	      <th scope="col">작성일</th>
-
-	    </tr> 
-	  </thead>
-	  <tbody align="center">
-
+		<thead align="center">
+			<tr>
+				<th scope="col">No.</th>
+				<th scope="col" width="60%">제  목</th>
+				<th scope="col">작성자</th>
+				<th scope="col">작성일</th>
+			</tr> 
+		</thead>
+<!-- 리스트 목록 -->
+	<tbody align="center">
 	<c:if test="${empty listBoard}">
 		<tr>
 			<td colspan="4">등록된 게시글이 없습니다.</td>
 		</tr>
-	</c:if>	
-	
-	<c:set var="qna_no" value="${requestScope.qna_no}"/>
+	</c:if>
 	<c:forEach var="dto" items="${listBoard}">
-		<tr data-bs-toggle="modal" href="#write" >    
+		<tr>  
 			<td>
 				<c:out value="${qna_no}"/>
 				<c:set var="qna_no" value="${qna_no-1}"/>
 			</td>
-			<td><a >${dto.qna_subject}</a></td>
+<!-- 제목을 클릭시 질문 상세보기-->
+			<td>
+			<a href="qnaContent.do?qna_no=${dto.qna_no}">
+			 ${dto.qna_subject}
+			</a>
+			</td>
+			
 			<td>${dto.qna_writer}</td>
-			<td>${dto.qna_regdate}</td>
+			<td>${dto.qna_regdate}</td>			
 		</tr>
 	</c:forEach>
-<!-- 페이징 처리 -->
-	<c:if test="${not empty listBoard}">	</c:if>
-		</tbody>
+	</tbody>
 	</table>
-
+<!-- 페이징 처리 -->
 		<nav aria-label="Page navigation example" >
 			<ul class="pagination justify-content-center">
 				<c:if test="${startPage > pageBlock}">
@@ -95,31 +95,12 @@
 </body>
 <br>	
 <%@ include file="../bottom.jsp"%>
-<!-- 질문내용 보는 모달창 : 추후 qna_no에 맞게 가져오는 것 구현할 예정-->
 
-	<c:set var="num" value="${requestScope.num}"/>
-	<c:forEach var="dto" items="${listBoard}">
-<input type=hidden name='test1' value='ttt'>
-
-<div class="modal" tabindex="-1" id="write">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      
-      <div class="modal-body">
-        <p>${dto.qna_content}</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-</c:forEach>
-
-
+<style>
+modal-body.input{
+	class:form-control;
+	type: text;
+}
+div{white-space: normal;}
+</style>
 

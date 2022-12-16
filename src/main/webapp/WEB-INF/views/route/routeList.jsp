@@ -24,7 +24,7 @@
 	<!-- row -->
 	<div class="row row-cols-1 row-cols-lg-4 row-cols-md-2 row-cols-sm-2 g-4 mx-0">
 	  <div class="col 숙소">
-	  	<a data-bs-toggle="modal" data-bs-target="#tourView">
+	  	<a data-bs-toggle="modal" data-bs-target="#routeView">
 		    <div class="card h-100">
 		      <img src="resources/img/111.jpeg" class="card-img-top" alt="..."
 		      style="width:100%   ; height:20vw ; object-fit:cover;">
@@ -122,9 +122,21 @@
     		<div class="col">
     			<h2 align="left">리뷰</h2>
       			<div class="mb-3">
-					<textarea class="form-control" id="exampleFormControlTextarea1" rows="7"></textarea><br>
+      			
+      			<form  action="insert_review.do" method="post">
+      			<label>평점 : </label>
+      			<select name="review_star">
+      			 <option value="★☆☆☆☆">★☆☆☆☆</option>
+      			 <option value="★★☆☆☆">★★☆☆☆</option>
+      			 <option value="★★★☆☆">★★★☆☆</option>
+      			 <option value="★★★★☆">★★★★☆</option>
+      			 <option value="★★★★★">★★★★★</option>
+                 </select>
+					<textarea class="form-control" name="review_content" rows="7"></textarea><br>
 					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-  					<button class="btn btn-primary" type="submit">Button</button>
+  					<input class="btn btn-primary" type="submit" value="등록">
+					</div>
+					</form>
 					</div><br><br>
 			<!--내가 등록한 리뷰? --> 
 				<h5	align="left">내가 등록한 리뷰?</h5>

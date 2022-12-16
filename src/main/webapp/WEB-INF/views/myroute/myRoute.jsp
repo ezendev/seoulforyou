@@ -29,17 +29,20 @@
 		document.mr.submit();
 	}
 
+	let trip_thema='${trip_thema}';
+	$("#trip_thema").val(trip_thema).attr("selected", "seleted");
 </script>
 
 <!-- main 1번 filter -->
 <form name="mr" action="myRouteAfter.do" method="post">
+<form name="mrs" method="post">
 <div class="container text-center clearfix">
   	<div class="row row-cols-3 g-10 p-5">
     <div class="col-lg-2 col-md-6">
     	<div id="thema">
 		     <select class="form-select" aria-label="Default select example" name="trip_thema" id="trip_thema">
 			  <option value="" selected>#여행테마</option>
-			  <option value="힐링" <c:if test="${trip_thema=='힐링'}">selected</c:if>>#힐링</option>
+			 <option value="힐링" <c:if test="${trip_thema=='힐링'}">selected</c:if>>#힐링</option>
 			  <option value="미식" <c:if test="${trip_thema=='미식'}">selected</c:if>>#미식</option>
 			  <option value="한류" <c:if test="${trip_thema=='한류'}">selected</c:if>>#한류</option>
 			  <option value="명소" <c:if test="${trip_thema=='명소'}">selected</c:if>>#명소</option>
@@ -51,7 +54,7 @@
     <div class="col-lg-2 col-md-6">
       <div id="regionSelect">
       <select class="form-select" aria-label="Default select example" name="region" id="region">
-		 <option value="" selected>세부지역(구)</option>
+		 <option value="0" selected>세부지역(구)</option>
 		  <option value="1"<c:if test="${region=='1'}">selected</c:if>>강남구</option>
 		  <option value="2"<c:if test="${region=='2'}">selected</c:if>>강동구</option>
 		  <option value="3"<c:if test="${region=='3'}">selected</c:if>>강북구</option>
@@ -120,7 +123,7 @@
 <div class="container text-center clearfix">
   <div class="row row-cols-3 g-15"> 
    
-<form name="mrs" action="tourFind.do" method="post">
+
    <!-- spot -->
   <div class="col-lg-3 col-md-6">
     <div class="container mx-auto ps-3">
@@ -165,7 +168,7 @@
 		  </c:if>
 		  <c:if test="${not empty findList}">
 		  	<c:forEach var="fdto" items="${findList}">	
-			 <button class="btn" type="button" id="tourbtn" name="tourbtn" onclick="location.href='addList.do?tour_no=${fdto.tour_no}'">
+			 <button class="btn" type="submit" id="tourbtn" name="tourbtn" formaction="addList.do?tour_no=${fdto.tour_no}">
 		  		<div class="card border-dark mx-auto" style="width: 230px; height:80px;">
 				  <div class="row g-0">
 				    <div class="col-md-4">
@@ -186,23 +189,30 @@
 	  <!-- favorite panel -->
 		<div class="tab-pane fade" id="favorite" role="tabpanel" aria-labelledby="favorite-tab" tabindex="0" style="overflow:scroll; height:600px">
 		<p></p>
-		<button class="btn" type="button">
-			<div class="card border-dark mx-auto" style="width: 90%; height:70px;">
-				<div class="row g-0">
-					<div class="col-md-4">
-				      <img src="resources/img/1.jpg" class="img-fluid-center rounded-start" style="width:70px; whight:70px">
+		<c:if test="${empty favorite}">
+			<p>즐겨찾기가 비어있습니다.</p>
+		</c:if>
+		<c:if test="${not empty favorite}">
+		<c:forEach var="fa" items="${favorite}">
+		<button class="btn" type="submit" id="favoritebtn" name="favoritebtn" formaction="addList.do?tour_no=${fa.tour_no}">
+		  		<div class="card border-dark mx-auto" style="width: 230px; height:80px;">
+				  <div class="row g-0">
+				    <div class="col-md-4">
+				      <img src="resources/img/1.jpg" class="img-fluid-center rounded-start pt-2" style="width:70px; height:70px">
 				    </div>
 				    <div class="col-md-7 mx-auto">
-				        <p class="card-text">장소 정보(주소)...</p>
+				        <p class="card-text pt-2">${fa.tour_name}</p>
 				    </div>
-				 </div>
-			</div>
-		</button> 
+				  </div>
+				</div>
+			 </button>
+		</c:forEach>
+		</c:if> 
 		</div>
 	
 	</div>
 	</div>
-</form>
+
 
    <!-- schedule -->
    <div class="col-lg-4 col-md-6">
@@ -253,6 +263,7 @@
      </div>
   </div>
 </div>
+</form>
 </form>
 
 <%@ include file="../bottom.jsp"%>

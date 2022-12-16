@@ -60,15 +60,38 @@ update mypage
 	set mypage_favorite_tour = mypage_favorite_tour||#{tour_no, jdbcType=NUMERIC}||','
 	where mem_no = #{no, jdbcType=NUMERIC}
 </update>
+
+<update id="deleteFavorite" parameterType="java.util.Map">
+update mypage
+	set mypage_favorite_tour = #{tour}
+	where mem_no = #{no, jdbcType=NUMERIC}
+</update>
+
+<!-- review -->
+<select id="listReview" parameterType="java.util.Map" resultType="reviewDTO">
+select * from (select rownum rn, B.* from
+              (select * from review where mem_no = #{no} order by review_no asc)B)
+              where rn between #{start} and #{end}
+</select>
+<select id="listReviewCount" resultType="Integer">
+ select count(*) from review where mem_no = #{no}
+</select>
+
 <!-- MyRoute -->
 <select id="getCountRoute" resultType="int">
  select count(*) from route where mem_no=#{no}
 </select>
-
+<select id="getCountRouteFilter" resultType="int">
+ select count(*) from route where mem_no = #{no} and route_hashtag=#{route_hashtag}
+</select>
 <select id="listMyroute" resultType="myRouteDTO" parameterType="java.util.Map">
  select * from (select rownum rn, A.* from 
 	(select * from route where mem_no = #{no} order by route_no desc)A) 
 		where rn between #{start} and #{end} 
 </select>
-
+<select id="filterMyroute" resultType="myRouteDTO" parameterType="java.util.Map">
+ select * from (select rownum rn, A.* from 
+	(select * from route where mem_no = #{no} and route_hashtag = #{route_hashtag, jdbcType=VARCHAR} order by route_no desc)A) 
+		where rn between #{start, jdbcType=NUMERIC} and #{end, jdbcType=NUMERIC} 
+</select>
 </mapper>

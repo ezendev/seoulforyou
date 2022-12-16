@@ -41,6 +41,7 @@
 
 <!-- main 1번 filter -->
 <form name="mr" action="myroute_editRoute_after.do" method="post">
+ <form name="mrs"method="post">
 <div class="container text-center clearfix">
   	<div class="row row-cols-3 g-10 p-5">
     <div class="col-lg-2 col-md-6">
@@ -128,6 +129,7 @@
 <div class="container text-center clearfix">
   <div class="row row-cols-3 g-15"> 
    
+   
    <!-- spot -->
   <div class="col-lg-3 col-md-6">
     <div class="container mx-auto ps-3">
@@ -142,7 +144,7 @@
 	<!-- search panel -->
 		<div class="tab-content" id="nav-tabContent">
 		  <div class="tab-pane fade show active" id="search" role="tabpanel" aria-labelledby="search-tab" tabindex="0" style="overflow:scroll; height:600px">
-		     <form name="mrs" action="eidt_tourFind.do" method="post">
+ 			
 		        <select class="form-select" aria-label="Default select example" name="searchType" id="searchType">
 				 <option value="0" selected>여행지 목록</option>
 				  <option value="1" <c:if test="${searchType=='1'}">selected</c:if>>문화</option>
@@ -153,7 +155,8 @@
 				 </select>
 		        <input type="text" name="keyword">
 		        <button class="btn btn-outline-success btn-sm" type="submit" formaction="edit_tourFind.do">GO!</button>
-			</form>
+		
+			
 			
 		    <!-- 검색항목이 뜨는 부분 -->
 		  <!-- 카드를 누르면 일정 list에 추가 -->
@@ -162,7 +165,7 @@
 		  </c:if>
 		  <c:if test="${not empty findList}">
 		  	<c:forEach var="fdto" items="${findList}">	
-			 <button class="btn" type="button" id="tourbtn" name="tourbtn" onclick="location.href='edit_addList.do?tour_no=${fdto.tour_no}'">
+			 <button class="btn" type="submit" id="tourbtn" name="tourbtn" formaction="edit_addList.do?tour_no=${fdto.tour_no}">
 		  		<div class="card border-dark mx-auto" style="width: 230px; height:80px;">
 				  <div class="row g-0">
 				    <div class="col-md-4">
@@ -180,23 +183,29 @@
 	</div>	
  
 	  
-	  <!-- favorite panel -->
+	 <!-- favorite panel -->
 		<div class="tab-pane fade" id="favorite" role="tabpanel" aria-labelledby="favorite-tab" tabindex="0" style="overflow:scroll; height:600px">
 		<p></p>
-		<button class="btn" type="button">
-			<div class="card border-dark mx-auto" style="width: 90%; height:70px;">
-				<div class="row g-0">
-					<div class="col-md-4">
-				      <img src="resources/img/1.jpg" class="img-fluid-center rounded-start" style="width:70px; whight:70px">
+		<c:if test="${empty favorite}">
+			<p>즐겨찾기가 비어있습니다.</p>
+		</c:if>
+		<c:if test="${not empty favorite}">
+		<c:forEach var="fa" items="${favorite}">
+		<button class="btn" type="submit" id="favoritebtn" name="favoritebtn" formaction="edit_addList.do?tour_no=${fa.tour_no}">
+		  		<div class="card border-dark mx-auto" style="width: 230px; height:80px;">
+				  <div class="row g-0">
+				    <div class="col-md-4">
+				      <img src="resources/img/1.jpg" class="img-fluid-center rounded-start pt-2" style="width:70px; height:70px">
 				    </div>
 				    <div class="col-md-7 mx-auto">
-				        <p class="card-text">장소 정보(주소)...</p>
+				        <p class="card-text pt-2">${fa.tour_name}</p>
 				    </div>
-				 </div>
-			</div>
-		</button> 
+				  </div>
+				</div>
+			 </button>
+		</c:forEach>
+		</c:if> 
 		</div>
-	
 	</div>
 	</div>
 
@@ -249,6 +258,7 @@
      </div>
   </div>
 </div>
+</form>
 </form>
 
 

@@ -9,26 +9,12 @@
 <head>
 <title>마이페이지</title>
 <script>
-function getselect() {
-    const value = e.value;
-
-    document.getElementById('result').innerText = value;
-   
-}
+<%-- 모달창 끄면 이전 입력 정보 사라짐 --%>
 $('.modal').on('hidden.bs.modal', function (e) {
     console.log('modal close');
   $(this).find('form')[0].reset()
 });
 </script>
-
-<style type="text/css">
-const myModal = document.getElementById('myModal')
-const myInput = document.getElementById('myInput')
-
-myModal.addEventListener('shown.bs.modal', () => {
-  myInput.focus()
-})
-</style>
  <link rel="stylesheet" href="resources/css/bootstrap.min.css">
 </head>
 <body>
@@ -44,14 +30,12 @@ myModal.addEventListener('shown.bs.modal', () => {
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
-        <a class="nav-link js-scroll-trigger" aria-current="page" href="#profile">
+        <a class="nav-link js-scroll-trigger" aria-current="page" href="mypage.do">
           <svg class="bi pe-none me-2" width="16" height="16"></svg>
          	 내정보</a>
       </li>
       
       <li>
-      
-        <%-- 클릭시 mypage_route 페이지로 넘어가게 수정 <a href="mypage_route.do"> --%>
         <a class="nav-link js-scroll-trigger" href="mypage_route.do">
           <svg class="bi pe-none me-2" width="16" height="16"></svg>
           	나의 여행 루트 </a>
@@ -95,3 +79,7 @@ myModal.addEventListener('shown.bs.modal', () => {
     </ul>
     <hr>
   </aside>
+<script src="resources/js/jquery-3.6.1.min.js"></script>
+   <script src="resources/js/bootstrap.bundle.js"></script>
+
+

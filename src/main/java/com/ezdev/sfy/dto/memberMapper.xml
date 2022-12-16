@@ -16,6 +16,10 @@
 	<insert id="insertMember" parameterType="memberDTO">
 		insert into member values(member_seq.nextval, #{member_name}, #{member_id}, #{member_passwd}, #{member_email}, #{member_hp}, sysdate)
 	</insert>
+<!-- 회원가입2: 마이페이지 -->
+	<insert id="insertMypage" parameterType="memberDTO">
+		insert into mypage (mypage_no, mem_no) values(mypage_seq.nextval, #{member_no})
+	</insert>
 	
 	<select id="listMember" resultType="memberDTO">
 		select * from member

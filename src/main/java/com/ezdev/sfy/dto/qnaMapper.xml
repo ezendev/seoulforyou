@@ -37,6 +37,7 @@
 		order by qna_no
 	</select>
 	
+<<<<<<< HEAD
 	<update id="tempOk" parameterType="QnaDTO">
 		update qna set qna_reply_content = #{qna_reply_content} where
 		qna_subject = #{qna_subject}
@@ -46,5 +47,13 @@
 	 update qna 
 	 set BRDDELETEFLAG = 'N'
 	 where qna_subject = #{qna_subject}
+=======
+	<update id="updateBoard" parameterType="QnaDTO">
+		update qna set qna_subject=#{qna_subject}, qna_content=#{qna_content} where qna_no = #{qna_no}
+	</update>
+	
+	<delete id="deleteQna" parameterType="int">
+		delete from qna where qna_no = #{qna_no}
+>>>>>>> branch 'main' of https://github.com/ezendev/seoulforyou.git
 	</delete>
 </mapper> 
