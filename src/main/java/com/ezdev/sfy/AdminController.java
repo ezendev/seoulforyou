@@ -56,8 +56,7 @@ public class AdminController {
 		// 1. 2주간 회원가입자 수 집계
 		int[] memberChartArr = adminMapper.countMemberByWeek();
 		session.setAttribute("memberChartValue", memberChartArr);
-
-
+		
 		/*
 		// 2. 요일별 리뷰갯수가 들어갈 배열
 		int[] reviewChartArr = adminMapper.countReviewByWeek();

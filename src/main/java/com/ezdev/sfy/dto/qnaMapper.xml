@@ -12,7 +12,7 @@
 	
 	<insert id="insertBoard" parameterType="QnaDTO">
 		insert into qna values(qna_seq.nextval,#{qna_writer},#{qna_subject},
-							#{qna_passwd},sysdate,0,#{qna_content},#{qna_re_step},#{qna_re_level},'','')
+							#{qna_passwd},sysdate,0,#{qna_content},#{qna_re_step},#{qna_re_level},'','','Y')
 	</insert>
 	
 	<update id="plusRe_step" parameterType="java.util.Map">
@@ -33,11 +33,10 @@
 	
 	<select id="listQna2" resultType="QnaDTO">
 		select qna_no, qna_subject, qna_content, qna_regdate 
-		from qna where brddeleteflag = 'y'
+		from qna where brddeleteflag = 'Y'
 		order by qna_no
 	</select>
-	
-<<<<<<< HEAD
+
 	<update id="tempOk" parameterType="QnaDTO">
 		update qna set qna_reply_content = #{qna_reply_content} where
 		qna_subject = #{qna_subject}
@@ -47,13 +46,14 @@
 	 update qna 
 	 set BRDDELETEFLAG = 'N'
 	 where qna_subject = #{qna_subject}
-=======
+	 </delete>
+	 
 	<update id="updateBoard" parameterType="QnaDTO">
 		update qna set qna_subject=#{qna_subject}, qna_content=#{qna_content} where qna_no = #{qna_no}
 	</update>
 	
 	<delete id="deleteQna" parameterType="int">
 		delete from qna where qna_no = #{qna_no}
->>>>>>> branch 'main' of https://github.com/ezendev/seoulforyou.git
+		 branch 'main' of https://github.com/ezendev/seoulforyou.git
 	</delete>
-</mapper> 
+	</mapper>
