@@ -12,6 +12,14 @@ public class QnaDTO {
 	private int qna_re_level;
 	private String qna_reply_content;
 	private String qna_reply_regdate;
+	private String brddeleteflag;
+	
+	public String getBrddeleteflag() {
+		return brddeleteflag;
+	}
+	public void setBrddeleteflag(String brddeleteflag) {
+		this.brddeleteflag = brddeleteflag;
+	}
 	public int getQna_no() {
 		return qna_no;
 	}

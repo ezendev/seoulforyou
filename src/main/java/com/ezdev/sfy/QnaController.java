@@ -29,6 +29,7 @@ public class QnaController {
 	MemberMapper memberMapper;
 	
 	@RequestMapping("/qnalist.do")
+	
 	public String listBoard(HttpServletRequest req, @RequestParam(required = false) String pageNum) {		
 		if (pageNum == null) {
 			pageNum = "1";

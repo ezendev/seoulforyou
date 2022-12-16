@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 	
+<mapper namespace="com.ezdev.sfy.dto.adminTempMapper">
+
+<insert id="upsertAdminTemp" parameterType="AdminTempDTO">
+
+ MERGE INTO AdminTemp
+ USING DUAL
+ ON (temp_qno = #{temp_qno})
+ WHEN MATCHED THEN
+ UPDATE SET 
+ qna_reply_content = #{qna_reply_content}
+ 
+ WHEN NOT MATCHED THEN
+ INSERT 
+ (temp_no, qna_reply_content, temp_qno)
+ VALUES
+ (adminTemp_seq.nextval, #{qna_reply_content}, #{temp_qno})	
+
+</insert>
+
+<select id="getContent" resultType="AdminTempDTO">
+
+ select * from AdminTemp 
+ where temp_qno=#{qno}
+
+</select>
+
+</mapper>

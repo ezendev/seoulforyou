@@ -17,13 +17,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ezdev.sfy.dto.AdminDTO;
+import com.ezdev.sfy.dto.AdminTempDTO;
 import com.ezdev.sfy.dto.MemberDTO;
 import com.ezdev.sfy.dto.QnaDTO;
 import com.ezdev.sfy.service.AdminMapper;
+import com.ezdev.sfy.service.AdminTempMapper;
 import com.ezdev.sfy.service.MemberMapper;
 import com.ezdev.sfy.service.MyRouteMapper;
 import com.ezdev.sfy.service.QnaMapper;
@@ -43,7 +46,7 @@ public class AdminController {
 	QnaMapper qnaMapper;
 	
 	@Autowired
-	MyRouteMapper myrouteMapper;
+	AdminTempMapper adminTempMapper;
 	
 	//top.jsp 로고 -> 관리자페이지
 	@RequestMapping("/admin.do")
@@ -53,8 +56,7 @@ public class AdminController {
 		// 1. 2주간 회원가입자 수 집계
 		int[] memberChartArr = adminMapper.countMemberByWeek();
 		session.setAttribute("memberChartValue", memberChartArr);
-
-
+		
 		/*
 		// 2. 요일별 리뷰갯수가 들어갈 배열
 		int[] reviewChartArr = adminMapper.countReviewByWeek();
@@ -84,18 +86,7 @@ public class AdminController {
 	public String sample() {
 		return "admin/Sample";
 	}
-	@RequestMapping("/jusoPopup.do")
-	public String joso() {
-		return "admin/jusoPopup";
-	}
-	@RequestMapping("/layout-static.do")
-	public String layoutStatic() {
-		return "admin/layout-static";
-	}
-	@RequestMapping("/layout-sidenav-light.do")
-	public String layoutSidenavLight() {
-		return "admin/layout-sidenav-light";
-	}
+	
 	@RequestMapping("/charts.do")
 	public String charts() {
 		return "admin/charts";
@@ -105,7 +96,8 @@ public class AdminController {
 	public String tableMember(HttpServletRequest req) {
 		List<MemberDTO> list = memberMapper.listMember2();
 		req.setAttribute("listMember2", list);
-
+		
+		
 		return "admin/table_member";
 	}
 	@RequestMapping("/member_update.do")
@@ -151,9 +143,14 @@ public class AdminController {
 		return "admin/table_qna";
 	}
 	
+	@RequestMapping("/fileUpload_ok.do")
+	public String fileUploadOk() {
+		return "admin/index";
+	}
+	
 	//파일 업로드에 대해 폴더에 저장   
 	@RequestMapping("/admin_input_ok.do")
-		public String fileUpload(HttpServletRequest req, @ModelAttribute AdminDTO dto, 
+	public String fileUpload(HttpServletRequest req, @ModelAttribute AdminDTO dto, 
 				BindingResult result) throws Exception{
 		if (result.hasErrors()) {
 			dto.setAdmin_profileImg("");
@@ -198,10 +195,68 @@ public class AdminController {
 		 }
 		}
 	
-	@RequestMapping("/fileUpload_ok.do")
-	public String fileUploadOk() {
-		return "admin/index";
+	@RequestMapping("/admin_temp.do")
+	public String adminTemp(HttpServletRequest req, @ModelAttribute AdminTempDTO dto)  {
+		
+		int res = adminTempMapper.upsertAdminTemp(dto);
+		
+		if(res>0) {
+			req.setAttribute("msg","임시저장 완료");
+			req.setAttribute("url", "table_qna.do");
+			return "message";
+			
+			}else {
+			req.setAttribute("msg","임시저장 실패");
+			req.setAttribute("url", "table_qna.do");
+			return "message";
+			 }
+		
 	}
+	@ResponseBody
+	@RequestMapping(value="/tempList.do",produces = "application/text; charset=utf8")
+	public String tempList(HttpServletRequest req) {
+
+	int qno = Integer.parseInt(req.getParameter("temp_qno"));
+	
+	AdminTempDTO dto = adminTempMapper.getContent(qno);
+	
+	String qna_reply_content = dto.getQna_reply_content();
+	
+	
+	return qna_reply_content;
 	}
+	
+	@RequestMapping("/admin_temp_ok.do")
+	public String tempOk(HttpServletRequest req, @ModelAttribute QnaDTO dto) {
+		int res = adminTempMapper.tempOk(dto);
+		
+		if(res>0) {
+			req.setAttribute("msg", "회원문의함 전송 완료");
+			req.setAttribute("url", "table_qna.do");
+			return "message";
+		}else {
+			req.setAttribute("msg", "회원문의함 전송 실패");
+			req.setAttribute("url", "table_qna.do");
+			return "message";
+		}
+	}
+	
+	@RequestMapping("/admin_temp_delete.do")
+	public String tempDelete(HttpServletRequest req, @ModelAttribute QnaDTO dto) {
+		int res = adminTempMapper.tempDelete(dto);
+		
+		if(res>0) {
+			req.setAttribute("msg", "답변완료 성공");
+			req.setAttribute("url", "table_qna.do");
+			return "message";
+		}else {
+			req.setAttribute("msg", "답변완료 실패");
+			req.setAttribute("url", "table_qna.do");
+			return "message";
+		}
+		
+	}
+}
+
 	
 
