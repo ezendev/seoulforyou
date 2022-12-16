@@ -7,13 +7,6 @@
 <title>문의리스트</title>
 <!-- 문의리스트입니다. -->
     
-    <head>
-	<script>
-	 	function valueSetting(qna){
-		 $('#qna').attr("value", qna);
- 			}
- 	</script>   
-    </head>
                     <div class="container-fluid px-4">
                         <h1 class="mt-4 ">문의목록</h1><br>
                          <div class="card mb-4"></div>
@@ -28,7 +21,7 @@
                               <thead>
                                   <tr>
                                       <th style="min-width:100px">문의번호</th>
-                                      <th>문의제목</th>
+                                      <th style="min-width:300px">문의제목</th>
                                       <th>문의내용</th>
                                       <th style="min-width:100px">등록기간</th>
                                   </tr>
@@ -43,20 +36,21 @@
                             <tfoot>
                                 <tr>
                                     <th style="min-width:100px">문의번호</th>
-                                    <th>문의제목</th>
+                                    <th style="min-width:300px">문의제목</th>
                                     <th>문의내용</th>
                                     <th style="min-width:100px">등록기간</th>
                                 </tr>
                             </tfoot>
                                     
                            <tbody>
-                            <c:forEach var="dto" items= "${listQna2}">
+                           	 <c:forEach var="dto" items= "${listQna2}">
                                <tr>
                                    <td style="min-width:100px">${dto.qna_no}</td>
-                                   <td>${dto.qna_subject}</td>
-                                   <td class="qna_content" data-bs-toggle="modal" data-bs-target="#qna_content" style="color:blue">
-                                   ${dto.qna_content}</td>
-                                   <td style="min-width:100px">${dto.qna_regdate}</td>
+                                   <td style="min-width:300px">${dto.qna_subject}</td>
+                                   <td onclick="valueSetting('${dto.qna_no}', '${dto.qna_subject}')" class="qna_content" data-bs-toggle="modal" data-bs-target="#admin_reply" style="color:blue">
+                               			${dto.qna_content}
+                                  </td>
+                                 <td style="min-width:100px">${dto.qna_regdate}</td>
                                </tr>
                               </c:forEach>
                            </tbody>
@@ -84,27 +78,35 @@
         <script src="resources/js/scripts.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="resources/js/datatables-simple-demo.js"></script>
-   
-   			 <!-- 문의 답변 모달 창 -->				
-               		<div class="modal fade modalBackground modalPopupWrap" id="qna_content">
+ 		<link href="resources/css/bootstrap.min.css" rel="stylesheet">
+		<script src="resources/js/jquery-3.6.1.min.js"></script>
+		<script src="resources/js/bootstrap.min.js"></script>
+   			 <!-- 문의 답변 모달 창 -->			
+   			 		<form name="f" method="post">
+   			 		<input type="hidden" id="adminTemp_qno" name="temp_qno" value="">
+   			 		<input type="hidden" id="adminTemp_subject" name="qna_subject">
+   			 		
+               		<div class="modal fade modalBackground modalPopupWrap"  id="admin_reply">
            		    <div class="modal-dialog">
 			 		<div class="modal-content">
 			  		<div class="modal-header justify-content-center">
 			  		<h1 class="h3 fw-normal">문의사항 답글</h1> 
 			   		</div>
-			   
+			   		
 			   		<div class="modal-body d-flex justify-content-center" style="width:500px; height:400px">
-			  		<textarea rows="5" cols="200" placeholder="답글을 작성해주세요" class="d-flex justify-content-center"></textarea>
+			  		<textarea id="adminTemp_content" name="qna_reply_content" rows="10px" cols="200px"  placeholder="답글을 입력하세요" class="d-flex justify-content-center"></textarea>
 					</div>
 					
 					<div class="modal-footer">
-					<button type="button" class="btn btn-primary">저장</button>
-					<button type="button" class="btn btn-secondary">완료</button>				
+					<input type="submit" class="btn btn-secondary" value="임시저장" formaction="admin_temp.do">
+					<input type="submit" class="btn btn-primary" value="전송" formaction="admin_temp_ok.do">
+					<input type="submit" class="btn btn-danger" value="삭제" formaction="admin_temp_delete.do" >				
+						</div>
+					  </div>
+					 </div>
 					</div>
-				  </div>
-				 </div>
-				</div>
-   
+					</form>
+	   
    					  <!-- 관리자등록 모달 내용 --> 	
                  		<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                       	<div class="modal-dialog">
@@ -169,5 +171,31 @@
 						<!-- 모달 dialog끝입니다 -->
 					 		  </div>
 		                    <!-- 관리자등록 모달 내용 끝입니다 -->
+		                    </div>
+	<script>
+	 function valueSetting(qno, subject){
+		 
+		 $('#adminTemp_qno').attr("value", qno)
+		 $('#adminTemp_subject').attr("value",subject)
+		 AjaxStart()
+	 }
+	</script>	 
+
+	<script>
+	function AjaxStart(){
+		var temp_qno = $('#adminTemp_qno').val();
+		
+		$.ajax({
+		url: 'tempList.do',
+		method: 'post',
+		data: {
+			temp_qno: temp_qno	
+		},
+		success: function(data){
+		$('#adminTemp_content').val(data);
+			}
+		})
+	}
+		</script>       
     </body>
 </html>
