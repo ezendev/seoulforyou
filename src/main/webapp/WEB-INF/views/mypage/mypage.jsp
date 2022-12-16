@@ -48,7 +48,7 @@ $('.modal').on('hidden.bs.modal', function (e) {
       </li>
       
       <li>
-        <a class="nav-link js-scroll-trigger" href="mypage_favorite.do">
+        <a class="nav-link js-scroll-trigger" href="mypage_favorite_list.do">
           <svg class="bi pe-none me-2" width="16" height="16"></svg>
          	나의 즐겨찾기</a>
       </li>

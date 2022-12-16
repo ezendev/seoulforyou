@@ -6,7 +6,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ezdev.sfy.dto.MyRouteDTO;
 import com.ezdev.sfy.dto.*;
 
 
@@ -42,9 +41,6 @@ public class MypageMapper {
 	public List<MemberDTO> findMember(Map<String, String> find){
 		return sqlSession.selectList("findMember", find);
 	}
-	public int updateFavorite(Map<String,Object> map) {
-		   return sqlSession.update("updateFavorite", map);
-	   }
 
 	 public List<ReviewDTO> listReview(int startRow, int endRow, int no){
 		 Map<String, Integer> map = new Hashtable<>();
@@ -79,8 +75,21 @@ public class MypageMapper {
 			return sqlSession.selectList("filterMyroute", filterMap);
 		}
 
+		// Favorite
+		public int updateFavorite(Map<String,Object> map) {
+			   return sqlSession.update("updateFavorite", map);
+		   }
+		
 		public int deleteFavorite(Map<String, Object> map) {
 			return sqlSession.update("deleteFavorite", map);
+		}
+
+		public List<TourDTO> listFavoriteTour(int no) {
+			return sqlSession.selectList("listFavoriteTour", no);
+		}
+
+		public List<MyRouteDTO> listFavoriteRoute(int no) {
+			return sqlSession.selectList("listFavoriteRoute", no);
 		}
 	   
 

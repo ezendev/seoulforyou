@@ -6,9 +6,6 @@
 	<select id="findTour" parameterType="java.util.Map" resultType="tourDTO">
 		${sql}
 	</select>
-	<select id="getTour" parameterType="Integer" resultType="tourDTO">
-		select * from tour where tour_no = #{tour_no}
-	</select>
 	<insert id="insertRoute" parameterType="myRouteDTO">
 		insert into route values(route_seq.nextval,#{mem_no, jdbcType=NUMERIC},#{route_subject, jdbcType=VARCHAR},#{route_content, jdbcType=VARCHAR},#{route_img, jdbcType=VARCHAR},
 				#{route_itinerary, jdbcType=VARCHAR},#{route_tour, jdbcType=VARCHAR},0,#{route_region, jdbcType=VARCHAR}, #{route_hashtag, jdbcType=VARCHAR},sysdate)
