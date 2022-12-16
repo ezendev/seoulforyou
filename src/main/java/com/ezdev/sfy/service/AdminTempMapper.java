@@ -30,4 +30,10 @@ public class AdminTempMapper {
 	public int tempOk(QnaDTO dto) {
 		int res = sqlSession.insert("tempOk", dto);
 		return res;
+	}
+
+
+	public int tempDelete(QnaDTO dto) {
+		int res = sqlSession.delete("tempDelete", dto);
+		return res;
 	}}

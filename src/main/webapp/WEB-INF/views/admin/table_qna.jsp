@@ -48,7 +48,7 @@
                                    <td style="min-width:100px">${dto.qna_no}</td>
                                    <td style="min-width:300px">${dto.qna_subject}</td>
                                    <td onclick="valueSetting('${dto.qna_no}', '${dto.qna_subject}')" class="qna_content" data-bs-toggle="modal" data-bs-target="#admin_reply" style="color:blue">
-                                 ${dto.qna_content}
+                               			${dto.qna_content}
                                   </td>
                                  <td style="min-width:100px">${dto.qna_regdate}</td>
                                </tr>
@@ -100,7 +100,7 @@
 					<div class="modal-footer">
 					<input type="submit" class="btn btn-secondary" value="임시저장" formaction="admin_temp.do">
 					<input type="submit" class="btn btn-primary" value="전송" formaction="admin_temp_ok.do">
-					<input type="submit" class="btn btn-danger" value="삭제" >				
+					<input type="submit" class="btn btn-danger" value="삭제" formaction="admin_temp_delete.do" >				
 						</div>
 					  </div>
 					 </div>

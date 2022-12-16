@@ -62,7 +62,8 @@ public class AdminController {
 	public String tableMember(HttpServletRequest req) {
 		List<MemberDTO> list = memberMapper.listMember2();
 		req.setAttribute("listMember2", list);
-
+		
+		
 		return "admin/table_member";
 	}
 	@RequestMapping("/member_update.do")
@@ -102,6 +103,8 @@ public class AdminController {
 	public String qnaList(HttpServletRequest req) {
 		List<QnaDTO> qlist = qnaMapper.listQna2();
 		req.setAttribute("listQna2", qlist);
+		
+		System.out.println(qlist);
 		
 		return "admin/table_qna";
 	}
@@ -202,6 +205,22 @@ public class AdminController {
 			req.setAttribute("url", "table_qna.do");
 			return "message";
 		}
+	}
+	
+	@RequestMapping("/admin_temp_delete.do")
+	public String tempDelete(HttpServletRequest req, @ModelAttribute QnaDTO dto) {
+		int res = adminTempMapper.tempDelete(dto);
+		
+		if(res>0) {
+			req.setAttribute("msg", "답변완료 성공");
+			req.setAttribute("url", "table_qna.do");
+			return "message";
+		}else {
+			req.setAttribute("msg", "답변완료 실패");
+			req.setAttribute("url", "table_qna.do");
+			return "message";
+		}
+		
 	}
 }
 

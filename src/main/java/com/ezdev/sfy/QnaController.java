@@ -27,6 +27,7 @@ public class QnaController {
 		return "pages/qnaWrite";
 	}
 	@RequestMapping("/qnalist.do")
+	
 	public String listBoard(HttpServletRequest req, @RequestParam(required = false) String pageNum) {
 		if (pageNum == null) {
 			pageNum = "1";
