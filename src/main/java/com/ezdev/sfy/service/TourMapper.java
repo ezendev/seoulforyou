@@ -84,6 +84,10 @@ public class TourMapper {
 	    map.put("type", type);
 	    return sqlSession.selectOne("getTourCountByRegionType", map);
 	}
+
+	public TourDTO getTour(int tour_no) {
+		return sqlSession.selectOne("getTour", tour_no);
+	}
   
    
 }

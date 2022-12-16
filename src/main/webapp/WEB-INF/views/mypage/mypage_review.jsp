@@ -12,14 +12,14 @@ $('.modal').on('hidden.bs.modal', function (e) {
 });
 </script>
  <div class="wrapper col-md-9">   
-            <h3 id="mypage_review">
-                나의 리뷰
-            </h3>
+            <h2 id="mypage_review" align="center">
+                	나의 리뷰
+            </h2>
         <!-- Main content -->
                         <table class="table table-sm table-hover">
                             <thead>
                             <tr>
-                                <th width="5%">#</th>
+                                <th width="5%">NO</th>
                                 <th width="10%">평점</th>
                                 <th width="20%">내용</th>
                                 <th width="15%">작성시간</th>
