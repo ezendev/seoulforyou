@@ -5,31 +5,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <title>회원 데이터 리스트</title>
-<!-- 회원리스트입니다 -->
- <head>
- 
- <style>
+
+  <style>
  .modalBackground { 
   opacity: 0.9;
   background-color: gray;
  } 
  </style>
  
- <script>
+<script>
  function valueSetting(no,name,id,passwd,email,hp){
 	 $('#no').attr("value", no);
 	 $('#name').attr("value", name);
 	 $('#id').attr("value", id);
 	 $('#passwd').attr("value", passwd);
 	 $('#email').attr("value", email);
-	 $('#hp').attr("value", hp);
- }
- 
+	 $('#hp').attr("value", hp)}
  </script>
-       
-</head>
-    <!-- 상단 네비바 구성 -->
-                <!-- 회원 목록 내용입니다. -->
+<!-- 회원리스트입니다 -->
+<!-- 상단 네비바 구성 -->
+<!-- 좌측 네비메뉴바 -->
+<!-- 프로필 설정 항목 살려주기 -->
+<!-- 회원 목록 내용입니다. -->
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">회원목록</h1><br>
                         <div class="card mb-4"></div>
@@ -77,7 +74,6 @@
                                             <a onclick="valueSetting('${dto.member_no}','${dto.member_name}',
                                              '${dto.member_id}','${dto.member_passwd}','${dto.member_email}','${dto.member_hp}')">
                                              <strong>${dto.member_name}</strong></a></td>
-                                            
                                             <td>${dto.member_id}</td>
                                             <td>${dto.member_passwd}</td>
                                             <td>${dto.member_email}</td>
@@ -121,10 +117,7 @@
 		      					
 		      				     <!-- 모달 등록내용입니다 -->
 		    					<div class="modal-body" style="height:250px">
-		     				
-		                	
                             	<div class="border-1 rounded-lg">
-                             
                              		<div class="row mb-3">
                                		<div class="col-md-6">
                                      <div class="form-floating mb-3 mb-md-0">
@@ -176,7 +169,6 @@
 		     <!-- 회원상세보기 모달창입니다 -->
 		     <div class="modal fade modalBackground modalPopupWrap" id="member_no">
                <div class="modal-dialog">
-             
 			  <div class="modal-content">
 			  <div class="modal-header justify-content-center">
 			  		<h1 class="h3 fw-normal">회원 정보 수정</h1> 
@@ -229,7 +221,7 @@
 						</div>
 						</form>
 				</div>
-			  </div>
+				</div>
 			</div>
 			</div>
 	  	  </body>

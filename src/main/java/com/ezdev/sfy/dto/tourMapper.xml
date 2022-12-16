@@ -18,6 +18,10 @@
 		where rn between #{start} and #{end}
    </select>
    
+   <select id="getTour"  resultType="tourDTO" parameterType="Integer">
+		select * from tour where tour_no = #{tour_no}
+	</select>
+   
    <select id="getTourCount"  resultType="Integer">
 		select count(*) from tour
 	</select>

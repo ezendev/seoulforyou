@@ -75,7 +75,7 @@ public class MyRouteController {
 		int tour_no=0;
 		for(int i=0; i<array.length; i++) {
 			tour_no=(int) Integer.parseInt(array[i]);
-			TourDTO rdto = myrouteMapper.getTour(tour_no);
+			TourDTO rdto = tourMapper.getTour(tour_no);
 			favorite.add(rdto);
 			}
 		session.setAttribute("favorite", favorite);
@@ -121,7 +121,7 @@ public class MyRouteController {
 	@RequestMapping(value="/addList.do")
 	public String addList(HttpServletRequest req, @RequestParam (required=false)int tour_no, @RequestParam Map<String, String>map) {
 		HttpSession session =req.getSession();
-		TourDTO rdto =myrouteMapper.getTour(tour_no);
+		TourDTO rdto =tourMapper.getTour(tour_no);
 		List<TourDTO> routeList = (List)session.getAttribute("myRoute");
 		if(routeList==null) {
 			routeList = new ArrayList<>();
@@ -309,7 +309,7 @@ public class MyRouteController {
 		//favorite이라는 리스트에 여행지dto담기
 		for(int i=0; i<array1.length; i++) {
 			int tour_no=(int) Integer.parseInt(array1[i]);
-			TourDTO rdto = myrouteMapper.getTour(tour_no);
+			TourDTO rdto = tourMapper.getTour(tour_no);
 			favorite.add(rdto);
 		}
 		session.setAttribute("favorite", favorite);
@@ -327,7 +327,7 @@ public class MyRouteController {
 		//editRoute라는 리스트에 담기
 		for(int i=0; i<array2.length; i++) {
 			tour_no=(int) Integer.parseInt(array2[i]);
-			TourDTO rdto =myrouteMapper.getTour(tour_no);
+			TourDTO rdto =tourMapper.getTour(tour_no);
 			editRoute.add(rdto);
 		}
 		session.setAttribute("editRoute", editRoute);
@@ -378,7 +378,7 @@ public class MyRouteController {
 	@RequestMapping(value="/edit_addList.do")
 	public String edit_addList(HttpServletRequest req, @RequestParam (required=false)int tour_no, @RequestParam Map <String, String> map) {
 		HttpSession session =req.getSession();
-		TourDTO rdto =myrouteMapper.getTour(tour_no);
+		TourDTO rdto =tourMapper.getTour(tour_no);
 		List<TourDTO> editRoute = (List)session.getAttribute("editRoute");
 		editRoute.add(rdto);
 		session.setAttribute("editRoute", editRoute);

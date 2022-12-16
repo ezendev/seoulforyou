@@ -28,6 +28,7 @@ import com.ezdev.sfy.dto.TourDTO;
 import com.ezdev.sfy.service.ChatMapper;
 import com.ezdev.sfy.service.MemberMapper;
 import com.ezdev.sfy.service.MypageMapper;
+import com.ezdev.sfy.service.TourMapper;
 
 
 @Controller
@@ -45,6 +46,9 @@ public class MypageController {
 	
 	@Autowired
 	MyRouteMapper myrouteMapper;
+	
+	@Autowired
+	TourMapper tourMapper;	
 	
 	//bottom.jsp 페이스북 아이콘 -> 마이페이지	 
 	@RequestMapping("/mypage.do")
@@ -176,6 +180,114 @@ public class MypageController {
 		req.setAttribute("endPage", endPage);
 		   return "mypage/mypage_review";
 	   }
+	
+	
+	@RequestMapping(value = "/mypage_favorite_list.do")
+	public String mypageFavorite(HttpServletRequest req, HttpSession session,
+			@RequestParam(required=false) String pageNum,
+			@RequestParam(required =false)String favorite_type) {
+		
+		if(favorite_type == null) {
+			favorite_type = "여행지";
+		}
+		
+		//유저 접속
+		int no =(int) session.getAttribute("nowUserNo");
+		MyPageDTO mdto = mypageMapper.getMyPage(no);
+		
+		List<TourDTO> favTourList= new ArrayList<>();
+		List<MyRouteDTO> favRouteList= new ArrayList<>();
+		
+		if(favorite_type.equals("여행지")) {
+			
+			String[]arr = null;
+			String mytour= mdto.getMypage_favorite_tour();
+			
+			if(mytour != null) {
+				arr = mytour.split(",");
+				for(String tour : arr) {
+					int tour_no = Integer.parseInt(tour);
+					TourDTO tdto = tourMapper.getTour(tour_no);
+					favTourList.add(tdto);
+				}
+				
+				//페이징
+				int countRow = arr.length;
+				if(pageNum==null) {
+					pageNum="1";
+				}
+				int currentPage = Integer.parseInt(pageNum);
+				int pageSize=5;
+				int startRow = (currentPage-1)*pageSize+1;
+				int endRow = startRow +pageSize-1;
+				if(endRow>countRow) endRow=countRow;
+				
+				int num = countRow-(startRow-1);
+				int pageCount = countRow/pageSize +(countRow%pageSize==0? 0:1);
+				int pageBlock=3;
+				int startPage=(currentPage -1)/pageBlock*pageBlock+1;
+				int endPage = startPage +pageBlock -1;
+				if(endPage> pageCount)endPage = pageCount;
+				
+				req.setAttribute("num", num);
+				req.setAttribute("pageCount", pageCount);
+				req.setAttribute("pageBlock", pageBlock);
+				req.setAttribute("startPage", startPage);
+				req.setAttribute("endPage", endPage);
+				req.setAttribute("favTourList", favTourList.subList(startRow-1, endRow));
+			}
+		
+			
+			
+		}else if(favorite_type.equals("여행루트")) {
+			
+			String[]arr = null;
+			String myroute= mdto.getMypage_favorite_route();
+			if(myroute != null) {
+				 arr = myroute.split(",");
+				 for(String route : arr) {
+						int route_no = Integer.parseInt(route);
+						MyRouteDTO rdto = myrouteMapper.getRoute(route_no);
+						favRouteList.add(rdto);
+					}
+				 
+				//페이징
+					int countRow = arr.length;
+					if(pageNum==null) {
+						pageNum="1";
+					}
+					int currentPage = Integer.parseInt(pageNum);
+					int pageSize=5;
+					int startRow = (currentPage-1)*pageSize+1;
+					int endRow = startRow +pageSize-1;
+					if(endRow>countRow) endRow=countRow;
+					
+					int num = countRow-(startRow-1);
+					int pageCount = countRow/pageSize +(countRow%pageSize==0? 0:1);
+					int pageBlock=3;
+					int startPage=(currentPage -1)/pageBlock*pageBlock+1;
+					int endPage = startPage +pageBlock -1;
+					if(endPage> pageCount)endPage = pageCount;
+					
+					req.setAttribute("num", num);
+					req.setAttribute("pageCount", pageCount);
+					req.setAttribute("pageBlock", pageBlock);
+					req.setAttribute("startPage", startPage);
+					req.setAttribute("endPage", endPage);
+					req.setAttribute("favRouteList", favRouteList.subList(startRow-1, endRow));
+			}
+		}
+		
+		req.setAttribute("favorite_type", favorite_type);
+		
+		/*
+
+		*/
+		
+		return "mypage/mypage_favorite";
+	}
+	
+	
 	@RequestMapping("/mypage_qna.do")
 	public String mypageQna() {
 		return "mypage/mypage_qna";
