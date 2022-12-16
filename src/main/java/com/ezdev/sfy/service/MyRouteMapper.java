@@ -38,7 +38,4 @@ public class MyRouteMapper {
 	public List<TourDTO> findTour(Map<String, String> sqlMap){
 		return sqlSession.selectList("findTour", sqlMap);
 	}
-	  public TourDTO getTour(int tour_no) {
-	   return sqlSession.selectOne("getTour", tour_no);
-  }
 }
