@@ -22,13 +22,14 @@
 				<th scope="col" width="60%">제  목</th>
 				<th scope="col">작성자</th>
 				<th scope="col">작성일</th>
+				<th scope="col">답변여부</th>
 			</tr> 
 		</thead>
 <!-- 리스트 목록 -->
 	<tbody align="center">
 	<c:if test="${empty listBoard}">
 		<tr>
-			<td colspan="4">등록된 게시글이 없습니다.</td>
+			<td colspan="5">등록된 게시글이 없습니다.</td>
 		</tr>
 	</c:if>
 	<c:forEach var="dto" items="${listBoard}">
@@ -39,13 +40,23 @@
 			</td>
 <!-- 제목을 클릭시 질문 상세보기-->
 			<td>
-			<a href="qnaContent.do?qna_no=${dto.qna_no}">
-			 ${dto.qna_subject}
-			</a>
+				<a href="qnaContent.do?qna_no=${dto.qna_no}">
+				 ${dto.qna_subject}
+				</a>
 			</td>
-			
 			<td>${dto.qna_writer}</td>
-			<td>${dto.qna_regdate}</td>			
+			<td>${dto.qna_regdate}</td>
+		<!-- 답변글이 없을 때 -->
+			<c:if test="${empty dto.qna_reply_content}">
+				<td>-</td>
+			</c:if>
+		<!-- 답변글이 있을 때 -->
+			<c:forEach var="reply" items="${dto.qna_reply_content}">
+				<td>
+				<a onclick="valueSetting('${dto.qna_no}', '${dto.qna_reply_regdate}','${dto.qna_reply_content}')" 
+					data-bs-toggle="modal" data-bs-target="#reply_qna">답변완료</a>
+				</td>
+			</c:forEach>	
 		</tr>
 	</c:forEach>
 	</tbody>
@@ -84,51 +95,31 @@
 </body>
 <br>	
 <%@ include file="../bottom.jsp"%>
-<!--  
-<form name="f" action="read_qna.do" method="post" onsubmit="return read_qna()">
-<input type="hidden" name="qna_" value="${getBoard.qna_no}" />
-<div class="modal" tabindex="-1" id="exampleModal">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-header">
-				<p class="modal-title">비밀번호 입력</p>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body" >
-				<div class="mb-3 row" align="right">
-					<label for="inputPassword" class="col-sm-3 col-form-label">비밀번호</label>
-					<div class="col-sm-9" align="left">
-						<input type="password" class="form-control" id="inputPassword" style="width:90%">
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<div class="col" align="center">
-					<input type="submit" value="확인" type="button" class="btn btn-primary">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">창닫기</button>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-</form>
 
+<div class="modal" tabindex="-1" id="reply_qna" >
+  <div class="modal-dialog modal-lg modal-dialog-centered" >
+    <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" >답변</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+		<div class="modal-body">
+		<p><input type="hidden" class="qna_no" /></p>
+		    <p><input class="form-control-plaintext qna_reply_content"></p>
+		</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">확인</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
-function read_qna(){
-	if(f.qna_passwd.value==""){
-		alert("비밀번호를 입력해 주세요")
-		f.qna_passwd.focus()
-		return false
-	}
-	return true
+
+//답변 창을 클릭했을 때 모달창에 각 dto값을 세팅해준다
+function valueSetting(qno_no,qno_reply_regdate, qna_reply_content){
+	$('.qno_no').attr("value", qno_no);
+	$('.qno_reply_regdate').attr("value", qno_reply_regdate);
+	$('.qna_reply_content').attr("value", qna_reply_content);	
 }
 </script>
--->
-<style>
-modal-body.input{
-	class:form-control;
-	type: text;
-}
-div{white-space: normal;}
-</style>
-
