@@ -80,7 +80,7 @@ public class MemberController {
 	
 	@RequestMapping(value="/join.do", method=RequestMethod.POST)
 	public String member_input_ok(HttpServletRequest req, @ModelAttribute MemberDTO dto,@RequestParam String member_id) {
-		 //아이디 중복 확인을 위한 id값 받아오기
+		  //아이디 중복 확인을 위한 id값 받아오기
 			MemberDTO dto2 = memberMapper.getMemberId(member_id);
 		 if(dto2 == null) {
 			 //데이터에 id가 없으면 회원가입 진행
