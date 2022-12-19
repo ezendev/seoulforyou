@@ -349,7 +349,6 @@ public class MypageController {
 		HttpSession session = req.getSession();
 		MemberDTO mdto = (MemberDTO) session.getAttribute("mdto");
 		String qna_writer = mdto.getMember_id();
-		System.out.println("qna_writer:" + qna_writer);
 		
 		if (pageNum == null) {
 			pageNum = "1";
@@ -360,10 +359,8 @@ public class MypageController {
 		int endRow = startRow + pageSize - 1;
 		int countRow = boardMapper.getCountById(qna_writer);
 		if (endRow > countRow) endRow = countRow;
-		System.out.println("countRow:" + countRow);
 		
 		List<QnaDTO> list = boardMapper.listBoardById(qna_writer, startRow, endRow);
-		System.out.println("list:" + list);
 		
 		int qna_no = countRow - (startRow - 1);
 		req.setAttribute("listBoard", list);
