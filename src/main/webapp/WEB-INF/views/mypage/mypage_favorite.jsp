@@ -150,8 +150,8 @@ a {
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      	<input id="checkDel" name="checkDel" />
-      	<input id="checkType" name="checkType" />
+      	<input type="hidden" id="checkDel" name="checkDel" />
+      	<input type="hidden" id="checkType" name="checkType" />
        	<p class="mx-auto">삭제하시겠습니까?</p>
       </div>
       <div class="modal-footer">
