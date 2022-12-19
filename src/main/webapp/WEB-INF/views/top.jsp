@@ -99,6 +99,10 @@
 		function logout(){
 			location.href="logout.do";
 		}
+		
+		function mypage(){
+			location.href="mypage.do";
+		}
 	</script>
 
 	
@@ -128,8 +132,9 @@
       <div class="col-md-3 text-end">
       	<c:if test="${not empty mdto}">
         <button onclick="javascript:chat()" type="button" class="btn btn-outline-primary me-2">쪽지</button>
-       	
-        </c:if>
+       	<button onclick="javascript:mypage()" type="button" class="btn btn-outline-primary me-2">마이페이지</button>
+        
+       	</c:if>
 		<c:if test="${empty mdto}">
       	<button type="button" class="btn btn-primary" data-bs-toggle="modal"
         	data-bs-target="#loginModal">로그인</button>
