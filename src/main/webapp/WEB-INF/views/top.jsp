@@ -267,7 +267,7 @@
         <div class="modal-footer">
     	<p class="mx-auto text-muted">© 2022 EzDev</p>
         </div>
-      </div>
+      </div> 
     </div>
   </div>
 </form>

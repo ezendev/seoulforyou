@@ -108,7 +108,7 @@ public class AdminController {
 	public String updateMember(HttpServletRequest req, @ModelAttribute MemberDTO dto,
 	BindingResult result) {
 		int res = memberMapper.updateMember2(dto);
-		
+		 
 		if(res>0) {
 			req.setAttribute("msg", "회원 정보 수정완료");
 			req.setAttribute("url", "table_member.do");

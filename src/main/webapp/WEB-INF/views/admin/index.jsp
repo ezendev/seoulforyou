@@ -181,7 +181,7 @@
 					<th>프로필 이미지 첨부 </th>
 						<tr>
 						<td>
-					<input type="file" name="admin_profileImg" id="admin_profileImg">
+					<input type="file" name="admin_profileImg" id="admin_profileImg" accept="image/*">
 					<input type="reset" value="취소" >
                      		</td>
                      		</tr>	
