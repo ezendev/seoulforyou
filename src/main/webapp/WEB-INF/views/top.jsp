@@ -67,7 +67,7 @@
 	
 	}
 	</style>
-	<!-- 관리자 로그인 javascript / 해당 함수가 최종 실행되면 a라는 이름의 form태그 전송이 실행된다-->
+	<!-- 관리자 로그인 javascript  해당 함수가 최종 실행되면 a라는 이름의 form태그 전송이 실행된다-->
 	<script>
 	function admin_login_ok(){
 		if(admin_id.value== ""){
