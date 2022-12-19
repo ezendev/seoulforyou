@@ -9,7 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -90,7 +94,7 @@ public class AdminController {
 	@RequestMapping("/charts.do")
 	public String charts() {
 		return "admin/charts";
-	}
+	} 
 	
 	@RequestMapping("/table_member.do")
 	public String tableMember(HttpServletRequest req) {
@@ -104,7 +108,7 @@ public class AdminController {
 	public String updateMember(HttpServletRequest req, @ModelAttribute MemberDTO dto,
 	BindingResult result) {
 		int res = memberMapper.updateMember2(dto);
-		
+		 
 		if(res>0) {
 			req.setAttribute("msg", "회원 정보 수정완료");
 			req.setAttribute("url", "table_member.do");
@@ -118,8 +122,6 @@ public class AdminController {
 	@RequestMapping("/member_delete.do")
 	public String deleteMember(HttpServletRequest req, @ModelAttribute MemberDTO dto, BindingResult result) {
 		int res = memberMapper.deleteMember2(dto);
-		
-		System.out.println(res);
 		
 		if(res>0) {
 			req.setAttribute("msg", "회원 정보 삭제완료");
@@ -137,8 +139,6 @@ public class AdminController {
 	public String qnaList(HttpServletRequest req) {
 		List<QnaDTO> qlist = qnaMapper.listQna2();
 		req.setAttribute("listQna2", qlist);
-		
-		System.out.println(qlist);
 		
 		return "admin/table_qna";
 	}
@@ -256,6 +256,49 @@ public class AdminController {
 		}
 		
 	}
+	
+	
+	@RequestMapping(value="/admin_login_ok.do", method= RequestMethod.POST)
+	public String adminLoginOk(HttpServletRequest req, HttpServletResponse resp, 
+	@RequestParam Map<String,String> map) {
+		System.out.println(map);
+		
+	AdminDTO dto = adminMapper.getAdminId(map.get("admin_id"));
+	
+	if(dto == null) {
+		req.setAttribute("msg", "해당하는 관리자 계정이 없습니다");
+		req.setAttribute("url", "index.do");
+	}else { 
+		if(dto.getAdmin_passwd().equals(map.get("admin_passwd"))) {
+			req.setAttribute("msg", dto.getAdmin_id() + "님 환영합니다");
+			req.setAttribute("url", "index.do");
+
+			//세션에 저장(해당 로그인 정보dto를 세션에 저장하여 로그인상태가 유지되도록 함)
+			HttpSession session = req.getSession();
+			session.setAttribute("adto", dto);
+			
+			//쿠키전송, 아이디를 기억하기 위해 
+			Cookie cookie = new Cookie("saveAid", map.get("admin_id"));
+			if(map.containsKey("saveAid")) cookie.setMaxAge(24*60*60);
+			else cookie.setMaxAge(0);
+			resp.addCookie(cookie);
+		}else {
+			req.setAttribute("msg", "비밀번호를 잘못눌렀습니다");
+			req.setAttribute("url", "index.do");
+		}
+	}
+	return "message";
+	}
+
+	@RequestMapping("/adminLogout.do")
+	public String adminLogout(HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		session.invalidate();
+		req.setAttribute("msg", "관리자 로그아웃 되었습니다");
+		req.setAttribute("url", "index.do");
+		return "message";
+	}
+
 }
 
 	

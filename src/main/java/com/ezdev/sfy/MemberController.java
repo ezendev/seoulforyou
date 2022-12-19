@@ -31,7 +31,10 @@ public class MemberController {
 
 	//로그인
 	@RequestMapping(value="/login_ok.do" , method =RequestMethod.POST)
-	public String login_ok(HttpServletRequest req, HttpServletResponse resp, @RequestParam Map<String, String>map) {
+	public String login_ok(HttpServletRequest req, HttpServletResponse resp, 
+			@RequestParam Map<String, String> map) {
+		
+		
 		MemberDTO dto = memberMapper.getMemberId(map.get("member_id"));	
 		
 		if(dto == null) {

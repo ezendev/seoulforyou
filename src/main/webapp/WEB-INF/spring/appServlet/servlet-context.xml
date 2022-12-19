@@ -17,7 +17,7 @@
 	<resources mapping="/resources/css/**" location="/resources/css/" />
 	<resources mapping="/resources/js/**" location="/resources/js/" />
 	<resources mapping="/resources/demo/**" location="/resources/demo/"/>
-	<resources mapping="/resources/adminImg/**" location="/resources/adminImg/"/>
+	<resources mapping="/resources/icon/**" location="/resources/icon/"/>
 	<resources mapping="/resources/myRouteImg/**" location="/resources/myRouteImg/"/>
 	
 	

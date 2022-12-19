@@ -20,4 +20,8 @@
 	select count(*) from route where route_hashtag = #{hashtag}
 </select>
 
+<select id="getAdminId" parameterType="String" resultType="adminDTO">
+select * from admin where admin_id = #{admin_id}
+</select>
+
 </mapper>
