@@ -1,17 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
 
 <!-- api키와 지도를 형성하는 <div id="map">은 지도를 넣고 싶은 위치에 넣기 -->
-				<script>		
-						
-				var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-			    mapOption = {
-			        center: new kakao.maps.LatLng(37.6562677764281, 127.063030448739), // 지도의 중심좌표(노원역)
-			        level: 6 // 지도의 확대 레벨
-			    };  
+<script>				
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	   mapOption = {
+       center: new kakao.maps.LatLng(37.6562677764281, 127.063030448739), // 지도의 중심좌표(노원역)
+      	 level: 6 // 지도의 확대 레벨
+	 };  
 			
 			// 지도를 생성합니다    
 			var map = new kakao.maps.Map(mapContainer, mapOption); 
@@ -37,14 +36,11 @@
 			        if (status === kakao.maps.services.Status.OK) {
 			        	//좌표 받기
 			        	var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-						var lat = new kakao.maps.LatLng(result[0].y);
-						var lng = new kakao.maps.LatLng(result[0].x);
 			            //positions라는 객체에 info와 좌표 담기
 			            var positions=[{
-			            	content: '<div style="width:150px">'+infoArr[index]+'</div>',
+			            	content:'<div style="width:200px; height:50px; padding:5px;">'+infoArr[index]+'</div>',
 							latlng: coords,
-							y: lat,
-							x: lng
+							
 			            }];
 			            
 			            //마커 찍기
@@ -54,28 +50,34 @@
 					            position: positions[i].latlng,
 					            clickable: true
 					        });
+					        
      
 			            var infowindow = new kakao.maps.InfoWindow({
 				            content: positions[i].content
 				        });
-			         	 //마커에 마우스를 놓으면 인포윈도우 보여짐
+			         	
+			            //마커에 마우스를 놓으면 인포윈도우 보여짐
 			            kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-			           	//인포윈도우 사라짐
+			           
+			         	//인포윈도우 사라짐
 			            kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-			            //마커를 누르면 카카오맵 이동
-			           	kakao.maps.event.addListener(marker, 'click', function(){
-			           		location.href="https://map.kakao.com/link/to/"+infoArr[index]+","+positions[i].y+","+positions[i].x+"";
-			           		
-						  	});
-						
+			            
+			           	//마커를 누르면 카카오맵 이동
+			      		var lat = positions[i].latlng.Ma;
+			         	var lng = positions[i].latlng.La;
+			            kakao.maps.event.addListener(marker, 'click', function(){
+			      		//새창으로 띄우는 것 새창없이 하려면 location.href=으로 변경
+			            window.open("https://map.kakao.com/link/map/"+infoArr[index]+","+lat+","+lng+"");
+			      		
+			            });
+					
 			           	//마커들이 지도에 한 번에 보여지도록 
-				       		console.log(infoArr[index]);
-			           		console.log(positions[i].y);
 				        map.relayout();
 			           	marker.setMap(map);
 			           
 			            };
 			           	
+			        
 			     		   }
 			 		   });
 					});
@@ -142,5 +144,7 @@
 			        infowindow.close();
 			    };
 			}
+		
+			
 			
 				</script>

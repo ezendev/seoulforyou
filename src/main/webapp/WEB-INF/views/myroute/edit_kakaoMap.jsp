@@ -20,7 +20,7 @@
 			var infoArr=[]; //info 담을 배열
 			//controller에 myRoute불러오기
 			<c:forEach items='${editRoute}' var='rdto'>
-					var info ='${rdto.getTour_name()}'; 
+					var info ='${fn:escapeXml(rdto.getTour_name())}';  
 					var address ='${rdto.getTour_addr()}';
 					addrArr.push(address);
 					infoArr.push(info);
@@ -35,11 +35,12 @@
 			        if (status === kakao.maps.services.Status.OK) {
 			        	//좌표 받기
 			        	var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-			            
+			           
 			            //positions라는 객체에 info와 좌표 담기
 			            var positions=[{
-			            	content: '<div style="width:150px">'+infoArr[index]+'</div>',
-							latlng: coords
+			            	content: '<div style="width:200px; height:50px; padding:5px;">'+infoArr[index]+'</div>',
+							latlng: coords,
+							
 			            }];
 			            
 			            //마커 찍기
@@ -49,8 +50,7 @@
 					            position: positions[i].latlng,
 					            clickable: true
 					        });
-     
-    
+					      
 			            var infowindow = new kakao.maps.InfoWindow({
 				            content: positions[i].content
 				        });
@@ -58,7 +58,7 @@
 			            kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
 			           	//인포윈도우 사라짐
 			            kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-						
+			            
 			           	//마커들이 지도에 한 번에 보여지도록 
 				        marker.setMap(map);
 				        

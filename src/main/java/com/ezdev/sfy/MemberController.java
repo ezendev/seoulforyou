@@ -1,5 +1,6 @@
 package com.ezdev.sfy;
 
+import java.io.IOException;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -18,12 +19,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ezdev.sfy.dto.MemberDTO;
+import com.ezdev.sfy.service.KakaoMapper;
 import com.ezdev.sfy.service.MemberMapper;
 
 @Controller
 public class MemberController {
 	@Autowired
 	MemberMapper memberMapper;
+	@Autowired
+	KakaoMapper kakaoMapper;
 
 	//로그인
 	@RequestMapping(value="/login_ok.do" , method =RequestMethod.POST)
@@ -93,5 +97,58 @@ public class MemberController {
 			 req.setAttribute("msg", "이미 존재하는 아이디입니다");
 		 }
 		return "message";
-	}	
-}
+	}
+	//카카오 로그인
+		@RequestMapping(value="/kakaoLogin.do", method=RequestMethod.GET)
+		public String getInfo(HttpServletRequest req, @RequestParam String code) throws IOException {
+	       HttpSession session = req.getSession();
+			System.out.println("code = " + code);
+	        String access_token = kakaoMapper.getToken(code); 
+	        Map<String, String> userInfo = kakaoMapper.getUserInfo(access_token);
+
+	       
+	        MemberDTO dto = memberMapper.getMemberEmail(userInfo.get("member_email"));
+	        if(dto == null) {
+	        	int res = memberMapper.insertMemKakao(userInfo);
+	        	if(res>0) {
+	        		MemberDTO mdto = memberMapper.getMemberId(userInfo.get("member_id"));
+	        		int res_mypage = memberMapper.insertMypage(mdto);
+	        		
+	        		if(res_mypage>0) {
+	        			if(res_mypage>0) {
+	        				req.setAttribute("msg", "회원 등록 성공!! 로그인을 해 주세요");
+	        				req.setAttribute("url", "index.do");
+	        			}else {
+	        				req.setAttribute("msg", "마이페이지 등록 실패!! 관리자에게 문의하세요.");
+	        				req.setAttribute("url", "join.do");
+	        			}
+	        	}else {
+	        		req.setAttribute("msg", "회원 등록 실패!! 관리자에게 문의하세요.");
+	    			req.setAttribute("url", "join.do");
+	        	}
+	        		return "message";
+	        	}
+	        }
+	        if(userInfo.get("member_email") != null) {
+	        	int member_no = dto.getMember_no();
+	        	String member_id = dto.getMember_id();
+	        	session.setAttribute("mdto", dto);
+	        	session.setAttribute("nowUserNo", member_no);
+	        	session.setAttribute("nowUserId", member_id);
+	        	session.setAttribute("userId", userInfo.get("member_email"));
+	        	session.setAttribute("access_token", access_token);
+	        }
+	        
+	        	return "index";
+		}     
+	     
+		@RequestMapping(value="/kakaoLogout.do")
+		public String kakaologout(HttpSession session) {
+			 kakaoMapper.kakaoLogout((String)session.getAttribute("access_Token"));
+			    session.removeAttribute("access_Token");
+			    session.removeAttribute("userId");
+			    return "index";
+		}
+		
+			
+	}

@@ -1,6 +1,7 @@
 package com.ezdev.sfy.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,13 @@ public class MemberMapper {
 	*/
 	public MemberDTO getMemberId(String member_id){
 		return sqlSession.selectOne("getMemberId", member_id);
+	}
+	public MemberDTO getMemberEmail(String member_email) {
+		return sqlSession.selectOne("getMemberEmail", member_email);
+	}
+	
+	public int insertMemKakao(Map<String, String> userInfo) {
+		return sqlSession.insert("insertMemKakao", userInfo);
 	}
 	
 }
