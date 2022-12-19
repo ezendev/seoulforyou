@@ -41,7 +41,6 @@
     <div class="input-form-backgroud row">
       <div class="input-form col-md-12 mx-auto">
         <h4 class="mb-3">회원가입</h4>
-        <form class="validation-form" novalidate>
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="name">이름</label>
@@ -53,7 +52,7 @@
             <div class="row">
             <div class="col-md-6 mb-3">
               <label for="name">아이디</label>
-              <input type="text" class="form-control" name="member_id" id="id" placeholder=""  required="">
+              <input type="text" class="form-control" name="member_id" id="member_id" placeholder=""  required="">
               <div class="invalid-feedback">
                 	아이디를 입력해주세요.
               </div>
@@ -86,16 +85,19 @@
           <hr class="mb-4">
  
           <div class="mb-4"></div>
-          <button class="btn btn-primary btn-lg btn-block" type="submit" onclick="javascript:check()">가입 완료</button>
-        </form>
+          <button class="btn btn-primary" type="submit">가입 완료</button>
+          <input class="btn btn-outline-secondary" type="button" style= "width:90px" value="취소" onclick="javascript:go_index()">    
       </div>
     </div>
     <footer class="my-3 text-center text-small">
       <p class="mb-1">&copy; 2022 EzDev</p>
     </footer>
   </div>
-
-  </form>
+</form>
 </body>
 
-</html>
+	<script>
+	function go_index(){
+		location.href="index.do";
+	}
+	</script>
