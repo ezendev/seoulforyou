@@ -67,6 +67,12 @@ update mypage
 	where mem_no = #{no, jdbcType=NUMERIC}
 </update>
 
+<update id="deleteRouteFavorite" parameterType="java.util.Map">
+update mypage
+	set mypage_favorite_route = #{route}
+	where mem_no = #{no, jdbcType=NUMERIC}
+</update>
+
 <!-- review -->
 <select id="listReview" parameterType="java.util.Map" resultType="reviewDTO">
 select * from (select rownum rn, B.* from
