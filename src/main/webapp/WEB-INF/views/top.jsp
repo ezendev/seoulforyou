@@ -64,6 +64,7 @@
 		font-weight: 700;
 		background-color: #5F9EA0;
 		border: 2px solid #5F9EA0;
+	
 	}
 	</style>
 	<!-- 관리자 로그인 javascript / 해당 함수가 최종 실행되면 a라는 이름의 form태그 전송이 실행된다-->
@@ -121,6 +122,10 @@
 		}
 		function logout(){
 			location.href="logout.do";
+		}
+		
+		function mypage(){
+			location.href="mypage.do";
 		}
 	</script>
 

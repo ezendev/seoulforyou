@@ -10,19 +10,8 @@
 
 <!-- 버튼 생성 : 나의문의내역확인 & 검색창 -->
 	<div class="position-relative">
-		<div class="container-fluid">
+		<div class="container-fluid" >
     		<button type="button" onclick="javascript:admin()" class="btn btn-outline-success btn px-4 me-md-3" style="float:left" >나의 문의내역 확인하기</button>
-    		<div class="position-absolute top-0 end-0">
-				<form class="d-flex">
-					<select class="form-select" style="width:40%">
-						<option value="title">제목</option>
-						<option value="content">내용</option>
-						<option value="content">작성자</option>
-					</select>
-					<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width:100%">
-					<button type="button" class="btn btn-outline-success btn px-4" id="search_btn" style="width:40%">검색</button>
-				</form>
-			</div>
 		</div>
     </div><br><br><br>
 <!--게시판 -->
@@ -95,7 +84,46 @@
 </body>
 <br>	
 <%@ include file="../bottom.jsp"%>
+<!--  
+<form name="f" action="read_qna.do" method="post" onsubmit="return read_qna()">
+<input type="hidden" name="qna_" value="${getBoard.qna_no}" />
+<div class="modal" tabindex="-1" id="exampleModal">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<p class="modal-title">비밀번호 입력</p>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body" >
+				<div class="mb-3 row" align="right">
+					<label for="inputPassword" class="col-sm-3 col-form-label">비밀번호</label>
+					<div class="col-sm-9" align="left">
+						<input type="password" class="form-control" id="inputPassword" style="width:90%">
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div class="col" align="center">
+					<input type="submit" value="확인" type="button" class="btn btn-primary">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">창닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</form>
 
+<script>
+function read_qna(){
+	if(f.qna_passwd.value==""){
+		alert("비밀번호를 입력해 주세요")
+		f.qna_passwd.focus()
+		return false
+	}
+	return true
+}
+</script>
+-->
 <style>
 modal-body.input{
 	class:form-control;
