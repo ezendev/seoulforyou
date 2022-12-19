@@ -83,15 +83,25 @@ public class MemberController {
 	
 	@RequestMapping(value="/join.do", method=RequestMethod.POST)
 	public String member_input_ok(HttpServletRequest req, @ModelAttribute MemberDTO dto,@RequestParam String member_id) {
-		 //아이디 중복 확인을 위한 id값 받아오기
+		  //아이디 중복 확인을 위한 id값 받아오기
 			MemberDTO dto2 = memberMapper.getMemberId(member_id);
 		 if(dto2 == null) {
 			 //데이터에 id가 없으면 회원가입 진행
 			int res = memberMapper.insertMember(dto);
-			if (res>0) {
-				req.setAttribute("msg", "회원 등록 성공!! 로그인을 해 주세요");
-				req.setAttribute("url", "index.do");;
-			}else {
+			if (res>0) {// 멤버table insert 성공시
+				// 마이페이지table에 insert
+				String id = dto.getMember_id();
+				MemberDTO mdto = memberMapper.getMemberId(id);
+				int res_mypage = memberMapper.insertMypage(mdto);
+				
+				if(res_mypage>0) {
+					req.setAttribute("msg", "회원 등록 성공!! 로그인을 해 주세요");
+					req.setAttribute("url", "index.do");
+				}else {
+					req.setAttribute("msg", "마이페이지 등록 실패!! 관리자에게 문의하세요.");
+					req.setAttribute("url", "join.do");
+				}
+			}else {// 멤버table insert 실패시
 				req.setAttribute("msg", "회원 등록 실패!! 회원등록페이지로 이동합니다.");
 				req.setAttribute("url", "join.do");
 			}
