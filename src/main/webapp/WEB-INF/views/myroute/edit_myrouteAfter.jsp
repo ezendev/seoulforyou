@@ -3,16 +3,22 @@
 <%@ include file="../top.jsp"%>
 
 <script type="text/javascript">
-	
+	//enter키 막음
+	document.addEventListener('keydown', function(event){
+		if(event.keyCode ===13){
+			event.preventDefault();
+			};
+		}, true);
+
 	function routeAfter_check(){
 		if(mra.route_subject.value==""){
 			alert("제목을 입력해주세요")
-			mra.route_subject.focus()
+			routeAfter.route_subject.focus()
 			return
 		}
 		if(mra.route_content.value==""){
 			alert("내용을 입력해주세요")
-			mra.route_content.focus()
+			routeAfter.route_content.focus()
 			return false
 		}
 		
@@ -22,7 +28,7 @@
 </script>
 
 <!-- main--> 
-<form id="mra" name="routeAfter" action="update_MyRoute.do" method="post" enctype="multipart/form-data">
+<form name="routeAfter" action="update_MyRoute.do" method="post" enctype="multipart/form-data">
 	<div class="container">
 		<div class="row">
 			<div class="mx-auto pt-5">
