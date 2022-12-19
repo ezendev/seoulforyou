@@ -29,8 +29,6 @@
 		document.mr.submit();
 	}
 
-	let trip_thema='${trip_thema}';
-	$("#trip_thema").val(trip_thema).attr("selected", "seleted");
 </script>
 
 <!-- main 1번 filter -->
@@ -55,31 +53,31 @@
       <div id="regionSelect">
       <select class="form-select" aria-label="Default select example" name="region" id="region">
 		 <option value="0" selected>세부지역(구)</option>
-		  <option value="1"<c:if test="${region=='1'}">selected</c:if>>강남구</option>
-		  <option value="2"<c:if test="${region=='2'}">selected</c:if>>강동구</option>
-		  <option value="3"<c:if test="${region=='3'}">selected</c:if>>강북구</option>
-		  <option value="4"<c:if test="${region=='4'}">selected</c:if>>강서구</option>
-		  <option value="5"<c:if test="${region=='5'}">selected</c:if>>관악구</option>
-		  <option value="6"<c:if test="${region=='6'}">selected</c:if>>광진구</option>
-		  <option value="7"<c:if test="${region=='7'}">selected</c:if>>구로구</option>
-		  <option value="8"<c:if test="${region=='8'}">selected</c:if>>금천구</option>
-		  <option value="9"<c:if test="${region=='9'}">selected</c:if>>노원구</option>
-		  <option value="10"<c:if test="${region=='10'}">selected</c:if>>도봉구</option>
-		  <option value="11"<c:if test="${region=='11'}">selected</c:if>>동대문구</option>
-		  <option value="12"<c:if test="${region=='12'}">selected</c:if>>동작구</option>
-		  <option value="13"<c:if test="${region=='13'}">selected</c:if>>마포구</option>
-		  <option value="14"<c:if test="${region=='14'}">selected</c:if>>서대문구</option>
-		  <option value="15"<c:if test="${region=='15'}">selected</c:if>>서초구</option>
-		  <option value="16"<c:if test="${region=='16'}">selected</c:if>>성동구</option>
-		  <option value="17"<c:if test="${region=='17'}">selected</c:if>>성북구</option>
-		  <option value="18"<c:if test="${region=='18'}">selected</c:if>>송파구</option>
-		  <option value="19"<c:if test="${region=='19'}">selected</c:if>>양천구</option>
-		  <option value="20"<c:if test="${region=='20'}">selected</c:if>>영등포구</option>
-		  <option value="21"<c:if test="${region=='21'}">selected</c:if>>용산구</option>
-		  <option value="22"<c:if test="${region=='22'}">selected</c:if>>은평구</option>
-		  <option value="23"<c:if test="${region=='23'}">selected</c:if>>종로구</option>
-		  <option value="24"<c:if test="${region=='24'}">selected</c:if>>중구</option>
-		  <option value="25"<c:if test="${region=='25'}">selected</c:if>>중랑구</option>
+		  <option value="9"<c:if test="${region=='9'}">selected</c:if>>강남구</option>
+		  <option value="11"<c:if test="${region=='11'}">selected</c:if>>강동구</option>
+		  <option value="23"<c:if test="${region=='23'}">selected</c:if>>강북구</option>
+		  <option value="1"<c:if test="${region=='1'}">selected</c:if>>강서구</option>
+		  <option value="7"<c:if test="${region=='7'}">selected</c:if>>관악구</option>
+		  <option value="15"<c:if test="${region=='15'}">selected</c:if>>광진구</option>
+		  <option value="3"<c:if test="${region=='3'}">selected</c:if>>구로구</option>
+		  <option value="5"<c:if test="${region=='5'}">selected</c:if>>금천구</option>
+		  <option value="25"<c:if test="${region=='25'}">selected</c:if>>노원구</option>
+		  <option value="24"<c:if test="${region=='24'}">selected</c:if>>도봉구</option>
+		  <option value="19"<c:if test="${region=='19'}">selected</c:if>>동대문구</option>
+		  <option value="6"<c:if test="${region=='6'}">selected</c:if>>동작구</option>
+		  <option value="12"<c:if test="${region=='12'}">selected</c:if>>마포구</option>
+		  <option value="16"<c:if test="${region=='16'}">selected</c:if>>서대문구</option>
+		  <option value="8"<c:if test="${region=='8'}">selected</c:if>>서초구</option>
+		  <option value="14"<c:if test="${region=='14'}">selected</c:if>>성동구</option>
+		  <option value="21"<c:if test="${region=='21'}">selected</c:if>>성북구</option>
+		  <option value="10"<c:if test="${region=='10'}">selected</c:if>>송파구</option>
+		  <option value="2"<c:if test="${region=='2'}">selected</c:if>>양천구</option>
+		  <option value="4"<c:if test="${region=='4'}">selected</c:if>>영등포구</option>
+		  <option value="13"<c:if test="${region=='13'}">selected</c:if>>용산구</option>
+		  <option value="20"<c:if test="${region=='20'}">selected</c:if>>은평구</option>
+		  <option value="17"<c:if test="${region=='17'}">selected</c:if>>종로구</option>
+		  <option value="18"<c:if test="${region=='18'}">selected</c:if>>중구</option>
+		  <option value="22"<c:if test="${region=='22'}">selected</c:if>>중랑구</option>
 		</select>
       </div>
     </div>
