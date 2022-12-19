@@ -1,5 +1,6 @@
 package com.ezdev.sfy.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,5 +38,12 @@ public class MyRouteMapper {
 	
 	public List<TourDTO> findTour(Map<String, String> sqlMap){
 		return sqlSession.selectList("findTour", sqlMap);
+	}
+
+	public List<MyRouteDTO> listRouteIncludeTour(int no) {
+		String tour_no = String.valueOf(no);
+		Map<String, String> map = new HashMap<>();
+		map.put("tour_no", tour_no);
+		return sqlSession.selectList("listRouteIncludeTour", map);
 	}
 }

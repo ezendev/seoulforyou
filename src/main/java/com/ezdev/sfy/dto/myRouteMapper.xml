@@ -16,6 +16,12 @@
 	<select id="getRoute" parameterType="Integer" resultType="myRouteDTO">
 		select*from route where route_no = #{route_no}
 	</select>
+	<select id="listRouteIncludeTour" parameterType="java.util.Map" resultType="myRouteDTO">
+		select * from route where (route_tour like '%,${tour_no},%'
+									or route_tour like '%,${tour_no}'
+									or route_tour like '${tour_no},%'
+									)order by route_no desc
+	</select>
 	<update id="updateRoute" parameterType="myRouteDTO">
 		update route set route_subject=#{route_subject}, route_content=#{route_content}, route_img=#{route_img},route_itinerary=#{route_itinerary, jdbcType=VARCHAR}, 
 		route_tour=#{route_tour}, route_region=#{route_region, jdbcType=VARCHAR}, route_hashtag= #{route_hashtag, jdbcType=VARCHAR} where route_no=#{route_no}

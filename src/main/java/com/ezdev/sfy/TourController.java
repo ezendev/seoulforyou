@@ -12,13 +12,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ezdev.sfy.dto.MyRouteDTO;
 import com.ezdev.sfy.dto.TourDTO;
+import com.ezdev.sfy.service.MyRouteMapper;
 import com.ezdev.sfy.service.TourMapper;
 
 @Controller
 public class TourController {
 	@Autowired
 	private TourMapper tourMapper;
+	
+	@Autowired
+	private MyRouteMapper myrouteMapper;
+	
 	//여행지
 	@RequestMapping("/tourList.do")
 	public String tourList(HttpServletRequest req
@@ -96,4 +102,17 @@ public class TourController {
 	  		return "tour/tourList";
 	    }
 	}
+	
+	@RequestMapping("/loadRoute.do")
+	public String tourList(HttpServletRequest req) {
+		int no = Integer.parseInt(req.getParameter("no"));
+		System.out.println(no);
+		
+		// tour_no값이 포함된 루트목록을 불러오기
+		List<MyRouteDTO> mlist = myrouteMapper.listRouteIncludeTour(no);
+
+		req.setAttribute("includeRouteList", mlist);
+		return "tour/tour_ajax_list";
+	}
+	
 }
