@@ -279,14 +279,68 @@ public class MypageController {
 		}
 		
 		req.setAttribute("favorite_type", favorite_type);
-		
-		/*
-
-		*/
-		
+				
 		return "mypage/mypage_favorite";
 	}
 	
+	// 나의 즐겨찾기 삭제
+	@RequestMapping("mypage_favorite_del.do")
+	public String mypage_favorite_del(HttpServletRequest req, HttpSession session) {
+		int tour_no = 0;
+		int route_no = 0;
+		int res = 0;
+		Map<String,Object> map = new HashMap<>(); 
+		
+		int no = (int) session.getAttribute("nowUserNo");
+		MyPageDTO mdto = mypageMapper.getMyPage(no);
+		int num = Integer.parseInt(req.getParameter("checkDel"));
+		String type = req.getParameter("checkType");
+		
+		//여행지 즐겨찾기 삭제
+		if(type.equals("여행지")) {
+			tour_no = num;
+			String mytour= mdto.getMypage_favorite_tour();
+			String[]arr = mytour.split(",");
+			
+			//현재 tour_no가 즐겨찾기 안에 있는지 검색
+			for(String list_tour : arr) {
+				int tno = Integer.parseInt(list_tour);
+				if(tno == tour_no) { //즐겨찾기 해제
+					String update_mytour = mytour.replace(String.valueOf(tour_no)+",", "");
+					map.put("tour", update_mytour);
+				    map.put("no", no);
+				    res = mypageMapper.deleteFavorite(map);
+					}
+				}
+		//여행루트  즐겨찾기 삭제
+		}else {
+			route_no = num;
+			String myroute= mdto.getMypage_favorite_route();
+			String[]arr = myroute.split(",");
+			
+	         //현재 route_no가 즐겨찾기 안에 있는지 검색
+	         for(String list_route : arr) {
+	            int rno = Integer.parseInt(list_route);
+	            if(rno == route_no) { //즐겨찾기 해제
+	               String update_myroute = myroute.replace(String.valueOf(route_no)+",", "");
+	               map.put("route", update_myroute);
+	               map.put("no", no);
+	               res = mypageMapper.deleteRouteFavorite(map);
+	               
+	               }
+	            }
+		}
+		
+		 if(res > 0) {
+             req.setAttribute("msg", "즐겨찾기가 삭제되었습니다.");
+             req.setAttribute("url", "mypage_favorite_list.do");
+          }else {
+             req.setAttribute("msg", "즐겨찾기 삭제를 실패했습니다.");
+             req.setAttribute("url", "mypage_favorite_list.do");
+          }
+         
+         return "message";
+	}
 	
 	@RequestMapping("/mypage_qna.do")
 	public String mypageQna() {
