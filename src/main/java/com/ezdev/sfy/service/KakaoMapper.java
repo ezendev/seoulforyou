@@ -36,7 +36,7 @@ public class KakaoMapper {
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
             sb.append("&client_id=4433f36e8b4d7a77d2fdd1a85312d7fe");
-            sb.append("&redirect_uri=http://localhost:8081/sfyy/kakaoLogin.do");
+            sb.append("&redirect_uri=http://localhost:8081/sfy/kakaoLogin.do");
             sb.append("&code=" + code);
             
             bw.write(sb.toString());
