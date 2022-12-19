@@ -71,6 +71,10 @@
 		<select id="getMemberNo" parameterType="int" resultType="memberDTO">
 		select * from member where member_no = #{member_no}
 	</select>
+	<select id="getMemberEmail" parameterType="String" resultType="memberDTO">
+		select*from member where member_email = #{member_email}
+	</select>
+
 
 </mapper> 	
 

@@ -254,7 +254,7 @@
 	        </div>
 	         <div class="col mx-auto pb-2">
 	        <c:if test="${userId eq null}">
-		      	<a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=4433f36e8b4d7a77d2fdd1a85312d7fe&redirect_uri=http://localhost:8081/sfyy/kakaoLogin.do&response_type=code">
+		      	<a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=4433f36e8b4d7a77d2fdd1a85312d7fe&redirect_uri=http://localhost:8081/sfy/kakaoLogin.do&response_type=code">
 		 		<img src="resources/img/kakao_login.png" style="width:200px;height:40px"/>
 				</a>
 			</c:if>
