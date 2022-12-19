@@ -97,10 +97,11 @@ a {
         <h1 class="modal-title fs-5" id="exampleModalLabel">나의 루트 삭제</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body mx-auto">
        	<p class="mx-auto">루트를 삭제하시려면 비밀번호를 입력해주세요</p>
-       	<input type="password" class="mx-auto" name="passwd">
+       	<input type="password" name="passwd">
       </div>
+      <small lable>*카카오 로그인 회원의 경우 내 정보 수정에서 비밀번호 변경 후에 이용해주세요</small>
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary">삭제</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
@@ -166,12 +167,12 @@ a {
 							<textarea id="content" class="form-control" id="exampleFormControlTextarea1" rows="10" readonly></textarea>
 							<p id="hashtag" align="right"></p>
 						<!-- 지도에서 경로보기 -->
-							<h5	align="left">내가 만든 루트</h5>  	
-						  	<div id="map" style="width:100%;height:600px;"></div>
+							<h5	align="left">내가 만든 루트</h5> 
+						  	<div id="map" style="width:100%;height:500px;"></div>
 								<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7dfa24ca49ecafb1d1c5352143d4a441&libraries=services,clusterer,drawing"></script>				        
 									<!-- api는 head, body 상관없지만 코드 실행보다는 먼저 선언 -->
 										<%@include file = "viewKakao.jsp"%>
-										
+							
 			
 							</div>
 				

@@ -21,8 +21,8 @@
 			
 			//controller에 myRoute불러오기
 			<c:forEach items='${myRoute}' var='rdto'>
-					var info ='${rdto.getTour_name()}'; 
-					var address ='${rdto.getTour_addr()}';
+					var info ='${fn:escapeXml(rdto.getTour_name())}'; 
+					var address ='${fn:escapeXml(rdto.getTour_addr())}';
 					addrArr.push(address);
 					infoArr.push(info);
 			</c:forEach>
@@ -41,7 +41,7 @@
 			            
 			            //positions라는 객체에 info와 좌표 담기
 			            var positions=[{
-			            	content: '<div style="width:200px; height:50px;" align="center">'+infoArr[index]+'</div>',
+			            	content: '<div style="width:200px; height:50px; padding:5px;">'+infoArr[index]+'</div>',
 							latlng: coords
 			            }];
 			          //마커 찍기
@@ -58,10 +58,12 @@
 				        });
 			         	 //마커에 마우스를 놓으면 인포윈도우 보여짐
 			            kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+
 			           	//인포윈도우 사라짐
 			            kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-						
+			            
 			           	//마커 확인
+			           		
 				        map.setCenter(coords);
 				        
 			           
@@ -70,7 +72,7 @@
 			 		   });
 					});
 	
-						
+			var bounds = new kakao.maps.LatLngBounds();			
 			var linePath = [];
 
 			var polyline = new kakao.maps.Polyline({
@@ -108,7 +110,7 @@
 			    const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 			    linePath.push(coords);
 			    polyline.setPath(linePath);
-			    
+			    bounds.extend(coords);
 				
 			    if(!polyline.getMap()) {
 			        polyline.setMap(map);
@@ -127,6 +129,11 @@
 			        infowindow.close();
 			    };
 			}
-					      
+			
+			function setBounds(){
+				map.setBounds(bounds);
+			}
+			 
+				      
 				
 				</script>

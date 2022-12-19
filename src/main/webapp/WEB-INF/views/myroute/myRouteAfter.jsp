@@ -5,24 +5,37 @@
 	
 <script type="text/javascript">
 	function routeAfter_check(){
-		if(mra.route_subject.value==""){
+		if(routeAfter.route_subject.value==""){
 			alert("제목을 입력해주세요")
-			mra.route_subject.focus()
+			routeAfter.route_subject.focus()
 			return
 		}
-		if(mra.route_content.value==""){
+		if(routeAfter.route_content.value==""){
 			alert("내용을 입력해주세요")
-			mra.route_content.focus()
+			routeAfter.route_content.focus()
+			return false
+		}
+		if(routeAfter.filename.value==""){
+			alert("파일을 입력해주세요")
+			routeAfter.filename.focus()
 			return false
 		}
 		
 		
 		document.routeAfter.submit()
 	}
+	
+	//enter키 막음
+	document.addEventListener('keydown', function(event){
+		if(event.keyCode ===13){
+			event.preventDefault();
+			};
+		}, true);
+
 </script>
 
 <!-- main--> 
-<form id="mra" name="routeAfter" action="upload.do" method="post" enctype="multipart/form-data">
+<form name="routeAfter" action="upload.do" method="post" enctype="multipart/form-data">
 	<div class="container">
 		<div class="row">
 			<div class="mx-auto pt-5">
@@ -34,25 +47,25 @@
 	<div class="row">
 		<div class="col-7 mx-auto pt-4">
 			<div class="form-floating pb-2">
-			  <textarea class="form-control" name="route_content" id="floatingTextarea2" style="height: 550px"></textarea>
+			  <textarea class="form-control" name="route_content" id="route_content" style="height: 550px"></textarea>
 			  <label for="floatingTextarea2">내용을 입력해주세요!</label>
 			</div>
 			 <div class="mb-3">
 			  <label for="formFile" class="form-label">이미지를 첨부해주세요!</label>
-			  <input class="form-control" type="file" name="filename" id="formFileMultiple" multiple>
+			  <input class="form-control" type="file" name="filename" id="filename" multiple>
 			</div>
 		</div>
 				
 		<!-- map! -->
-		<div class="col-5 mx-auto pt-4">
-			<div id="map" style="width:100%;height:650px;"></div>
+		<div class="col-5 text-center pt-3">	
+		<button class="btn btn-outline-secondary sm-btn" type="button" onclick="setBounds()">ROUTE CHECK</button>
+			<div id="map" style="width:100%;height:600px;"></div>
 			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7dfa24ca49ecafb1d1c5352143d4a441&libraries=services,clusterer,drawing"></script>
 			<!-- api는 head, body 상관없지만 코드 실행보다는 먼저 선언 -->
 			<%@include file="kakaoMap.jsp" %>
 			
 			
-		</div>
-		
+		</div>	
 		<div class="row p-3">
 			<div align="center">
 				<input class="btn btn-outline-dark" type="submit" id="save" value="저장" onclick="routeAfter_check()">

@@ -252,6 +252,18 @@
 	         <button id="login-btn" class="btn btn-primary btn-block" type="button" onclick="javascript:login_ok()">로그인</button>
     	     <button id="join-btn" class="btn btn-primary btn-block" type="button" onclick="javascript:join()">회원가입</button>
 	        </div>
+	         <div class="col mx-auto pb-2">
+	        <c:if test="${userId eq null}">
+		      	<a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=4433f36e8b4d7a77d2fdd1a85312d7fe&redirect_uri=http://localhost:8081/sfyy/kakaoLogin.do&response_type=code">
+		 		<img src="resources/img/kakao_login.png" style="width:200px;height:40px"/>
+				</a>
+			</c:if>
+			<c:if test="${userId ne null}">
+        		<button type="button" class="btn btn-warning" onclick="location.href='kakaoLogout.do'">카카오 로그아웃</button>
+        		<br>
+        		<small class="text-muted">*카카오로그인은 로그아웃 후 이용해주세요</small>
+    		</c:if>
+	        </div>
         <div class="modal-footer">
     	<p class="mx-auto text-muted">© 2022 EzDev</p>
         </div>
