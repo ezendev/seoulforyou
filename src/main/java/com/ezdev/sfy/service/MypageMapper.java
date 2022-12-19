@@ -83,6 +83,10 @@ public class MypageMapper {
 		public int deleteFavorite(Map<String, Object> map) {
 			return sqlSession.update("deleteFavorite", map);
 		}
+		
+		public int deleteRouteFavorite(Map<String, Object> map) {
+			return sqlSession.update("deleteRouteFavorite", map);
+		}
 
 		public List<TourDTO> listFavoriteTour(int no) {
 			return sqlSession.selectList("listFavoriteTour", no);
