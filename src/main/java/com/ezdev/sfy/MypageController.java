@@ -533,24 +533,30 @@ public class MypageController {
 	@ResponseBody
 	public String mypageFavoriteCheck(HttpServletRequest req,HttpSession session) {
 		int tour_no = Integer.parseInt(req.getParameter("no"));
-		int no = (int) session.getAttribute("nowUserNo");
+		int no = 0;
+		if(session.getAttribute("nowUserNo") != null) {
+			no = (int) session.getAttribute("nowUserNo");
+		}
 		
 		MyPageDTO pdto = mypageMapper.getMyPage(no);
 		
-		// 기존 즐겨찾기가 존재하면
-		if(pdto.getMypage_favorite_tour() != null) {
-			//즐겨찾기(tour)가져오기& ','별로 나눠서 배열에 담기
-			String tour= pdto.getMypage_favorite_tour();
-			String[] arr = tour.split(",");
-			
-			//현재 tour_no가 즐겨찾이 안에 있는지 검색
-			for(String tno : arr) {
-				int list_tno = Integer.parseInt(tno);
-				if(list_tno == tour_no) { // 있으면
-					return "existFavorite";
+		if(pdto != null) {
+			// 기존 즐겨찾기가 존재하면
+			if(pdto.getMypage_favorite_tour() != null) {
+				//즐겨찾기(tour)가져오기& ','별로 나눠서 배열에 담기
+				String tour= pdto.getMypage_favorite_tour();
+				String[] arr = tour.split(",");
+				
+				//현재 tour_no가 즐겨찾이 안에 있는지 검색
+				for(String tno : arr) {
+					int list_tno = Integer.parseInt(tno);
+					if(list_tno == tour_no) { // 있으면
+						return "existFavorite";
+					}
 				}
 			}
 		}
+		
 		return null;
 }
 

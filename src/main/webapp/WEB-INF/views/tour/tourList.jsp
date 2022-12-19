@@ -91,50 +91,8 @@
 		      </div>
 		      
 				<!-- Modal footer -->
-				<div class="modal-footer">
-					<div class="container text-center">
-						<h5>이 여행지가 포함된 여행루트</h5>
-						<div class="container text-center">
-							<div class="row mt-3">
-								<div class="col">
-									<div class="container">	
-										<div class="card h-100">
-											<img class="card-img-top" src="resources/img/route1.jpeg" alt="Card image" style="width:100%">
-											<div class="card-text">
-												<div class="d-grid gap-2">
-													<a href="#" class="btn btn-secondary btn-sm">보러가기</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col">
-									<div class="container">	
-										<div class="card h-100">
-											<img class="card-img-top" src="resources/img/route1.jpeg" alt="Card image" style="width:100%">
-											<div class="card-text">
-												<div class="d-grid gap-2">
-													<a href="#" class="btn btn-secondary btn-sm">보러가기</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col">
-									<div class="container">	
-										<div class="card h-100">
-											<img class="card-img-top" src="resources/img/route1.jpeg" alt="Card image" style="width:100%">
-											<div class="card-text">
-												<div class="d-grid gap-2">
-													<a href="#" class="btn btn-secondary btn-sm">보러가기</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+				<div class="routes modal-footer">
+					<!-- 이 여행지가 포함된 루트 / tour_ajax_list.jsp 올 자리 -->
 				</div>
 				<!-- Modal footer End -->
 				
@@ -199,6 +157,23 @@ function makeFavorite(){
 }  
 </script>
 
+<script>
+function loadRoute(no){
+	var no = no;
+	
+	$.ajax({
+		url: "loadRoute.do",
+        type: "POST",
+        data: {
+            no: no
+        },
+        success: function (data) {
+        	$(".routes").html(data);
+        },
+	})
+}
+
+</script>
 
 <script>
 
@@ -213,6 +188,9 @@ function valueSetting(no, name, postal, addr, hp){
 	
 	//즐겨찾기 여부 확인
 	checkFavorite();
+	
+	//이 여행지가 포함된 여행루트 불러오기
+	loadRoute(no);
 }
 </script>
 
