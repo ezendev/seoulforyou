@@ -12,7 +12,7 @@
 	
 	<insert id="insertBoard" parameterType="QnaDTO">
 		insert into qna values(qna_seq.nextval,#{qna_writer},#{qna_subject},
-							#{qna_passwd},sysdate,0,#{qna_content},#{qna_re_step},#{qna_re_level},'','','Y')
+							#{qna_passwd},sysdate,0,#{qna_content},#{qna_re_step},#{qna_re_level},'',0,'Y')
 	</insert>
 	
 	<update id="plusRe_step" parameterType="java.util.Map">
@@ -54,6 +54,5 @@
 	
 	<delete id="deleteQna" parameterType="int">
 		delete from qna where qna_no = #{qna_no}
-		 branch 'main' of https://github.com/ezendev/seoulforyou.git
 	</delete>
 	</mapper>
