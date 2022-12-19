@@ -156,7 +156,7 @@
       <div class="col-md-3 text-end">
       	<c:if test="${not empty mdto and empty adto}">
         <button onclick="javascript:chat()" type="button" class="btn btn-outline-primary me-2">쪽지</button>
-        
+        <button onclick="javascript:mypage()" type="button" class="btn btn-outline-primary me-2"> 마이페이지 </button>
         </c:if>
         
         <!-- 관리자 로그인이 되면 header부분이 바뀌도록 한다 -->    

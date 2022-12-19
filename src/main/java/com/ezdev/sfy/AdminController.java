@@ -161,7 +161,6 @@ public class AdminController {
 		if(filename == null || filename.trim().equals("")) {
 			req.setAttribute("msg", "이미지를 첨부해주세요");
 			req.setAttribute("url", "fileUpload_ok.do");
-			return "message";
 		}
 		HttpSession session = req.getSession();
 		String upPath = session.getServletContext().getRealPath("/resources/temp_admin");
@@ -171,7 +170,7 @@ public class AdminController {
 		}catch(IOException e) {
 			req.setAttribute("msg", "이미지 업로드 실패");
 			req.setAttribute("url", "fileUpload_ok.do");
-			return "message";
+
 		}
 		session.setAttribute("upPath", upPath);
 		
@@ -186,13 +185,13 @@ public class AdminController {
 		if(res>0) {
 		req.setAttribute("msg","관리자계정 등록성공");
 		req.setAttribute("url", "fileUpload_ok.do");
-		return "message";
 		
 		}else {
 		req.setAttribute("msg","관리자계정 등록실패");
 		req.setAttribute("url", "fileUpload_ok.do");
-		return "message";
 		 }
+		
+		return "admin/index";
 		}
 	
 	@RequestMapping("/admin_temp.do")
