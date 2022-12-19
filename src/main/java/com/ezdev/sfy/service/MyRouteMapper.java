@@ -46,4 +46,61 @@ public class MyRouteMapper {
 		map.put("tour_no", tour_no);
 		return sqlSession.selectList("listRouteIncludeTour", map);
 	}
+	
+	  public TourDTO getTour(int tour_no) {
+		   return sqlSession.selectOne("getTour", tour_no);
+	  }
+		  public int plusReadcount(int route_no) {
+			  return sqlSession.update("plusRouteReadcount",route_no);
+		  }
+
+		public int getRouteCountByType(String routeType) {
+			Map<String, String> map = new HashMap<>();
+			String type="";
+			if(routeType.equals("1")) {
+				type="힐링";
+			}else if(routeType.equals("2")) {
+				type="미식";
+			}else if(routeType.equals("3")) {
+				type="한류";
+			}else if(routeType.equals("4")) {
+				type="명소";
+			}else if(routeType.equals("5")) {
+				type="쇼핑";
+			}
+			map.put("routeType", type);
+			return sqlSession.selectOne("getRouteCountByType", map);
+		}
+
+		public int getRouteCount() {
+			return sqlSession.selectOne("getRouteCount");
+		}
+
+		public List<MyRouteDTO> listRouteByType(String routeType, int startRow, int endRow) {
+			Map<String, Object> map = new HashMap<>();
+			String type="";
+			if(routeType.equals("1")) {
+				type="힐링";
+			}else if(routeType.equals("2")) {
+				type="미식";
+			}else if(routeType.equals("3")) {
+				type="한류";
+			}else if(routeType.equals("4")) {
+				type="명소";
+			}else if(routeType.equals("5")) {
+				type="쇼핑";
+			}
+			map.put("type", type);
+			map.put("start", startRow);
+			map.put("end", endRow);
+		return sqlSession.selectList("listRouteByType", map);
+		}
+
+		public List<MyRouteDTO> listRoutePart(int startRow, int endRow) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("start", startRow);
+			map.put("end", endRow);
+		
+		return sqlSession.selectList("listRoutePart", map);
+		}
 }
