@@ -94,7 +94,7 @@ public class AdminController {
 	@RequestMapping("/charts.do")
 	public String charts() {
 		return "admin/charts";
-	}
+	} 
 	
 	@RequestMapping("/table_member.do")
 	public String tableMember(HttpServletRequest req) {

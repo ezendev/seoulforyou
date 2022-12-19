@@ -73,7 +73,7 @@
 		if(admin_id.value== ""){
 			alert("관리자 아이디를 입력해주세요")
 			admin_id.focus()
-			return
+			return 
 		}
 		if(admin_passwd.value== ""){
 			alert("관리자 비밀번호를 입력해주세요")
