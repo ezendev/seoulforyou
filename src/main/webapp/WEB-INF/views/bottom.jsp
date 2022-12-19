@@ -12,7 +12,10 @@
       <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
 
        
-       
+       <li class="ms-3"><a data-bs-toggle="modal" data-bs-target="#AdminLoginModal" class="text-muted">
+          <img src="resources/icon/admin.svg" width="16" height="16" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
+          </img></a>
+        </li>
        
         <li class="ms-3"><a class="text-muted" href="qnalist.do">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">

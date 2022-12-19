@@ -94,4 +94,13 @@ public class AdminMapper {
 		return sqlSession.selectOne("countRouteByHash", hashtag);
 	}
 
+
+	public AdminDTO getAdminId(String admin_id) {
+		return sqlSession.selectOne("getAdminId", admin_id);
+		
+	}
+
+
+	
+
 }
