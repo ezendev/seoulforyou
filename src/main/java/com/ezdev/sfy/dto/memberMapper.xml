@@ -19,6 +19,7 @@
 	<insert id="insertMemKakao" parameterType="java.util.Map">
 		insert into member(member_no, member_name, member_id, member_email, member_regdate, kakao) values(member_seq.nextval, #{member_name, jdbcType=VARCHAR}, #{member_id}, #{member_email, jdbcType=VARCHAR}, sysdate, 1)
 	</insert>
+	
 <!-- 회원가입2: 마이페이지 -->
 	<insert id="insertMypage" parameterType="memberDTO">
 		insert into mypage (mypage_no, mem_no) values(mypage_seq.nextval, #{member_no})
@@ -46,16 +47,27 @@
 	<delete id="deleteMember2" parameterType="memberDTO">
 	  delete from member where member_no = #{member_no} 
 	</delete>
+
+	<select id="getMemberId" parameterType="String" resultType="memberDTO">
+		select * from member where member_id = #{member_id}
+	</select>
+
+ 
+	<select id="getMemberNo" parameterType="int" resultType="memberDTO">
+		select * from member where member_no = #{member_no}
+	</select>
+	
+	<select id="getMemberEmail" parameterType="String" resultType="memberDTO">
+		select*from member where member_email = #{member_email}
+	</select>
+		<delete id="deleteMember" parameterType="int">
+		delete from member where member_no = #{member_no}
+	</delete>
+
 <!--  	
 	<select id="findMember" parameterType="java.util.Map" resultType="memberDTO">
 		select * from jsp_member where ${search} = #{searchString}
 	</select>
-	
-	<delete id="deleteMember" parameterType="int">
-		delete from jsp_member where no = #{no}
-	</delete>
-	
-
 	
 
 	
@@ -63,19 +75,6 @@
 		${sql}
 	</select>
 		-->
-	<select id="getMemberId" parameterType="String" resultType="memberDTO">
-		select * from member where member_id = #{member_id}
-	</select>
-
- 
-		<select id="getMemberNo" parameterType="int" resultType="memberDTO">
-		select * from member where member_no = #{member_no}
-	</select>
-	<select id="getMemberEmail" parameterType="String" resultType="memberDTO">
-		select*from member where member_email = #{member_email}
-	</select>
-
-
 </mapper> 	
 
 

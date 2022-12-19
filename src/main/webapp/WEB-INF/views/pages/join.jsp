@@ -69,7 +69,7 @@
 
 	          <div class="col-lg-8">
 	            <label for="email">이메일</label>
-	            <input type="text" class="form-control" name="member_email" id="email" placeholder="you@example.com" required="">
+	            <input type="email" class="form-control" name="member_email" id="email" placeholder="you@example.com" required="">
 	            <div class="invalid-feedback">
 	              	이메일을 입력해주세요.
 	            </div>
@@ -78,7 +78,7 @@
 				<div class="form-group" id="divPhoneNumber">
                     <label for="inputPhoneNumber" class="col-lg-2 control-label">휴대폰 번호</label>
                     <div class="col-lg-8">
-                        <input type="text" class="form-control onlyNumber" name="member_hp" id="phoneNumber" required="" placeholder="-를 제외하고 숫자만 입력하세요." maxlength="11">
+                        <input type="number" class="form-control onlyNumber" name="member_hp" id="phoneNumber" required="" placeholder="-를 제외하고 숫자만 입력하세요." maxlength="11">
                     </div>
                 </div><br>
                 

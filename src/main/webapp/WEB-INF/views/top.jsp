@@ -127,6 +127,9 @@
 		function mypage(){
 			location.href="mypage.do";
 		}
+		function myQna(){
+			location.href="mypage_qna.do";
+		}
 	</script>
 
 	

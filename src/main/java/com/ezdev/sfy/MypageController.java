@@ -559,6 +559,20 @@ public class MypageController {
 		
 		return null;
 }
-
-	
+	@RequestMapping(value="/deleteMember.do")
+	public String member_delete(HttpServletRequest req,HttpSession session) {
+		//현재 로그인된 세선값을 받아와서 탈퇴 진행
+		int member_no = (int) session.getAttribute("nowUserNo");
+		int res = memberMapper.deleteMember(member_no);
+		if (res>0) {
+			//세션 종료 후 index로 이동
+			session.invalidate();
+			req.setAttribute("msg", "회원탈퇴가 완료되었습니다.");
+			req.setAttribute("url", "index.do");
+		}else {
+			req.setAttribute("msg", "다시 시도해 주세요.");
+		}
+		
+		return "message";
+	}
 }
