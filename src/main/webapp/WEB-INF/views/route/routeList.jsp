@@ -47,90 +47,96 @@
 	<div class="modal fade" id="routeView">
  	<div class="modal-dialog modal-lg modal-dialog-s crollable">
 	    <div class="modal-content">
-	      	
 			<!-- Modal body -->
 			<div class="modal-body">
 				<div class="container text-center">
 			  		<div class="row">
-			  			<!-- 좌측페이지 -->
-			    		<div class="col-lg-6">
-			    			
-			    			<h2 align="left" ><a href="#" id="favorite" title="즐겨찾기 등록"><img src="resources/icon/star-fill.svg"></a><input  class="route_subject" ></h2>
-							<input class="route_no">
-							<input class="route_readcount">
-							<!-- 사진 -->				
-							<div>				    
-							  <img id="thumbnail" class="d-block w-100 " >
-							</div>
-				<br>
-			<!-- 글내용 -->
-				<p><textarea class="form-control route_content"  id="exampleFormControlTextarea1" rows="10" readonly></textarea></p>
-				<p align="right"><input  class="route_hashtag"></p>
-			<!-- 지도에서 경로보기 -->
-				<h5	align="left">추천 여행경로</h5>
-					<div id="map" style="width:100%;height:450px;"></div>
+			  			<div class="col">
+			  			<!-- 1. 본문 -->
+		    			<h2 align="left" >
+			    			<button type="button" style="border:0; background:transparent" onclick="javascript:makeFavorite()">
+								<img id="favoriteStar" src="resources/icon/star.svg" alt="" >
+							</button>
+		    				<input  class="route_subject" >
+		    			</h2>
+						<input type="hidden" class="route_no">
+						<span>조회수</span>
+						<input class="route_readcount">
+						
+						<!-- 사진 -->				
+						<div>
+						  <img id="thumbnail" class="d-block w-100 " >
+						</div>
+						<br>
+						
+						<!-- 글내용 -->
+						<p>
+							<textarea class="form-control route_content"
+								id="exampleFormControlTextarea1" rows="10" readonly></textarea>
+						</p>
+						<p align="right">
+							<input  class="route_hashtag">
+						</p>
+						
+						<!-- 지도에서 경로보기 -->
+							<div id="map" style="width:100%;height:450px;"></div>
 								<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7dfa24ca49ecafb1d1c5352143d4a441&libraries=services,clusterer,drawing"></script>				        
-									<!-- api는 head, body 상관없지만 코드 실행보다는 먼저 선언 -->
-										<%@include file = "route_kakaoMap.jsp"%>
+								<!-- api는 head, body 상관없지만 코드 실행보다는 먼저 선언 -->
+								<%@include file = "route_kakaoMap.jsp"%>
 							</div>
-			</div>			
-			<!-- 우측페이지 -->
-    		<div class="col">
-    			<h2 align="left">리뷰</h2>
-      			<div class="mb-3">
-					<textarea class="form-control" id="exampleFormControlTextarea1" rows="7"></textarea><br>
-					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-  					<button class="btn btn-primary" type="submit">Button</button>
-					</div><br><br>
-			<!--내가 등록한 리뷰? --> 
-				<h5	align="left">내가 등록한 리뷰?</h5>
-				<textarea class="form-control" id="exampleFormControlTextarea1" rows="5" readonly>내가 등록한 리뷰?	</textarea><br><br>
-			<!-- 리뷰목록 -->
-				<h5	align="left">리뷰목록</h5>
-				<table class="table table-hover">
-				  <thead>
-				    <tr>
-				      <th scope="col">NO.</th>
-				      <th scope="col">Writer</th>
-				      <th scope="col">Review</th>
-				    </tr>
-				  </thead>
-				  <tbody>
-				    <tr>
-				      <th scope="row">1</th>
-				      <td>Mark</td>
-				      <td><textarea class="form-control" id="exampleFormControlTextarea1" rows="2"  readonly>리뷰</textarea></td>
-				    </tr>
-				    <tr>
-				      <th scope="row">2</th>
-				      <td>Jacob</td>
-				       <td><textarea class="form-control" id="exampleFormControlTextarea1" rows="2" readonly>리뷰</textarea></td>
-				    </tr>
-				    <tr>
-				      <th scope="row">3</th>
-				      <td>Thornton</td>
-				       <td><textarea class="form-control" id="exampleFormControlTextarea1" rows="2" readonly>리뷰</textarea></td>
-				    </tr>
-				    <tr>
-				      <th scope="row">3</th>
-				      <td>David</td>
-				       <td><textarea class="form-control" id="exampleFormControlTextarea1" rows="2" readonly>리뷰</textarea></td>
-				    </tr>
-				    <tr>
-				      <th scope="row">3</th>
-				      <td>Maria</td>
-				       <td><textarea class="form-control" id="exampleFormControlTextarea1" rows="2" readonly>리뷰</textarea></td>
-				    </tr>
-				  </tbody>
-				</table>
-				</div>
+							
+						<!-- 2. 리뷰 -->
+			    			<h2 align="left">리뷰</h2>
+			      			<div class="mb-3">
+			      				<!-- 로그인을 하지 않았다면 -->
+			      				<c:if test="${empty sessionScope.mdto}">
+			      					<p class="text-muted">로그인하고 리뷰를 남겨보세요!</p>
+			      				</c:if>
+			      				<!-- 로그인을 했다면 리뷰남기기, 내가 등록한 리뷰 보기 가능 -->
+			      				<c:if test="${not empty sessionScope.mdto}">
+			      					<form  action="insert_review.do" method="post">
+									<input type="hidden" class="review_route_no" name="review_route_no">
+									<textarea class="form-control" name="review_content" rows="7"></textarea>
+									<label>평점 : </label>
+					      			<select name="review_star">
+						      			<option value="★☆☆☆☆">★☆☆☆☆</option>
+						      			<option value="★★☆☆☆">★★☆☆☆</option>
+						      			<option value="★★★☆☆">★★★☆☆</option>
+						      			<option value="★★★★☆">★★★★☆</option>
+						      			<option value="★★★★★">★★★★★</option>
+					                </select>
+									<br>
+									<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+				  						<input class="btn btn-primary" type="submit" value="등록">
+									</div>
+									</form>
+									<br><br>
+									<!--내가 등록한 리뷰 --> 
+									<h5	align="left">내가 등록한 리뷰</h5>
+									<!-- 내가 등록한 리뷰 올 자리 -->
+										<textarea class="my_review" rows="5" readonly></textarea>
+			      				</c:if>
+								
+									<br><br>
+								<!-- 리뷰목록 -->
+								<table class="table table-hover">
+								  <thead>
+								    <tr>
+								      <th scope="col">평점</th>
+								      <th scope="col">내용</th>
+								    </tr>
+								  </thead>
+								  <tbody class="review_list">
+								    <!-- review_ajax_list.jsp / 리뷰 들어갈 자리 -->
+								  </tbody>
+								</table>
+							</div>
 						</div>
 			  		</div>
-			  		</div>
+			  	</div>
 			</div>
-		</div>
 	</div>
-</div>
+	</div>
 
 <div class="d-flex justify-content-center mt-3">	
 <c:if test="${not empty listRoute}">			
@@ -146,9 +152,50 @@
 			</c:if>
 	</div>
 
+<script>
+function checkFavorite(){
+	const no = $('.route_no').val();
+	$.ajax({
+		url: "mypage_route_favorite_check.do",
+        type: "POST",
+        data: {
+            no: no
+        },
+        success: function (data) {
+        	if(data == "existFavorite"){
+        		$("#favoriteStar").attr("src", "resources/icon/star-fill.svg" );
+        	}else{
+        		$("#favoriteStar").attr("src", "resources/icon/star.svg" );
+        	}
+        },
+	})
+}
 
-    <script>
-    function valueSetting(route_readcount,route_no,route_subject, route_img, route_content,route_hashtag){
+function makeFavorite(){
+	const no = $('.route_no').val();
+	$.ajax({
+		url: "mypage_route_favorite.do",
+        type: "POST",
+        data: {
+            no: no
+        },
+        success: function (data) {
+        	if(data=="loginFirst"){
+        		alert("로그인을 해주세요.");
+        	}else if(data=="add"){
+        		checkFavorite();
+        	}else if(data=="delete"){
+        		checkFavorite();
+        	}
+        },
+	})
+	
+}  
+</script>
+
+<script>
+    function valueSetting(route_readcount,route_no,route_subject,
+    						route_img, route_content,route_hashtag){
 	//모달input에 dto값 설정
 	$('.route_readcount').attr("value", route_readcount);	
 	$('.route_no').attr("value", route_no);	
@@ -156,9 +203,38 @@
 	$('.route_img').attr("value", route_img);
 	$('.route_content').val(route_content);
 	$('.route_hashtag').attr("value", route_hashtag);
+	$('.review_route_no').attr("value", route_no);
+	
+	//즐겨찾기 여부 확인
+	checkFavorite();
 	
 	var upPath = $("#upPath").val();
 	const no = route_no;
+	
+	$.ajax({
+		url: 'getMyReview.do',
+	 	type: 'POST',
+	 	data: {route_no: no},
+	 	success: function(data){
+	 		$(".my_review").val(data);
+	 	},
+	 	error: function(){
+	 		alert("error");
+	 	}
+	  });
+	
+	$.ajax({
+		url: 'listReview.do',
+	 	type: 'POST',
+	 	data: {route_no: no},
+	 	success: function(data){
+	 		$(".review_list").html(data);
+	 	},
+	 	error: function(){
+	 		alert("error");
+	 	}
+	  });
+	
 	
 	$.ajax({
 		  url: 'getReadcount.do',
@@ -192,7 +268,6 @@
 			 	$.each(data, function(index, value){
 			 		setList(route);
 			 	})
-			 	console.log("성공");
 			 	},
 			 	error: function(){
 			 		alert("error");

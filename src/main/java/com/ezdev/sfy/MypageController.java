@@ -533,6 +533,8 @@ public class MypageController {
 		
 			return "mypage/mypage_friend_listmember";
 	}
+	
+	// 여행지 즐겨찾기 추가
 	@RequestMapping(value="/mypage_favorite.do", produces = "application/text; charset=utf8")
 	@ResponseBody
 	public String mypageFavorite(HttpServletRequest req,HttpSession session) {
@@ -577,7 +579,7 @@ public class MypageController {
 	}
 	
 	
-	//즐겨찾기 여부 체크
+	//여행지 즐겨찾기 여부 체크
 	@RequestMapping("/mypage_favorite_check.do")
 	@ResponseBody
 	public String mypageFavoriteCheck(HttpServletRequest req,HttpSession session) {
@@ -608,6 +610,82 @@ public class MypageController {
 		
 		return null;
 }
+	
+	// 여행루트 즐겨찾기 추가
+		@RequestMapping(value="/mypage_route_favorite.do", produces = "application/text; charset=utf8")
+		@ResponseBody
+		public String mypageRouteFavorite(HttpServletRequest req,HttpSession session) {
+			Map<String,Object> map=new HashMap<>(); 
+			int route_no = Integer.parseInt(req.getParameter("no"));
+			
+			// 로그인 안 되어있으면
+			if(session.getAttribute("nowUserNo") == null) {
+				return "loginFirst";
+			}
+			
+			int no = (int) session.getAttribute("nowUserNo");
+		    MyPageDTO pdto = mypageMapper.getMyPage(no);
+			
+			// 기존 즐겨찾기가 존재하면
+			if(pdto.getMypage_favorite_route() != null) {
+				//즐겨찾기(tour)가져오기& ','별로 나눠서 배열에 담기
+				String route= pdto.getMypage_favorite_route();
+				String[] arr = route.split(",");
+				
+				//현재 route_no가 즐겨찾기 안에 있는지 검색
+				for(String list_rno : arr) {
+					int rno = Integer.parseInt(list_rno);
+					
+					if(rno == route_no) { //즐겨찾기 해제
+						String update_route = route.replace(String.valueOf(route_no)+",", "");
+						map.put("route", update_route);
+					    map.put("no", no);
+					    int res = mypageMapper.deleteRouteFavorite(map);
+					    
+						return "delete";
+						}
+					}
+				
+			}
+				// 즐겨찾기 리스트가 존재하지 않거나 tour_no가 즐겨찾기에 없다면
+				map.put("route_no", route_no);
+			    map.put("no", no);
+				int res = mypageMapper.updateRouteFavorite(map);
+				return "add";
+			
+		}
+		
+		
+		//여행루트 즐겨찾기 여부 체크
+		@RequestMapping("/mypage_route_favorite_check.do")
+		@ResponseBody
+		public String mypageRouteFavoriteCheck(HttpServletRequest req,HttpSession session) {
+			int route_no = Integer.parseInt(req.getParameter("no"));
+			int no = 0;
+			if(session.getAttribute("nowUserNo") != null) {
+				no = (int) session.getAttribute("nowUserNo");
+			}
+			MyPageDTO pdto = mypageMapper.getMyPage(no);
+			
+			if(pdto != null) {
+				// 기존 즐겨찾기가 존재하면
+				if(pdto.getMypage_favorite_route() != null) {
+					//즐겨찾기(tour)가져오기& ','별로 나눠서 배열에 담기
+					String route= pdto.getMypage_favorite_route();
+					String[] arr = route.split(",");
+					
+					//현재 tour_no가 즐겨찾이 안에 있는지 검색
+					for(String rno : arr) {
+						int list_rno = Integer.parseInt(rno);
+						if(list_rno == route_no) { // 있으면
+							return "existFavorite";
+						}
+					}
+				}
+			}
+			
+			return null;
+	}
 
 	
 }
