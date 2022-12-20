@@ -182,6 +182,7 @@
 						<tr>
 						<td>
 					<input type="file" name="admin_profileImg" id="admin_profileImg" accept="image/*">
+					<input type="hidden" name="admin_id" id="admin_id" value="${sessionScope.adto.admin_id}">
 					<input type="reset" value="취소" >
                      		</td>
                      		</tr>	
@@ -289,6 +290,7 @@
 memberChart.update();
      	
 </script>
+
  
  <script>
      	//이번주 리뷰수 차트
@@ -342,7 +344,5 @@ memberChart.update();
 
 reviewChart.update();
 </script>
-
-                  </body>
-     
+</body>
 </html>

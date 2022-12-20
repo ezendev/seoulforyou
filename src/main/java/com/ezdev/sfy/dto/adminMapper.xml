@@ -4,8 +4,8 @@
 <mapper namespace="com.ezdev.sfy.dto.adminMapper">
 
 <insert id="insertAdmin" parameterType="adminDTO">
-	insert into admin values(admin_seq.nextval,#{admin_id},#{admin_name},
-	#{admin_passwd},#{admin_email},#{admin_profileImg})
+ insert into admin values
+ (admin_seq.nextval, #{admin_id}, #{admin_name}, #{admin_passwd}, #{admin_email}, #{admin_profileImg})	
 </insert>
 
 <select id="countMemberByWeek" resultType="java.util.Map" parameterType="java.util.Map">
@@ -20,7 +20,7 @@
 	select count(*) from route where route_hashtag = #{hashtag}
 </select>
 
-<select id="getAdminId" parameterType="String" resultType="adminDTO">
+<select id="getAdminId" parameterType="java.util.Map" resultType="adminDTO">
 select * from admin where admin_id = #{admin_id}
 </select>
 

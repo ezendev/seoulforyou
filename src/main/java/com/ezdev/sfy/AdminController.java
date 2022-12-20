@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -55,7 +56,13 @@ public class AdminController {
 	//top.jsp 로고 -> 관리자페이지
 	@RequestMapping("/admin.do")
 
-	public String admin(HttpSession session) {
+	public String admin(HttpSession session, HttpServletRequest req) {
+		
+		AdminDTO dto = (AdminDTO)session.getAttribute("adto");
+		String profile_img = dto.getAdmin_profileImg();
+		req.setAttribute("profile_img", profile_img); 
+		//참고로 이때 profile_img는 업로드 된 이미지의 이름일뿐이다
+		
 		
 		// 1. 2주간 회원가입자 수 집계
 		int[] memberChartArr = adminMapper.countMemberByWeek();
@@ -105,8 +112,7 @@ public class AdminController {
 		return "admin/table_member";
 	}
 	@RequestMapping("/member_update.do")
-	public String updateMember(HttpServletRequest req, @ModelAttribute MemberDTO dto,
-	BindingResult result) {
+	public String updateMember(HttpServletRequest req, @ModelAttribute MemberDTO dto) {
 		int res = memberMapper.updateMember2(dto);
 		 
 		if(res>0) {
@@ -150,47 +156,50 @@ public class AdminController {
 	
 	//파일 업로드에 대해 폴더에 저장   
 	@RequestMapping("/admin_input_ok.do")
-	public String fileUpload(HttpServletRequest req, @ModelAttribute AdminDTO dto, 
-				BindingResult result) throws Exception{
-		if (result.hasErrors()) {
+	public String fileUpload(HttpServletRequest req, @ModelAttribute AdminDTO dto, BindingResult result) throws Exception{
+
+		if(result.hasErrors()) {
 			dto.setAdmin_profileImg("");
 		}
+		
 		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
 		MultipartFile files = mr.getFile("admin_profileImg");
 		String filename = files.getOriginalFilename();
+		System.out.println(filename); 
+		
 		if(filename == null || filename.trim().equals("")) {
 			req.setAttribute("msg", "이미지를 첨부해주세요");
 			req.setAttribute("url", "fileUpload_ok.do");
 		}
 		HttpSession session = req.getSession();
-		String upPath = session.getServletContext().getRealPath("/resources/temp_admin");
+		String upPath = "C:\\admin";
 		File target = new File(upPath, filename);
 		try {
 			files.transferTo(target);
 		}catch(IOException e) {
 			req.setAttribute("msg", "이미지 업로드 실패");
 			req.setAttribute("url", "fileUpload_ok.do");
-
 		}
 		session.setAttribute("upPath", upPath);
 		
 		dto.setAdmin_profileImg(filename); 
-		
 		dto.setAdmin_name(req.getParameter("admin_name"));
 		dto.setAdmin_id(req.getParameter("admin_id"));
 		dto.setAdmin_passwd(req.getParameter("admin_passwd"));
 		dto.setAdmin_email(req.getParameter("admin_email"));
 		
+		//열린 세션에 adto라는 이름에 위의 관리자계정 등록 값dto를 저장
+		session.setAttribute("adto", dto);
+		
 		int res = adminMapper.insertAdmin(dto); 
 		if(res>0) {
-		req.setAttribute("msg","관리자계정 등록성공");
+		req.setAttribute("msg","관리자계정 등록성공, 사진 변경완료");
 		req.setAttribute("url", "fileUpload_ok.do");
 		
 		}else {
 		req.setAttribute("msg","관리자계정 등록실패");
 		req.setAttribute("url", "fileUpload_ok.do");
 		 }
-		
 		return "admin/index";
 		}
 	
@@ -260,7 +269,6 @@ public class AdminController {
 	@RequestMapping(value="/admin_login_ok.do", method= RequestMethod.POST)
 	public String adminLoginOk(HttpServletRequest req, HttpServletResponse resp, 
 	@RequestParam Map<String,String> map) {
-		System.out.println(map);
 		
 	AdminDTO dto = adminMapper.getAdminId(map.get("admin_id"));
 	

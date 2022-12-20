@@ -2,7 +2,7 @@ package com.ezdev.sfy.dto;
 
 public class AdminDTO {
 	
-	private String admin_no;
+	private int admin_no;
 	private String admin_id;
 	private String admin_name;
 	private String admin_passwd;
@@ -10,10 +10,11 @@ public class AdminDTO {
 	private String admin_profileImg;
 	
 	
-	public String getAdmin_no() {
+	
+	public int getAdmin_no() {
 		return admin_no;
 	}
-	public void setAdmin_no(String admin_no) {
+	public void setAdmin_no(int admin_no) {
 		this.admin_no = admin_no;
 	}
 	public String getAdmin_id() {
