@@ -21,19 +21,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ezdev.sfy.dto.MemberDTO;
 import com.ezdev.sfy.dto.MyPageDTO;
 import com.ezdev.sfy.dto.MyRouteDTO;
+import com.ezdev.sfy.dto.QnaDTO;
 import com.ezdev.sfy.dto.ReviewDTO;
 import com.ezdev.sfy.service.MyRouteMapper;
-import com.ezdev.sfy.dto.FriendDTO;
 import com.ezdev.sfy.dto.TourDTO;
 import com.ezdev.sfy.service.ChatMapper;
 import com.ezdev.sfy.service.MemberMapper;
 import com.ezdev.sfy.service.MypageMapper;
+import com.ezdev.sfy.service.QnaMapper;
 import com.ezdev.sfy.service.TourMapper;
 
 
 @Controller
-public class MypageController {
-    
+public class MypageController {	
+	@Autowired
+	QnaMapper boardMapper;
 	
 	@Autowired
 	MypageMapper mypageMapper;
@@ -343,9 +345,56 @@ public class MypageController {
 	}
 	
 	@RequestMapping("/mypage_qna.do")
-	public String mypageQna() {
+	public String mypage_qna(HttpServletRequest req, @RequestParam(required = false) String pageNum) {
+		HttpSession session = req.getSession();
+		MemberDTO mdto = (MemberDTO) session.getAttribute("mdto");
+		String qna_writer = mdto.getMember_id();
+		
+		if (pageNum == null) {
+			pageNum = "1";
+		}
+		int currentPage = Integer.parseInt(pageNum);
+		int pageSize = 5;
+		int startRow = (currentPage-1) * pageSize + 1;
+		int endRow = startRow + pageSize - 1;
+		int countRow = boardMapper.getCountById(qna_writer);
+		if (endRow > countRow) endRow = countRow;
+		
+		List<QnaDTO> list = boardMapper.listBoardById(qna_writer, startRow, endRow);
+		
+		int qna_no = countRow - (startRow - 1);
+		req.setAttribute("listBoard", list);
+		req.setAttribute("qna_no", qna_no);
+		int pageCount = countRow / pageSize + (countRow%pageSize==0 ? 0 : 1);
+		int pageBlock = 3;
+		int startPage = (currentPage - 1) / pageBlock * pageBlock + 1;
+		int endPage = startPage + pageBlock - 1;
+		if (endPage > pageCount) endPage = pageCount;		
+		req.setAttribute("pageCount", pageCount);
+		req.setAttribute("pageBlock", pageBlock);
+		req.setAttribute("startPage", startPage);
+		req.setAttribute("endPage", endPage);
+		
 		return "mypage/mypage_qna";
 	}
+	
+	@RequestMapping("/mypage_qna_del.do")
+	public String mypage_qna_del(HttpServletRequest req) {
+		int qna_no = Integer.parseInt(req.getParameter("checkDel"));
+		int res = boardMapper.deleteQna(qna_no);
+
+		if(res>0) {
+			req.setAttribute("msg", "문의내역을 삭제했습니다.");
+			req.setAttribute("url", "mypage_qna.do");
+		}else {
+			req.setAttribute("msg", "문의내역 삭제를 실패했습니다.");
+			req.setAttribute("url", "mypage_qna.do");
+		}
+		return "message";
+	
+	}
+	
+	
 	@RequestMapping("/mypage_friend.do")
 	public String mypage_friend(HttpServletRequest req, HttpSession session) {
 		
