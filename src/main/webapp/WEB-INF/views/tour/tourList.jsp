@@ -145,10 +145,8 @@ function makeFavorite(){
         	if(data=="loginFirst"){
         		alert("로그인을 해주세요.");
         	}else if(data=="add"){
-        		alert("즐겨찾기에 추가되었습니다.")
         		checkFavorite();
         	}else if(data=="delete"){
-        		alert("즐겨찾기가 해제되었습니다.")
         		checkFavorite();
         	}
         },

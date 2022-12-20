@@ -45,27 +45,28 @@
 	
 	<!-- 상세페이지 모달 -->
 	<div class="modal fade" id="routeView">
- 	<div class="modal-dialog modal-lg modal-dialog-s crollable">
+ 	<div class="modal-dialog   modal-dialog-scrollable">
 	    <div class="modal-content">
 			<!-- Modal body -->
 			<div class="modal-body">
-				<div class="container text-center">
-			  		<div class="row">
-			  			<div class="col">
+				<div class="container-fluid text-center">
+			  		<div class="row ">
+			  			<div class="col-md-12">
 			  			<!-- 1. 본문 -->
 		    			<h2 align="left" >
 			    			<button type="button" style="border:0; background:transparent" onclick="javascript:makeFavorite()">
 								<img id="favoriteStar" src="resources/icon/star.svg" alt="" >
 							</button>
-		    				<input  class="route_subject" >
+		    				<input type="text" class="route_subject" style="background-color:transparent;border:0; solid black;text-align:left;" spellcheck="false">
 		    			</h2>
 						<input type="hidden" class="route_no">
-						<span>조회수</span>
-						<input class="route_readcount">
-						
+						<div align="left">
+						<span>조회수:</span>
+						<input type="text"class="route_readcount" style="background-color:transparent;border:0; solid black;text-align:left;">
+						</div>
 						<!-- 사진 -->				
 						<div>
-						  <img id="thumbnail" class="d-block w-100 " >
+						  <img id="thumbnail" class="d-block w-100 " style="width:100%; height:20vw; object-fit:fill;">
 						</div>
 						<br>
 						
@@ -74,8 +75,8 @@
 							<textarea class="form-control route_content"
 								id="exampleFormControlTextarea1" rows="10" readonly></textarea>
 						</p>
-						<p align="right">
-							<input  class="route_hashtag">
+						<p align="left">
+							<input  class="route_hashtag" style="background-color:transparent;border:0; solid black;text-align:left;" spellcheck="false">
 						</p>
 						
 						<!-- 지도에서 경로보기 -->
@@ -114,7 +115,7 @@
 									<!--내가 등록한 리뷰 --> 
 									<h5	align="left">내가 등록한 리뷰</h5>
 									<!-- 내가 등록한 리뷰 올 자리 -->
-										<textarea class="my_review" rows="5" readonly></textarea>
+										<textarea class="my_review" rows="5" cols="40" readonly></textarea>
 			      				</c:if>
 								
 									<br><br>
@@ -202,7 +203,7 @@ function makeFavorite(){
 	$('.route_subject').attr("value", route_subject);	
 	$('.route_img').attr("value", route_img);
 	$('.route_content').val(route_content);
-	$('.route_hashtag').attr("value", route_hashtag);
+	$('.route_hashtag').attr("value", "#"+route_hashtag);
 	$('.review_route_no').attr("value", route_no);
 	
 	//즐겨찾기 여부 확인

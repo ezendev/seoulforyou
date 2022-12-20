@@ -146,9 +146,10 @@ a {
 <div class="modal fade" id="routeView" data-bs-backdrop="static">
  	<div class="modal-dialog modal-lg modal-dialog-scrollable">
 	    <div class="modal-content">
-	      	<div class="modal-header">
-	      		<a href="#" id="favorite" title="즐겨찾기 등록"><img src="resources/icon/star-fill.svg"></a> 
+	      	<div class="modal-header"> 
+	      		<div align="left">
 		        <h1 class="modal-title fs-5 mx-auto" id="staticBackdropLabel">ROUTE</h1>
+		        </div>
 		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="reload()"></button>
 		      </div>
 			<!-- Modal body -->
