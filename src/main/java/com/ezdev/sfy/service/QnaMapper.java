@@ -63,5 +63,19 @@ public class QnaMapper {
 	public List<QnaDTO> listQna2(){
 		return sqlSession.selectList("listQna2");
 	}
+
+	public int getCountById(String qna_writer) {
+		Map<String, String> map = new Hashtable<>();
+		map.put("id", qna_writer);
+		return sqlSession.selectOne("getCountById", map);
+	}
+
+	public List<QnaDTO> listBoardById(String qna_writer, int startRow, int endRow) {
+		Map<String, Object> map = new Hashtable<>();
+		map.put("id", qna_writer);
+		map.put("start", startRow);
+		map.put("end", endRow);
+		return sqlSession.selectList("listBoardById", map);
+	}
 	
 }
