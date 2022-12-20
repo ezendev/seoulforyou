@@ -96,7 +96,9 @@ public class AdminMapper {
 
 
 	public AdminDTO getAdminId(String admin_id) {
-		return sqlSession.selectOne("getAdminId", admin_id);
+		Map<String,String> map = new HashMap<>();
+		map.put("admin_id", admin_id);
+		return sqlSession.selectOne("getAdminId", map);
 		
 	}
 
