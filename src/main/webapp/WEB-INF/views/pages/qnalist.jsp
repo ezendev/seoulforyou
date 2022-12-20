@@ -4,7 +4,6 @@
 <%@ include file="../top.jsp"%>
 
 <body>
-<%String qna_writer =(String)session.getAttribute("member_id"); %>
 <div class="container themed-container text-center">
 <h1 class="display -5 fw-bold" align="center">질문게시판</h1><br><br><br>
 
@@ -52,14 +51,14 @@
 				<td>-</td>
 			</c:if>
 		<!-- 답변글이 있을 때 -->
-			<c:forEach var="reply" items="${dto.qna_reply_content}">
+			<c:if test="${not empty dto.qna_reply_content}">
 				<td>
 				<a onclick="valueSetting('${dto.qna_no}', '${dto.qna_reply_regdate}','${dto.qna_reply_content}')" 
 					data-bs-toggle="modal" data-bs-target="#reply_qna">답변완료</a>
 				</td>
-			</c:forEach>	
+			</c:if>
 		</tr>
-	</c:forEach>
+		</c:forEach>	
 	</tbody>
 	</table>
 <!-- 페이징 처리 -->
