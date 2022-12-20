@@ -4,7 +4,7 @@
  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="com.ezdev.sfy.dto.reviewMapper">
 <insert id="insertReview" parameterType="reviewDTO">
-insert into review values(review_seq.nextval, #{mem_no}, #{review_content}, #{review_star}, sysdate)
+insert into review values(review_seq.nextval, #{review_route_no}, #{mem_no}, #{review_content}, #{review_star}, sysdate)
 </insert>
 <select id="getReview" parameterType="int" resultType="reviewDTO"> 
 select * from review where review_no = #{review_no}
@@ -15,5 +15,13 @@ delete from review where review_no = #{review_no}
 <update id="updateReview" parameterType="reviewDTO">
 update review set review_content = #{review_content}, review_star = #{review_star} where review_no = #{review_no}
 </update>
+
+<select id="listRouteReview" parameterType="java.util.Map" resultType="reviewDTO"> 
+select * from review where review_route_no = #{route_no}
+</select>
+
+<select id="getReviewByRoute" parameterType="java.util.Map" resultType="reviewDTO"> 
+select * from review where mem_no = #{no} and review_route_no = #{route_no}
+</select>
 
 </mapper>

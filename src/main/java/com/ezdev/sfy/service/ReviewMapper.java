@@ -26,4 +26,16 @@ public class ReviewMapper {
     public ReviewDTO getReview(int review_no) {
     	return sqlSession.selectOne("getReview", review_no);
     }
+    
+    public List<ReviewDTO> listRouteReview(int route_no){
+    	Map<String, Integer> map = new Hashtable<>();
+    	map.put("route_no", route_no);
+    	return sqlSession.selectList("listRouteReview", map);
+    }
+	public ReviewDTO getReviewByRoute(int no, int route_no) {
+		Map<String, Integer> map = new Hashtable<>();
+		map.put("no", no);
+    	map.put("route_no", route_no);
+		return sqlSession.selectOne("getReviewByRoute", map);
+	}
 }

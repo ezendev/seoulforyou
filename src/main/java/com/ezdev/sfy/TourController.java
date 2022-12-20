@@ -1,8 +1,6 @@
 package com.ezdev.sfy;
 
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -106,7 +104,6 @@ public class TourController {
 	@RequestMapping("/loadRoute.do")
 	public String tourList(HttpServletRequest req) {
 		int no = Integer.parseInt(req.getParameter("no"));
-		System.out.println(no);
 		
 		// tour_no값이 포함된 루트목록을 불러오기
 		List<MyRouteDTO> mlist = myrouteMapper.listRouteIncludeTour(no);
