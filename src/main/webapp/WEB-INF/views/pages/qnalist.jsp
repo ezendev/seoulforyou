@@ -11,7 +11,8 @@
 <!-- 버튼 생성 : 나의문의내역확인 & 검색창 -->
 	<div class="position-relative">
 		<div class="container-fluid" >
-    		<button type="button" onclick="javascript:admin()" class="btn btn-outline-success btn px-4 me-md-3" style="float:left" >나의 문의내역 확인하기</button>
+		<!-- 마이페이지 나의 문의내역으로 이동 -->
+    		<button type="button" onclick="javascript:myQna()" class="btn btn-outline-success btn px-4 me-md-3" style="float:left" >나의 문의내역 확인하기</button>	
 		</div>
     </div><br><br><br>
 <!--게시판 -->

@@ -61,6 +61,17 @@ public class QnaController {
 		return "pages/qnalist";
 	}
 	
+	@RequestMapping(value="/myQna.do", method=RequestMethod.GET)
+	public String read_MyQna(HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		if(session.getAttribute("nowUserNo")==null) {
+			req.setAttribute("msg", "로그인 후에  이용이 가능합니다.");
+			req.setAttribute("url", "index.do");
+			return "message";
+		}
+		return "mypage/mypage_qna";
+	}
+	
 	@RequestMapping(value="/qnaWrite.do", method=RequestMethod.GET)
 	public String writeForm_board(HttpServletRequest req) {
 		HttpSession session = req.getSession();
