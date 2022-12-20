@@ -1,7 +1,10 @@
 package com.ezdev.sfy;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,11 +18,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ezdev.sfy.dto.MyRouteDTO;
 import com.ezdev.sfy.dto.TourDTO;
 import com.ezdev.sfy.service.MyRouteMapper;
+import com.ezdev.sfy.service.TourMapper;
 
 @Controller
 public class RouteController {
 	@Autowired
 	MyRouteMapper myrouteMapper;
+	@Autowired
+	TourMapper tourMapper;
 	//여행루트
 	@RequestMapping("/routeList.do")
 	public String routeList(HttpServletRequest req
@@ -110,6 +116,31 @@ public class RouteController {
 				return "0";				
 			}
 		}
+	@RequestMapping(value="/getRouteKakao.do")
+	@ResponseBody
+	public Map<String, Object> map(HttpServletRequest req, HttpSession session){
+		int route_no = Integer.parseInt(req.getParameter("no"));
+		MyRouteDTO dto = myrouteMapper.getRoute(route_no);
+		String route = dto.getRoute_tour();
+		String []array = route.split(",");
+		int tour_no;
+		List<TourDTO> routeView = (List)session.getAttribute("routeView");
+		if(routeView==null) {
+			routeView = new ArrayList<>();
+		}
+		//리스트에 담기
+		for(int i=0; i<array.length; i++) {
+			tour_no=(int) Integer.parseInt(array[i]);
+			TourDTO rdto =tourMapper.getTour(tour_no);
+			routeView.add(rdto);
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("routeView", routeView);
+	
+		return map;
+		
 	}
+}
 
 
