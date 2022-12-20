@@ -48,16 +48,16 @@
 <select id="findMember" parameterType="java.util.Map" resultType="memberDTO">
 		${sql}
 	</select>
-<!-- <sql id="search"> <include refid="search"/>
- <if test="msearchType!=null"> 
-  <if test="msearchType == 'id'.toString()">where member_id like '%' || #{mkeyword} || '%'</if>
-  <if test="msearchType == 'name'.toString()">where member_name like '%' || #{mkeyword} || '%'</if>
- </if>
-</sql> -->
 
 <update id="updateFavorite" parameterType="java.util.Map" >
 update mypage
 	set mypage_favorite_tour = mypage_favorite_tour||#{tour_no, jdbcType=NUMERIC}||','
+	where mem_no = #{no, jdbcType=NUMERIC}
+</update>
+
+<update id="updateRouteFavorite" parameterType="java.util.Map" >
+update mypage
+	set mypage_favorite_route = mypage_favorite_route||#{route_no, jdbcType=NUMERIC}||','
 	where mem_no = #{no, jdbcType=NUMERIC}
 </update>
 

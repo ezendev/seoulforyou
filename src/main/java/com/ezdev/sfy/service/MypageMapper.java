@@ -80,6 +80,10 @@ public class MypageMapper {
 			   return sqlSession.update("updateFavorite", map);
 		   }
 		
+		public int updateRouteFavorite(Map<String, Object> map) {
+			return sqlSession.update("updateRouteFavorite", map);
+		}
+		
 		public int deleteFavorite(Map<String, Object> map) {
 			return sqlSession.update("deleteFavorite", map);
 		}
