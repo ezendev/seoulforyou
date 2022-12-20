@@ -34,6 +34,11 @@ public class MemberMapper {
 		return sqlSession.update("updateMember2", dto);
 		
 	}
+//마이페이지에서 회원탈퇴 할때
+	public int deleteMember(int member_no) {
+		return sqlSession.delete("deleteMember", member_no);
+	}
+//관리자페이지에서 회원탈퇴
 	public int deleteMember2(MemberDTO dto) {
 		return sqlSession.delete("deleteMember2", dto);
 	}
@@ -41,13 +46,12 @@ public class MemberMapper {
 	public  List<MemberDTO> findMember(Map<String, String> map){
 		return  sqlSession.selectList("findMember", map);
 	}
-	public int deleteMember(int no) {
-		return sqlSession.delete("deleteMember", no);
-	}
+	
 	*/
 	public MemberDTO getMemberNo(int member_no){
 	return  sqlSession.selectOne("getMemberNo", member_no);
 	}
+
 	
 	public int updateMember(MemberDTO dto) {
 	return sqlSession.update("updateMember", dto);
