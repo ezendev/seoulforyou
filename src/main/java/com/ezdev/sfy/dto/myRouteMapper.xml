@@ -29,5 +29,33 @@
 	<delete id ="delMyroute" parameterType="Integer">
 	delete from route where route_no = #{route_no} 
 	</delete>
+	
+	<select id="listRoute" resultType="myRouteDTO">
+		select * from route
+	</select>
+	
+	<select id="listRouteByType" resultType="MyRouteDTO" parameterType="java.util.Map">
+      select * from (select rownum rn, A.* from(select * from route where route_hashtag = #{type})A)
+		where rn between #{start} and #{end}
+   </select>
+   
+   <select id="listRoutePart" resultType="MyRouteDTO" parameterType="java.util.Map">
+      select * from (select rownum rn, A.* from(select * from route)A)
+		where rn between #{start} and #{end}
+   </select>
+	
+	<update id="plusRouteReadcount" parameterType="int">
+		update route set route_readcount = route_readcount + 1 where route_no =
+		#{route_no}
+	</update>
 
+	<select id="getRouteCount" resultType="Integer">
+		select count(*) from route
+	</select>
+
+	<select id="getRouteCountByType" resultType="Integer"
+		parameterType="java.util.Map">
+		select count(*) from route where route_hashtag = #{routeType}
+	</select>
+	
 </mapper>
