@@ -145,6 +145,7 @@ public class MypageController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 			map.put("subject", dto.getRoute_subject());
+			map.put("readcount", dto.getRoute_readcount());
 			map.put("content", dto.getRoute_content());
 			map.put("img", dto.getRoute_img());
 			map.put("hashtag", dto.getRoute_hashtag());
