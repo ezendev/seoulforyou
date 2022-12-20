@@ -18,159 +18,47 @@
 	<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 	<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 	<script src="https://uicdn.toast.com/editor/latest/i18n/ko-kr.min.js"></script>	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>	
 	<!-- from review_page -->
-	<script src="resources/js/bootstrap.bundle.min.js"></script>
-	
+	<script src="resources/js/bootstrap.bundle.min.js"></script>	
 	<!-- 플로팅 버튼 -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css" />
-	
-	<style>
-	/*플로팅 버튼 수정*/
-	.floating-button {
-	  display: flex;
-	  position: fixed;
-	  right: 10px;
-	  bottom: 15px;
-	  z-index: 999;
-	}
-	 
-	/*플로팅 버튼 스타일 */
-	.qnalist-btn {
-		width: 100%;
-		height: 100%;
-		opacity: 1;
-		border-radius: 50%;
-		font-size: 1.15em;
-		font-family: 'HYHeadLine';
-		color: #FFFAFA;
-		text-align: center;
-	}
-	 
-	/*플로팅 버튼 스타일========*/
-	.move-qnalist {
-		float: left;
-		display: flex;
-		position: relative;
-		width: 32px;
-		height: 32px;
-		border-radius: 50%;
-		cursor: pointer;
-		justify-content: center;
-		align-items: center;
-		margin-left: 5px;
-		/*사용자 설정 파트*/	
-		font-weight: 700;
-		background-color: #5F9EA0;
-		border: 2px solid #5F9EA0;
-	
-	}
-	</style>
-	<!-- 관리자 로그인 javascript  해당 함수가 최종 실행되면 a라는 이름의 form태그 전송이 실행된다-->
-	<script>
-	function admin_login_ok(){
-		if(admin_id.value== ""){
-			alert("관리자 아이디를 입력해주세요")
-			admin_id.focus()
-			return 
-		}
-		if(admin_passwd.value== ""){
-			alert("관리자 비밀번호를 입력해주세요")
-			admin_passwd.focus()
-			return
-		}
-		document.a.submit()
-	}
-	</script>
-	
-	<script>
-	function adminLogout(){
-		location.href="adminLogout.do";
-	}
-	</script>
-
-	<script>
-		function admin(){
-			location.href="admin.do";
-		}
-		function login(){
-			location.href="login.do";
-		}
-		function login_ok(){
-			if(member_id.value==""){
-				alert("아이디를 입력해 주세요")
-				member_id.focus()
-				return
-			}
-			if(member_passwd.value==""){
-				alert("비밀번호를 입력해 주세요")
-				member_passwd.focus()
-				return
-			}
-			document.f.submit()
-		}
-		
-		function join(){
-			location.href="join.do";
-		}
-		function chat(){
-			location.href="chat.do";
-		}
-		function qnaWrite(){
-			location.href="qnaWrite.do";
-		}
-		function logout(){
-			location.href="logout.do";
-		}
-		
-		function mypage(){
-			location.href="mypage.do";
-		}
-		function myQna(){
-			location.href="mypage_qna.do";
-		}
-	</script>
-
-	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css" />		
 	<title>Seoul For You</title>
-  
 </head>
+
 <body>
   <div class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-
-      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="index.do" class="nav-link px-2 link-secondary">Home</a></li>
-        <li><a href="tourList.do" class="nav-link px-2 link-dark">여행지</a></li>
-        <li><a href="routeList.do" class="nav-link px-2 link-dark">여행루트</a></li>
-        <li><a href="myRoute.do" class="nav-link px-2 link-dark" onclick="make()">나의여행 만들기</a></li>
-      </ul>
+<!-- SeoulForYou 배너 -->  
+	<a href="index.do" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none"><img src="resources/img/seoulforyou.png"  style="width:50%"></a>
+<!-- 메뉴 -->
+    <ul class="nav justify-content-center" >
+	    <li class="fw-bold"><a href="index.do" class="nav-link px-2 link-secondary">Home</a></li>
+	    <li class="fw-bold"><a href="tourList.do" class="nav-link px-2 link-dark">여행지</a></li>
+	    <li class="fw-bold"><a href="routeList.do" class="nav-link px-2 link-dark">여행루트</a></li>
+	    <li class="fw-bold"><a href="myRoute.do" class="nav-link px-2 link-dark" onclick="make()">나의여행 만들기</a></li>
+    </ul>
       
 <!-- 쪽지버튼은 로그인해야 나타남 -->
       <div class="col-md-3 text-end">
       	<c:if test="${not empty mdto and empty adto}">
-        <button onclick="javascript:chat()" type="button" class="btn btn-outline-primary me-2">쪽지</button>
-        <button onclick="javascript:mypage()" type="button" class="btn btn-outline-primary me-2"> 마이페이지 </button>
-        </c:if>
+      	<!--채팅버튼-->
+		<img src="resources/icon/chat-quote.svg" style="width:16%" onclick="javascript:chat()" class="btn btn-outline-white">
+		<!--마이페이지 버튼-->
+        <img src="resources/icon/person-circle.svg" style="width:16%" onclick="javascript:mypage()" class="btn btn-outline-white">
+        <button type="button" class="btn btn-secondary" onclick="javascript:logout()">로그아웃</button>
+       	</c:if>
         
-        <!-- 관리자 로그인이 되면 header부분이 바뀌도록 한다 -->    
+<!-- 관리자 로그인이 되면 header부분이 바뀌도록 한다 -->    
         <c:if test="${not empty adto and empty mdto}">
-		<a href="admin.do" style="text-decoration-line:none"><img src="resources/icon/adminSite.svg" onclick="javascript:adminSite()" width="40" height="40" >
-		</a>
-		<button type="button" class="btn btn-primary" onclick="javascript:adminLogout()">로그아웃</button>
+		<a href="admin.do" style="text-decoration-line:none"><img src="resources/icon/adminSite.svg" onclick="javascript:adminSite()" width="40" height="40"></a>
+			<button type="button" class="btn btn-secondary" onclick="javascript:adminLogout()">로그아웃</button>
 		</c:if>
         
 		<c:if test="${empty mdto and empty adto}">
-      	<button type="button" class="btn btn-primary" data-bs-toggle="modal"
-        	data-bs-target="#loginModal">로그인</button>
-        </c:if>
-        
-        <c:if test="${not empty mdto}">
-              	<button type="button" class="btn btn-primary" onclick="javascript:logout()">로그아웃</button>
+      	<button type="button" class="btn btn-success " data-bs-toggle="modal" data-bs-target="#loginModal">로그인</button>
         </c:if>
       </div>
-    
 	</header>
     
 <!-- 플로팅 버튼(qnalist로 이동) -->
@@ -267,9 +155,105 @@
   </div>
 </form>
 
+<!-- 스트립트 모음 -->
+<script>
+	function adminLogout() {location.href="adminLogout.do";}
+	function admin() {location.href="admin.do";}
+	function login(){location.href="login.do";}
+	function join() {location.href="join.do";}
+	function chat() {location.href="chat.do";}
+	function qnaWrite() {location.href="qnaWrite.do";}
+	function logout() {location.href="logout.do";}
+	function mypage() {location.href="mypage.do";}
+	function myQna() {location.href="mypage_qna.do";}
+	function login_ok(){
+		if(member_id.value==""){
+			alert("아이디를 입력해 주세요")
+			member_id.focus()
+			return
+		}
+		if(member_passwd.value==""){
+			alert("비밀번호를 입력해 주세요")
+			member_passwd.focus()
+			return
+		}
+		document.f.submit()
+	}
+	function admin_login_ok(){
+		if(admin_id.value== ""){
+			alert("관리자 아이디를 입력해주세요")
+			admin_id.focus()
+			return 
+		}
+		if(admin_passwd.value== ""){
+			alert("관리자 비밀번호를 입력해주세요")
+			admin_passwd.focus()
+			return
+		}
+		document.a.submit()
+	}	
+</script>
 
-
-
-
-
+<!-- 스타일 -->
+<style>
+	/*플로팅 버튼 수정*/
+	.floating-button {
+	  display: flex;
+	  position: fixed;
+	  right: 10px;
+	  bottom: 15px;
+	  z-index: 999;
+	}
+	 
+	/*플로팅 버튼 스타일 */
+	.qnalist-btn {
+		width: 100%;
+		height: 100%;
+		opacity: 1;
+		border-radius: 50%;
+		font-size: 1.15em;
+		font-family: 'HYHeadLine';
+		color: #FFFAFA;
+		text-align: center;
+	}
+	 
+	/*플로팅 버튼 스타일========*/
+	.move-qnalist {
+		float: left;
+		display: flex;
+		position: relative;
+		width: 32px;
+		height: 32px;
+		border-radius: 50%;
+		cursor: pointer;
+		justify-content: center;
+		align-items: center;
+		margin-left: 5px;
+		/*사용자 설정 파트*/	
+		font-weight: 700;
+		background-color: #5F9EA0;
+		border: 2px solid #5F9EA0;	
+	}
+	/*로그인*/
+	.btn-success{
+		background-color: #A0C8C8;
+		border-color:#A0C8C8;
+		font-weight: 600;
+		border-radius: 1rem;
+	}
+	/*로그아웃*/
+	.btn-secondary {
+		background-color: #A0C8C8;
+		border-color:#A0C8C8;
+		font-weight: 600;
+		border-radius: 1rem;
+		}
+	/*채팅, 마이페이지 버튼*/	
+	.btn-outline-white{
+		margin-left : -10px;
+	
+	}
+	/*메누 간격*/
+	ul li {margin-left:20px;}
+</style>
 </html>
