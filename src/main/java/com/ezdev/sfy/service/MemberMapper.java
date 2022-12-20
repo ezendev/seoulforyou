@@ -34,7 +34,7 @@ public class MemberMapper {
 		return sqlSession.update("updateMember2", dto);
 		
 	}
-//마이페이지에서 회원탈퇴
+//마이페이지에서 회원탈퇴 할때
 	public int deleteMember(int member_no) {
 		return sqlSession.delete("deleteMember", member_no);
 	}

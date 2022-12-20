@@ -608,6 +608,7 @@ public class MypageController {
 		
 		return null;
 }
+	//마이페이지에서 회원탈퇴하기
 	@RequestMapping(value="/deleteMember.do")
 	public String member_delete(HttpServletRequest req,HttpSession session) {
 		//현재 로그인된 세선값을 받아와서 탈퇴 진행

@@ -66,7 +66,7 @@
 	              	비밀번호를 입력해 주세요.
 	            </div>
           </div><br>
-
+		<!-- 이메일형식 aaa@aa~ -->
 	          <div class="col-lg-8">
 	            <label for="email">이메일</label>
 	            <input type="email" class="form-control" name="member_email" id="email" placeholder="you@example.com" required="">

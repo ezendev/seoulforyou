@@ -66,7 +66,7 @@ $('.modal').on('hidden.bs.modal', function (e) {
       </li>
       
       <li>
-        <a class="nav-link link-dark" href="deleteMember.do">
+        <a class="nav-link link-trigger" href="deleteMember.do">
           <svg class="bi pe-none me-2" width="16" height="16"></svg>
           	회원 탈퇴</a>
       </li>

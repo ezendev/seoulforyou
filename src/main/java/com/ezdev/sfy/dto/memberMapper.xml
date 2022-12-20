@@ -60,21 +60,11 @@
 	<select id="getMemberEmail" parameterType="String" resultType="memberDTO">
 		select*from member where member_email = #{member_email}
 	</select>
-		<delete id="deleteMember" parameterType="int">
+	
+	<delete id="deleteMember" parameterType="int">
 		delete from member where member_no = #{member_no}
 	</delete>
 
-<!--  	
-	<select id="findMember" parameterType="java.util.Map" resultType="memberDTO">
-		select * from jsp_member where ${search} = #{searchString}
-	</select>
-	
-
-	
-	<select id="searchMember" parameterType="java.util.Map" resultType="String">
-		${sql}
-	</select>
-		-->
 </mapper> 	
 
 
