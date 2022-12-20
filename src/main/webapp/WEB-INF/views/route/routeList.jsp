@@ -68,14 +68,11 @@
 				<p align="right"><input  class="route_hashtag"></p>
 			<!-- 지도에서 경로보기 -->
 				<h5	align="left">추천 여행경로</h5>
-					<div class="card" style="width:100%" >
-						<img class="card-img-top" src="resources/root/root2.png" alt="Card image" style="width:100%">
-							<div class="card-text">
-								<div class="d-grid gap-2">
-									<a href="routeTraffic.do" class="btn btn-secondary btn-sm">내 위치에서 경로찾기</a>
-								</div>
+					<div id="map" style="width:100%;height:450px;"></div>
+								<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7dfa24ca49ecafb1d1c5352143d4a441&libraries=services,clusterer,drawing"></script>				        
+									<!-- api는 head, body 상관없지만 코드 실행보다는 먼저 선언 -->
+										<%@include file = "route_kakaoMap.jsp"%>
 							</div>
-					</div>	
 			</div>			
 			<!-- 우측페이지 -->
     		<div class="col">
@@ -185,7 +182,29 @@
 			  $("#thumbnail").attr("src","/upload/"+data);
 		    }
 		  })
+		  
+		  $.ajax({
+				url: 'getRouteKakao.do',
+			 	type: 'POST',
+			 	data: {no: no},
+			 	success: function(data){
+			 		route = data.routeView;
+			 	$.each(data, function(index, value){
+			 		setList(route);
+			 	})
+			 	console.log("성공");
+			 	},
+			 	error: function(){
+			 		alert("error");
+			 	}
+			  });
 }
+    
+    $(document).ready(function(){
+    	$('#routeView').on('hide.bs.modal', function(){
+    			location.reload();
+    	});
+    });
 </script>
 <script>
    function searchFilter(event){
