@@ -43,7 +43,7 @@
 				<label for="member_id">
 						아이디
 					</label>
-					<input type="text" class="form-control" name="member_id" value="${mdto.member_id }" />
+					<input type="text" class="form-control" name="member_id" value="${mdto.member_id }" readonly />
 				<label for="member_hp">
 						이름
 					</label>
