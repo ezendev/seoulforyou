@@ -88,8 +88,7 @@ public class QnaController {
 		HttpSession session = req.getSession();
 		String member_id = (String)session.getAttribute("nowUserId");
 		dto.setQna_writer(member_id);
-		
-		session.setAttribute("mdto", dto);
+
 		if (result.hasErrors()) {
 			dto.setQna_no(0);
 			dto.setQna_re_step(0);
