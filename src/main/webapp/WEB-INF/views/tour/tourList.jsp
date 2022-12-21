@@ -241,7 +241,8 @@ function valueSetting(no, name, postal, addr, hp){
 	
 	//즐겨찾기 여부 확인
 	checkFavorite();
-	
+
+	/*
 	// 이 여행지가 포함된 여행루트 - 초기 지도 만들기
 	for(var i=0; i<3; i++){
 		var mapContainer = document.getElementById('map' + i) // 지도를 표시할 div
@@ -252,6 +253,7 @@ function valueSetting(no, name, postal, addr, hp){
 		// 지도를 생성합니다    
 		var map = new kakao.maps.Map(mapContainer, mapOption); 
 	}
+	*/
 	
 	// 지도에 좌표 찍기
 	loadRoute(no);
@@ -412,16 +414,16 @@ function loadRoute(no){
 	 		for(var i=0; i<routeArr.length; i++){
 	 			var route = routeArr[i];
 
-	 			/*
+	 			
 	 			var mapContainer = document.getElementById('map' + i), // 지도를 표시할 div 
 	 			mapOption = {
 	 			center: new kakao.maps.LatLng(37.6562677764281, 127.063030448739), // 지도의 중심좌표(노원역)
 	 				 level: 6 // 지도의 확대 레벨
 	 			};  
 	 					
-	 			// 지도를 생성합니다    
+	 			// 지도를 생성합니다
 	 			var map = new kakao.maps.Map(mapContainer, mapOption); 
-	 			*/
+	 			
 	 			
 	 			setList(route, i);	
 	 		}
