@@ -32,18 +32,8 @@
 	            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <!-- fa-user로 기본 이미지 구현 -->
                 <!-- <i class="fas fa-user fa-fw"></i> 기본 아이콘 -->
-                   <li class="nav-item dropdown">
-                    <a class="profile_img nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-					<img id="profile_img" class="profile_img" src="/admin/${profile_img}" style="border-radius:50%; width:30px; height:30px" />                   
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">프로필</a></li>
-                        <li><a class="dropdown-item" href="#!">활동기록</a></li>
-                        <li><hr class="dropdown-divider"/></li>
-                        <li><a class="dropdown-item" href="#!">로그아웃</a></li>
-                    </ul>
-                 </li>
-            </ul>
+				<img id="profile_img" class="profile_img" src="/admin/${profile_img}" style="border-radius:50%; width:40px; height:40px" />                   
+	            </ul>
         </nav>
         
         
@@ -89,17 +79,18 @@
                                 </div>   
                                 
                                  <!-- 프로필 설정 항목 살려주기 -->
-					                                <a class="nav-link" href="#" >프로필 설정</a>
-					                               </nav>
-					                               </div>
-					                      		  </div>
-					                    		</div>
-					                    <div class="sb-sidenav-footer">
-					                        <div class="small">Logged in as:</div>
-					                        Administrator
-					                    </div>
-					                </nav>
-					            </div>
+		                                <a class="nav-link" href="profile.do" >프로필 수정</a>
+		                               </nav>
+		                               </div>
+		                      		  </div>
+		                    		</div>
+				                    <div class="sb-sidenav-footer">
+				                    <c:if test="${not empty adto}">
+				                    <button class="btn btn-danger" type="submit" onclick="javascript:adminLogout()">로그아웃</button>
+				                    </c:if>
+				                    </div>
+				                </nav>
+				            </div>
 					            <div id="layoutSidenav_content">
 					                <main>
 					                
