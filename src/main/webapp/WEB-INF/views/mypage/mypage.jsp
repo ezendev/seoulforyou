@@ -66,7 +66,7 @@ $('.modal').on('hidden.bs.modal', function (e) {
       </li>
       
       <li>
-        <a class="nav-link link-trigger" href="deleteMember.do">
+        <a class="nav-link link-trigger" data-bs-toggle="modal" data-bs-target="#quitModal">
           <svg class="bi pe-none me-2" width="16" height="16"></svg>
           	회원 탈퇴</a>
       </li>
@@ -79,7 +79,28 @@ $('.modal').on('hidden.bs.modal', function (e) {
     </ul>
     <hr>
   </aside>
-<script src="resources/js/jquery-3.6.1.min.js"></script>
-   <script src="resources/js/bootstrap.bundle.js"></script>
+  
+ <!-- 회원탈퇴 체크 모달 -->
+<form name="quit" action="deleteMember.do" method="post">
+<div class="modal fade" id="quitModal" tabindex="-1" aria-labelledby="quitModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="checkModalLabel">탈퇴</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      	<input type="hidden" id="checkDel" name="checkDel" />
+      	<input type="hidden" id="checkType" name="checkType" />
+       	<p class="mx-auto">정말 탈퇴하시겠습니까?</p>
+      </div>
+      <div class="modal-footer">
+	      <button type="submit" class="btn btn-primary">탈퇴</button>
+      	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
 
 
