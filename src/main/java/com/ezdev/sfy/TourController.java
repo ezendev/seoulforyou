@@ -118,6 +118,7 @@ public class TourController {
 		
 		
 		List<Object> unionList = new ArrayList<>();
+		List<Object> unionNameList = new ArrayList<>();
 		
 		// 최대 3개의 루트목록 꺼내기
 		for(int i=0; i<size; i++) {
@@ -137,10 +138,12 @@ public class TourController {
 				dlist.add(tdto);
 			}
 			unionList.add(dlist);
+			unionNameList.add(mrdto.getRoute_subject());
 		}
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("routeView", unionList);
+		map.put("routeName", unionNameList);
 		
 		return map;
 	}
