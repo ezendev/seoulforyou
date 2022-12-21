@@ -242,7 +242,7 @@ function valueSetting(no, name, postal, addr, hp){
 	//즐겨찾기 여부 확인
 	checkFavorite();
 
-	/*
+	
 	// 이 여행지가 포함된 여행루트 - 초기 지도 만들기
 	for(var i=0; i<3; i++){
 		var mapContainer = document.getElementById('map' + i) // 지도를 표시할 div
@@ -253,7 +253,7 @@ function valueSetting(no, name, postal, addr, hp){
 		// 지도를 생성합니다    
 		var map = new kakao.maps.Map(mapContainer, mapOption); 
 	}
-	*/
+	
 	
 	// 지도에 좌표 찍기
 	loadRoute(no);
@@ -270,7 +270,7 @@ function valueSetting(no, name, postal, addr, hp){
 </script>
 
 <script>
-	function setList(route, i){
+	function setList(route, i, map){
 		var addrArr=[];
 		var infoArr=[];
 		var list =[];
@@ -425,7 +425,7 @@ function loadRoute(no){
 	 			var map = new kakao.maps.Map(mapContainer, mapOption); 
 	 			
 	 			
-	 			setList(route, i);	
+	 			setList(route, i, map);	
 	 		}
 	 	},
 	 	error: function(){
