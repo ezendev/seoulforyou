@@ -18,7 +18,7 @@
      <c:otherwise>
         <li class="ms-3"><a data-bs-toggle="modal" data-bs-target="#AdminLoginModal" class="text-muted">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
-          <img src="resources/icon/admin.svg" width="16" height="16"/>
+          <img src="resources/icon/administrator.png" width="16" height="16"/>
           </svg>
         </li>
         </c:otherwise>

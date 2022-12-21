@@ -344,5 +344,11 @@ memberChart.update();
 
 reviewChart.update();
 </script>
+
+<script>
+function adminLogout(){
+	location.href="adminLogout.do";
+}
+</script>
 </body>
 </html>

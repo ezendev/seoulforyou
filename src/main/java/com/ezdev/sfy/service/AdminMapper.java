@@ -103,6 +103,18 @@ public class AdminMapper {
 	}
 
 
+	public int adminUpdate(AdminDTO dto) {
+		int res = sqlSession.update("adminUpdate", dto);
+		return res;
+	}
+
+
+	public int adminDelete(AdminDTO dto) {
+		int res = sqlSession.delete("adminDelete", dto);
+		return res;
+	}
+
+
 	
 
 }
