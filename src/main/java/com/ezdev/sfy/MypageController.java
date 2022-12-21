@@ -381,7 +381,7 @@ public class MypageController {
 	@RequestMapping("/mypage_qna_del.do")
 	public String mypage_qna_del(HttpServletRequest req) {
 		int qna_no = Integer.parseInt(req.getParameter("checkDel"));
-		int res = boardMapper.deleteQna(qna_no);
+		int res = boardMapper.deleteQna2(qna_no);
 
 		if(res>0) {
 			req.setAttribute("msg", "문의내역을 삭제했습니다.");
