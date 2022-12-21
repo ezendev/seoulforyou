@@ -72,7 +72,7 @@
 <!-- 관리자 로그인 모달 -->
 <form name="a" action="admin_login_ok.do" method="post">
   <div class="modal fade" id="AdminLoginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="width:350px">
       <div class="modal-content">
       
         <div class="modal-header">
@@ -111,7 +111,7 @@
   <!-- 로그인 모달-->
 <form name="f" action="login_ok.do" method="post" >
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalTitle" aria-hidden="true" >
-    <div class="modal-dialog modal-dialog-centered" role="document" >
+    <div class="modal-dialog modal-dialog-centered" role="document" style="width:350px">
       <div class="modal-content">
       
         <div class="modal-header">
@@ -259,9 +259,7 @@
 	/*메뉴 간격*/
 	ul li {margin-left:20px;}
 	
-	.modal-dialog{
-	width:350px;
-	}
+
 	
 </style>
 </html>
