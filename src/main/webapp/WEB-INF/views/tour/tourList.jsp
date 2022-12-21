@@ -107,9 +107,9 @@
 												</div>
 												<div class="card-text">
 													<div class="d-grid gap-2">
-														<!-- 
-														<a href="routeList.do?route_no=${tmp.route_no}" class="btn btn-secondary btn-sm">${tmp.route_subject}</a>
-														-->
+														<a id="name0" href="routeList.do" class="btn btn-secondary btn-sm">
+															<!-- 여행루트 제목 -->&nbsp;
+														</a>
 													</div>
 												</div>
 											</div>
@@ -122,9 +122,9 @@
 												</div>
 												<div class="card-text">
 													<div class="d-grid gap-2">
-														<!-- 
-														<a href="routeList.do?route_no=${tmp.route_no}" class="btn btn-secondary btn-sm">${tmp.route_subject}</a>
-														-->
+														<a id="name1" href="routeList.do" class="btn btn-secondary btn-sm">
+															<!-- 여행루트 제목 -->&nbsp;
+														</a>
 													</div>
 												</div>
 											</div>
@@ -137,9 +137,9 @@
 												</div>
 												<div class="card-text">
 													<div class="d-grid gap-2">
-														<!-- 
-														<a href="routeList.do?route_no=${tmp.route_no}" class="btn btn-secondary btn-sm">${tmp.route_subject}</a>
-														-->
+														<a id="name2" href="routeList.do" class="btn btn-secondary btn-sm">
+															<!-- 여행루트 제목 -->&nbsp;
+														</a>
 													</div>
 												</div>
 											</div>
@@ -242,6 +242,11 @@ function valueSetting(no, name, postal, addr, hp){
 	//즐겨찾기 여부 확인
 	checkFavorite();
 
+	//초기 지도 삭제
+	for(var i=0; i<3; i++){
+		var mapContainer = document.getElementById('map' + i);
+		mapContainer.innerText = '';
+	}
 	
 	// 이 여행지가 포함된 여행루트 - 초기 지도 만들기
 	for(var i=0; i<3; i++){
@@ -411,9 +416,13 @@ function loadRoute(no){
 	 	data: {no: no},
 	 	success: function(data){
 	 		var routeArr = data.routeView;
+	 		var routeNameArr = data.routeName;
+
 	 		for(var i=0; i<routeArr.length; i++){
 	 			var route = routeArr[i];
-
+	 			var route_name = routeNameArr[i];
+	 			
+	 			$('#name'+i).text(route_name);
 	 			
 	 			var mapContainer = document.getElementById('map' + i), // 지도를 표시할 div 
 	 			mapOption = {
