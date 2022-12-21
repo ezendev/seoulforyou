@@ -86,24 +86,38 @@ a {
             </div>  
 
   
+      <div class="d-flex justify-content-center mt-3">
       <form name="mpnext" method="get">
 	     <div class="box-footer">
 		    <div class="text-center">
+		    <nav aria-label="Page navigation example" >
+			<ul class="pagination">
 		       <c:if test="${not empty listMyroute}">
 		       	<c:if test ="${startPage >pageBlock }">
-		       		[<a href="mypage_route.do?pageNum=${startPage-1}">이전</a>]
+		       	<li class="page-item"><a class="page-link"
+		       		 href="mypage_route.do?pageNum=${startPage-1}" aria-label="Previous">
+		       		 <span aria-hidden="true">&laquo;</span>
+		       		 </a></li>
 		       	</c:if>
 		       	<c:forEach var ="i" begin="${startPage}" end="${endPage}">
-		       		[<a href ="mypage_route.do?pageNum=${i}">${i}</a>]
-
+		       		<li class="page-item"><a class="page-link" href ="mypage_route.do?pageNum=${i}">${i}</a>
+				</li>
 		       	</c:forEach>     	
 		        <c:if test="${pageCount> endPage}">
-		        	[<a href="mypage_route.do?pageNum=${endPage+1}">다음</a>]    
+		        <li class="page-item">
+				<a class="page-link"
+		        	href="mypage_route.do?pageNum=${endPage+1}" aria-label="Next"><span
+							aria-hidden="true">&raquo;</span>
+							</a>
+							</li>   
 		       	</c:if>
 		       </c:if>
+		       </ul>
+		       </nav>
 		    </div>
 		</div>
       </form>
+      </div>
 		</section>
 	</div>
 </div>
