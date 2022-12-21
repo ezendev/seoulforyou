@@ -57,6 +57,8 @@
 		</c:forEach>
 	</div>
 	
+
+</div>
 	<!-- 여행지 상세페이지 모달 -->
 	<div class="modal fade" id="tourView">
 	 	<div class="modal-dialog modal-lg">
@@ -92,14 +94,66 @@
 		      
 				<!-- Modal footer -->
 				<div class="routes modal-footer">
-					<!-- 이 여행지가 포함된 루트 / tour_ajax_list.jsp 올 자리 -->
-				</div>
+					<!-- 이 여행지가 포함된 루트-->
+					<div class="container text-center">
+						<h5>이 여행지가 포함된 여행루트</h5>
+						<div class="container text-center">
+							<div class="row mt-2">
+								<div class="col ">
+										<div class="container">	
+											<div class="card h-100">
+											<!-- 맵0 -->
+												<div id="map0" style="width:100%;height:450px;"></div>
+												</div>
+												<div class="card-text">
+													<div class="d-grid gap-2">
+														<!-- 
+														<a href="routeList.do?route_no=${tmp.route_no}" class="btn btn-secondary btn-sm">${tmp.route_subject}</a>
+														-->
+													</div>
+												</div>
+											</div>
+										</div>
+									<div class="col ">
+										<div class="container">	
+											<div class="card h-100">
+											<!-- 맵1 -->
+												<div id="map1" style="width:100%;height:450px;"></div>
+												</div>
+												<div class="card-text">
+													<div class="d-grid gap-2">
+														<!-- 
+														<a href="routeList.do?route_no=${tmp.route_no}" class="btn btn-secondary btn-sm">${tmp.route_subject}</a>
+														-->
+													</div>
+												</div>
+											</div>
+										</div>
+									<div class="col ">
+										<div class="container">	
+											<div class="card h-100">
+											<!-- 맵2 -->
+												<div id="map2" style="width:100%;height:450px;"></div>
+												</div>
+												<div class="card-text">
+													<div class="d-grid gap-2">
+														<!-- 
+														<a href="routeList.do?route_no=${tmp.route_no}" class="btn btn-secondary btn-sm">${tmp.route_subject}</a>
+														-->
+													</div>
+												</div>
+											</div>
+									</div>
+								</div>
+							</div>
 				<!-- Modal footer End -->
-				
 			</div>
 		</div>
 	</div>
-	<div class="d-flex justify-content-center mt-3">
+	</div>
+</div>
+
+<div class="d-flex justify-content-center mt-3">
 	<nav aria-label="Page navigation example" >
 			<ul class="pagination">
 		<c:if test="${not empty tourList}">	
@@ -126,7 +180,12 @@
 		</nav>
 	</div>
 
-</div>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7dfa24ca49ecafb1d1c5352143d4a441&libraries=services,clusterer,drawing"></script>
+
+<script>
+
+</script>
+
 <script>
 function checkFavorite(){
 	const no = $('.no').val();
@@ -168,23 +227,6 @@ function makeFavorite(){
 }  
 </script>
 
-<script>
-function loadRoute(no){
-	var no = no;
-	
-	$.ajax({
-		url: "loadRoute.do",
-        type: "POST",
-        data: {
-            no: no
-        },
-        success: function (data) {
-        	$(".routes").html(data);
-        },
-	})
-}
-
-</script>
 
 <script>
 
@@ -200,7 +242,18 @@ function valueSetting(no, name, postal, addr, hp){
 	//즐겨찾기 여부 확인
 	checkFavorite();
 	
-	//이 여행지가 포함된 여행루트 불러오기
+	// 이 여행지가 포함된 여행루트 - 초기 지도 만들기
+	for(var i=0; i<3; i++){
+		var mapContainer = document.getElementById('map' + i) // 지도를 표시할 div
+		mapOption = {
+		center: new kakao.maps.LatLng(37.6562677764281, 127.063030448739), // 지도의 중심좌표(노원역)
+			 level: 6 // 지도의 확대 레벨
+		};  
+		// 지도를 생성합니다    
+		var map = new kakao.maps.Map(mapContainer, mapOption); 
+	}
+	
+	// 지도에 좌표 찍기
 	loadRoute(no);
 }
 </script>
@@ -212,6 +265,173 @@ function valueSetting(no, name, postal, addr, hp){
        $('#tourType').val(tourType);
        $('#tourForm').submit();
    }
+</script>
+
+<script>
+	function setList(route, i){
+		var addrArr=[];
+		var infoArr=[];
+		var list =[];
+		list =route;
+		for(var i in route){
+			addrArr.push(route[i].tour_addr);
+			infoArr.push(route[i].tour_name);
+		}
+	
+	
+	//주소-좌표 변환 메소드
+	var geocoder = new kakao.maps.services.Geocoder();
+	
+	//주소-좌표 변환
+	addrArr.forEach(function(address, index) {
+	    geocoder.addressSearch(address, function(result, status) {
+	        if (status === kakao.maps.services.Status.OK) {
+	        	//좌표 받기
+	        	var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+	            //positions라는 객체에 info와 좌표 담기
+	            var positions=[{
+	            	content:'<div style="width:200px; height:50px; padding:5px;">'+infoArr[index]+'</div>',
+					latlng: coords,
+					
+	            }];
+	            
+	            //마커 찍기
+	            for(var i=0; i<positions.length; i++){
+			        var marker = new kakao.maps.Marker({
+			            map: map,
+			            position: positions[i].latlng,
+			            clickable: true
+			        });
+			        
+	  
+	            var infowindow = new kakao.maps.InfoWindow({
+		            content: positions[i].content
+		        });
+	         	
+	            //마커에 마우스를 놓으면 인포윈도우 보여짐
+	            kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+	           
+	         	//인포윈도우 사라짐
+	            kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+	            
+	           	//마커를 누르면 카카오맵 이동
+	      		var lat = positions[i].latlng.Ma;
+	         	var lng = positions[i].latlng.La;
+	            kakao.maps.event.addListener(marker, 'click', function(){
+	      		//새창으로 띄우는 것 새창없이 하려면 location.href=으로 변경
+	            window.open("https://map.kakao.com/link/map/"+infoArr[index]+","+lat+","+lng+"");
+	      		
+	            });
+			
+	           	//마커들이 지도에 한 번에 보여지도록 
+		        map.relayout();
+	           	marker.setMap(map);
+	           
+	            };
+	           	
+	        
+	     		   }
+	 		   });
+			});
+			
+	
+	
+	var bounds = new kakao.maps.LatLngBounds();
+	var linePath = [];
+	
+	var polyline = new kakao.maps.Polyline({
+	    path: linePath,
+	    strokeWeight: 3,
+	    strokeOpacity: 1,
+	    strokeColor: 'red',
+	    strokeStyle: 'solid'
+	});
+	
+	const addressSearch = address => {
+	    return new Promise((resolve, reject) => {
+	        geocoder.addressSearch(address, function(result, status) {
+	            if (status === kakao.maps.services.Status.OK) {
+	                resolve(result);
+	            } else {
+	                reject(status);
+	            }
+	        });
+	    });
+	};
+	
+	(async () => {
+	    try {
+	        for(var address of addrArr) {
+	            const result = await addressSearch(address);
+	            setPolyLine(result);
+	        }
+	    } catch (e) {
+	        console.log(e);
+	    }
+	})();
+	
+	
+	function setPolyLine(result) {
+	    const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+	    linePath.push(coords);
+	    polyline.setPath(linePath);
+	    bounds.extend(coords);
+		map.setBounds(bounds);
+	    
+	    if(!polyline.getMap()) {
+	        polyline.setMap(map);
+	    }
+	}
+	}
+	// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+	function makeOverListener(map, marker, infowindow) {
+	    return function() {
+	        infowindow.open(map, marker);
+	    };
+	}
+	
+	// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+	function makeOutListener(infowindow) {
+	    return function() {
+	        infowindow.close();
+	    };
+	}
+	
+</script>
+
+<script>
+function loadRoute(no){
+	var no = no;
+		
+	$.ajax({
+		url: 'getIncludeRouteKakao.do',
+	 	type: 'POST',
+	 	data: {no: no},
+	 	success: function(data){
+	 		var routeArr = data.routeView;
+	 		for(var i=0; i<routeArr.length; i++){
+	 			var route = routeArr[i];
+
+	 			/*
+	 			var mapContainer = document.getElementById('map' + i), // 지도를 표시할 div 
+	 			mapOption = {
+	 			center: new kakao.maps.LatLng(37.6562677764281, 127.063030448739), // 지도의 중심좌표(노원역)
+	 				 level: 6 // 지도의 확대 레벨
+	 			};  
+	 					
+	 			// 지도를 생성합니다    
+	 			var map = new kakao.maps.Map(mapContainer, mapOption); 
+	 			*/
+	 			
+	 			setList(route, i);	
+	 		}
+	 	},
+	 	error: function(){
+	 		alert("error");
+	 	}
+	  });
+}
+
 </script>
     
 <%@ include file="../bottom.jsp"%>
