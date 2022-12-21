@@ -100,17 +100,30 @@
 		</div>
 	</div>
 	<div class="d-flex justify-content-center mt-3">
+	<nav aria-label="Page navigation example" >
+			<ul class="pagination">
 		<c:if test="${not empty tourList}">	
 			<c:if test="${startPage > pageBlock}">
-				[<a href="tourList.do?pageNum=${startPage-1}&tourType=${tourType}">이전</a>]
+			<li class="page-item"><a class="page-link"
+				 href="tourList.do?pageNum=${startPage-1}&tourType=${tourType}" aria-label="Previous">
+					<span aria-hidden="true">&laquo;</span>
+				</a></li>
 			</c:if>
 			<c:forEach var="i" begin="${startPage}" end="${endPage}">
-				[<a href="tourList.do?pageNum=${i}&tourType=${tourType}">${i}</a>]
+			<li class="page-item">	<a class="page-link" href="tourList.do?pageNum=${i}&tourType=${tourType}">${i}</a>
+			</li>
 			</c:forEach>	
 			<c:if test="${pageCount > endPage}">
-				[<a href="tourList.do?pageNum=${endPage+1}&tourType=${tourType}">다음</a>]
+				<li class="page-item">
+				<a class="page-link"
+				 href="tourList.do?pageNum=${endPage+1}&tourType=${tourType}" aria-label="Next"><span
+							aria-hidden="true">&raquo;</span>
+							</a>
+							</li>
 			</c:if>
 		</c:if>
+		</ul>
+		</nav>
 	</div>
 
 </div>

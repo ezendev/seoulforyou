@@ -49,20 +49,31 @@
 	                 </c:forEach>
                                </tbody>
                                 </table>
-
-        <ul>
+		 <div class="d-flex justify-content-center mt-3">
+        <nav aria-label="Page navigation example" >
+        <ul class="pagination">
             <c:if test="${not empty listMypageMember}">
                 <c:if test="${startPage > pageBlock}">
-			[<a href="mypage_friend_listmember.do?pageNum=${startPage-1}">이전</a>]
+              <li class="page-item"><a class="page-link"  
+			 href="mypage_friend_listmember.do?pageNum=${startPage-1}" aria-label="Previous"> 
+			 <span aria-hidden="true">&laquo;</span>
+			 </a></li>
 		</c:if>
 		<c:forEach var="i" begin="${startPage}" end="${endPage}">
-			[<a href="mypage_friend_listmember.do?pageNum=${i}">${i}</a>]
+			<li class="page-item"><a class="page-link" href="mypage_friend_listmember.do?pageNum=${i}">${i}</a>
+		</li>
 		</c:forEach>	
-		<c:if test="${pageCount > endPage}">
-			[<a href="mypage_friend_listmember.do?pageNum=${endPage+1}">다음</a>]
+		<c:if test="${pageCount > endPage}">	
+			 <li class="page-item">
+				<a class="page-link"
+		        	href="mypage_friend_listmember.do?pageNum=${endPage+1}" aria-label="Next"><span
+							aria-hidden="true">&raquo;</span>
+							</a>
+							</li>
 		</c:if>
 	    </c:if>
         </ul>
+        </nav>
         <br/><br/>
         <hr/>
 </div>
