@@ -66,6 +66,7 @@ public class AdminController {
 		String admin_passwd = dto.getAdmin_passwd();
 		String admin_email = dto.getAdmin_email();
 		
+		
 		session.setAttribute("admin_no", admin_no);
 		session.setAttribute("profile_img", profile_img); 
 		session.setAttribute("admin_id", admin_id);

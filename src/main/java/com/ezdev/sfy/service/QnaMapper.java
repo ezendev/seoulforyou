@@ -57,7 +57,11 @@ public class QnaMapper {
 			return -1;
 		}
 	}
-	public int deleteQna(int qna_no) {
+	public int deleteQna(QnaDTO dto) {
+		return sqlSession.delete("deleteQna", dto);
+	}
+	
+	public int deleteQna2(int qna_no) {
 		return sqlSession.delete("deleteQna", qna_no);
 	}
 	public List<QnaDTO> listQna2(){

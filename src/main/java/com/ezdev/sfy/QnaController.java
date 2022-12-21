@@ -138,8 +138,11 @@ public class QnaController {
 	}
 
 	@RequestMapping(value="/qnaDelete.do")
-	public String qna_delete(HttpServletRequest req, @RequestParam int qna_no) {
-		int res = boardMapper.deleteQna(qna_no);
+	public String qna_delete(HttpServletRequest req, @ModelAttribute QnaDTO dto) {
+		int res = boardMapper.deleteQna(dto);
+		
+		System.out.println(res);
+		
 		if (res>0) {
 			req.setAttribute("msg", "글 삭제 성공!! 목록페이지로 이동합니다.");
 		}else {
