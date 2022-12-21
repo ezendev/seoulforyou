@@ -79,11 +79,11 @@ public class AdminController {
 		int[] memberChartArr = adminMapper.countMemberByWeek();
 		session.setAttribute("memberChartValue", memberChartArr);
 		
-		/*
+		
 		// 2. 요일별 리뷰갯수가 들어갈 배열
 		int[] reviewChartArr = adminMapper.countReviewByWeek();
-		session.setAttribute("reviewChartValue", routeChartArr);
-		*/
+		session.setAttribute("reviewChartValue", reviewChartArr);
+		
 
 
 		// 3. 루트테마별 갯수가 들어갈 배열
@@ -176,7 +176,6 @@ public class AdminController {
 		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
 		MultipartFile files = mr.getFile("admin_profileImg");
 		String filename = files.getOriginalFilename();
-		System.out.println(filename); 
 		
 		if(filename == null || filename.trim().equals("")) {
 			req.setAttribute("msg", "이미지를 첨부해주세요");
