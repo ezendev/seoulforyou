@@ -72,35 +72,36 @@
 <!-- 관리자 로그인 모달 -->
 <form name="a" action="admin_login_ok.do" method="post">
   <div class="modal fade" id="AdminLoginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="width:350px">
       <div class="modal-content">
+      
         <div class="modal-header">
-          <h5 class="modal-title" id="loginModalTitle">Seoul For You</h5>
+          <img src="resources/img/seoulforyou.png"  style="width:50%; margin-left:-10px" >
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-       <div class="modal-body">
-		  <h1 class="h3 mb-3 font-weight-normal">관리자 로그인</h1>
-		  <c:if test="${empty cookie.saveAid.value}"> 
-		  	<input type="text" name="admin_id" id="admin_id" class="form-control" placeholder="아이디">
-		  </c:if>
-		  
-		  <c:if test="${not empty cookie.saveAid.value}">
-		  	<input type="text" name="admin_id" id="admin_id" class="form-control" value="${cookie.saveAid.value}">
-		  </c:if>
-		  <input type="password" name="admin_passwd" id="admin_passwd" class="form-control" placeholder="비밀번호">
-		  
-			<div class="checkbox mb-3 p-2">
-   			<label>
-        	<input type="checkbox" name="saveAid"> 아이디 기억하기
-   			</label>
-	    	</div>
+        
+		<div class="modal-body" align="center">
+			<h2 class="h3 mb-3 font-weight-normal">관리자 로그인</h2>
+			<div class="mb-3">		  
+				<c:if test="${empty cookie.saveAid.value}"> 
+					<input type="text" name="admin_id" id="admin_id" class="form-control" placeholder="아이디" style="height:49px">
+				</c:if>
+				
+				<c:if test="${not empty cookie.saveAid.value}">
+					<input type="text" name="admin_id" id="admin_id" class="form-control" value="${cookie.saveAid.value}" style="height:49px">
+				</c:if>
+			</div>
+			<div class="mb-3"> 
+				<input type="password" name="admin_passwd" id="admin_passwd" class="form-control" placeholder="비밀번호" style="height:49px">
+				<div class="checkbox mb-3 p-2">
+		  			<label><input type="checkbox" name="saveAid"> 아이디 기억하기</label>
+		    	</div>
+			</div>
+	        <button id="admin-login-btn" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="button" onclick="javascript:admin_login_ok()" style="height:49px">로그인</button>
 		</div>
-	    	<div class="d-grid gap-2 d-md-block mx-auto pb-2">
-	        <button id="admin-login-btn" class="btn btn-primary btn-block" type="button" onclick="javascript:admin_login_ok()">로그인</button>
-	        </div>
-        	<div class="modal-footer">
-    		<p class="mx-auto text-muted">© 2022 EzDev</p>
-        	</div>
+       	<div class="modal-footer">
+   			<p class="mx-auto text-muted">© 2022 EzDev</p>
+       	</div>
       </div>
     </div>
   </div>
@@ -108,54 +109,56 @@
 
 
   <!-- 로그인 모달-->
-<form name="f" action="login_ok.do" method="post">
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+<form name="f" action="login_ok.do" method="post" >
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalTitle" aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered" role="document" style="width:350px">
       <div class="modal-content">
+      
         <div class="modal-header">
-          <h5 class="modal-title" id="loginModalTitle">Seoul For You</h5>
+          <img src="resources/img/seoulforyou.png"  style="width:50%; margin-left:-10px" >
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
-			<h1 class="h3 mb-3 font-weight-normal">로그인</h1>
-			<c:if test="${empty cookie.saveId.value}"> 
-			   <input type="email" name="member_id" id="member_id" class="form-control" placeholder="아이디">
-			</c:if>
-			<c:if test="${not empty cookie.saveId.value}">
-			 <input type="email" name="member_id" id="member_id" class="form-control" placeholder="아이디">
-			 </c:if>
-				<input type="password" name="member_passwd" id="member_passwd" class="form-control" placeholder="비밀번호" >
-			<div class="checkbox mb-3 p-2">
-   				<label>
-        			<input type="checkbox" value="remember-me"> 아이디 기억하기
-   				</label>
-	    	</div>
+        
+		<div class="modal-body" align="center">
+			<h2 class="h3 mb-3 font-weight-normal" >로그인</h2>
+			<div class="mb-3">
+				<c:if test="${empty cookie.saveId.value}"> 
+					<input type="text" name="member_id" id="member_id" class="form-control" placeholder="아이디" style="height:49px">					
+				</c:if>
+				<c:if test="${not empty cookie.saveId.value}">
+					<input type="text" name="member_id" id="member_id" class="form-control" placeholder="아이디" style="height:49px">
+				</c:if>
+			</div>
+			
+			<div class="mb-3">
+				<input type="password" name="member_passwd" id="member_passwd" class="form-control" placeholder="비밀번호" style="height:49px">
+				<div class="checkbox mb-3 p-2">
+		  				<label>
+		       			<input type="checkbox" value="remember-me" > 아이디 기억하기
+		  				</label>
+		    	</div>
+			</div>
+				<button id="login-btn" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="button" onclick="javascript:login_ok()">로그인</button>
+		        <c:if test="${userId eq null}">
+			      	<a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=4433f36e8b4d7a77d2fdd1a85312d7fe&redirect_uri=http://localhost:8081/sfy/kakaoLogin.do&response_type=code">
+			 		<img src="resources/img/kakao3.png" style="width:317px;height:49px;margin-left:-8px"/>
+					</a>
+				</c:if>
+				<c:if test="${userId ne null}">
+		       		<button type="button" class="btn btn-warning" onclick="location.href='kakaoLogout.do'">카카오 로그아웃</button>
+		       		<br>
+		       		<small class="text-muted">*카카오로그인은 로그아웃 후 이용해주세요</small>
+		   		</c:if>
 		</div>
-	        <div class="d-grid gap-2 d-md-block mx-auto pb-2">
-	         <button id="login-btn" class="btn btn-primary btn-block" type="button" onclick="javascript:login_ok()">로그인</button>
-    	     <button id="join-btn" class="btn btn-primary btn-block" type="button" onclick="javascript:join()">회원가입</button>
-	        </div>
-	         <div class="col mx-auto pb-2">
-	        <c:if test="${userId eq null}">
-		      	<a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=4433f36e8b4d7a77d2fdd1a85312d7fe&redirect_uri=http://localhost:8081/sfy/kakaoLogin.do&response_type=code">
-		 		<img src="resources/img/kakao_login.png" style="width:200px;height:40px"/>
-				</a>
-			</c:if>
-			<c:if test="${userId ne null}">
-        		<button type="button" class="btn btn-warning" onclick="location.href='kakaoLogout.do'">카카오 로그아웃</button>
-        		<br>
-        		<small class="text-muted">*카카오로그인은 로그아웃 후 이용해주세요</small>
-    		</c:if>
-	        </div>
         <div class="modal-footer">
-    	<p class="mx-auto text-muted">© 2022 EzDev</p>
+        <button id="join-btn" class="btn btn-outline-primary btn-sm btn-block" type="button" onclick="javascript:join()">회원가입</button>
         </div>
       </div> 
     </div>
   </div>
 </form>
 
-<!-- 스트립트 모음 -->
+<!-- 스크립트 모음 -->
 <script>
 	function adminLogout() {location.href="adminLogout.do";}
 	function admin() {location.href="admin.do";}
@@ -253,7 +256,10 @@
 		margin-left : -10px;
 	
 	}
-	/*메누 간격*/
+	/*메뉴 간격*/
 	ul li {margin-left:20px;}
+	
+
+	
 </style>
 </html>
