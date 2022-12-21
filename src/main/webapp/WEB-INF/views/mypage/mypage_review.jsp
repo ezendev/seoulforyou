@@ -43,7 +43,7 @@ $('.modal').on('hidden.bs.modal', function (e) {
                                 <td title="${redto.review_content}">
                                 <c:choose>
                                 <c:when test="${fn:length(redto.review_content)>15}">
-                                </span>
+
                                 <c:out value="${fn:substring(redto.review_content,0,14)}"/>....
                                 </c:when>
                                 <c:otherwise>
@@ -64,7 +64,7 @@ $('.modal').on('hidden.bs.modal', function (e) {
                             </c:forEach>
                             </tbody>
                         </table>
-               <form align="center">     
+               <form style="text-align:center">     
             <c:if test="${not empty listReview}">
                 <c:if test="${startPage > pageBlock}">
 			[<a href="mypage_review.do?pageNum=${startPage-1}">이전</a>]
@@ -78,8 +78,6 @@ $('.modal').on('hidden.bs.modal', function (e) {
 	    </c:if>
         </form>  
              </div>
-             </div>
-            </div>
  <!-- Modal -->
 <div class="modal fade" id="review_update" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -90,31 +88,31 @@ $('.modal').on('hidden.bs.modal', function (e) {
       </div>
       <div class="modal-body">
          <form name="f" action="update_review.do" method="post">
-				<input type="hidden" id="review_no" name="review_no" />
-				<div class="form-group">
+			<input type="hidden" id="review_no" name="review_no" />
+			<div class="form-group">
 				<label for="review_star">
 						평점 : 
 				</label>
-					<select name="review_star" class="form-control">
-      			 <option value="★☆☆☆☆">★☆☆☆☆</option>
-      			 <option value="★★☆☆☆">★★☆☆☆</option>
-      			 <option value="★★★☆☆">★★★☆☆</option>
-      			 <option value="★★★★☆">★★★★☆</option>
-      			 <option value="★★★★★">★★★★★</option>
+				<select name="review_star" class="form-control">
+	      			 <option value="★☆☆☆☆">★☆☆☆☆</option>
+	      			 <option value="★★☆☆☆">★★☆☆☆</option>
+	      			 <option value="★★★☆☆">★★★☆☆</option>
+	      			 <option value="★★★★☆">★★★★☆</option>
+	      			 <option value="★★★★★">★★★★★</option>
                  </select>
 				<label for="review_content">
 						내용
 			    </label>
-			<textarea class="form-control" id="review_content" name="review_content" rows="7"></textarea><br>
-		</div>
-      </div>
-      <div class="modal-footer">
-        <input type="submit" class="btn btn-primary" value="입력">
-      <input type="reset" class="btn btn-secondary" data-bs-dismiss="modal" value="취소">
-      </div>
-      </form>
-    </div>
-  </div>
+				<textarea class="form-control" id="review_content" name="review_content" rows="7"></textarea><br>
+			</div>
+	      	<div class="modal-footer">
+		        <input type="submit" class="btn btn-primary" value="입력">
+		      	<input type="reset" class="btn btn-secondary" data-bs-dismiss="modal" value="취소">
+			</div>
+      		</form>
+    	</div>
+  	</div>
+	</div>
 </div>
         <!-- /.content -->
    <script>
@@ -125,9 +123,4 @@ $('.modal').on('hidden.bs.modal', function (e) {
    		$('#review_content').val(content);
    	}
    </script>
-  <script src="resources/js/jquery-3.6.1.min.js"></script>
-   <script src="resources/js/bootstrap.bundle.js"></script>
-   <script src="js/star-rating.js" type="text/javascript"></script>
-  </body>
-  </html>
   <%@ include file="../bottom.jsp"%>

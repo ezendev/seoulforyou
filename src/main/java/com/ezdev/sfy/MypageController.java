@@ -52,7 +52,6 @@ public class MypageController {
 	@Autowired
 	TourMapper tourMapper;	
 	
-	//bottom.jsp 페이스북 아이콘 -> 마이페이지	 
 	@RequestMapping("/mypage.do")
 	public String mypage(HttpServletRequest req, HttpSession session) {
 		int no =(int) session.getAttribute("nowUserNo");
@@ -196,7 +195,7 @@ public class MypageController {
 		
 		//유저 접속
 		int no =(int) session.getAttribute("nowUserNo");
-		MyPageDTO mdto = mypageMapper.getMyPage(no);
+		MyPageDTO mpdto = mypageMapper.getMyPage(no);
 		
 		List<TourDTO> favTourList= new ArrayList<>();
 		List<MyRouteDTO> favRouteList= new ArrayList<>();
@@ -204,7 +203,7 @@ public class MypageController {
 		if(favorite_type.equals("여행지")) {
 			
 			String[]arr = null;
-			String mytour= mdto.getMypage_favorite_tour();
+			String mytour= mpdto.getMypage_favorite_tour();
 			
 			if(mytour != null) {
 				arr = mytour.split(",");
@@ -245,7 +244,7 @@ public class MypageController {
 		}else if(favorite_type.equals("여행루트")) {
 			
 			String[]arr = null;
-			String myroute= mdto.getMypage_favorite_route();
+			String myroute= mpdto.getMypage_favorite_route();
 			if(myroute != null) {
 				 arr = myroute.split(",");
 				 for(String route : arr) {
@@ -295,14 +294,14 @@ public class MypageController {
 		Map<String,Object> map = new HashMap<>(); 
 		
 		int no = (int) session.getAttribute("nowUserNo");
-		MyPageDTO mdto = mypageMapper.getMyPage(no);
+		MyPageDTO mpdto = mypageMapper.getMyPage(no);
 		int num = Integer.parseInt(req.getParameter("checkDel"));
 		String type = req.getParameter("checkType");
 		
 		//여행지 즐겨찾기 삭제
 		if(type.equals("여행지")) {
 			tour_no = num;
-			String mytour= mdto.getMypage_favorite_tour();
+			String mytour= mpdto.getMypage_favorite_tour();
 			String[]arr = mytour.split(",");
 			
 			//현재 tour_no가 즐겨찾기 안에 있는지 검색
@@ -318,7 +317,7 @@ public class MypageController {
 		//여행루트  즐겨찾기 삭제
 		}else {
 			route_no = num;
-			String myroute= mdto.getMypage_favorite_route();
+			String myroute= mpdto.getMypage_favorite_route();
 			String[]arr = myroute.split(",");
 			
 	         //현재 route_no가 즐겨찾기 안에 있는지 검색
@@ -404,8 +403,8 @@ public class MypageController {
 		
 		// 친구 리스트 불러오기
 			// 로그인한 유저의 mypageDTO에서 친구 불러오기
-		MyPageDTO mdto = mypageMapper.getMyPage(no);
-		String friends = mdto.getMypage_friend();
+		MyPageDTO mpdto = mypageMapper.getMyPage(no);
+		String friends = mpdto.getMypage_friend();
 
 		if(friends != null) {
 			//콤마를 기준으로 배열에 넣고 mybatis foreach 처리를 위해 리스트에 넣기
@@ -434,8 +433,8 @@ public class MypageController {
 		
 		// 이미 친구라면 추가 불가
 			// 로그인한 유저의 mypageDTO에서 친구 불러오기
-		MyPageDTO mdto = mypageMapper.getMyPage(no);
-		String friends = mdto.getMypage_friend();
+		MyPageDTO mpdto = mypageMapper.getMyPage(no);
+		String friends = mpdto.getMypage_friend();
 		
 		if(friends != null) {
 			//콤마를 기준으로 배열에 넣기
@@ -472,8 +471,8 @@ public class MypageController {
 		
 		// 삭제할 친구 특정하기
 			// 로그인한 유저의 mypageDTO에서 친구 불러오기
-		MyPageDTO mdto = mypageMapper.getMyPage(no);
-		String friends = mdto.getMypage_friend();
+		MyPageDTO mpdto = mypageMapper.getMyPage(no);
+		String friends = mpdto.getMypage_friend();
 		
 			//콤마를 기준으로 배열에 넣기
 		String[] arr = friends.split(",");
@@ -529,11 +528,6 @@ public class MypageController {
 			
 		return "mypage/mypage_friend_listmember";
 	}
-	@RequestMapping("/mypage_findmember.do")//미완성
-	public String mypage_findmember(HttpServletRequest req, @RequestParam Map<String, String> find) {
-		
-			return "mypage/mypage_friend_listmember";
-	}
 	
 	//마이페이지에서 회원탈퇴하기
 		@RequestMapping(value="/deleteMember.do")
@@ -558,7 +552,10 @@ public class MypageController {
 	@ResponseBody
 	public String mypageFavorite(HttpServletRequest req,HttpSession session) {
 		Map<String,Object> map=new HashMap<>(); 
-		int tour_no = Integer.parseInt(req.getParameter("no"));
+		int tour_no = 0;
+		if(req.getParameter("no") != null) {
+			tour_no = Integer.parseInt(req.getParameter("no"));
+		}
 		
 		// 로그인 안 되어있으면
 		if(session.getAttribute("nowUserNo") == null) {
