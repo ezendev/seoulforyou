@@ -62,7 +62,7 @@ function checkMember(){
 							</c:forEach>
 						</tbody>
 					</table>
-					<a role="button" class="btn btn-primary" href="javascript:checkMember()">
+					<a role="button" class="btn btn-primary" href="javascript:checkMember()" style="float:right">
 					 친구 추가
 					</a>
 				</div>

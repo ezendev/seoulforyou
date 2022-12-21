@@ -5,8 +5,8 @@
 
 <!-- mypage_main.jsp -->
 		<div class="col-md-9">
-        	<h3>프로필</h3>
-        	<table class="table table-sm">
+        	<h3 align="center">프로필</h3>
+        	<table class="table table-sm mt-4">
 	        <tr>
 	        	<th>아이디</th>
 	       		<td>${mdto.member_id }</td>
@@ -24,7 +24,7 @@
 		        <td>${mdto.member_hp}</td>
 		    </tr>
 	        </table>
-     		  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#profile_update">수정</button>
+     		  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#profile_update" style="float:right">수정</button>
 		</div>
 
 <!-- Modal -->
