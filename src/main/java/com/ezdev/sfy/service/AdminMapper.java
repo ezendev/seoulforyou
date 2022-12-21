@@ -48,7 +48,6 @@ public class AdminMapper {
 			// sql 쿼리 날려서 결과값인 맵 꺼내오기
 			result = sqlSession.selectList("countMemberByWeek", map);
 			resultMap = (Map<String, BigDecimal>) result.get(0); //{7=0, 5=1, ... -5=1, -6=0}
-			//System.out.println("resultMap: " + resultMap);
 			
 			// 값만 배열에 저장하기
 			unionList[i+7-1] = resultMap.get(String.valueOf(i)).intValue(); // [0, 1, ... 1, 0]			
@@ -59,7 +58,7 @@ public class AdminMapper {
 	}
 	
 	
-	/*
+	
 	// 통계자료 -> 리뷰 집계
 	public int[] countReviewByWeek() {
 		String sql;
@@ -78,7 +77,6 @@ public class AdminMapper {
 			// sql 쿼리 날려서 결과값인 맵 꺼내오기
 			result = sqlSession.selectList("countReviewByWeek", map);
 			resultMap = (Map<String, BigDecimal>) result.get(0); //{7=0, 5=1, ... 1=0}
-			System.out.println("resultMap: " + resultMap);
 			
 			// 값만 배열에 저장하기
 			unionList[i-1] = resultMap.get(String.valueOf(i)).intValue(); // [0, 1, ... 1, 0]			
@@ -86,7 +84,7 @@ public class AdminMapper {
 
 		return unionList;
 	}
-	*/
+	
 	
 	
 	// 통계자료 -> 루트테마별 집계
