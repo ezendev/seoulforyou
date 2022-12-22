@@ -16,7 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,14 +30,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ezdev.sfy.dto.AdminDTO;
 import com.ezdev.sfy.dto.AdminTempDTO;
+import com.ezdev.sfy.dto.EmailDTO;
 import com.ezdev.sfy.dto.MemberDTO;
 import com.ezdev.sfy.dto.QnaDTO;
 import com.ezdev.sfy.service.AdminMapper;
 import com.ezdev.sfy.service.AdminTempMapper;
 import com.ezdev.sfy.service.MemberMapper;
-import com.ezdev.sfy.service.MyRouteMapper;
 import com.ezdev.sfy.service.QnaMapper;
-
 // @Controller -> Url, @Service ->처리, @Repository -> dao, @Component -> 구성, @RestController -> url과 ajax
 //12.05재수정입니다..
 @Controller
@@ -52,6 +53,8 @@ public class AdminController {
 	
 	@Autowired
 	AdminTempMapper adminTempMapper;
+	
+
 	
 	//top.jsp 로고 -> 관리자페이지
 	@RequestMapping("/admin.do")
@@ -349,7 +352,10 @@ public class AdminController {
 		return "message";
 		
 	}
-}
+	
+		
+	}
+
 
 	
 

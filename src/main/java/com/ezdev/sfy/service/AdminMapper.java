@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ezdev.sfy.dto.AdminDTO;
+import com.ezdev.sfy.dto.EmailDTO;
 
 
 @Service

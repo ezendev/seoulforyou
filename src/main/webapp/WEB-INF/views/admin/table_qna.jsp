@@ -82,9 +82,6 @@
 		<script src="resources/js/jquery-3.6.1.min.js"></script>
 		<script src="resources/js/bootstrap.min.js"></script>
    			 <!-- 문의 답변 모달 창 -->			
-   			 		<form name="f" method="post">
-   			 		<input type="hidden" id="adminTemp_qno" name="temp_qno" value="">
-   			 		<input type="hidden" id="adminTemp_subject" name="qna_subject">
    			 		
                		<div class="modal fade modalBackground modalPopupWrap"  id="admin_reply">
            		    <div class="modal-dialog">
@@ -92,6 +89,9 @@
 			  		<div class="modal-header justify-content-center">
 			  		<h1 class="h3 fw-normal">문의사항 답글</h1> 
 			   		</div>
+   			 		<form name="f" method="post">
+   			 		<input type="hidden" id="adminTemp_qno" name="temp_qno" value="">
+   			 		<input type="hidden" id="adminTemp_subject" name="qna_subject">
 			   		
 			   		<div class="modal-body d-flex justify-content-center" style="width:500px; height:400px">
 			  		<textarea id="adminTemp_content" name="qna_reply_content" rows="10px" cols="200px"  placeholder="답글을 입력하세요" class="d-flex justify-content-center"></textarea>
@@ -100,13 +100,15 @@
 					<div class="modal-footer">
 					<input type="submit" class="btn btn-secondary" value="임시저장" formaction="admin_temp.do">
 					<input type="submit" class="btn btn-primary" value="전송" formaction="admin_temp_ok.do">
-					<input type="submit" class="btn btn-danger" value="삭제" formaction="admin_temp_delete.do" >				
+					<input type="submit" class="btn btn-danger" value="삭제" formaction="admin_temp_delete.do" >
 						</div>
+					</form>
+					<form name="a" method="get">
+					<input type="submit" class="btn btn-primary" value="메일전송"	formaction="write.do">			
+	   				</form>
 					  </div>
 					 </div>
 					</div>
-					</form>
-	   
    					  <!-- 관리자등록 모달 내용 --> 	
                  		<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                       	<div class="modal-dialog">

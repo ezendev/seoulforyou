@@ -34,4 +34,5 @@ delete from admin where admin_no = #{admin_no}
 </delete>
 
 
+
 </mapper>
