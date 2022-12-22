@@ -156,7 +156,7 @@ a {
 
 <!-- view modal -->
 <div class="modal fade" id="routeView" data-bs-backdrop="static">
- 	<div class="modal-dialog modal-lg modal-dialog-scrollable">
+ 	<div class="modal-dialog modal-md modal-dialog-scrollable">
 	    <div class="modal-content">
 	      	<div class="modal-header"> 
 	      		<div align="left">
@@ -169,11 +169,11 @@ a {
 				<div class="container text-center">
 			  	<div class="row">
 			  			<!-- 좌측페이지(제목, 콘텐츠, 이미지, 해쉬태그는 ajax에서 설정되어서 여기에는 값이 없음)-->
-			    		<div class="col-lg-6">
+			    		<div class="col-lg-12">
 			    			<h2 id="subject" align="left"></h2>
 							<!-- 사진 -->
 							  <div class="container">
-							      <img id="image" src="" class="d-block w-100">
+							      <img id="image" src="" class="d-block w-100" style="width:100%; height:20vw; object-fit:fill;" >
 							  </div>
 							<br>
 						<!-- 글내용 -->
@@ -184,41 +184,8 @@ a {
 						  	<div id="map" style="width:100%;height:500px;"></div>
 								<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7dfa24ca49ecafb1d1c5352143d4a441&libraries=services,clusterer,drawing"></script>				        
 									<!-- api는 head, body 상관없지만 코드 실행보다는 먼저 선언 -->
-										<%@include file = "viewKakao.jsp"%>
-							
-			
-							</div>
-				
-				<!-- 우측페이지 -->
-		    		<div class="col-lg-6">
-		    			<h2 align="left">리뷰</h2>
-		      			<div class="mb-3">
-							<textarea class="form-control" id="exampleFormControlTextarea1" rows="7"></textarea><br>
-							<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-							</div><br><br>
-					<!--내가 등록한 리뷰? --> 
-						<h5	align="left">내가 등록한 리뷰?</h5>
-						<textarea class="form-control" id="exampleFormControlTextarea1" rows="5" readonly>내가 등록한 리뷰?	</textarea><br><br>
-					<!-- 리뷰목록 -->
-						<h5	align="left">리뷰목록</h5>
-						<table class="table table-hover">
-						  <thead>
-						    <tr>
-						      <th scope="col">NO.</th>
-						      <th scope="col">Writer</th>
-						      <th scope="col">Review</th>
-						    </tr>
-						  </thead>
-						  <tbody>
-						    <tr>
-						      <th scope="row">1</th>
-						      <td>Mark</td>
-						      <td><textarea class="form-control" id="exampleFormControlTextarea1" rows="2"  readonly>리뷰</textarea></td>
-						    </tr>
-						  </tbody>
-						</table>
-						</div>
-					</div>
+										<%@include file = "viewKakao.jsp"%>										
+							</div>						
 					</div>
 				</div>
 			</div><!-- 모달 바디 종료 -->
