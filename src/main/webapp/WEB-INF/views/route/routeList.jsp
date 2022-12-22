@@ -29,12 +29,12 @@
 	  	  <div class="col 숙소">
 	  		<a onclick="valueSetting('${rdto.route_readcount}','${rdto.route_no}', '${rdto.route_subject}','${rdto.route_img}','${rdto.route_content}','${rdto.route_hashtag}')" 	
 	  	 	data-bs-toggle="modal" data-bs-target="#routeView"> 	  	 
-			    <div class="card h-100">
+			    <div class="card h-100 card border-info mb-3">
 			      <img src="resources/img/seoul2.jpg" class="card-img-top" alt="..."
 			      style="width:100%; height:20vw ; object-fit:cover;">
-			      <div class="card-body">
-			        <h5 class="card-title">${rdto.route_subject}</h5>
-			        <p class="card-text">#${rdto.route_hashtag}</p>
+			      <div class="card-body ">
+			        <h5 class="card-title text-dark ">${rdto.route_subject}</h5>
+			        <p class="card-text text-primary">#${rdto.route_hashtag}</p>
 			      </div>
 			    </div>					  		
 	  		</a>	  	  	
@@ -57,12 +57,12 @@
 			    			<button type="button" style="border:0; background:transparent" onclick="javascript:makeFavorite()">
 								<img id="favoriteStar" src="resources/icon/star.svg" alt="" >
 							</button>
-		    				<input type="text" class="route_subject" style="background-color:transparent;border:0; solid black;text-align:left;" spellcheck="false">
+		    				<input type="text" class="route_subject" style="background-color:transparent;border:0; solid black;text-align:left;" spellcheck="false" readonly>
 		    			</h2>
 						<input type="hidden" class="route_no">
 						<div align="left">
 						<span>조회수:</span>
-						<input type="text"class="route_readcount" style="background-color:transparent;border:0; solid black;text-align:left;">
+						<input type="text"class="route_readcount" style="background-color:transparent;border:0; solid black;text-align:left;" readonly>
 						</div>
 						<!-- 사진 -->				
 						<div>
@@ -76,7 +76,7 @@
 								id="exampleFormControlTextarea1" rows="10" readonly></textarea>
 						</p>
 						<p align="left">
-							<input  class="route_hashtag" style="background-color:transparent;border:0; solid black;text-align:left;" spellcheck="false">
+							<input  class="route_hashtag" style="background-color:transparent;border:0; solid black;text-align:left;" spellcheck="false" readonly>
 						</p>
 						
 						<!-- 지도에서 경로보기 -->
@@ -178,7 +178,7 @@ function checkFavorite(){
         },
         success: function (data) {
         	if(data == "existFavorite"){
-        		$("#favoriteStar").attr("src", "resources/icon/star-fill.svg" );
+        		$("#favoriteStar").attr("src", "resources/icon/star-fill3.svg" );
         	}else{
         		$("#favoriteStar").attr("src", "resources/icon/star.svg" );
         	}
