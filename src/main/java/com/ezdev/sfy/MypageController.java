@@ -59,6 +59,12 @@ public class MypageController {
 		session.setAttribute("getMember", dto);
 		return "mypage/mypage_main";
 	}
+	
+	@RequestMapping("/mypage_quit.do")
+	public String mypage() {
+		return "mypage/mypage_quit";
+	}
+	
 	@RequestMapping("/update.do")
 	public String mypage(HttpServletRequest req,@ModelAttribute MemberDTO dto) {				
 		HttpSession session=req.getSession();

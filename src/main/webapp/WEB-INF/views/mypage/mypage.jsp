@@ -66,20 +66,11 @@ $('.modal').on('hidden.bs.modal', function (e) {
       </li>
       
       <li>
-        <a class="nav-link link-trigger" href="deleteMember.do">
+        <a class="nav-link link-trigger" href="mypage_quit.do">
           <svg class="bi pe-none me-2" width="16" height="16"></svg>
           	회원 탈퇴</a>
       </li>
-      
-      <li>
-        <a class="nav-link active" href="#">
-          <svg class="bi pe-none me-2" width="16" height="16"></svg>
-         	 로그아웃</a>
-      </li>
     </ul>
     <hr>
+       
   </aside>
-<script src="resources/js/jquery-3.6.1.min.js"></script>
-   <script src="resources/js/bootstrap.bundle.js"></script>
-
-

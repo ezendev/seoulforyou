@@ -31,3 +31,13 @@
 		<button onclick="javascript:sendChat()" type="button" class="btn btn-outline-success btn px-4" id="search_btn" style="width:100">전송</button>
 	</form>
 </div>
+
+<script>
+//enter키 막음
+document.addEventListener('keydown', function(event){
+	if(event.keyCode ===13){
+		event.preventDefault();
+		};
+	}, true);
+
+</script>
