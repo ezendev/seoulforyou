@@ -3,7 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <%@ include file="../top.jsp"%>
-
+<link rel="stylesheet" type="text/css" href="resources/css/styles.css">
 <div class="container-md">
 	<!-- 여행지 분류 -->
 	<div class="row mt-2">
@@ -32,7 +32,7 @@
 			<div class="tourcol col ${tdto.tour_type}">
 				<a onclick="valueSetting('${tdto.tour_no}', '${tdto.tour_name}','${tdto.tour_postal}','${tdto.tour_addr}','${tdto.tour_hp}')"
 					data-bs-toggle="modal" data-bs-target="#tourView">
-			    	<div class="card h-100 card border-success mb-3" >
+			    	<div class="card h-100 card border-success mb-3  card text-bg-light mb-3" >
 			    		<!-- 여행지 이미지 -->
 				    	<img src="resources/img/seoul2.jpg" class="card-img-top" alt="..."
 				    		style="width:100%; height:20vw; object-fit:cover;">
@@ -82,10 +82,10 @@
 		    			</div>
 		   			 	<div class="col-sm-12 col-md-12 col-lg-6">
 		   			 		<p><input type="hidden" class="no" /></p>
-			     			 <p><img src="resources/icon/geo-alt.svg">이름: <input class="name" style="background-color:transparent;border:0; solid black;" spellcheck="false" readonly /></p>
+			     			 <p><img src="resources/icon/geo-alt.svg">이름: <input class="name" style="background-color:transparent;border:0; solid black;" spellcheck="false"  readonly /></p>
 			     			 <p><img src="resources/icon/clock.svg">우편번호: <input class="postal" style="background-color:transparent;border:0; solid black;" spellcheck="false" readonly  /></p>
-			     			 <p><img src="resources/icon/clock.svg"> 주소: <input class="addr" style="background-color:transparent;border:0; solid black;" spellcheck="false" readonly /></p>
 			     			 <p><img src="resources/icon/telephone.svg"> 전화번호: <input class="hp" style="background-color:transparent;border:0; solid black;" spellcheck="false" readonly /></p>
+			     			 <p><img src="resources/icon/clock.svg"> 주소: <textarea class="addr"  spellcheck="false" style="border:none" spellcheck="false" readonly rows="3"	></textarea></p>
 		    			</div>
 		 		 	</div>
 				</div>
@@ -236,7 +236,7 @@ function valueSetting(no, name, postal, addr, hp){
 	$('.no').attr("value", no);
 	$('.name').attr("value", name);
 	$('.postal').attr("value", postal);
-	$('.addr').attr("value", addr);
+	$('.addr').val(addr);
 	$('.hp').attr("value", hp);	
 	
 	//즐겨찾기 여부 확인

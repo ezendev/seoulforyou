@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!-- tour.jsp -->
 <%@ include file="../top.jsp"%>
-
+<link rel="stylesheet" type="text/css" href="resources/css/styles.css">
 <div class="container-md">
 	<!-- 여행루트 분류 -->
 	<div class="row mt-2">
@@ -29,7 +29,7 @@
 	  	  <div class="col 숙소">
 	  		<a onclick="valueSetting('${rdto.route_readcount}','${rdto.route_no}', '${rdto.route_subject}','${rdto.route_img}','${rdto.route_content}','${rdto.route_hashtag}')" 	
 	  	 	data-bs-toggle="modal" data-bs-target="#routeView"> 	  	 
-			    <div class="card h-100 card border-info mb-3">
+			    <div class="card h-100 card border-info mb-3 card text-bg-light mb-3">
 			      <img src="resources/img/seoul2.jpg" class="card-img-top" alt="..."
 			      style="width:100%; height:20vw ; object-fit:cover;">
 			      <div class="card-body ">

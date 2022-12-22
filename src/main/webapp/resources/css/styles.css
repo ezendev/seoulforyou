@@ -11699,3 +11699,11 @@ body {
   font-size: 0.75rem;
   border-radius: 0.25rem !important;
 }
+input:focus {outline:none;}
+textarea {
+  resize: none;
+}
+
+textarea:focus{
+	outline:none;
+	}
