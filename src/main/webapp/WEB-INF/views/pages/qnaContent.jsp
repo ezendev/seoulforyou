@@ -39,11 +39,32 @@
 					</div>
 					<a href="qnalist.do" class="btn btn-outline-secondary">목록으로</a> 
 					<a href="update_qna.do?qna_no=${getBoard.qna_no}" class="btn btn-outline-warning">수정하기</a>
-					<a href="qnaDelete.do?qna_no=${getBoard.qna_no}" class="btn btn-outline-danger"
-						onclick="return confirm('삭제하시겠습니까?')">삭제</a>
+					<a data-bs-toggle="modal" data-bs-target="#deleteModal" class="btn btn-outline-danger">삭제</a>
 				</form>
 			</div>
 		</div>
 		</div>
+<form method="post">		
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">비밀번호 입력창</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <label for="qna_passwd">비밀번호 입력</label>
+        <input type="password" id="qna_passwd" name="qna_passwd">
+        <input type="hidden" id="qna_no" name="qna_no" value="${getBoard.qna_no}">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+        <button type="submit" class="btn btn-primary" formaction="qnaDelete.do" >확인</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
 </body>	
 <%@ include file="../bottom.jsp"%>

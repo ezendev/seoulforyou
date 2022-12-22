@@ -1,6 +1,9 @@
 package com.ezdev.sfy;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -9,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ezdev.sfy.dto.MyRouteDTO;
 import com.ezdev.sfy.dto.TourDTO;
@@ -101,15 +105,47 @@ public class TourController {
 	    }
 	}
 	
-	@RequestMapping("/loadRoute.do")
-	public String tourList(HttpServletRequest req) {
+	@RequestMapping("/getIncludeRouteKakao.do")
+	@ResponseBody
+	public Map<String, Object> map(HttpServletRequest req) {
 		int no = Integer.parseInt(req.getParameter("no"));
 		
-		// tour_no값이 포함된 루트목록을 불러오기
+		// tour_no값이 포함된 루트목록 전체를 불러오기
 		List<MyRouteDTO> mlist = myrouteMapper.listRouteIncludeTour(no);
 
-		req.setAttribute("includeRouteList", mlist);
-		return "tour/tour_ajax_list";
+		int size = mlist.size();
+		if(size>3) size = 3;
+		
+		
+		List<Object> unionList = new ArrayList<>();
+		List<Object> unionNameList = new ArrayList<>();
+		
+		// 최대 3개의 루트목록 꺼내기
+		for(int i=0; i<size; i++) {
+			MyRouteDTO mrdto = mlist.get(i);
+
+			// 각 루트에 포함된 여행지목록을 배열에 넣기
+			String route = mrdto.getRoute_tour();
+			String []array = route.split(",");
+			int tour_no;
+
+			List<TourDTO> dlist = new ArrayList<>();
+			// 여행지 갯수만큼 dto를 꺼내고 리스트에 담아 최종리스트에 넣기
+			for(int j=0; j<array.length; j++) {
+				tour_no=(int) Integer.parseInt(array[j]);
+				TourDTO tdto =tourMapper.getTour(tour_no);
+
+				dlist.add(tdto);
+			}
+			unionList.add(dlist);
+			unionNameList.add(mrdto.getRoute_subject());
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("routeView", unionList);
+		map.put("routeName", unionNameList);
+		
+		return map;
 	}
 	
 }

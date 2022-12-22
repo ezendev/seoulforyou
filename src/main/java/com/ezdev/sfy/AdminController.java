@@ -60,7 +60,19 @@ public class AdminController {
 		
 		AdminDTO dto = (AdminDTO)session.getAttribute("adto");
 		String profile_img = dto.getAdmin_profileImg();
-		req.setAttribute("profile_img", profile_img); 
+		int admin_no = dto.getAdmin_no();
+		String admin_name = dto.getAdmin_name();
+		String admin_id = dto.getAdmin_id(); //프로필 수정 페이지에 admin_id를 통하여 리스트 얻기 위해
+		String admin_passwd = dto.getAdmin_passwd();
+		String admin_email = dto.getAdmin_email();
+		
+		
+		session.setAttribute("admin_no", admin_no);
+		session.setAttribute("profile_img", profile_img); 
+		session.setAttribute("admin_id", admin_id);
+		session.setAttribute("admin_name", admin_name);
+		session.setAttribute("admin_passwd", admin_passwd);
+		session.setAttribute("admin_email", admin_email);
 		//참고로 이때 profile_img는 업로드 된 이미지의 이름일뿐이다
 		
 		
@@ -68,11 +80,11 @@ public class AdminController {
 		int[] memberChartArr = adminMapper.countMemberByWeek();
 		session.setAttribute("memberChartValue", memberChartArr);
 		
-		/*
+		
 		// 2. 요일별 리뷰갯수가 들어갈 배열
 		int[] reviewChartArr = adminMapper.countReviewByWeek();
-		session.setAttribute("reviewChartValue", routeChartArr);
-		*/
+		session.setAttribute("reviewChartValue", reviewChartArr);
+		
 
 
 		// 3. 루트테마별 갯수가 들어갈 배열
@@ -165,7 +177,6 @@ public class AdminController {
 		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
 		MultipartFile files = mr.getFile("admin_profileImg");
 		String filename = files.getOriginalFilename();
-		System.out.println(filename); 
 		
 		if(filename == null || filename.trim().equals("")) {
 			req.setAttribute("msg", "이미지를 첨부해주세요");
@@ -200,7 +211,7 @@ public class AdminController {
 		req.setAttribute("msg","관리자계정 등록실패");
 		req.setAttribute("url", "fileUpload_ok.do");
 		 }
-		return "admin/index";
+		return "message";
 		}
 	
 	@RequestMapping("/admin_temp.do")
@@ -305,7 +316,39 @@ public class AdminController {
 		req.setAttribute("url", "index.do");
 		return "message";
 	}
-
+	
+	@RequestMapping("/profile.do")
+	public String profile() {
+	
+	return "admin/profile";
+	}
+	@RequestMapping("/admin_update.do")
+	public String adminUpdate(HttpServletRequest req, @ModelAttribute AdminDTO dto) {
+		int res = adminMapper.adminUpdate(dto);
+		
+		if(res>0) {
+			req.setAttribute("msg", "관리자 정보 수정 완료");
+			req.setAttribute("url", "index.do");
+		}else {
+			req.setAttribute("msg", "관리자 정보 수정 실패");
+			req.setAttribute("url", "index.do");
+		}
+		return "message";
+	}
+	@RequestMapping("/admin_delete.do")
+	public String adminDelete(HttpServletRequest req, @ModelAttribute AdminDTO dto) {
+		int res = adminMapper.adminDelete(dto);
+		
+		if(res>0) {
+			req.setAttribute("msg", "관리자 정보 삭제 완료");
+			req.setAttribute("url", "adminLogout.do");
+		}else {
+			req.setAttribute("msg", "관리자 정보 삭제 실패");
+			req.setAttribute("url", "index.do");
+		}
+		return "message";
+		
+	}
 }
 
 	

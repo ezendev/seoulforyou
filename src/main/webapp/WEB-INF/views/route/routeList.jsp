@@ -45,13 +45,13 @@
 	
 	<!-- 상세페이지 모달 -->
 	<div class="modal fade" id="routeView">
- 	<div class="modal-dialog   modal-dialog-scrollable">
+ 	<div class="modal-dialog modal-lg  modal-dialog-scrollable">
 	    <div class="modal-content">
 			<!-- Modal body -->
 			<div class="modal-body">
 				<div class="container-fluid text-center">
 			  		<div class="row ">
-			  			<div class="col-md-12">
+			  			<div class="col-lg-6">
 			  			<!-- 1. 본문 -->
 		    			<h2 align="left" >
 			    			<button type="button" style="border:0; background:transparent" onclick="javascript:makeFavorite()">
@@ -87,6 +87,7 @@
 							</div>
 							
 						<!-- 2. 리뷰 -->
+							<div class="col-lg-6">
 			    			<h2 align="left">리뷰</h2>
 			      			<div class="mb-3">
 			      				<!-- 로그인을 하지 않았다면 -->
@@ -132,6 +133,7 @@
 								  </tbody>
 								</table>
 							</div>
+							</div>
 						</div>
 			  		</div>
 			  	</div>
@@ -139,20 +141,32 @@
 	</div>
 	</div>
 
-<div class="d-flex justify-content-center mt-3">	
-<c:if test="${not empty listRoute}">			
+<div class="d-flex justify-content-center mt-3">
+	<nav aria-label="Page navigation example" >
+			<ul class="pagination">
+		<c:if test="${not empty listRoute}">	
 			<c:if test="${startPage > pageBlock}">
-				[<a href="routeList.do?pageNum=${startPage-1}&routeType=${routeType}">이전</a>]
+			<li class="page-item"><a class="page-link"
+				 href="routeList.do?pageNum=${startPage-1}&routeType=${routeType}" aria-label="Previous">
+					<span aria-hidden="true">&laquo;</span>
+				</a></li>
 			</c:if>
 			<c:forEach var="i" begin="${startPage}" end="${endPage}">
-				[<a href="routeList.do?pageNum=${i}&routeType=${routeType}">${i}</a>]
+			<li class="page-item">	<a class="page-link" href="routeList.do?pageNum=${i}&routeType=${routeType}">${i}</a>
+			</li>
 			</c:forEach>	
 			<c:if test="${pageCount > endPage}">
-				[<a href="routeList.do?pageNum=${endPage+1}&routeType=${routeType}">다음</a>]
-			</c:if>		
+				<li class="page-item">
+				<a class="page-link"
+				 href="routeList.do?pageNum=${endPage+1}&routeType=${routeType}" aria-label="Next"><span
+							aria-hidden="true">&raquo;</span>
+							</a>
+							</li>
 			</c:if>
+		</c:if>
+		</ul>
+		</nav>
 	</div>
-
 <script>
 function checkFavorite(){
 	const no = $('.route_no').val();
