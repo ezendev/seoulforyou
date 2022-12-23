@@ -89,8 +89,15 @@ public class TourController {
 		req.setAttribute("startPage", startPage);
 		req.setAttribute("endPage", endPage);
 		
+		//필터 + 지역 + 페이지 선택시
+		if(!tourType.equals("0") && !region.equals("0") && !pageNum.equals("1")) {
+			req.setAttribute("pageNum", "1");
+			List<TourDTO> list = tourMapper.listTourByRegionType(tourType, region, startRow, endRow);
+			session.setAttribute("tourList", list);
+	        return "tour/tourList";
+		}
 		//필터 + 지역 선택시
-		if(!tourType.equals("0") && !region.equals("0")) {
+		else if(!tourType.equals("0") && !region.equals("0")) {
 			List<TourDTO> list = tourMapper.listTourByRegionType(tourType, region, startRow, endRow);
 			session.setAttribute("tourList", list);
 	        return "tour/tourList";
