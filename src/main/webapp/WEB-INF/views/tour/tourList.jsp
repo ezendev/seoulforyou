@@ -274,7 +274,7 @@ function valueSetting(no, name, postal, addr, hp){
 <script>
    function searchFilter(event){
        const tourType = $("#filterByType option:selected").val();
-       location.href="tourList.do?pageNum=${pageNum}&tourType="+tourType+"&region=${region}"
+       location.href="tourList.do?pageNum=1&tourType="+tourType+"&region=${region}"
        
    }
 </script>
