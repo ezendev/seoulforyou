@@ -118,9 +118,10 @@
                <!-- Modal body -->
                <div class="modal-body d-flex justify-content-center">
                		<form id="chatF" method="post" action="startChat.do">
-               			<textarea name="content" placeholder="내용을 입력하세요."></textarea>
+               			<textarea name="content" placeholder="내용을 입력하세요."
+               				style="width: 300px; height: 200px; resize: none;"></textarea>
                			<input name="friend_no" type="hidden" id="friend_no"/>
-               			<button type="submit">전송</button>
+               			<button class="btn btn-outline-primary me-2" type="submit">전송</button>
                		</form>
                		
                </div>
