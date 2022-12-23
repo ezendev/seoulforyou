@@ -127,18 +127,18 @@ a {
 		       <c:if test="${not empty listMyroute}">
 		       	<c:if test ="${startPage >pageBlock }">
 		       	<li class="page-item"><a class="page-link"
-		       		 href="mypage_route.do?pageNum=${startPage-1}&route_hashtag=${route_hashtag}" aria-label="Previous">
+		       		 href="mypage_route.do?pageNum=${startPage-1}" aria-label="Previous">
 		       		 <span aria-hidden="true">&laquo;</span>
 		       		 </a></li>
 		       	</c:if>
 		       	<c:forEach var ="i" begin="${startPage}" end="${endPage}">
-		       		<li class="page-item"><a class="page-link" href ="mypage_route.do?pageNum=${i}&route_hashtag=${route_hashtag}">${i}</a>
+		       		<li class="page-item"><a class="page-link" href ="mypage_route.do?pageNum=${i}">${i}</a>
 				</li>
 		       	</c:forEach>     	
 		        <c:if test="${pageCount> endPage}">
 		        <li class="page-item">
 				<a class="page-link"
-		        	href="mypage_route.do?pageNum=${endPage+1}&route_hashtag=${route_hashtag}" aria-label="Next"><span
+		        	href="mypage_route.do?pageNum=${endPage+1}" aria-label="Next"><span
 							aria-hidden="true">&raquo;</span>
 							</a>
 							</li>   
