@@ -36,7 +36,7 @@
 	    <li class="fw-bold"><a href="index.do" class="nav-link px-2 link-secondary">Home</a></li>
 	    <li class="fw-bold"><a href="tourList.do" class="nav-link px-2 link-dark">여행지</a></li>
 	    <li class="fw-bold"><a href="routeList.do" class="nav-link px-2 link-dark">여행루트</a></li>
-	    <li class="fw-bold"><a href="myRoute.do" class="nav-link px-2 link-dark" onclick="make()">나의여행 만들기</a></li>
+	    <li class="fw-bold"><a href="myRoute.do" class="nav-link px-2 link-dark" >나의여행 만들기</a></li>
     </ul>
       
 <!-- 쪽지버튼은 로그인해야 나타남 -->
@@ -46,17 +46,21 @@
 		<img src="resources/icon/chat-quote.svg" style="width:16%" onclick="javascript:chat()" class="btn btn-outline-white">
 		<!--마이페이지 버튼-->
         <img src="resources/icon/person-circle.svg" style="width:16%" onclick="javascript:mypage()" class="btn btn-outline-white">
-        <button type="button" class="btn btn-secondary" onclick="javascript:logout()">로그아웃</button>
+        <button type="button" class="btn btn-secondary" onclick="javascript:logout()"style="background-color: #A0C8C8;border-color:#A0C8C8;font-weight: 600;border-radius: 1rem;">
+        	로그아웃
+        </button>
        	</c:if>
         
 <!-- 관리자 로그인이 되면 header부분이 바뀌도록 한다 -->    
         <c:if test="${not empty adto and empty mdto}">
 		<a href="admin.do" style="text-decoration-line:none"><img src="resources/icon/adminSite.svg" onclick="javascript:adminSite()" width="40" height="40"></a>
-			<button type="button" class="btn btn-secondary" onclick="javascript:adminLogout()">로그아웃</button>
+			<button type="button" class="btn btn-secondary" onclick="javascript:adminLogout()"style="background-color: #A0C8C8;border-color:#A0C8C8;font-weight: 600;border-radius: 1rem;">
+			로그아웃</button>
 		</c:if>
         
 		<c:if test="${empty mdto and empty adto}">
-      	<button type="button" class="btn btn-success " data-bs-toggle="modal" data-bs-target="#loginModal">로그인</button>
+      	<button type="button" class="btn btn-success " data-bs-toggle="modal" data-bs-target="#loginModal" style="background-color: #A0C8C8;border-color:#A0C8C8;font-weight: 600;border-radius: 1rem;">
+      	로그인</button>
         </c:if>
       </div>
 	</header>
@@ -239,17 +243,9 @@
 	}
 	/*로그인*/
 	.btn-success{
-		background-color: #A0C8C8;
-		border-color:#A0C8C8;
-		font-weight: 600;
-		border-radius: 1rem;
+		
 	}
-	/*로그아웃*/
-	.btn-secondary {
-		background-color: #A0C8C8;
-		border-color:#A0C8C8;
-		font-weight: 600;
-		border-radius: 1rem;
+	
 		}
 	/*채팅, 마이페이지 버튼*/	
 	.btn-outline-white{

@@ -10,7 +10,6 @@
 		<c:when test="${nowUserNo ne tmp.chat_send_no}">
 			<!-- 만약 현재 로그인된 유저가 받은 메시지라면 -->
 			<div class="chat ch1">
-	            <div class="icon"><i class="fa-solid fa-user"></i></div>
 	            <div class="textbox">${tmp.chat_content}</div>
 	            <span>${tmp.chat_send_time}</span>
 	        </div>
@@ -18,7 +17,6 @@
 		<c:otherwise>
 			<!-- 만약 현재 로그인된 유저가 보낸 메시지라면 -->
 			<div class="chat ch2">
-	            <div class="icon"><i class="fa-solid fa-user"></i></div>
 	            <div class="textbox">${tmp.chat_content}</div>
 	            <span>${tmp.chat_send_time}</span>
 	        </div>
@@ -31,3 +29,13 @@
 		<button onclick="javascript:sendChat()" type="button" class="btn btn-outline-success btn px-4" id="search_btn" style="width:100">전송</button>
 	</form>
 </div>
+
+<script>
+//enter키 막음
+document.addEventListener('keydown', function(event){
+	if(event.keyCode ===13){
+		event.preventDefault();
+		};
+	}, true);
+
+</script>

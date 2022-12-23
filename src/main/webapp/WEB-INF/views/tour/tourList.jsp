@@ -3,7 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <%@ include file="../top.jsp"%>
-
+<link rel="stylesheet" type="text/css" href="resources/css/styles.css">
 <div class="container-md">
 	<!-- 여행지 분류 -->
 	<div class="row mt-2">
@@ -21,33 +21,38 @@
 		</div>
 	</div>
 	
-	<form id="tourForm" name="f1" method="post" action="tourList.do">
-      <input type="hidden" id="tourType" name="tourType">
-   </form>
-	
+
 	<!-- 여행지 리스트 -->
+	<c:if test="${empty tourList}">
+		<div class="d-flex justify-content-center mt-5 mb-5">
+		<p class="text-muted">
+			등록된 여행지가 없습니다.
+		</p>
+		</div>
+	</c:if>
 	<div class="tourrow row row-cols-1 row-cols-lg-4 row-cols-md-2 row-cols-sm-2 g-4 mx-0">
+		 
 		<c:forEach var="tdto" items="${tourList}">
 			<!-- 여행지 -->
 			<div class="tourcol col ${tdto.tour_type}">
 				<a onclick="valueSetting('${tdto.tour_no}', '${tdto.tour_name}','${tdto.tour_postal}','${tdto.tour_addr}','${tdto.tour_hp}')"
 					data-bs-toggle="modal" data-bs-target="#tourView">
-			    	<div class="card h-100">
+			    	<div class="card h-100 card border-success mb-3  card text-bg-light mb-3" >
 			    		<!-- 여행지 이미지 -->
 				    	<img src="resources/img/seoul2.jpg" class="card-img-top" alt="..."
 				    		style="width:100%; height:20vw; object-fit:cover;">
 						<!-- 여행지 -->
-			    		<div class="tour-card-body card-body">
+			    		<div class="tour-card-body card-body  ">
 					      	<!-- 이름 -->
-					        <h5 class="card-title">${tdto.tour_name}</h5>
+					        <h5 class="card-title  ">${tdto.tour_name}</h5>
 					        
 				        	<!-- 주소 -->
 					        <c:choose>
 						        <c:when test="${fn:length(tdto.tour_addr) gt 26}">
-						        	<p class="card-text">${fn:substring(tdto.tour_addr, 0, 25)}...</p>
+						        	<p class="card-text text-success">${fn:substring(tdto.tour_addr, 0, 25)}...</p>
 						        </c:when>
 						        <c:otherwise>
-							        <p class="card-text">${tdto.tour_addr}</p>
+							        <p class="card-text text-success">${tdto.tour_addr}</p>
 						        </c:otherwise>
 							</c:choose>
 						</div>
@@ -82,10 +87,10 @@
 		    			</div>
 		   			 	<div class="col-sm-12 col-md-12 col-lg-6">
 		   			 		<p><input type="hidden" class="no" /></p>
-			     			 <p><img src="resources/icon/geo-alt.svg">이름: <input class="name"  /></p>
-			     			 <p><img src="resources/icon/clock.svg">우편번호: <input class="postal"  /></p>
-			     			 <p><img src="resources/icon/clock.svg"> 주소: <input class="addr"  /></p>
-			     			 <p><img src="resources/icon/telephone.svg"> 전화번호: <input class="hp"  /></p>
+			     			 <p><img src="resources/icon/geo-alt.svg">이름: <input class="name" style="background-color:transparent;border:0; solid black;" spellcheck="false"  readonly /></p>
+			     			 <p><img src="resources/icon/clock.svg">우편번호: <input class="postal" style="background-color:transparent;border:0; solid black;" spellcheck="false" readonly  /></p>
+			     			 <p><img src="resources/icon/telephone.svg"> 전화번호: <input class="hp" style="background-color:transparent;border:0; solid black;" spellcheck="false" readonly /></p>
+			     			 <p><img src="resources/icon/clock.svg"> 주소: <textarea class="addr"  spellcheck="false" style="border:none" spellcheck="false" readonly rows="3"	></textarea></p>
 		    			</div>
 		 		 	</div>
 				</div>
@@ -153,24 +158,24 @@
 	</div>
 </div>
 
-<div class="d-flex justify-content-center mt-3">
-	<nav aria-label="Page navigation example" >
+<div class="d-flex justify-content-center mt-3 ">
+	<nav aria-label="Page navigation example  " >
 			<ul class="pagination">
 		<c:if test="${not empty tourList}">	
 			<c:if test="${startPage > pageBlock}">
-			<li class="page-item"><a class="page-link"
-				 href="tourList.do?pageNum=${startPage-1}&tourType=${tourType}" aria-label="Previous">
+			<li class="page-item"><a class="page-link"  
+				 href="tourList.do?pageNum=${startPage-1}&tourType=${tourType}&region=${region}" aria-label="Previous">
 					<span aria-hidden="true">&laquo;</span>
 				</a></li>
 			</c:if>
 			<c:forEach var="i" begin="${startPage}" end="${endPage}">
-			<li class="page-item">	<a class="page-link" href="tourList.do?pageNum=${i}&tourType=${tourType}">${i}</a>
+			<li class="page-item">	<a class="page-link" href="tourList.do?pageNum=${i}&tourType=${tourType}&region=${region}">${i}</a>
 			</li>
 			</c:forEach>	
 			<c:if test="${pageCount > endPage}">
 				<li class="page-item">
 				<a class="page-link"
-				 href="tourList.do?pageNum=${endPage+1}&tourType=${tourType}" aria-label="Next"><span
+				 href="tourList.do?pageNum=${endPage+1}&tourType=${tourType}&region=${region}" aria-label="Next"><span
 							aria-hidden="true">&raquo;</span>
 							</a>
 							</li>
@@ -197,7 +202,7 @@ function checkFavorite(){
         },
         success: function (data) {
         	if(data == "existFavorite"){
-        		$("#favoriteStar").attr("src", "resources/icon/star-fill.svg" );
+        		$("#favoriteStar").attr("src", "resources/icon/star-fill3.svg" );
         	}else{
         		$("#favoriteStar").attr("src", "resources/icon/star.svg" );
         	}
@@ -236,7 +241,7 @@ function valueSetting(no, name, postal, addr, hp){
 	$('.no').attr("value", no);
 	$('.name').attr("value", name);
 	$('.postal').attr("value", postal);
-	$('.addr').attr("value", addr);
+	$('.addr').val(addr);
 	$('.hp').attr("value", hp);	
 	
 	//즐겨찾기 여부 확인
@@ -269,8 +274,8 @@ function valueSetting(no, name, postal, addr, hp){
 <script>
    function searchFilter(event){
        const tourType = $("#filterByType option:selected").val();
-       $('#tourType').val(tourType);
-       $('#tourForm').submit();
+       location.href="tourList.do?pageNum=1&tourType="+tourType+"&region=${region}"
+       
    }
 </script>
 

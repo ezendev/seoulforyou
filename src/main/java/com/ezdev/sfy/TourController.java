@@ -37,22 +37,25 @@ public class TourController {
 		HttpSession session = req.getSession();
 		
 		//여행지 타입
-		if (tourType == null) {
+		if (tourType == null || tourType.trim()=="") {
 			tourType = "0";
 		}
 		req.setAttribute("tourType", tourType);
 		
 		//여행지 지역
-		if (region == null) {
+		if (region == null || region.trim()=="") {
 			region = "0";
 		}
 		req.setAttribute("region", region);
 		
 		//페이징
-		if (pageNum == null) {
+		if (pageNum == null || pageNum.trim()=="") {
 			pageNum = "1";
 		}
+		req.setAttribute("pageNum", pageNum);
+		
 		int currentPage = Integer.parseInt(pageNum);
+		
 		int pageSize = 8;
 		int startRow = (currentPage-1) * pageSize + 1;
 		int endRow = startRow + pageSize - 1;
@@ -60,18 +63,18 @@ public class TourController {
 		
 		// countRow 구하기
 		// 투어타입이 0이고 지역이 존재하면
-		if(tourType == "0" && !region.equals("0")) {
+		if(tourType.equals("0") && !region.equals("0")) {			
 			countRow = tourMapper.getTourCountByRegion(region); //지역전부불러오기
 			
 		//투어타입이 12345고 지역이 존재하면
-		}else if(!tourType.equals("0") && !region.equals("0")) {
+		}else if(!tourType.equals("0") && !region.equals("0")) {			
 			countRow = tourMapper.getTourCountByRegionType(tourType, region);//타입+지역불러오기
 		
 		//투어타입이 12345면
-		}else if(!tourType.equals("0")) {
+		}else if(!tourType.equals("0")) {			
 			countRow = tourMapper.getTourCountByType(tourType); //타입별불러오기
 		//그외
-		}else {
+		}else {			
 			countRow = tourMapper.getTourCount(); //전부불러오기
 		}
 		
@@ -80,21 +83,34 @@ public class TourController {
 		int pageBlock = 5;
 		int startPage = (currentPage - 1) / pageBlock * pageBlock + 1;
 		int endPage = startPage + pageBlock - 1;
-		if (endPage > pageCount) endPage = pageCount;		
+		if (endPage > pageCount) endPage = pageCount;
 		req.setAttribute("pageCount", pageCount);
 		req.setAttribute("pageBlock", pageBlock);
 		req.setAttribute("startPage", startPage);
 		req.setAttribute("endPage", endPage);
 		
-		//필터 선택시
-		if(!tourType.equals("0")) {
+		//필터 + 지역 + 페이지 선택시
+		if(!tourType.equals("0") && !region.equals("0") && !pageNum.equals("1")) {
+			req.setAttribute("pageNum", "1");
+			List<TourDTO> list = tourMapper.listTourByRegionType(tourType, region, startRow, endRow);
+			session.setAttribute("tourList", list);
+	        return "tour/tourList";
+		}
+		//필터 + 지역 선택시
+		else if(!tourType.equals("0") && !region.equals("0")) {
+			List<TourDTO> list = tourMapper.listTourByRegionType(tourType, region, startRow, endRow);
+			session.setAttribute("tourList", list);
+	        return "tour/tourList";
+		 //필터 선택시
+		}
+		else if(!tourType.equals("0")) {
 			List<TourDTO> list = tourMapper.listTourByType(tourType, startRow, endRow);
 			session.setAttribute("tourList", list);
 	        return "tour/tourList";
 	        
 	     //지도 눌러서 들어오면
 		}else if(!region.equals("0")) { 
-	         List<TourDTO> list = tourMapper.listTourByRegion(region);
+	         List<TourDTO> list = tourMapper.listTourByRegion(region, startRow, endRow);
 	         session.setAttribute("tourList", list);
 	         return "tour/tourList";
 	    //여행지 메뉴로 들어오면
