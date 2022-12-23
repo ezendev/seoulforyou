@@ -21,12 +21,17 @@
 		</div>
 	</div>
 	
-	<form id="tourForm" name="f1" method="post" action="tourList.do">
-      <input type="hidden" id="tourType" name="tourType">
-   </form>
-	
+
 	<!-- 여행지 리스트 -->
+	<c:if test="${empty tourList}">
+		<div class="d-flex justify-content-center mt-5 mb-5">
+		<p class="text-muted">
+			등록된 여행지가 없습니다.
+		</p>
+		</div>
+	</c:if>
 	<div class="tourrow row row-cols-1 row-cols-lg-4 row-cols-md-2 row-cols-sm-2 g-4 mx-0">
+		 
 		<c:forEach var="tdto" items="${tourList}">
 			<!-- 여행지 -->
 			<div class="tourcol col ${tdto.tour_type}">
@@ -159,18 +164,18 @@
 		<c:if test="${not empty tourList}">	
 			<c:if test="${startPage > pageBlock}">
 			<li class="page-item"><a class="page-link"  
-				 href="tourList.do?pageNum=${startPage-1}&tourType=${tourType}" aria-label="Previous">
+				 href="tourList.do?pageNum=${startPage-1}&tourType=${tourType}&region=${region}" aria-label="Previous">
 					<span aria-hidden="true">&laquo;</span>
 				</a></li>
 			</c:if>
 			<c:forEach var="i" begin="${startPage}" end="${endPage}">
-			<li class="page-item">	<a class="page-link" href="tourList.do?pageNum=${i}&tourType=${tourType}">${i}</a>
+			<li class="page-item">	<a class="page-link" href="tourList.do?pageNum=${i}&tourType=${tourType}&region=${region}">${i}</a>
 			</li>
 			</c:forEach>	
 			<c:if test="${pageCount > endPage}">
 				<li class="page-item">
 				<a class="page-link"
-				 href="tourList.do?pageNum=${endPage+1}&tourType=${tourType}" aria-label="Next"><span
+				 href="tourList.do?pageNum=${endPage+1}&tourType=${tourType}&region=${region}" aria-label="Next"><span
 							aria-hidden="true">&raquo;</span>
 							</a>
 							</li>
@@ -269,8 +274,8 @@ function valueSetting(no, name, postal, addr, hp){
 <script>
    function searchFilter(event){
        const tourType = $("#filterByType option:selected").val();
-       $('#tourType').val(tourType);
-       $('#tourForm').submit();
+       location.href="tourList.do?pageNum=${pageNum}&tourType="+tourType+"&region=${region}"
+       
    }
 </script>
 
