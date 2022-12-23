@@ -13,15 +13,6 @@
  } 
  </style>
  
-<script>
- function valueSetting(no,name,id,passwd,email,hp){
-	 $('#no').attr("value", no);
-	 $('#name').attr("value", name);
-	 $('#id').attr("value", id);
-	 $('#passwd').attr("value", passwd);
-	 $('#email').attr("value", email);
-	 $('#hp').attr("value", hp)}
- </script>
 <!-- 회원리스트입니다 -->
 <!-- 상단 네비바 구성 -->
 <!-- 좌측 네비메뉴바 -->
@@ -224,6 +215,15 @@
 				</div>
 			</div>
 			</div>
+<script>
+ function valueSetting(no,name,id,passwd,email,hp){
+	 $('#no').attr("value", no);
+	 $('#name').attr("value", name);
+	 $('#id').attr("value", id);
+	 $('#passwd').attr("value", passwd);
+	 $('#email').attr("value", email);
+	 $('#hp').attr("value", hp)}
+ </script>
 	  	  </body>
 		</html>
 			

@@ -98,6 +98,9 @@ public class AdminController {
 		}
 		session.setAttribute("routeChartValue", routeChartArr);
 		
+		//회원목록테이블
+		List<MemberDTO> list = memberMapper.listMember2();
+		req.setAttribute("listMember2", list);
 		
 		return "admin/index";
 	}
