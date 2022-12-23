@@ -10,11 +10,17 @@
 	</select>
 	
 	<select id="listTourByRegion" resultType="tourDTO" parameterType="java.util.Map">
-      select * from tour where tour_addr like '%${region}%'
+      select * from (select rownum rn, A.* from(select * from tour where tour_addr like '%${region}%' order by tour_no)A)
+		where rn between #{start} and #{end}
    </select>
    
    <select id="listTourByType" resultType="tourDTO" parameterType="java.util.Map">
       select * from (select rownum rn, A.* from(select * from tour where tour_type = #{type})A)
+		where rn between #{start} and #{end}
+   </select>
+   
+   <select id="listTourByRegionType" resultType="tourDTO" parameterType="java.util.Map">
+      select * from (select rownum rn, A.* from(select * from tour where tour_addr like '%${region}%' and tour_type = #{type})A)
 		where rn between #{start} and #{end}
    </select>
    
