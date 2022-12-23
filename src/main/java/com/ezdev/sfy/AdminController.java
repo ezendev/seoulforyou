@@ -51,8 +51,10 @@ public class AdminController {
 	
 	//top.jsp 로고 -> 관리자페이지
 	@RequestMapping("/admin.do")
-
 	public String admin(HttpSession session, HttpServletRequest req) {
+		
+		
+		
 		
 		AdminDTO dto = (AdminDTO)session.getAttribute("adto");
 		String profile_img = dto.getAdmin_profileImg();
@@ -61,8 +63,6 @@ public class AdminController {
 		String admin_id = dto.getAdmin_id(); //프로필 수정 페이지에 admin_id를 통하여 리스트 얻기 위해
 		String admin_passwd = dto.getAdmin_passwd();
 		String admin_email = dto.getAdmin_email();
-		
-		
 		session.setAttribute("admin_no", admin_no);
 		session.setAttribute("profile_img", profile_img); 
 		session.setAttribute("admin_id", admin_id);
@@ -71,17 +71,13 @@ public class AdminController {
 		session.setAttribute("admin_email", admin_email);
 		//참고로 이때 profile_img는 업로드 된 이미지의 이름일뿐이다
 		
-		
 		// 1. 2주간 회원가입자 수 집계
 		int[] memberChartArr = adminMapper.countMemberByWeek();
 		session.setAttribute("memberChartValue", memberChartArr);
 		
-		
 		// 2. 요일별 리뷰갯수가 들어갈 배열
 		int[] reviewChartArr = adminMapper.countReviewByWeek();
 		session.setAttribute("reviewChartValue", reviewChartArr);
-		
-
 
 		// 3. 루트테마별 갯수가 들어갈 배열
 		int[] routeChartArr = new int[5];
@@ -97,11 +93,6 @@ public class AdminController {
 			routeChartArr[i] = num;
 		}
 		session.setAttribute("routeChartValue", routeChartArr);
-		
-		//회원목록테이블
-		List<MemberDTO> list = memberMapper.listMember2();
-		req.setAttribute("listMember2", list);
-		
 		return "admin/index";
 	}
 	@RequestMapping("/Sample.do")

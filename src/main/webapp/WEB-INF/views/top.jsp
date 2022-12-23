@@ -53,7 +53,7 @@
         
 <!-- 관리자 로그인이 되면 header부분이 바뀌도록 한다 -->    
         <c:if test="${not empty adto and empty mdto}">
-		<a href="admin.do" style="text-decoration-line:none"><img src="resources/icon/adminSite.svg" onclick="javascript:adminSite()" width="40" height="40"></a>
+		<a href="admin.do" style="text-decoration-line:none"><img src="resources/icon/adminSite.svg" width="40" height="40"></a>
 			<button type="button" class="btn btn-secondary" onclick="javascript:adminLogout()"style="background-color: #A0C8C8;border-color:#A0C8C8;font-weight: 600;border-radius: 1rem;">
 			로그아웃</button>
 		</c:if>
