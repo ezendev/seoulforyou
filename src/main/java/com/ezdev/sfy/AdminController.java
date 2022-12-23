@@ -2,23 +2,17 @@ package com.ezdev.sfy;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +24,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ezdev.sfy.dto.AdminDTO;
 import com.ezdev.sfy.dto.AdminTempDTO;
-import com.ezdev.sfy.dto.EmailDTO;
 import com.ezdev.sfy.dto.MemberDTO;
 import com.ezdev.sfy.dto.QnaDTO;
 import com.ezdev.sfy.service.AdminMapper;
@@ -326,7 +319,40 @@ public class AdminController {
 	return "admin/profile";
 	}
 	@RequestMapping("/admin_update.do")
-	public String adminUpdate(HttpServletRequest req, @ModelAttribute AdminDTO dto) {
+	public String adminUpdate(HttpServletRequest req, @ModelAttribute AdminDTO dto,  BindingResult result) throws Exception{
+		
+		if(result.hasErrors()) {
+			dto.setAdmin_profileImg("");
+		}
+		
+		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
+		MultipartFile files = mr.getFile("admin_profileImg");
+		String filename = files.getOriginalFilename();
+		
+		if(filename == null || filename.trim().equals("")) {
+			req.setAttribute("msg", "이미지를 첨부해주세요");
+			req.setAttribute("url", "fileUpload_ok.do");
+		}
+		HttpSession session = req.getSession();
+		String upPath = "C:\\admin";
+		File target = new File(upPath, filename);
+		try {
+			files.transferTo(target);
+		}catch(IOException e) {
+			req.setAttribute("msg", "이미지 업로드 실패");
+			req.setAttribute("url", "fileUpload_ok.do");
+		}
+		session.setAttribute("upPath", upPath);
+		
+		dto.setAdmin_profileImg(filename); 
+		dto.setAdmin_name(req.getParameter("admin_name"));
+		dto.setAdmin_id(req.getParameter("admin_id"));
+		dto.setAdmin_passwd(req.getParameter("admin_passwd"));
+		dto.setAdmin_email(req.getParameter("admin_email"));
+		
+		//열린 세션에 adto라는 이름에 위의 관리자계정 등록 값dto를 저장
+		session.setAttribute("adto", dto);
+		
 		int res = adminMapper.adminUpdate(dto);
 		
 		if(res>0) {
@@ -353,7 +379,19 @@ public class AdminController {
 		
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/memberEmail.do", produces = "application/text; charset=utf8" )
+	public String memberEmail(HttpServletRequest req) {
 		
+
+		String member_id = (String)req.getParameter("qna_writer");
+		
+		MemberDTO dto = memberMapper.getMemberId(member_id);
+		
+		String member_email = dto.getMember_email();
+		
+		return member_email;
+	}
 	}
 
 

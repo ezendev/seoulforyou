@@ -114,6 +114,12 @@ public class AdminMapper {
 	}
 
 
+	public int adminEmail(EmailDTO dto) {
+		int res = sqlSession.insert("adminEmail", dto);
+		return res;
+	}
+
+
 	
 
 }

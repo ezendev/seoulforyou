@@ -32,7 +32,7 @@
 	</select>
 	
 	<select id="listQna2" resultType="QnaDTO">
-		select qna_no, qna_subject, qna_content, qna_regdate 
+		select qna_no, qna_subject, qna_content, qna_regdate, qna_writer 
 		from qna where brddeleteflag = 'Y'
 		order by qna_no
 	</select>
