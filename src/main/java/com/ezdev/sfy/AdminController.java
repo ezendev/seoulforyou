@@ -2,14 +2,10 @@ package com.ezdev.sfy;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,9 +29,7 @@ import com.ezdev.sfy.dto.QnaDTO;
 import com.ezdev.sfy.service.AdminMapper;
 import com.ezdev.sfy.service.AdminTempMapper;
 import com.ezdev.sfy.service.MemberMapper;
-import com.ezdev.sfy.service.MyRouteMapper;
 import com.ezdev.sfy.service.QnaMapper;
-
 // @Controller -> Url, @Service ->처리, @Repository -> dao, @Component -> 구성, @RestController -> url과 ajax
 //12.05재수정입니다..
 @Controller
@@ -53,10 +47,14 @@ public class AdminController {
 	@Autowired
 	AdminTempMapper adminTempMapper;
 	
+
+	
 	//top.jsp 로고 -> 관리자페이지
 	@RequestMapping("/admin.do")
-
 	public String admin(HttpSession session, HttpServletRequest req) {
+		
+		
+		
 		
 		AdminDTO dto = (AdminDTO)session.getAttribute("adto");
 		String profile_img = dto.getAdmin_profileImg();
@@ -65,8 +63,6 @@ public class AdminController {
 		String admin_id = dto.getAdmin_id(); //프로필 수정 페이지에 admin_id를 통하여 리스트 얻기 위해
 		String admin_passwd = dto.getAdmin_passwd();
 		String admin_email = dto.getAdmin_email();
-		
-		
 		session.setAttribute("admin_no", admin_no);
 		session.setAttribute("profile_img", profile_img); 
 		session.setAttribute("admin_id", admin_id);
@@ -75,17 +71,13 @@ public class AdminController {
 		session.setAttribute("admin_email", admin_email);
 		//참고로 이때 profile_img는 업로드 된 이미지의 이름일뿐이다
 		
-		
 		// 1. 2주간 회원가입자 수 집계
 		int[] memberChartArr = adminMapper.countMemberByWeek();
 		session.setAttribute("memberChartValue", memberChartArr);
 		
-		
 		// 2. 요일별 리뷰갯수가 들어갈 배열
 		int[] reviewChartArr = adminMapper.countReviewByWeek();
 		session.setAttribute("reviewChartValue", reviewChartArr);
-		
-
 
 		// 3. 루트테마별 갯수가 들어갈 배열
 		int[] routeChartArr = new int[5];
@@ -101,8 +93,6 @@ public class AdminController {
 			routeChartArr[i] = num;
 		}
 		session.setAttribute("routeChartValue", routeChartArr);
-		
-		
 		return "admin/index";
 	}
 	@RequestMapping("/Sample.do")
@@ -323,7 +313,40 @@ public class AdminController {
 	return "admin/profile";
 	}
 	@RequestMapping("/admin_update.do")
-	public String adminUpdate(HttpServletRequest req, @ModelAttribute AdminDTO dto) {
+	public String adminUpdate(HttpServletRequest req, @ModelAttribute AdminDTO dto,  BindingResult result) throws Exception{
+		
+		if(result.hasErrors()) {
+			dto.setAdmin_profileImg("");
+		}
+		
+		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
+		MultipartFile files = mr.getFile("admin_profileImg");
+		String filename = files.getOriginalFilename();
+		
+		if(filename == null || filename.trim().equals("")) {
+			req.setAttribute("msg", "이미지를 첨부해주세요");
+			req.setAttribute("url", "fileUpload_ok.do");
+		}
+		HttpSession session = req.getSession();
+		String upPath = "C:\\admin";
+		File target = new File(upPath, filename);
+		try {
+			files.transferTo(target);
+		}catch(IOException e) {
+			req.setAttribute("msg", "이미지 업로드 실패");
+			req.setAttribute("url", "fileUpload_ok.do");
+		}
+		session.setAttribute("upPath", upPath);
+		
+		dto.setAdmin_profileImg(filename); 
+		dto.setAdmin_name(req.getParameter("admin_name"));
+		dto.setAdmin_id(req.getParameter("admin_id"));
+		dto.setAdmin_passwd(req.getParameter("admin_passwd"));
+		dto.setAdmin_email(req.getParameter("admin_email"));
+		
+		//열린 세션에 adto라는 이름에 위의 관리자계정 등록 값dto를 저장
+		session.setAttribute("adto", dto);
+		
 		int res = adminMapper.adminUpdate(dto);
 		
 		if(res>0) {
@@ -349,7 +372,22 @@ public class AdminController {
 		return "message";
 		
 	}
-}
+	
+	@ResponseBody
+	@RequestMapping(value="/memberEmail.do", produces = "application/text; charset=utf8" )
+	public String memberEmail(HttpServletRequest req) {
+		
+
+		String member_id = (String)req.getParameter("qna_writer");
+		
+		MemberDTO dto = memberMapper.getMemberId(member_id);
+		
+		String member_email = dto.getMember_email();
+		
+		return member_email;
+	}
+	}
+
 
 	
 

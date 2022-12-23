@@ -26,12 +26,16 @@ select * from admin where admin_id = #{admin_id}
 
 <update id="adminUpdate" parameterType="adminDTO">
 update admin set admin_name=#{admin_name}, admin_id=#{admin_id}, 
-admin_passwd=#{admin_passwd},admin_email=#{admin_email} where admin_no=#{admin_no}
+admin_passwd=#{admin_passwd},admin_email=#{admin_email}, admin_profileImg=#{admin_profileImg} where admin_no=#{admin_no}
 </update>
 
 <delete id="adminDelete" parameterType="adminDTO">
 delete from admin where admin_no = #{admin_no}
 </delete>
 
+<insert id="adminEmail" parameterType="emailDTO">
+insert into email values(#{senderName}, #{senderMail}, #{receiveMail}, #{subject}, #{message})
+
+</insert>
 
 </mapper>

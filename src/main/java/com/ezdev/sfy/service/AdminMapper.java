@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ezdev.sfy.dto.AdminDTO;
+import com.ezdev.sfy.dto.EmailDTO;
 
 
 @Service
@@ -109,6 +110,12 @@ public class AdminMapper {
 
 	public int adminDelete(AdminDTO dto) {
 		int res = sqlSession.delete("adminDelete", dto);
+		return res;
+	}
+
+
+	public int adminEmail(EmailDTO dto) {
+		int res = sqlSession.insert("adminEmail", dto);
 		return res;
 	}
 

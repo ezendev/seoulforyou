@@ -35,50 +35,62 @@
 				</div>
 			</div>
 		</div>
+		</div>
           
-        <!-- 목차항목입니다 -->
-        <div class="card mb-4">
-            <div class="card-header">
-                <i class="fas fa-table me-1"></i>
-                DataTable Example
-            </div>
-            <div class="card-body">
-                <table id="datatablesSimple">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
-                        </tr>
-                    </tfoot>
-                    <tbody>
-                        <tr>
-                            <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
-                            <td>61</td>
-                            <td>2011/04/25</td>
-                            <td>$320,800</td>
-                        </tr>
-                       </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </main>
+     		<div class="container-fluid px-4">
+                        <h1 class="mt-4">회원목록</h1><br>
+                        <div class="card mb-4"></div>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                DataTable Member
+                            </div>
+                            <div class="card-body">
+                                <table id="datatablesSimple">
+                                    <thead>
+                                        <tr>
+                                            <th>번호</th>
+                                            <th>이름</th>
+                                            <th>아이디</th>
+                                            <th>비밀번호</th>
+                                            <th>이메일</th>
+                                            <th>전화번호</th>
+                                        </tr>
+                                    </thead>
+                                     
+                                     <c:if test= "${empty listMember2}">
+                                     	<tr>
+                                     	<td colspan="6">등록된 회원이 없습니다</td>
+                                     	</tr>
+                                     </c:if>
+                                      <tfoot>
+                                        <tr>
+                                            <th>번호</th>
+                                            <th>이름</th>
+                                            <th>아이디</th>
+                                            <th>비밀번호</th>
+                                            <th>이메일</th>
+                                            <th>전화번호</th>
+                                        </tr>
+                                    </tfoot>
+                                     <tbody>
+                                         <c:forEach var="dto" items= "${listMember2}">	
+                                        <tr>
+                                            <td>${dto.member_no}</td>
+                                            <td>${dto.member_name}</td>
+                                            <td>${dto.member_id}</td>
+                                            <td>${dto.member_passwd}</td>
+                                            <td>${dto.member_email}</td>
+                                            <td>${dto.member_hp}</td>
+                                        </tr>
+                                        </c:forEach> 
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+		            
+		    </main>
 			                <footer class="py-4 bg-light mt-auto">
 			                    <div class="container-fluid px-4">
 			                        <div class="d-flex align-items-center justify-content-between small">
