@@ -270,7 +270,7 @@ function makeFavorite(){
 	            no: no
 	        },
 		  success: function (data) {
-			  $("#thumbnail").attr("src","/upload/"+data);
+			  $("#thumbnail").attr("src","https://ezdev-sfy.s3.ap-northeast-2.amazonaws.com/route/"+data);
 		    }
 		  })
 		  

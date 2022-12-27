@@ -5,10 +5,10 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property value="oracle.jdbc.driver.OracleDriver" name="driverClassName"/>
-		<property value="jdbc:oracle:thin:@localhost:1521:xe" name="url"/>
-		<property value="bigdata02" name="username"/>
-		<property value="bigdata02" name="password"/>
+		<property value="com.mysql.cj.jdbc.Driver" name="driverClassName"/>
+		<property value="jdbc:mysql://localhost:3306/ezdev?serverTimezone=UTC" name="url"/>
+		<property value="bigdata" name="username"/>
+		<property value="1234" name="password"/>
 	</bean>
 	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

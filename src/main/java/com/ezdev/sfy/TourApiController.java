@@ -30,7 +30,7 @@ public class TourApiController {
 	//임시 db 페이지로 가는 mapping -> bottom.jsp 인스타그램 아이콘
 		@RequestMapping("/dbTemp.do")
 		public String dbTemp(){
-			return "dbTemp";
+			return "admin/dbTemp";
 		}
 		
 		//db 저장하는 mapping

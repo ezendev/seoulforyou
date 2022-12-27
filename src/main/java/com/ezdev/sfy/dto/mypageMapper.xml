@@ -19,28 +19,28 @@
 <update id="insertFriendMe" parameterType="java.util.Map" >
 	update mypage
 		set mypage_friend =
-			mypage_friend||#{friend_no}||CHR(044)
+			concat(ifnull(mypage_friend, ''),Ifnull(#{friend_no}, ''),CHAR(044 USING ASCII))
 	where mem_no = #{no}
 </update>
 
 <update id="insertFriendYou" parameterType="java.util.Map" >
 	update mypage
 		set mypage_friend =
-			mypage_friend||#{no}||CHR(044)
+			concat(ifnull(mypage_friend, ''),Ifnull(#{no}, ''),CHAR(044 USING ASCII))
 	where mem_no = #{friend_no}
 </update>
 
 <update id="deleteFriend" parameterType="java.util.Map">
 	update mypage
 		set mypage_friend =
-		replace(mypage_friend, #{friend_no}||CHR(044), '')
+		replace(mypage_friend, Concat(Ifnull(#{friend_no}, ''),CHAR(044 USING ASCII)), '')
 	where mem_no = #{no}
 </update>
 
 <select id="listMypageMember" parameterType="java.util.Map" resultType="memberDTO">
- select * from (select rownum rn, A.* from 
-			(select * from member order by member_no asc)A) 
-				where rn between #{start} and #{end}
+select *from(select @rownum:=@rownum+1  rn, A.* from (select * from member order by member_no asc) A, (select @rownum := 0) R
+ where 1=1) list
+<![CDATA[ where rn >= #{start} and rn <=#{end} ]]> 
 </select>
 <select id="listMypageMemberCount" resultType="Integer">
  select count(*) from member
@@ -48,17 +48,20 @@
 <select id="findMember" parameterType="java.util.Map" resultType="memberDTO">
 		${sql}
 	</select>
-
 <update id="updateFavorite" parameterType="java.util.Map" >
-update mypage
-	set mypage_favorite_tour = mypage_favorite_tour||#{tour_no, jdbcType=NUMERIC}||','
-	where mem_no = #{no, jdbcType=NUMERIC}
+update mypage set mypage_favorite_tour =
+	case when mypage_favorite_tour is null then CONCAT(#{tour_no}, ',')
+	else CONCAT(mypage_favorite_tour, #{tour_no}, ',')
+	end
+where mem_no = #{no}
 </update>
 
 <update id="updateRouteFavorite" parameterType="java.util.Map" >
-update mypage
-	set mypage_favorite_route = mypage_favorite_route||#{route_no, jdbcType=NUMERIC}||','
-	where mem_no = #{no, jdbcType=NUMERIC}
+update mypage set mypage_favorite_route =
+	case when mypage_favorite_route is null then CONCAT(#{route_no}, ',')
+	else  CONCAT(mypage_favorite_route, #{route_no}, ',')
+	end
+where mem_no = #{no}
 </update>
 
 <update id="deleteFavorite" parameterType="java.util.Map">
@@ -75,9 +78,9 @@ update mypage
 
 <!-- review -->
 <select id="listReview" parameterType="java.util.Map" resultType="reviewDTO">
-select * from (select rownum rn, B.* from
-              (select * from review where mem_no = #{no} order by review_no asc)B)
-              where rn between #{start} and #{end}
+select *from(select @rownum:=@rownum+1  rn, A.* from (select * from review where mem_no = #{no} order by review_no desc) A, (select @rownum := 0) R
+ where 1=1) list
+<![CDATA[ where rn >= #{start} and rn <=#{end} ]]> 
 </select>
 <select id="listReviewCount" resultType="Integer">
  select count(*) from review where mem_no = #{no}
@@ -91,13 +94,13 @@ select * from (select rownum rn, B.* from
  select count(*) from route where mem_no = #{no} and route_hashtag=#{route_hashtag}
 </select>
 <select id="listMyroute" resultType="myRouteDTO" parameterType="java.util.Map">
- select * from (select rownum rn, A.* from 
-	(select * from route where mem_no = #{no} order by route_no desc)A) 
-		where rn between #{start} and #{end} 
+select *from(select @rownum:=@rownum+1  rn, A.* from (select*from route where mem_no=#{no} order by route_no desc) A, (select @rownum := 0) R
+ where 1=1) list
+<![CDATA[ where rn >= #{start} and rn <=#{end} ]]> 
 </select>
 <select id="filterMyroute" resultType="myRouteDTO" parameterType="java.util.Map">
- select * from (select rownum rn, A.* from 
-	(select * from route where mem_no = #{no} and route_hashtag = #{route_hashtag, jdbcType=VARCHAR} order by route_no desc)A) 
-		where rn between #{start, jdbcType=NUMERIC} and #{end, jdbcType=NUMERIC} 
+select *from(select @rownum:=@rownum+1  rn, A.* from (select * from route where mem_no = #{no} and route_hashtag = #{route_hashtag, jdbcType=VARCHAR} order by route_no desc) A, (select @rownum := 0) R
+ where 1=1) list
+<![CDATA[ where rn >= #{start, jdbcType=NUMERIC} and rn <=#{end, jdbcType=NUMERIC} ]]> 
 </select>
 </mapper>

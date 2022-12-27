@@ -5,23 +5,26 @@
 
 <mapper namespace="com.ezdev.sfy.tourMapper">
 	<select id="listTour" resultType="tourDTO" parameterType="java.util.Map">
-		select * from (select rownum rn, A.* from(select * from tour order by tour_no)A)
-		where rn between #{start} and #{end}
+		select *from(select @rownum:=@rownum+1  rn, A.* from (select * from tour order by tour_no) A, (select @rownum := 0) R
+	 where 1=1) list
+	<![CDATA[ where rn >= #{start} and rn <=#{end} ]]> 
 	</select>
 	
 	<select id="listTourByRegion" resultType="tourDTO" parameterType="java.util.Map">
-      select * from (select rownum rn, A.* from(select * from tour where tour_addr like '%${region}%' order by tour_no)A)
-		where rn between #{start} and #{end}
+     select *from(select @rownum:=@rownum+1  rn, A.* from (select * from tour where tour_addr like '%${region}%' order by tour_no) A, (select @rownum := 0) R
+	 where 1=1) list
+	<![CDATA[ where rn >= #{start} and rn <=#{end} ]]> 
    </select>
    
    <select id="listTourByType" resultType="tourDTO" parameterType="java.util.Map">
-      select * from (select rownum rn, A.* from(select * from tour where tour_type = #{type})A)
-		where rn between #{start} and #{end}
+      select *from(select @rownum:=@rownum+1  rn, A.* from (select * from tour where tour_type = #{type}) A, (select @rownum := 0) R
+	 where 1=1) list
+	<![CDATA[ where rn >= #{start} and rn <=#{end} ]]> 
    </select>
-   
    <select id="listTourByRegionType" resultType="tourDTO" parameterType="java.util.Map">
-      select * from (select rownum rn, A.* from(select * from tour where tour_addr like '%${region}%' and tour_type = #{type})A)
-		where rn between #{start} and #{end}
+     select *from(select @rownum:=@rownum+1  rn, A.* from (select * from tour where tour_addr like '%${region}%' and tour_type = #{type}) A, (select @rownum := 0) R
+	 where 1=1) list
+	<![CDATA[ where rn >= #{start} and rn <=#{end} ]]> 
    </select>
    
    <select id="getTour"  resultType="tourDTO" parameterType="Integer">

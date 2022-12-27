@@ -4,22 +4,10 @@
 <mapper namespace="com.ezdev.sfy.dto.adminTempMapper">
 
 <insert id="upsertAdminTemp" parameterType="AdminTempDTO">
-
- MERGE INTO AdminTemp
- USING DUAL
- ON (temp_qno = #{temp_qno})
- WHEN MATCHED THEN
- UPDATE SET 
- qna_reply_content = #{qna_reply_content}
- 
- WHEN NOT MATCHED THEN
- INSERT 
- (temp_no, qna_reply_content, temp_qno)
- VALUES
- (adminTemp_seq.nextval, #{qna_reply_content}, #{temp_qno})	
-
+insert into adminTemp(temp_no, qna_reply_content, temp_qno) 
+ values(nextval('adminTemp_seq'), #{qna_reply_content}, #{temp_qno}) 
+ on duplicate key update qna_reply_content = #{qna_reply_content};
 </insert>
-
 <!-- 임시저장 내용불러오기 -->
 <select id="getContent" resultType="AdminTempDTO">
 
@@ -27,5 +15,6 @@
  where temp_qno=#{qno}
 
 </select>
+
 
 </mapper>

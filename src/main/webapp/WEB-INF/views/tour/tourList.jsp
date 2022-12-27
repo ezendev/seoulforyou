@@ -388,6 +388,7 @@ function valueSetting(no, name, postal, addr, hp){
 	    linePath.push(coords);
 	    polyline.setPath(linePath);
 	    bounds.extend(coords);
+	    map.relayout();
 		map.setBounds(bounds);
 	    
 	    if(!polyline.getMap()) {

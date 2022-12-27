@@ -4,7 +4,7 @@
  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="com.ezdev.sfy.dto.reviewMapper">
 <insert id="insertReview" parameterType="reviewDTO">
-insert into review values(review_seq.nextval, #{review_route_no}, #{mem_no}, #{review_content}, #{review_star}, sysdate)
+insert into review values(nextval('review_seq'), #{review_route_no}, #{mem_no}, #{review_content}, #{review_star}, sysdate())
 </insert>
 <select id="getReview" parameterType="int" resultType="reviewDTO"> 
 select * from review where review_no = #{review_no}

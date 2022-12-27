@@ -32,28 +32,24 @@ public class AdminMapper {
 		String sql;
 		Map<String, String> map = new HashMap<>(); // 쿼리문에 넘겨줄 맵
 		List<Object> result = new ArrayList<>(); // 쿼리문 결과 넣을 list
-		Map<String, BigDecimal> resultMap = new HashMap<>(); // list안의 맵 꺼내올 곳
+		Map<String, Object> resultMap = new HashMap<>(); // list안의 맵 꺼내올 곳
 		int[] unionList = new int[14]; // 모든 값 합칠 곳
 		
 		// 지난주 ~ 이번주
-		for(int i=7; i>-7; --i) {
-			if(i != 0) {
-				sql = "select count(*) as \"" + i +"\" from member" + 
-				 		" where TRUNC(sysdate,'iw') +" + -i + "= member_regdate";
-			}else {
-				sql = "select count(*) as \"" + i +"\" from member" + 
-				 		" where TRUNC(sysdate,'iw') = member_regdate";
-			}
+		for(int i=14; i>0; --i) {
+			sql = "select count(*) as \"" + i +"\" from member" + 
+				 	" where date_format(date_sub(now(), interval (weekday(now()) + \"" + (i-7) + "\")day), '%y-%m-%d') = date_format(member_regdate, '%y-%m-%d')";	
+		
 			map.put("sql", sql);
 			
 			// sql 쿼리 날려서 결과값인 맵 꺼내오기
 			result = sqlSession.selectList("countMemberByWeek", map);
-			resultMap = (Map<String, BigDecimal>) result.get(0); //{7=0, 5=1, ... -5=1, -6=0}
+			resultMap = (Map<String, Object>) result.get(0); //{7=0, 5=1, ... -5=1, -6=0}
 			
 			// 값만 배열에 저장하기
-			unionList[i+7-1] = resultMap.get(String.valueOf(i)).intValue(); // [0, 1, ... 1, 0]			
-			}
-		
+			unionList[i-1] = ((Long) resultMap.get(String.valueOf(i))).intValue(); // [0, 1, ... 1, 0]			
+			
+		}
 		
 		return unionList;
 	}
@@ -65,23 +61,23 @@ public class AdminMapper {
 		String sql;
 		Map<String, String> map = new HashMap<>(); // 쿼리문에 넘겨줄 맵
 		List<Object> result = new ArrayList<>(); // 쿼리문 결과 넣을 list
-		Map<String, BigDecimal> resultMap = new HashMap<>(); // list안의 맵 꺼내올 곳
+		Map<String, Object> resultMap = new HashMap<>(); // list안의 맵 꺼내올 곳
 		int[] unionList = new int[7]; // 모든 값 합칠 곳
 		
 		// 이번주
-		for(int i=7; i>0; --i) {
+		for(int i=0; i>-7; --i) {
 			sql = "select count(*) as \"" + i +"\" from review" + 
-			 		" where TRUNC(sysdate,'iw') +" + i + "= review_regdate";
+				 	" where date_format(date_sub(now(), interval (weekday(now()) + \"" + i + "\")day), '%y-%m-%d') = date_format(review_regdate, '%y-%m-%d')";
 			
 			map.put("sql", sql);
 			
 			// sql 쿼리 날려서 결과값인 맵 꺼내오기
 			result = sqlSession.selectList("countReviewByWeek", map);
-			resultMap = (Map<String, BigDecimal>) result.get(0); //{7=0, 5=1, ... 1=0}
+			resultMap = (Map<String, Object>) result.get(0); //{7=0, 5=1, ... -5=1, -6=0}
 			
 			// 값만 배열에 저장하기
-			unionList[i-1] = resultMap.get(String.valueOf(i)).intValue(); // [0, 1, ... 1, 0]			
-			}
+			unionList[i+6] = ((Long) resultMap.get(String.valueOf(i))).intValue(); // [0, 1, ... 1, 0]			
+		}
 
 		return unionList;
 	}

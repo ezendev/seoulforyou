@@ -25,6 +25,7 @@ import com.ezdev.sfy.dto.QnaDTO;
 import com.ezdev.sfy.dto.ReviewDTO;
 import com.ezdev.sfy.service.MyRouteMapper;
 import com.ezdev.sfy.dto.TourDTO;
+import com.ezdev.sfy.service.AWSs3Mapper;
 import com.ezdev.sfy.service.ChatMapper;
 import com.ezdev.sfy.service.MemberMapper;
 import com.ezdev.sfy.service.MypageMapper;
@@ -51,6 +52,8 @@ public class MypageController {
 	
 	@Autowired
 	TourMapper tourMapper;	
+	@Autowired
+	AWSs3Mapper s3;
 	
 	@RequestMapping("/mypage.do")
 	public String mypage(HttpServletRequest req, HttpSession session) {
@@ -85,8 +88,8 @@ public class MypageController {
 		int no =(int) session.getAttribute("nowUserNo");
 		//테마로 필터링
 		int countRow =0;
-		if(route_hashtag == null ||route_hashtag.trim()=="") {
-			route_hashtag="0";
+		if(route_hashtag == null||route_hashtag.trim().equals("")||route_hashtag =="0" ||route_hashtag.trim().equals("0")) {
+			route_hashtag = "0";
 			countRow = mypageMapper.getCountRoute(no);
 		}else {
 			countRow = mypageMapper.getCountRouteFilter(no, route_hashtag);
@@ -106,17 +109,16 @@ public class MypageController {
 		int startPage=(currentPage -1)/pageBlock*pageBlock+1;
 		int endPage = startPage +pageBlock -1;
 		if(endPage> pageCount)endPage = pageCount;
-		
 		List<MyRouteDTO> list= null;
-		if(!route_hashtag.trim().equals("0")) {
+		if(route_hashtag.trim()=="0" || route_hashtag.trim()== null) {
+			list = mypageMapper.listMyroute(no, startRow, endRow);
+		}else if(route_hashtag.trim() !="0" || route_hashtag.trim()!= null){
 			Map<String, Object>filterMap = new Hashtable<>();
 			filterMap.put("no", no);
 			filterMap.put("start", startRow);
 			filterMap.put("end", endRow);
 			filterMap.put("route_hashtag", route_hashtag);
 			list = mypageMapper.filterMyroute(filterMap);
-		}else{
-			list = mypageMapper.listMyroute(no, startRow, endRow);
 		}
 		
 		req.setAttribute("route_hashtag", route_hashtag);
@@ -146,9 +148,10 @@ public class MypageController {
 			tour_no=(int) Integer.parseInt(array[i]);
 			TourDTO rdto =tourMapper.getTour(tour_no);
 			routeView.add(rdto);
-		}
-		
+		}	
+		System.out.println(dto.getRoute_no());
 		Map<String, Object> map = new HashMap<String, Object>();
+			map.put("no", dto.getRoute_no());
 			map.put("subject", dto.getRoute_subject());
 			map.put("readcount", dto.getRoute_readcount());
 			map.put("content", dto.getRoute_content());
@@ -315,7 +318,10 @@ public class MypageController {
 				int tno = Integer.parseInt(list_tour);
 				if(tno == tour_no) { //즐겨찾기 해제
 					String update_mytour = mytour.replace(String.valueOf(tour_no)+",", "");
-					map.put("tour", update_mytour);
+					if(update_mytour.trim().equals("")) {
+						map.put("tour", null);
+					}else {
+					map.put("tour", update_mytour);}
 				    map.put("no", no);
 				    res = mypageMapper.deleteFavorite(map);
 					}
@@ -326,12 +332,15 @@ public class MypageController {
 			String myroute= mpdto.getMypage_favorite_route();
 			String[]arr = myroute.split(",");
 			
-	         //현재 route_no가 즐겨찾기 안에 있는지 검색
+			//현재 route_no가 즐겨찾기 안에 있는지 검색
 	         for(String list_route : arr) {
 	            int rno = Integer.parseInt(list_route);
 	            if(rno == route_no) { //즐겨찾기 해제
 	               String update_myroute = myroute.replace(String.valueOf(route_no)+",", "");
-	               map.put("route", update_myroute);
+	               if(update_myroute.trim().equals("")) {
+						map.put("route", null);
+					}else {
+					map.put("route", update_myroute);}
 	               map.put("no", no);
 	               res = mypageMapper.deleteRouteFavorite(map);
 	               
@@ -399,7 +408,6 @@ public class MypageController {
 		return "message";
 	
 	}
-	
 	
 	@RequestMapping("/mypage_friend.do")
 	public String mypage_friend(HttpServletRequest req, HttpSession session) {
@@ -583,7 +591,11 @@ public class MypageController {
 				
 				if(tno == tour_no) { //즐겨찾기 해제
 					String update_tour = tour.replace(String.valueOf(tour_no)+",", "");
+					if(update_tour.trim().equals("")) {
+						map.put("tour", null);
+					}else {
 					map.put("tour", update_tour);
+					}
 				    map.put("no", no);
 				    int res = mypageMapper.deleteFavorite(map);
 				    
@@ -660,7 +672,11 @@ public class MypageController {
 					
 					if(rno == route_no) { //즐겨찾기 해제
 						String update_route = route.replace(String.valueOf(route_no)+",", "");
+						if(update_route.trim().equals("")) {
+							map.put("route", null);
+						}else {
 						map.put("route", update_route);
+						}
 					    map.put("no", no);
 					    int res = mypageMapper.deleteRouteFavorite(map);
 					    

@@ -124,6 +124,7 @@
 			    linePath.push(coords);
 			    polyline.setPath(linePath);
 			    bounds.extend(coords);
+			    map.relayout();
 				map.setBounds(bounds);
 			    
 			    if(!polyline.getMap()) {

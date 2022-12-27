@@ -5,14 +5,14 @@
 
 <mapper namespace="com.ezen.sfy.dto.qnaMapper">
 	<select id="listBoard" parameterType="java.util.Map" resultType="QnaDTO">
-		select * from (select rownum rn, A.* from 
-			(select * from qna order by qna_re_step asc)A) 
-				where rn between #{start} and #{end}
+		select *from(select @rownum:=@rownum+1  rn, A.* from (select * from qna order by qna_re_step asc) A, (select @rownum := 0) R
+	 where 1=1) list
+	<![CDATA[ where rn >= #{start} and rn <=#{end} ]]> 
 	</select>
 	
 	<insert id="insertBoard" parameterType="QnaDTO">
-		insert into qna values(qna_seq.nextval,#{qna_writer},#{qna_subject},
-							#{qna_passwd},sysdate,0,#{qna_content},#{qna_re_step},#{qna_re_level},'',0,'Y')
+		insert into qna (qna_no, qna_writer, qna_subject, qna_passwd, qna_regdate, qna_readcount, qna_content, qna_re_step, qna_re_level, brddeleteflag)values(nextval('qna_seq'),#{qna_writer},#{qna_subject},
+							#{qna_passwd},sysdate(),0,#{qna_content},#{qna_re_step},#{qna_re_level},'Y')
 	</insert>
 	
 	<update id="plusRe_step" parameterType="java.util.Map">
@@ -36,9 +36,8 @@
 		from qna where brddeleteflag = 'Y'
 		order by qna_no
 	</select>
-	
-	<!-- 문의 답변 내용 수정 -->
-	<update id="tempOk" parameterType="QnaDTO"> 
+<!-- 문의 답변 내용 수정 -->
+	<update id="tempOk" parameterType="QnaDTO">
 		update qna set qna_reply_content = #{qna_reply_content} where
 		qna_subject = #{qna_subject}
 	</update>
@@ -66,9 +65,9 @@
 	</select>
 	
 	<select id="listBoardById" parameterType="java.util.Map" resultType="QnaDTO">
-		select * from (select rownum rn, A.* from 
-			(select * from qna where qna_writer = #{id} order by qna_re_step asc)A) 
-				where rn between #{start} and #{end}
+	select *from(select @rownum:=@rownum+1  rn, A.* from (select * from qna where qna_writer = #{id} order by qna_re_step asc) A, (select @rownum := 0) R
+	 where 1=1) list
+	<![CDATA[ where rn >= #{start} and rn <=#{end} ]]> 
 	</select>
 	
 	</mapper>

@@ -5,7 +5,7 @@
 
 <insert id="insertAdmin" parameterType="adminDTO">
  insert into admin values
- (admin_seq.nextval, #{admin_id}, #{admin_name}, #{admin_passwd}, #{admin_email}, #{admin_profileImg})	
+ (nextval('admin_seq'), #{admin_id}, #{admin_name}, #{admin_passwd}, #{admin_email}, #{admin_profileImg})
 </insert>
 
 <select id="countMemberByWeek" resultType="java.util.Map" parameterType="java.util.Map">

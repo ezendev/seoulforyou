@@ -32,7 +32,7 @@
 	            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <!-- fa-user로 기본 이미지 구현 -->
                 <!-- <i class="fas fa-user fa-fw"></i> 기본 아이콘 -->
-				<img id="profile_img" class="profile_img" src="/admin/${profile_img}" style="border-radius:50%; width:40px; height:40px" />                   
+				<img id="profile_img" class="profile_img" src="https://ezdev-sfy.s3.ap-northeast-2.amazonaws.com/admin/${profile_img}" style="border-radius:50%; width:40px; height:40px" />                   
 	            </ul>
         </nav>
         
@@ -62,6 +62,7 @@
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="table_member.do">회원리스트</a>
                                     <a class="nav-link" href="table_qna.do">문의리스트</a>
+                                     <a class="nav-link" href="dbTemp.do">관광API</a>
                                 </nav>
                             </div>
                            <div class="dropdown-divider" style="border-color: gray"></div>
