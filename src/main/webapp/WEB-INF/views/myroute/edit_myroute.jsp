@@ -84,7 +84,7 @@
 <body>
 <main>
 <div class=container>
-<form name="mr" action="myRouteAfter.do" method="post">
+<form name="mr" action="myroute_editRoute_after.do" method="post">
 <form name="mrs" method="post">
 
 <section class="py-5 text-center container" style="height:275px">
@@ -98,7 +98,7 @@
     <!-- 테마 선택 -->
 	
 	    <select class="form-select" aria-label="Default select example" name="trip_thema" id="trip_thema" style="width:250px">
-			<option value="0" selected>#여행테마</option>
+			<option value="${getRoute.route_hashtag}" selected>#${getRoute.route_hashtag}</option>
 				<option value="힐링" <c:if test="${trip_thema=='힐링'}">selected</c:if>>#힐링</option>
 				<option value="미식" <c:if test="${trip_thema=='미식'}">selected</c:if>>#미식</option>
 				<option value="한류" <c:if test="${trip_thema=='한류'}">selected</c:if>>#한류</option>
@@ -110,7 +110,7 @@
     <!-- 지역 선택 -->
     
 		<select class="form-select" aria-label="Default select example" name="region" id="region" style="width:250px">
-			<option value="0" selected>세부지역(구)</option>
+			<option value="${getRoute.route_region}" selected>세부지역(구)</option>
 				<option value="9"<c:if test="${region=='9'}">selected</c:if>>강남구</option>
 				<option value="11"<c:if test="${region=='11'}">selected</c:if>>강동구</option>
 				<option value="23"<c:if test="${region=='23'}">selected</c:if>>강북구</option>
@@ -170,7 +170,7 @@
     	</div>
 	<!-- 버튼-->
 		<div class="button_col" align="right">
-			<input class="btn btn-dark" type="button" value="초기화" onclick="location.href='myRoute.do'" style="width:70px">
+			<input class="btn btn-dark" type="button" value="초기화" onclick="location.href='myroute_editRoute.do?route_no=${getRoute.route_no}'" style="width:70px">
 	    	<input class="btn btn-dark" type="button" value="저장" onclick="route_check()" style="width:70px">
 	    </div>
 	    
@@ -343,8 +343,8 @@
 				<div id="map" style="width:100%;height:550px;"></div>
 					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7dfa24ca49ecafb1d1c5352143d4a441&libraries=services,clusterer,drawing"></script>				        
 					<!-- api는 head, body 상관없지만 코드 실행보다는 먼저 선언 -->	
-					<%@ include file ="kakaoMap.jsp" %>
-					<button class="btn btn-outline-primary" type="button" onclick="setBounds()"  style="width:100%; margin-top:10px">경로 확인</button>
+					<%@ include file ="edit_kakaoMap.jsp" %>
+					
 		  	</div>
 		  				
 			</div>

@@ -4,11 +4,7 @@
 
 <script type="text/javascript">
 	//enter키 막음
-	document.addEventListener('keydown', function(event){
-		if(event.keyCode ===13){
-			event.preventDefault();
-			};
-		}, true);
+	
 
 	function routeAfter_check(){
 		if(mra.route_subject.value==""){

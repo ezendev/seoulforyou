@@ -61,7 +61,7 @@ public class QnaMapper {
 		return sqlSession.delete("deleteQna", dto);
 	}
 	public int deleteQna2(int qna_no) {
-		return sqlSession.delete("deleteQna", qna_no);
+		return sqlSession.delete("deleteQna2", qna_no);
 	}
 	public List<QnaDTO> listOfQna(){
 		return sqlSession.selectList("listOfQna");
