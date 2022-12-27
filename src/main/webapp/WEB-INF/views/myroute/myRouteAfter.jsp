@@ -25,12 +25,7 @@
 		document.routeAfter.submit()
 	}
 	
-	//enter키 막음
-	document.addEventListener('keydown', function(event){
-		if(event.keyCode ===13){
-			event.preventDefault();
-			};
-		}, true);
+	
 
 </script>
 
