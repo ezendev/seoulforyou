@@ -136,7 +136,6 @@ public class QnaController {
 		}
 		return "message";
 	}
-
 	@RequestMapping(value="/qnaDelete.do")
 	public String qna_delete(HttpServletRequest req, @ModelAttribute QnaDTO dto) {
 		int res = boardMapper.deleteQna(dto);

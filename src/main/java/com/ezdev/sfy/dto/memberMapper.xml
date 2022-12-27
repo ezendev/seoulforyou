@@ -34,18 +34,18 @@
 					member_hp=#{member_hp,jdbcType=VARCHAR} where member_no = #{member_no}
 	</update>
 
-	<select id="listMember2" resultType="memberDTO">
+	<select id="listOfMember" resultType="memberDTO">
 		select member_no, member_name, member_id, member_passwd, member_email,
 		member_hp from member order by member_no  
 	</select>
 	
-	<update id="updateMember2" parameterType="memberDTO">
+	<update id="updateListMember" parameterType="memberDTO">
 		update member set member_name=#{member_name},member_id=#{member_id},
 		member_passwd=#{member_passwd},member_email=#{member_email},
 		member_hp=#{member_hp} where member_no = #{member_no}	
 	</update>
 	
-	<delete id="deleteMember2" parameterType="memberDTO">
+	<delete id="deleteListMember" parameterType="memberDTO">
 	  delete from member where member_no = #{member_no} 
 	</delete>
 

@@ -53,14 +53,11 @@ public class AdminController {
 	@RequestMapping("/admin.do")
 	public String admin(HttpSession session, HttpServletRequest req) {
 		
-		
-		
-		
 		AdminDTO dto = (AdminDTO)session.getAttribute("adto");
 		String profile_img = dto.getAdmin_profileImg();
 		int admin_no = dto.getAdmin_no();
 		String admin_name = dto.getAdmin_name();
-		String admin_id = dto.getAdmin_id(); //프로필 수정 페이지에 admin_id를 통하여 리스트 얻기 위해
+		String admin_id = dto.getAdmin_id();
 		String admin_passwd = dto.getAdmin_passwd();
 		String admin_email = dto.getAdmin_email();
 		session.setAttribute("admin_no", admin_no);
@@ -69,7 +66,6 @@ public class AdminController {
 		session.setAttribute("admin_name", admin_name);
 		session.setAttribute("admin_passwd", admin_passwd);
 		session.setAttribute("admin_email", admin_email);
-		//참고로 이때 profile_img는 업로드 된 이미지의 이름일뿐이다
 		
 		// 1. 2주간 회원가입자 수 집계
 		int[] memberChartArr = adminMapper.countMemberByWeek();
@@ -93,11 +89,11 @@ public class AdminController {
 			routeChartArr[i] = num;
 		}
 		session.setAttribute("routeChartValue", routeChartArr);
+		
+		List<MemberDTO> list = memberMapper.listOfMember();
+		req.setAttribute("listOfMember", list);
+		
 		return "admin/index";
-	}
-	@RequestMapping("/Sample.do")
-	public String sample() {
-		return "admin/Sample";
 	}
 	
 	@RequestMapping("/charts.do")
@@ -107,7 +103,7 @@ public class AdminController {
 	
 	@RequestMapping("/table_member.do")
 	public String tableMember(HttpServletRequest req) {
-		List<MemberDTO> list = memberMapper.listMember2();
+		List<MemberDTO> list = memberMapper.listOfMember();
 		req.setAttribute("listMember2", list);
 		
 		
@@ -115,7 +111,7 @@ public class AdminController {
 	}
 	@RequestMapping("/member_update.do")
 	public String updateMember(HttpServletRequest req, @ModelAttribute MemberDTO dto) {
-		int res = memberMapper.updateMember2(dto);
+		int res = memberMapper.updateListMember(dto);
 		 
 		if(res>0) {
 			req.setAttribute("msg", "회원 정보 수정완료");
@@ -129,7 +125,7 @@ public class AdminController {
 	}
 	@RequestMapping("/member_delete.do")
 	public String deleteMember(HttpServletRequest req, @ModelAttribute MemberDTO dto, BindingResult result) {
-		int res = memberMapper.deleteMember2(dto);
+		int res = memberMapper.deleteListMember(dto);
 		
 		if(res>0) {
 			req.setAttribute("msg", "회원 정보 삭제완료");
@@ -145,8 +141,8 @@ public class AdminController {
 	
 	@RequestMapping("/table_qna.do")
 	public String qnaList(HttpServletRequest req) {
-		List<QnaDTO> qlist = qnaMapper.listQna2();
-		req.setAttribute("listQna2", qlist);
+		List<QnaDTO> qlist = qnaMapper.listOfQna();
+		req.setAttribute("listOfQna", qlist);
 		
 		return "admin/table_qna";
 	}
@@ -158,7 +154,7 @@ public class AdminController {
 	
 	//파일 업로드에 대해 폴더에 저장   
 	@RequestMapping("/admin_input_ok.do")
-	public String fileUpload(HttpServletRequest req, @ModelAttribute AdminDTO dto, BindingResult result) throws Exception{
+	public String adminInput(HttpServletRequest req, @ModelAttribute AdminDTO dto, BindingResult result) throws Exception{
 
 		if(result.hasErrors()) {
 			dto.setAdmin_profileImg("");
@@ -173,7 +169,7 @@ public class AdminController {
 			req.setAttribute("url", "fileUpload_ok.do");
 		}
 		HttpSession session = req.getSession();
-		String upPath = "C:\\admin";
+		String upPath = "C:\\admin"; //spring server에 등록
 		File target = new File(upPath, filename);
 		try {
 			files.transferTo(target);
@@ -181,7 +177,7 @@ public class AdminController {
 			req.setAttribute("msg", "이미지 업로드 실패");
 			req.setAttribute("url", "fileUpload_ok.do");
 		}
-		session.setAttribute("upPath", upPath);
+		session.setAttribute("upPath", upPath); //이미지 저장경로를 세션에 저장
 		
 		dto.setAdmin_profileImg(filename); 
 		dto.setAdmin_name(req.getParameter("admin_name"));
@@ -189,8 +185,8 @@ public class AdminController {
 		dto.setAdmin_passwd(req.getParameter("admin_passwd"));
 		dto.setAdmin_email(req.getParameter("admin_email"));
 		
-		//열린 세션에 adto라는 이름에 위의 관리자계정 등록 값dto를 저장
-		session.setAttribute("adto", dto);
+		
+		session.setAttribute("adto", dto); //열린 세션에 adto라는 이름에 위의 관리자계정 등록 값dto를 저장
 		
 		int res = adminMapper.insertAdmin(dto); 
 		if(res>0) {
@@ -205,7 +201,7 @@ public class AdminController {
 		}
 	
 	@RequestMapping("/admin_temp.do")
-	public String adminTemp(HttpServletRequest req, @ModelAttribute AdminTempDTO dto)  {
+	public String upsertAdminTemp(HttpServletRequest req, @ModelAttribute AdminTempDTO dto)  {
 		
 		int res = adminTempMapper.upsertAdminTemp(dto);
 		
@@ -250,9 +246,9 @@ public class AdminController {
 		}
 	}
 	
-	@RequestMapping("/admin_temp_delete.do")
-	public String tempDelete(HttpServletRequest req, @ModelAttribute QnaDTO dto) {
-		int res = adminTempMapper.tempDelete(dto);
+	@RequestMapping("/admin_replyContent_delete.do")
+	public String adminReplyContentDelete(HttpServletRequest req, @ModelAttribute QnaDTO dto) {
+		int res = adminTempMapper.adminReplyContentDelete(dto);
 		
 		if(res>0) {
 			req.setAttribute("msg", "답변완료 성공");

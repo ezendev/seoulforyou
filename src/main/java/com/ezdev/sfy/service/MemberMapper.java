@@ -27,11 +27,11 @@ public class MemberMapper {
 	public List<MemberDTO> listMember(){
 		return sqlSession.selectList("listMember");
 	}
-	public List<MemberDTO> listMember2(){
-		return sqlSession.selectList("listMember2");
+	public List<MemberDTO> listOfMember(){
+		return sqlSession.selectList("listOfMember");
 	}
-	public int updateMember2(MemberDTO dto) {
-		return sqlSession.update("updateMember2", dto);
+	public int updateListMember(MemberDTO dto) {
+		return sqlSession.update("updateListMember", dto);
 		
 	}
 //마이페이지에서 회원탈퇴 할때
@@ -39,8 +39,8 @@ public class MemberMapper {
 		return sqlSession.delete("deleteMember", member_no);
 	}
 //관리자페이지에서 회원탈퇴
-	public int deleteMember2(MemberDTO dto) {
-		return sqlSession.delete("deleteMember2", dto);
+	public int deleteListMember(MemberDTO dto) {
+		return sqlSession.delete("deleteListMember", dto);
 	}
 	/*
 	public  List<MemberDTO> findMember(Map<String, String> map){

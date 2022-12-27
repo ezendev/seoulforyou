@@ -31,18 +31,19 @@
 		select count(*) from qna
 	</select>
 	
-	<select id="listQna2" resultType="QnaDTO">
+	<select id="listOfQna" resultType="QnaDTO">
 		select qna_no, qna_subject, qna_content, qna_regdate, qna_writer 
 		from qna where brddeleteflag = 'Y'
 		order by qna_no
 	</select>
-
-	<update id="tempOk" parameterType="QnaDTO">
+	
+	<!-- 문의 답변 내용 수정 -->
+	<update id="tempOk" parameterType="QnaDTO"> 
 		update qna set qna_reply_content = #{qna_reply_content} where
 		qna_subject = #{qna_subject}
 	</update>
 	
-	<delete id="tempDelete" parameterType="String">
+	<delete id="adminReplyContentDelete" parameterType="String">
 	 update qna 
 	 set BRDDELETEFLAG = 'N'
 	 where qna_subject = #{qna_subject}
