@@ -33,7 +33,7 @@ public class AdminTempMapper {
 	}
 
 
-	public int tempDelete(QnaDTO dto) {
-		int res = sqlSession.delete("tempDelete", dto);
+	public int adminReplyContentDelete(QnaDTO dto) {
+		int res = sqlSession.delete("adminReplyContentDelete", dto);
 		return res;
 	}}

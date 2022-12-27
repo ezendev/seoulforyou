@@ -28,7 +28,7 @@
                                   </tr>
                               </thead>
                             
-                            <c:if test= "${empty listQna2}">
+                            <c:if test= "${empty listOfQna}">
                           	<tr>
                            	<td colspan="4">등록된 문의가 없습니다</td>
                           	</tr>
@@ -44,7 +44,7 @@
                             </tfoot>
                                     
                            <tbody>
-                           	 <c:forEach var="dto" items= "${listQna2}">
+                           	 <c:forEach var="dto" items= "${listOfQna}">
                                <tr>
                                    <td style="min-width:100px">${dto.qna_no}</td>
                                    <td style="min-width:300px">${dto.qna_subject}</td>
@@ -96,7 +96,7 @@
 					<input type="submit" class="btn btn-primary" value="전송" formaction="admin_temp_ok.do">
 					<button type="button" class="btn btn-primary" data-bs-target="#admin_mail" data-bs-toggle="modal" data-bs-dismiss="modal"
 					  		  onclick="MemberEmail()" >알람</button>
-					<input type="submit" class="btn btn-danger" value="삭제" formaction="admin_temp_delete.do" >
+					<input type="submit" class="btn btn-danger" value="삭제" formaction="admin_replyContent_delete.do" >
 					</div>
 					</form>
 					</div>

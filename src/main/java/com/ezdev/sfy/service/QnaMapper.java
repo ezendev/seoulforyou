@@ -64,8 +64,8 @@ public class QnaMapper {
 	public int deleteQna2(int qna_no) {
 		return sqlSession.delete("deleteQna", qna_no);
 	}
-	public List<QnaDTO> listQna2(){
-		return sqlSession.selectList("listQna2");
+	public List<QnaDTO> listOfQna(){
+		return sqlSession.selectList("listOfQna");
 	}
 
 	public int getCountById(String qna_writer) {
