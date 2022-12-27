@@ -26,6 +26,7 @@ import com.ezdev.sfy.dto.AdminDTO;
 import com.ezdev.sfy.dto.AdminTempDTO;
 import com.ezdev.sfy.dto.MemberDTO;
 import com.ezdev.sfy.dto.QnaDTO;
+import com.ezdev.sfy.service.AWSs3Mapper;
 import com.ezdev.sfy.service.AdminMapper;
 import com.ezdev.sfy.service.AdminTempMapper;
 import com.ezdev.sfy.service.MemberMapper;
@@ -46,6 +47,8 @@ public class AdminController {
 	
 	@Autowired
 	AdminTempMapper adminTempMapper;
+	@Autowired
+	AWSs3Mapper s3;
 	
 
 	
@@ -169,15 +172,14 @@ public class AdminController {
 			req.setAttribute("url", "fileUpload_ok.do");
 		}
 		HttpSession session = req.getSession();
-		String upPath = "C:\\admin"; //spring server에 등록
-		File target = new File(upPath, filename);
+		File target = new File(filename);
 		try {
 			files.transferTo(target);
 		}catch(IOException e) {
 			req.setAttribute("msg", "이미지 업로드 실패");
 			req.setAttribute("url", "fileUpload_ok.do");
 		}
-		session.setAttribute("upPath", upPath); //이미지 저장경로를 세션에 저장
+		s3.uploadFile("admin/"+filename, target);
 		
 		dto.setAdmin_profileImg(filename); 
 		dto.setAdmin_name(req.getParameter("admin_name"));
@@ -304,37 +306,46 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/profile.do")
-	public String profile() {
-	
+	public String profile(HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		String admin_id = (String)session.getAttribute("admin_id");
+		AdminDTO dto = adminMapper.getAdminId(admin_id);
+		session.setAttribute("getAdmin", dto);
 	return "admin/profile";
 	}
+	
 	@RequestMapping("/admin_update.do")
 	public String adminUpdate(HttpServletRequest req, @ModelAttribute AdminDTO dto,  BindingResult result) throws Exception{
+		HttpSession session = req.getSession();
+		String admin_id = (String)session.getAttribute("admin_id");
+		AdminDTO adto = adminMapper.getAdminId(admin_id);
 		
 		if(result.hasErrors()) {
 			dto.setAdmin_profileImg("");
 		}
 		
-		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
-		MultipartFile files = mr.getFile("admin_profileImg");
-		String filename = files.getOriginalFilename();
-		
-		if(filename == null || filename.trim().equals("")) {
-			req.setAttribute("msg", "이미지를 첨부해주세요");
-			req.setAttribute("url", "fileUpload_ok.do");
+		MultipartHttpServletRequest mr = (MultipartHttpServletRequest) req;
+		MultipartFile file = mr.getFile("admin_profileImg");
+		String profile = file.getOriginalFilename();
+	
+		if (file == null || profile.trim().equals("")) {
+			dto.setAdmin_profileImg(adto.getAdmin_profileImg());
+		} else {
+			File target = new File(profile);
+			try {
+				file.transferTo(target);
+			} catch (IOException e) {
+				e.printStackTrace();
+				req.setAttribute("msg", "이미지 업로드 중 오류 발생, 다시 등록해주세요");
+				req.setAttribute("url", "admin.do");
+				return "message";
+			}
+			s3.deleteFile("admin/"+adto.getAdmin_profileImg());
+			s3.uploadFile("admin/"+profile, target);
+			
+			dto.setAdmin_profileImg(profile);
 		}
-		HttpSession session = req.getSession();
-		String upPath = "C:\\admin";
-		File target = new File(upPath, filename);
-		try {
-			files.transferTo(target);
-		}catch(IOException e) {
-			req.setAttribute("msg", "이미지 업로드 실패");
-			req.setAttribute("url", "fileUpload_ok.do");
-		}
-		session.setAttribute("upPath", upPath);
 		
-		dto.setAdmin_profileImg(filename); 
 		dto.setAdmin_name(req.getParameter("admin_name"));
 		dto.setAdmin_id(req.getParameter("admin_id"));
 		dto.setAdmin_passwd(req.getParameter("admin_passwd"));

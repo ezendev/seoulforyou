@@ -7,8 +7,8 @@
 		${sql}
 	</select>
 	<insert id="insertRoute" parameterType="myRouteDTO">
-		insert into route values(route_seq.nextval,#{mem_no, jdbcType=NUMERIC},#{route_subject, jdbcType=VARCHAR},#{route_content, jdbcType=VARCHAR},#{route_img, jdbcType=VARCHAR},
-				#{route_itinerary, jdbcType=VARCHAR},#{route_tour, jdbcType=VARCHAR},0,#{route_region, jdbcType=VARCHAR}, #{route_hashtag, jdbcType=VARCHAR},sysdate)
+		insert into route values(nextval('route_seq'),#{mem_no, jdbcType=NUMERIC},#{route_subject, jdbcType=VARCHAR},#{route_content, jdbcType=VARCHAR},#{route_img, jdbcType=VARCHAR},
+				#{route_itinerary, jdbcType=VARCHAR},#{route_tour, jdbcType=VARCHAR},0,#{route_region, jdbcType=VARCHAR}, #{route_hashtag, jdbcType=VARCHAR},sysdate())
 	</insert>
 	<select id="getRouteTour" parameterType="Integer" resultType="tourDTO">
 		select * from route where route_no = #{route_no}
@@ -35,15 +35,16 @@
 	</select>
 	
 	<select id="listRouteByType" resultType="MyRouteDTO" parameterType="java.util.Map">
-      select * from (select rownum rn, A.* from(select * from route where route_hashtag = #{type})A)
-		where rn between #{start} and #{end}
+      select *from(select @rownum:=@rownum+1  rn, A.* from (select * from route where route_hashtag = #{type} order by route_no desc) A, (select @rownum := 0) R
+	 where 1=1) list
+	<![CDATA[ where rn >= #{start} and rn <=#{end} ]]> 
    </select>
    
    <select id="listRoutePart" resultType="MyRouteDTO" parameterType="java.util.Map">
-      select * from (select rownum rn, A.* from(select * from route)A)
-		where rn between #{start} and #{end}
+     select *from(select @rownum:=@rownum+1  rn, A.* from (select * from route order by route_no desc) A, (select @rownum := 0) R
+	 where 1=1) list
+	<![CDATA[ where rn >= #{start} and rn <=#{end} ]]> 
    </select>
-	
 	<update id="plusRouteReadcount" parameterType="int">
 		update route set route_readcount = route_readcount + 1 where route_no =
 		#{route_no}

@@ -14,15 +14,15 @@
 <mapper namespace="com.ezdev.sfy.dto.memberMapper">	
 <!-- 회원가입 -->
 	<insert id="insertMember" parameterType="memberDTO">
-		insert into member values(member_seq.nextval, #{member_name}, #{member_id}, #{member_passwd}, #{member_email}, #{member_hp}, sysdate, 0)
+		insert into member values(nextval('member_seq'), #{member_name}, #{member_id}, #{member_passwd}, #{member_email}, #{member_hp}, sysdate(), 0)
 	</insert>
 	<insert id="insertMemKakao" parameterType="java.util.Map">
-		insert into member(member_no, member_name, member_id, member_email, member_regdate, kakao) values(member_seq.nextval, #{member_name, jdbcType=VARCHAR}, #{member_id}, #{member_email, jdbcType=VARCHAR}, sysdate, 1)
+		insert into member(member_no, member_name, member_id, member_email, member_regdate, kakao) values(nextval('member_seq'), #{member_name, jdbcType=VARCHAR}, #{member_id}, #{member_email, jdbcType=VARCHAR}, sysdate(), 1)
 	</insert>
 	
 <!-- 회원가입2: 마이페이지 -->
 	<insert id="insertMypage" parameterType="memberDTO">
-		insert into mypage (mypage_no, mem_no) values(mypage_seq.nextval, #{member_no})
+		insert into mypage (mypage_no, mem_no) values(nextval('mypage_seq'), #{member_no})
 	</insert>
 	
 	<select id="listMember" resultType="memberDTO">

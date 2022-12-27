@@ -146,12 +146,19 @@
 	    <version>${org.springframework-version}</version>
 	</dependency>
 		
-			<!-- https://mvnrepository.com/artifact/com.oracle.jdbc/ojdbc8 -->
-			<dependency>
-			    <groupId>com.oracle.jdbc</groupId>
-			    <artifactId>ojdbc8</artifactId>
-			    <version>12.2.0.1</version>
-			</dependency>
+			<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		    <version>8.0.31</version>
+		</dependency>
+				
+		<!-- amazon s3 -->
+		<dependency>
+	      <groupId>com.amazonaws</groupId>
+	      <artifactId>aws-java-sdk</artifactId>
+	      <version>1.11.66</version>
+	    </dependency>
 	
 		<!-- mybatis -->
 		<dependency>

@@ -72,7 +72,7 @@
 			            });
 					
 			           	//마커들이 지도에 한 번에 보여지도록 
-				        map.relayout();
+				        
 			           	marker.setMap(map);
 			           
 			            };
@@ -124,6 +124,7 @@
 			    linePath.push(coords);
 			    polyline.setPath(linePath);
 			    bounds.extend(coords);
+			    map.relayout();
 				map.setBounds(bounds);
 			    
 			    if(!polyline.getMap()) {

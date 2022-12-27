@@ -8,7 +8,7 @@
 	<insert id="sendChat" parameterType="chatDTO">
 		insert into chat(chat_no, chat_room, chat_send_no, chat_recv_no, chat_send_time,
 							chat_read_time, chat_content, chat_read_chk)
-		values(chat_seq.nextval, #{chat_room}, #{chat_send_no}, #{chat_recv_no}, to_char(sysdate,'mm.dd hh24:mi'), to_char(sysdate,'yyyy.mm.dd hh24:mi'), #{chat_content}, 0)
+		values(nextval('chat_seq'), #{chat_room}, #{chat_send_no}, #{chat_recv_no}, date_format(sysdate(),'%m.%d %H:%i'), date_format(sysdate(),'%Y.%m.%d %H:%i'), #{chat_content}, 0)
 	</insert>
 	
 	<!-- 채팅방 목록 -->

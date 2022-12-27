@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.ezdev.sfy.service.MyRouteMapper;
 import com.ezdev.sfy.service.MypageMapper;
 import com.ezdev.sfy.service.TourMapper;
+import com.ezdev.sfy.service.AWSs3Mapper;
 import com.ezdev.sfy.service.MemberMapper;
 import com.ezdev.sfy.dto.MemberDTO;
 import com.ezdev.sfy.dto.MyPageDTO;
@@ -40,6 +41,8 @@ public class MyRouteController {
 	MemberMapper memberMapper;
 	@Autowired
 	MypageMapper mypageMapper;
+	@Autowired
+	AWSs3Mapper s3;
 
 	// 나의여행 만들기페이지로 이동
 	@RequestMapping("/myRoute.do")
@@ -203,9 +206,7 @@ public class MyRouteController {
 		// 파일이름이 동일하면 덮어씌워지기 때문에 이를 보완하기 위해 UUID사용('랜덤이름_원래 이름'으로 저장)
 		String uuid = UUID.randomUUID().toString();
 		file_name = uuid + '_' + file_name;
-		HttpSession session = req.getSession();
-		String upPath = "C://ezdev";
-		File target = new File(upPath, file_name);
+		File target = new File(file_name);
 		try {
 			file.transferTo(target);
 		} catch (IOException e) {
@@ -214,7 +215,10 @@ public class MyRouteController {
 			req.setAttribute("url", "myRouteAfter.do");
 			return "message";
 		}
-		session.setAttribute("upPath", upPath);
+				
+		s3.uploadFile("route/"+file_name, target);
+		
+		HttpSession session = req.getSession();
 		dto.setRoute_img(file_name);
 
 		// after페이지의 content와 subject를 dto에 넣기
@@ -260,25 +264,27 @@ public class MyRouteController {
 	}
 
 	// myroute삭제
-	@RequestMapping(value = "/myroute_delRoute.do")
-	public String mypage_deleteRoute(HttpServletRequest req, @RequestParam Map<String, String> map) {
-		HttpSession session = req.getSession();
-		int route_no = Integer.parseInt(map.get("route_no"));
-		int no = (int) session.getAttribute("nowUserNo");
-		MemberDTO dto = memberMapper.getMemberNo(no);
-		if (dto.getMember_passwd().trim().equals(map.get("passwd"))) {
-			int res = myrouteMapper.delMyroute(route_no);
-			if (res > 0) {
-				req.setAttribute("msg", "게시글 삭제 성공!! 마이루트 페이지로 이동합니다.");
+		@RequestMapping(value = "/myroute_delRoute.do")
+		public String mypage_deleteRoute(HttpServletRequest req, @RequestParam Map<String, String> map) {
+			HttpSession session = req.getSession();
+			int route_no = Integer.parseInt(map.get("route_no"));
+			MyRouteDTO rdto = myrouteMapper.getRoute(route_no);
+			int no = (int) session.getAttribute("nowUserNo");
+			MemberDTO dto = memberMapper.getMemberNo(no);
+			if (dto.getMember_passwd().trim().equals(map.get("passwd"))) {
+				int res = myrouteMapper.delMyroute(route_no);
+				if (res > 0) {
+					req.setAttribute("msg", "게시글 삭제 성공!! 마이루트 페이지로 이동합니다.");
+				} else {
+					req.setAttribute("msg", "게시글 삭제 실패!! 마이루트 페이지로 이동합니다.");
+				}
 			} else {
-				req.setAttribute("msg", "게시글 삭제 실패!! 마이루트 페이지로 이동합니다.");
+				req.setAttribute("msg", "비밀번호가 틀립니다. 다시 입력해주세요");
 			}
-		} else {
-			req.setAttribute("msg", "비밀번호가 틀립니다. 다시 입력해주세요");
+			s3.deleteFile("route/"+rdto.getRoute_img());
+			req.setAttribute("url", "mypage_route.do");
+			return "message";
 		}
-		req.setAttribute("url", "mypage_route.do");
-		return "message";
-	}
 
 	// -------------------------------------------------------------------------------------------------------------//
 	// edit
@@ -430,8 +436,6 @@ public class MyRouteController {
 		MyRouteDTO dto = myrouteMapper.getRoute(route_no);
 		session.setAttribute("getRoute", dto);
 
-		String upPath = "C://ezdev";
-		session.setAttribute("upPath", upPath);
 		String route_hashtag = map.get("trip_thema");
 		String route_region = map.get("region");
 		String startDate = map.get("startDate");
@@ -463,8 +467,7 @@ public class MyRouteController {
 			String uuid = UUID.randomUUID().toString();
 			edit_name = uuid + '_' + edit_name;
 
-			String upPath = "C://ezdev";
-			File target = new File(upPath, edit_name);
+			File target = new File(edit_name);
 			try {
 				editFile.transferTo(target);
 			} catch (IOException e) {
@@ -473,6 +476,9 @@ public class MyRouteController {
 				req.setAttribute("url", "myroute_editRoute_after.do");
 				return "message";
 			}
+			s3.deleteFile("route/"+dto.getRoute_img());
+			s3.uploadFile("route/"+edit_name, target);
+						
 			mdto.setRoute_img(edit_name);
 		}
 		// after페이지의 content와 subject를 dto에 넣기

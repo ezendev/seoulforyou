@@ -6,7 +6,7 @@
 <mapper namespace="com.ezdev.sfy.tourApiMapper">
 	<insert id="insertDb" parameterType="java.util.List">
 		insert into tour(tour_no, tour_type, tour_name, tour_postal, tour_addr, tour_hp)
-		select tour_seq.nextval, A.* from(
+		select nextval('tour_seq'), A.* from(
 			<foreach collection="list" item="item" separator="UNION ALL ">
 				select #{item.tour_type, jdbcType=NUMERIC} as tour_type,
 						#{item.tour_name, jdbcType=VARCHAR} as tour_name,
@@ -16,7 +16,6 @@
 				from dual
 			</foreach>) A		
 	</insert>
-	
 	<delete id="deleteDb" parameterType="int">
 		delete from tour where tour_type = #{type}
 	</delete>
