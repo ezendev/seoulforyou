@@ -162,7 +162,7 @@ a {
 
 <!-- 삭제 체크 모달 -->
 <!-- Modal -->
-<form name="mypageQnaDel" id="checkDelform" action="mypage_qna_del.do" method="post">
+<form name="mypageQnaDel" action="mypage_qna_del.do" method="post">
 <div class="modal fade" id="checkModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -185,7 +185,7 @@ a {
 
 <script>
 function valueSetting(no){
-	$('#checkDelform').attr("action", "mypage_qna_del.do?qna_no="+no);
+	$('#checkDel').attr("value", no);
 	console.log(no);
 }
 

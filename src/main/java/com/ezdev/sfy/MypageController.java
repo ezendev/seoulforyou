@@ -394,8 +394,8 @@ public class MypageController {
 	}
 	
 	@RequestMapping("/mypage_qna_del.do")
-	public String mypage_qna_del(HttpServletRequest req, @RequestParam (required=false) int qna_no) {
-		//int qna_no = Integer.parseInt(req.getParameter("checkDel"));
+	public String mypage_qna_del(HttpServletRequest req) {
+		int qna_no = Integer.parseInt(req.getParameter("checkDel"));
 		int res = boardMapper.deleteQna2(qna_no);
 
 		if(res>0) {
